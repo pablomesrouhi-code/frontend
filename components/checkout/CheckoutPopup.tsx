@@ -176,16 +176,23 @@ export default function CheckoutPopup({ onClose }: Props) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm px-4">
-      <div className="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm px-4 pt-4 pb-[max(12px,env(safe-area-inset-bottom))] sm:p-4 sm:pb-4">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="checkout-modal-title"
+        className="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col min-h-0 max-h-[min(92vh,92dvh)] sm:max-h-[min(88vh,720px)]"
+      >
         {/* Header */}
-        <div className="bg-[#b8485c] px-6 py-5 text-white">
-          <div className="flex justify-between items-start">
-            <div>
-              <h2 className="text-xl font-bold">خطوة أخيرة لتأكيد طلبك</h2>
+        <div className="bg-[#b8485c] px-6 py-5 text-white shrink-0">
+          <div className="flex justify-between items-start gap-3">
+            <div className="min-w-0">
+              <h2 id="checkout-modal-title" className="text-xl font-bold">
+                خطوة أخيرة لتأكيد طلبك
+              </h2>
               <p className="text-sm text-white/80 mt-1">أدخلي اسمك ورقم جوالك فقط</p>
             </div>
-            <button onClick={onClose} className="text-white/70 hover:text-white transition p-1">
+            <button type="button" onClick={onClose} className="text-white/70 hover:text-white transition p-1 shrink-0 rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="إغلاق">
               <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -193,7 +200,7 @@ export default function CheckoutPopup({ onClose }: Props) {
           </div>
         </div>
 
-        <div className="px-6 py-5 flex flex-col gap-5">
+        <div className="px-6 py-5 flex flex-col gap-5 flex-1 min-h-0 overflow-y-auto overscroll-y-contain touch-pan-y pb-6 sm:pb-5">
           {checkoutError && (
             <div className="rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm px-4 py-3">
               {checkoutError}
@@ -203,11 +210,14 @@ export default function CheckoutPopup({ onClose }: Props) {
           <div className="bg-[#FFFFFF] rounded-xl p-4">
             <p className="text-sm font-bold text-[#1C1C1C] mb-3">ملخص طلبك:</p>
             {items.map((item) => (
-              <div key={item.productId} className="flex justify-between items-center py-1.5 border-b border-gray-200 last:border-0">
-                <span className="text-sm text-[#1C1C1C]">
+              <div
+                key={item.productId}
+                className="flex justify-between items-start gap-3 py-1.5 border-b border-gray-200 last:border-0"
+              >
+                <span className="text-sm text-[#1C1C1C] min-w-0 flex-1 text-right leading-snug break-words">
                   {item.nameAr} — {item.offerQty === 1 ? 'قطعة' : item.offerQty === 2 ? 'قطعتين' : '3 قطع'}
                 </span>
-                <span className="font-bold text-[#b8485c] text-sm">{item.price} ريال</span>
+                <span className="font-bold text-[#b8485c] text-sm shrink-0 tabular-nums">{item.price} ريال</span>
               </div>
             ))}
             <div className="flex justify-between items-center mt-2 pt-2">
