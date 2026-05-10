@@ -4,14 +4,9 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCartStore } from '@/stores/cart-store'
+import { getPublicApiBase } from '@/lib/api'
 import { getBestUpsell } from '@/lib/products'
 import UpsellModal from './UpsellModal'
-
-function apiBase(): string | null {
-  const u = process.env.NEXT_PUBLIC_API_URL?.trim()
-  if (!u) return null
-  return u.replace(/\/+$/, '')
-}
 
 const TEST_PHONES = ['055000000']
 
@@ -51,10 +46,10 @@ export default function CheckoutPopup({ onClose }: Props) {
 
   async function finalizeOrder(data: FormValues, upsellAccepted: boolean) {
     setCheckoutError(null)
-    const base = apiBase()
+    const base = getPublicApiBase()
     if (!base) {
       setCheckoutError(
-        'تعذّر تأكيد الطلب: عنوان الـ API غير مُعرّف. أضيفوا NEXT_PUBLIC_API_URL ثم حاولوا مرة أخرى.'
+        'تعذّر تأكيد الطلب: عرّفوا NEXT_PUBLIC_API_URL في بيئة البناء (.env أو EasyPanel build args) ثم أعيدوا نشر الواجهة.'
       )
       return
     }
