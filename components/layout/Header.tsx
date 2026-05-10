@@ -2,9 +2,17 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useCartStore } from '@/stores/cart-store'
 
 const LOGO_GRADIENT = 'linear-gradient(135deg, #b8485c 0%, #943c50 100%)'
+
+const NAV_LINKS = [
+  { href: '/', label: 'الرئيسية' },
+  { href: '/products', label: 'المنتجات' },
+  { href: '/about', label: 'من نحن' },
+  { href: '/contact', label: 'اتصل بنا' },
+] as const
 
 const BANNER_MESSAGES = [
   { icon: '🚚', text: 'الدفع عند الاستلام · شحن سريع لجميع مناطق المملكة' },
@@ -13,10 +21,32 @@ const BANNER_MESSAGES = [
 ]
 
 export default function Header() {
+  const pathname = usePathname()
   const { items, openCart } = useCartStore()
   const count = items.length
   const [msgIndex, setMsgIndex] = useState(0)
   const [visible, setVisible] = useState(true)
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [pathname])
+
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false)
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [menuOpen])
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [menuOpen])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -58,14 +88,9 @@ export default function Header() {
             )}
           </button>
 
-          {/* Nav */}
-          <nav className="hidden md:flex items-center gap-0.5">
-            {[
-              { href: '/', label: 'الرئيسية' },
-              { href: '/products', label: 'المنتجات' },
-              { href: '/about', label: 'من نحن' },
-              { href: '/contact', label: 'اتصل بنا' },
-            ].map((link) => (
+          {/* Nav — desktop */}
+          <nav className="hidden md:flex items-center gap-0.5" aria-label="التنقل الرئيسي">
+            {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -78,6 +103,23 @@ export default function Header() {
               </Link>
             ))}
           </nav>
+
+          {/* Mobile menu */}
+          <div className="flex md:hidden items-center gap-2">
+            <button
+              type="button"
+              className="p-2.5 rounded-lg border transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+              style={{ borderColor: '#dfd6d4', color: '#5c5656' }}
+              onClick={() => setMenuOpen(true)}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-nav-menu"
+              aria-label="فتح القائمة"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
 
           {/* Logo */}
           <Link
@@ -97,6 +139,49 @@ export default function Header() {
           </Link>
         </div>
       </header>
+
+      {/* Mobile full-screen nav */}
+      {menuOpen ? (
+        <div className="md:hidden fixed inset-0 z-50 flex flex-col bg-white" id="mobile-nav-menu" role="dialog" aria-modal="true" aria-label="قائمة التصفح">
+          <div className="shrink-0 flex items-center justify-between px-4 h-16 border-b border-[#dfd6d4] bg-white">
+            <button
+              type="button"
+              className="p-2.5 rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center"
+              style={{ color: '#5c5656' }}
+              onClick={() => setMenuOpen(false)}
+              aria-label="إغلاق القائمة"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <span className="text-sm font-semibold" style={{ color: '#3d3838' }}>القائمة</span>
+            <span className="w-11" aria-hidden />
+          </div>
+          <nav className="flex-1 overflow-y-auto px-4 py-6" aria-label="التنقل الرئيسي">
+            <ul className="flex flex-col gap-1">
+              {NAV_LINKS.map((link) => {
+                const active = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href))
+                return (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="flex items-center text-base font-medium py-4 px-3 rounded-xl transition-colors min-h-[48px]"
+                      style={{
+                        color: active ? '#b8485c' : '#5c5656',
+                        background: active ? '#f1e6e4' : 'transparent',
+                      }}
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </nav>
+        </div>
+      ) : null}
 
       {/* Announcement Banner — خلفية موحّدة بنفس تدرّج اللوغو */}
       <div

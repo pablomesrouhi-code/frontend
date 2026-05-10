@@ -10,7 +10,8 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-ARG NEXT_PUBLIC_SITE_URL=https://Nabtalabo.store
+# Defaults match production; EasyPanel Build Args override these at image build time.
+ARG NEXT_PUBLIC_SITE_URL=https://nabtalabo.store
 ARG NEXT_PUBLIC_API_URL=https://api.nabtalabo.store
 ARG NEXT_PUBLIC_META_PIXEL_ID=
 ARG NEXT_PUBLIC_TIKTOK_PIXEL_ID=

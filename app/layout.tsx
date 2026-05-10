@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   title: 'نبتة لابو | Nabta Labo',
   description: 'علكات وظيفية يومية لدعم جمالك من الداخل، راحة هضمك، وهدوء مسائك. نبتة لابو — روتين يومي صار ألذ وأسهل.',
   keywords: 'علكات, كولاجين, بروبيوتيك, مغنيسيوم, مكملات, نساء, السعودية, نبتة لابو',
+  icons: {
+    icon: [{ url: '/nabta-lab-brand.png', type: 'image/png' }],
+    shortcut: '/nabta-lab-brand.png',
+    apple: '/nabta-lab-brand.png',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
