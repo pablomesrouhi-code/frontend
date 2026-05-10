@@ -6,35 +6,60 @@ import { Product } from '@/lib/products'
 type Props = {
   product: Product
   placingOrder?: boolean
+  /** Shown on upsell step when API/network fails (otherwise user sees a “dead” screen). */
+  checkoutError?: string | null
   onAccept: () => void
   onSkip: () => void
 }
 
 const TIMER_SECONDS = 15
 
+/**
+ * Parents often pass inline `() => finalizeOrder(...)` which changes every render.
+ * If `onSkip` was in the timer effect deps, the countdown reset constantly and auto-skip / clicks could break.
+ * Refs keep the latest callbacks without restarting the timer effect.
+ */
 export default function UpsellModal({
   product,
   placingOrder = false,
+  checkoutError = null,
   onAccept,
   onSkip,
 }: Props) {
   const [timeLeft, setTimeLeft] = useState(TIMER_SECONDS)
   const autoSkipFiredRef = useRef(false)
+  const onSkipRef = useRef(onSkip)
+  const onAcceptRef = useRef(onAccept)
+
+  onSkipRef.current = onSkip
+  onAcceptRef.current = onAccept
 
   useEffect(() => {
     if (placingOrder) return
     if (timeLeft <= 0) {
       if (!autoSkipFiredRef.current) {
         autoSkipFiredRef.current = true
-        onSkip()
+        onSkipRef.current()
       }
       return
     }
-    const t = setTimeout(() => setTimeLeft((t) => t - 1), 1000)
+    const t = setTimeout(() => setTimeLeft((n) => n - 1), 1000)
     return () => clearTimeout(t)
-  }, [timeLeft, onSkip, placingOrder])
+  }, [timeLeft, placingOrder])
 
   const progress = (timeLeft / TIMER_SECONDS) * 100
+
+  function handleAccept() {
+    if (placingOrder) return
+    autoSkipFiredRef.current = true
+    onAcceptRef.current()
+  }
+
+  function handleSkip() {
+    if (placingOrder) return
+    autoSkipFiredRef.current = true
+    onSkipRef.current()
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm px-4">
@@ -48,6 +73,11 @@ export default function UpsellModal({
         </div>
 
         <div className="px-6 py-6 flex flex-col gap-5">
+          {checkoutError ? (
+            <div className="rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm px-4 py-3">
+              {checkoutError}
+            </div>
+          ) : null}
           {/* Badge */}
           <div className="flex items-center justify-between">
             <span className="bg-[#943c50] text-white text-xs font-bold px-3 py-1 rounded-full">
@@ -81,7 +111,9 @@ export default function UpsellModal({
               <div className="flex items-center gap-2 mt-2">
                 <span className="text-2xl font-bold text-[#b8485c]">99 ريال</span>
                 <span className="text-sm text-gray-400 line-through">199 ريال</span>
-                <span className="text-xs bg-[#f1e6e4] text-[#943c50] px-2 py-0.5 rounded-full font-bold">50% خصم</span>
+                <span className="text-xs bg-[#f1e6e4] text-[#943c50] px-2 py-0.5 rounded-full font-bold">
+                  50% خصم
+                </span>
               </div>
             </div>
           </div>
@@ -89,7 +121,7 @@ export default function UpsellModal({
           {/* CTAs */}
           <button
             type="button"
-            onClick={onAccept}
+            onClick={handleAccept}
             disabled={placingOrder}
             className="w-full bg-[#b8485c] text-white font-bold py-4 rounded-full text-lg hover:bg-[#943c50] transition-colors disabled:opacity-60"
           >
@@ -97,7 +129,7 @@ export default function UpsellModal({
           </button>
           <button
             type="button"
-            onClick={onSkip}
+            onClick={handleSkip}
             disabled={placingOrder}
             className="w-full text-center text-sm text-[#5c5656] py-2 hover:text-[#1C1C1C] transition disabled:opacity-50"
           >

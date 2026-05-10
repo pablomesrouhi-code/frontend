@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -35,28 +35,14 @@ export default function CheckoutPopup({ onClose }: Props) {
 
   const upsell = getBestUpsell(items.map((i) => i.productId))
 
-  function onSubmit(data: FormValues) {
-    setFormData(data)
-    if (upsell) {
-      setShowUpsell(true)
-    } else {
-      void finalizeOrder(data, false)
-    }
-  }
-
-  async function finalizeOrder(data: FormValues, upsellAccepted: boolean) {
-    setCheckoutError(null)
-    const base = getPublicApiBase()
-    if (!base) {
-      setCheckoutError(
-        'تعذّر تأكيد الطلب: عرّفوا NEXT_PUBLIC_API_URL في بيئة البناء (.env أو EasyPanel build args) ثم أعيدوا نشر الواجهة.'
-      )
-      return
-    }
-    setPlacingOrder(true)
-    try {
-      const upsellAcceptedOk = upsellAccepted && !!upsell
-      const res = await fetch(`${base}/api/orders`, {
+  const finalizeOrder = useCallback(
+    async (data: FormValues, upsellAccepted: boolean) => {
+      setCheckoutError(null)
+      const base = getPublicApiBase()
+      setPlacingOrder(true)
+      try {
+        const upsellAcceptedOk = upsellAccepted && !!upsell
+        const res = await fetch(`${base}/api/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -104,7 +90,15 @@ export default function CheckoutPopup({ onClose }: Props) {
         const msg =
           formatFastApiDetail(parsed) ||
           `تعذّر إرسال الطلب (${res.status}). جرّبوا بعد قليل أو تواصلوا مع الدعم.`
-        setCheckoutError(msg)
+        const hint403 =
+          res.status === 403
+            ? ' إن كنت تختبرين من خارج السعودية أو مع VPN، جرّبي الرقم 055000000 أو اطلبي من الإدارة تعطيل MaxMind مؤقتاً (MAXMIND_ENABLED=false).'
+            : ''
+        const hint503 =
+          res.status === 503
+            ? ' غالباً قاعدة البيانات أو الاتصال DATABASE_URL — راجع سجلات الـ API.'
+            : ''
+        setCheckoutError(msg + hint403 + hint503)
         setPlacingOrder(false)
         return
       }
@@ -136,11 +130,36 @@ export default function CheckoutPopup({ onClose }: Props) {
       clearCart()
       onClose()
       window.location.href = '/thank-you'
-    } catch {
+    } catch (err) {
+      const net =
+        err instanceof TypeError
+          ? ' تعذّر الاتصال بالـ API (CORS أو إنترنت أو عنوان API خاطئ).'
+          : ''
       setCheckoutError(
-        'تعذّر الاتصال بالخادم. تأكّدوا من الإنترنت أو جرّبوا بعد قليل.'
+        `تعذّر الاتصال بالخادم.${net} تأكّدوا من الإنترنت أو جرّبوا بعد قليل.`
       )
       setPlacingOrder(false)
+    }
+  },
+    [items, total, upsell, clearCart, onClose]
+  )
+
+  const onUpsellAccept = useCallback(() => {
+    if (!formData) return
+    void finalizeOrder(formData, true)
+  }, [formData, finalizeOrder])
+
+  const onUpsellSkip = useCallback(() => {
+    if (!formData) return
+    void finalizeOrder(formData, false)
+  }, [formData, finalizeOrder])
+
+  function onSubmit(data: FormValues) {
+    setFormData(data)
+    if (upsell) {
+      setShowUpsell(true)
+    } else {
+      void finalizeOrder(data, false)
     }
   }
 
@@ -149,8 +168,9 @@ export default function CheckoutPopup({ onClose }: Props) {
       <UpsellModal
         product={upsell}
         placingOrder={placingOrder}
-        onAccept={() => void finalizeOrder(formData, true)}
-        onSkip={() => void finalizeOrder(formData, false)}
+        checkoutError={checkoutError}
+        onAccept={onUpsellAccept}
+        onSkip={onUpsellSkip}
       />
     )
   }
