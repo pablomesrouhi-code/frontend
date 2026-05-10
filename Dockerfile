@@ -3,10 +3,29 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
+# `NEXT_PUBLIC_*` must exist at `npm run build` time. `.env` is not copied (.dockerignore).
+# In EasyPanel, set the same names as Build Arguments (or rely on defaults below).
 FROM node:22-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+ARG NEXT_PUBLIC_SITE_URL=https://Nabtalabo.store
+ARG NEXT_PUBLIC_API_URL=https://api.nabtalabo.store
+ARG NEXT_PUBLIC_META_PIXEL_ID=
+ARG NEXT_PUBLIC_TIKTOK_PIXEL_ID=
+ARG NEXT_PUBLIC_SNAP_PIXEL_ID=
+ARG NEXT_PUBLIC_ENABLE_PIXELS=true
+ARG NEXT_PUBLIC_PIXEL_SCRIPT_STRATEGY=lazyOnload
+
+ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL} \
+    NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL} \
+    NEXT_PUBLIC_META_PIXEL_ID=${NEXT_PUBLIC_META_PIXEL_ID} \
+    NEXT_PUBLIC_TIKTOK_PIXEL_ID=${NEXT_PUBLIC_TIKTOK_PIXEL_ID} \
+    NEXT_PUBLIC_SNAP_PIXEL_ID=${NEXT_PUBLIC_SNAP_PIXEL_ID} \
+    NEXT_PUBLIC_ENABLE_PIXELS=${NEXT_PUBLIC_ENABLE_PIXELS} \
+    NEXT_PUBLIC_PIXEL_SCRIPT_STRATEGY=${NEXT_PUBLIC_PIXEL_SCRIPT_STRATEGY}
+
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 

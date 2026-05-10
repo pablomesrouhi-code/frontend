@@ -72,7 +72,7 @@ export default function HomePage() {
               <div className="w-16 h-1 rounded-full mb-5" style={{ background: 'linear-gradient(90deg, #c9937e, #d8c9c6)' }} />
 
               <p className="text-lg leading-relaxed mb-6 max-w-md" style={{ color: '#5c5656' }}>
-                مجموعة علكات Labo Nabta: بروبيوتيك وراحة الهضم، مغنيسيوم ومساء أنعم، وبوتين لدعم الشعر والبشرة والأظافر — خطوات بسيطة في يوم واحد.
+                مجموعة علكات نبتة لابو: بروبيوتيك وراحة الهضم بعد الأكل، مغنيسيوم ومساء أنعم، وكولاجين مع فيتامين C لدعم البشرة والشعر والأظافر — خطوات بسيطة في يوم واحد.
               </p>
 
               {/* Compliance badges */}
@@ -185,7 +185,7 @@ export default function HomePage() {
               كل منتج مصمم لاحتياج محدد، مع أسعار تناسبك
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-7 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch min-w-0 w-full">
             {PRODUCTS.map((p) => <ProductCard key={p.id} product={p} />)}
           </div>
         </div>

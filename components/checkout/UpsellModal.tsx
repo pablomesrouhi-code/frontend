@@ -1,27 +1,38 @@
 'use client'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Product } from '@/lib/products'
 
 type Props = {
   product: Product
+  placingOrder?: boolean
   onAccept: () => void
   onSkip: () => void
 }
 
 const TIMER_SECONDS = 15
 
-export default function UpsellModal({ product, onAccept, onSkip }: Props) {
+export default function UpsellModal({
+  product,
+  placingOrder = false,
+  onAccept,
+  onSkip,
+}: Props) {
   const [timeLeft, setTimeLeft] = useState(TIMER_SECONDS)
+  const autoSkipFiredRef = useRef(false)
 
   useEffect(() => {
+    if (placingOrder) return
     if (timeLeft <= 0) {
-      onSkip()
+      if (!autoSkipFiredRef.current) {
+        autoSkipFiredRef.current = true
+        onSkip()
+      }
       return
     }
     const t = setTimeout(() => setTimeLeft((t) => t - 1), 1000)
     return () => clearTimeout(t)
-  }, [timeLeft, onSkip])
+  }, [timeLeft, onSkip, placingOrder])
 
   const progress = (timeLeft / TIMER_SECONDS) * 100
 
@@ -77,14 +88,18 @@ export default function UpsellModal({ product, onAccept, onSkip }: Props) {
 
           {/* CTAs */}
           <button
+            type="button"
             onClick={onAccept}
-            className="w-full bg-[#b8485c] text-white font-bold py-4 rounded-full text-lg hover:bg-[#943c50] transition-colors"
+            disabled={placingOrder}
+            className="w-full bg-[#b8485c] text-white font-bold py-4 rounded-full text-lg hover:bg-[#943c50] transition-colors disabled:opacity-60"
           >
-            أضيفيه لطلبي بـ 99 ريال
+            {placingOrder ? 'جاري الإرسال...' : 'أضيفيه لطلبي بـ 99 ريال'}
           </button>
           <button
+            type="button"
             onClick={onSkip}
-            className="w-full text-center text-sm text-[#5c5656] py-2 hover:text-[#1C1C1C] transition"
+            disabled={placingOrder}
+            className="w-full text-center text-sm text-[#5c5656] py-2 hover:text-[#1C1C1C] transition disabled:opacity-50"
           >
             لا شكراً، أكملي طلبي
           </button>

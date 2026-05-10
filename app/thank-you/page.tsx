@@ -15,6 +15,8 @@ type OrderData = {
   upsellPrice: number
   finalTotal: number
   createdAt: string
+  orderNumber?: string
+  orderId?: string
 }
 
 export default function ThankYouPage() {
@@ -44,6 +46,11 @@ export default function ThankYouPage() {
           <h1 className="text-3xl font-bold mb-2">تم استلام طلبك بنجاح!</h1>
           <p className="text-white/80 text-lg">
             شكراً لكِ {order?.name ? `${order.name}` : ''}. وصلنا طلبك وسيتواصل معك فريقنا لتأكيد التفاصيل وترتيب التوصيل.
+            {order?.orderNumber && (
+              <span className="block mt-2 text-white/90 text-base" dir="ltr">
+                رقم الطلب: <strong className="font-mono">{order.orderNumber}</strong>
+              </span>
+            )}
           </p>
         </div>
 

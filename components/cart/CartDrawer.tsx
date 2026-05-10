@@ -1,9 +1,35 @@
 'use client'
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { useCartStore } from '@/stores/cart-store'
-import { PRODUCTS, getProductById, getCrossSellProducts, getPriceForQty } from '@/lib/products'
+import { PRODUCTS, getProductById } from '@/lib/products'
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 import CheckoutPopup from '@/components/checkout/CheckoutPopup'
+
+function cartThumb(
+  product: ReturnType<typeof getProductById>,
+  size: 'sm' | 'md',
+  accentColor: string,
+  bgColor: string
+) {
+  const cls = size === 'sm' ? 'w-12 h-12' : 'w-16 h-16'
+  if (!product) {
+    return (
+      <ImagePlaceholder accentColor={accentColor} bgColor={bgColor} label="" aspectRatio="1" className={cls} />
+    )
+  }
+  return (
+    <div className={`relative ${cls} shrink-0 overflow-hidden rounded-xl border border-[#eae2df] bg-[#faf9f8]`}>
+      <Image
+        src={product.coverImage}
+        alt={product.nameAr}
+        fill
+        sizes={size === 'sm' ? '48px' : '64px'}
+        className="object-cover object-center"
+      />
+    </div>
+  )
+}
 
 export default function CartDrawer() {
   const { items, isOpen, closeCart, removeItem, addItem, total } = useCartStore()
@@ -55,15 +81,7 @@ export default function CartDrawer() {
                 {/* Cart Items */}
                 {items.map((item) => (
                   <div key={item.productId} className="bg-white rounded-xl p-4 flex gap-3 shadow-sm">
-                    <div className="w-16 h-16 shrink-0">
-                      <ImagePlaceholder
-                        accentColor={item.accentColor}
-                        bgColor={item.bgColor}
-                        label=""
-                        aspectRatio="1"
-                        className="w-16 h-16"
-                      />
-                    </div>
+                    {cartThumb(getProductById(item.productId), 'md', item.accentColor, item.bgColor)}
                     <div className="flex-1 min-w-0">
                       <p className="font-bold text-[#1C1C1C] text-sm">{item.nameAr}</p>
                       <p className="text-xs text-[#5c5656] mt-0.5">
@@ -89,15 +107,7 @@ export default function CartDrawer() {
                     <div className="flex flex-col gap-2">
                       {crossSells.map((p) => (
                         <div key={p.id} className="bg-white rounded-xl p-3 flex gap-3 items-center shadow-sm">
-                          <div className="w-12 h-12 shrink-0">
-                            <ImagePlaceholder
-                              accentColor={p.accentColor}
-                              bgColor={p.bgColor}
-                              label=""
-                              aspectRatio="1"
-                              className="w-12 h-12"
-                            />
-                          </div>
+                          {cartThumb(getProductById(p.id), 'sm', p.accentColor, p.bgColor)}
                           <div className="flex-1 min-w-0">
                             <p className="font-semibold text-sm text-[#1C1C1C]">{p.nameAr}</p>
                             <p className="text-xs text-[#5c5656] truncate">{p.subtitleAr}</p>

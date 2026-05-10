@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useCartStore } from '@/stores/cart-store'
 
@@ -79,17 +80,20 @@ export default function Header() {
           </nav>
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="text-right">
-              <p className="font-bold leading-tight text-base tracking-tight" style={{ color: '#1C1C1C' }}>نبتة لابو</p>
-              <p className="text-[9px] leading-none tracking-[0.2em] uppercase font-semibold" style={{ color: '#b8485c' }}>Nabta Labo</p>
-            </div>
-            <div
-              className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all"
-              style={{ background: LOGO_GRADIENT }}
-            >
-              N
-            </div>
+          <Link
+            href="/"
+            className="flex items-center shrink-0 group py-1 -my-0.5"
+            aria-label="نبتة لابو — الصفحة الرئيسية"
+          >
+            <Image
+              src="/nabta-lab-brand.png"
+              alt="نبتة لابو — من الطبيعة لراحتك وجمالك"
+              width={320}
+              height={140}
+              priority
+              sizes="(max-width: 640px) 42vw, 200px"
+              className="h-10 sm:h-11 w-auto max-w-[min(200px,42vw)] object-contain object-right"
+            />
           </Link>
         </div>
       </header>

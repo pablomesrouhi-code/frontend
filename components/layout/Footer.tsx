@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 const FOOTER_LINKS = [
@@ -21,20 +22,15 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
           {/* Brand */}
           <div className="max-w-md mx-auto md:mx-0">
-            <div className="flex items-center gap-3 mb-4 justify-center md:justify-start">
-              <div
-                className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg shrink-0"
-                style={{ background: 'linear-gradient(135deg, #b8485c, #943c50)' }}
-              >
-                N
-              </div>
-              <div className="text-right">
-                <p className="font-bold text-white leading-tight">نبتة لابو</p>
-                <p className="text-[9px] tracking-[0.2em] uppercase" style={{ color: '#c9937e' }}>
-                  Nabta Labo
-                </p>
-              </div>
-            </div>
+            <Link href="/" className="inline-block mb-4 mx-auto md:mx-0" aria-label="نبتة لابو — الصفحة الرئيسية">
+              <Image
+                src="/nabta-lab-brand.png"
+                alt="نبتة لابو — من الطبيعة لراحتك وجمالك"
+                width={320}
+                height={140}
+                className="h-14 sm:h-16 w-auto max-w-[240px] object-contain mx-auto md:mx-0 rounded-lg bg-[#faf7f6] p-2 ring-1 ring-white/10"
+              />
+            </Link>
             <p className="text-sm leading-relaxed text-white/80 mb-4">
               علكات وظيفية يومية للمرأة السعودية — جمال، هضم، وهدوء المساء في روتين بسيط وممتع.
             </p>

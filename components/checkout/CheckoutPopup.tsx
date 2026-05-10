@@ -7,6 +7,12 @@ import { useCartStore } from '@/stores/cart-store'
 import { getBestUpsell } from '@/lib/products'
 import UpsellModal from './UpsellModal'
 
+function apiBase(): string | null {
+  const u = process.env.NEXT_PUBLIC_API_URL?.trim()
+  if (!u) return null
+  return u.replace(/\/+$/, '')
+}
+
 const TEST_PHONES = ['055000000']
 
 const schema = z.object({
@@ -25,6 +31,8 @@ export default function CheckoutPopup({ onClose }: Props) {
   const { items, total, clearCart } = useCartStore()
   const [showUpsell, setShowUpsell] = useState(false)
   const [formData, setFormData] = useState<FormValues | null>(null)
+  const [placingOrder, setPlacingOrder] = useState(false)
+  const [checkoutError, setCheckoutError] = useState<string | null>(null)
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -37,34 +45,117 @@ export default function CheckoutPopup({ onClose }: Props) {
     if (upsell) {
       setShowUpsell(true)
     } else {
-      finalizeOrder(data, false)
+      void finalizeOrder(data, false)
     }
   }
 
-  function finalizeOrder(data: FormValues, upsellAccepted: boolean) {
-    const orderSummary = {
-      name: data.name,
-      phone: data.phone,
-      items: [...items],
-      total: total(),
-      upsellAccepted,
-      upsellProduct: upsellAccepted && upsell ? upsell : null,
-      upsellPrice: upsellAccepted ? 99 : 0,
-      finalTotal: total() + (upsellAccepted ? 99 : 0),
-      createdAt: new Date().toISOString(),
+  async function finalizeOrder(data: FormValues, upsellAccepted: boolean) {
+    setCheckoutError(null)
+    const base = apiBase()
+    if (!base) {
+      setCheckoutError(
+        'تعذّر تأكيد الطلب: عنوان الـ API غير مُعرّف. أضيفوا NEXT_PUBLIC_API_URL ثم حاولوا مرة أخرى.'
+      )
+      return
     }
-    sessionStorage.setItem('nabtalabo_order', JSON.stringify(orderSummary))
-    clearCart()
-    onClose()
-    window.location.href = '/thank-you'
+    setPlacingOrder(true)
+    try {
+      const upsellAcceptedOk = upsellAccepted && !!upsell
+      const res = await fetch(`${base}/api/orders`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customer_name: data.name,
+          phone: data.phone,
+          items: items.map((i) => ({
+            product_id: i.productId,
+            offer_qty: i.offerQty,
+          })),
+          accepted_upsell: upsellAcceptedOk,
+          upsell_product_id:
+            upsellAcceptedOk && upsell ? upsell.id : undefined,
+          source_page:
+            typeof window !== 'undefined' ? window.location.href : undefined,
+        }),
+      })
+
+      let parsed: Record<string, unknown> = {}
+      try {
+        parsed = (await res.json()) as Record<string, unknown>
+      } catch {
+        /* empty or non-JSON */
+      }
+
+      function formatFastApiDetail(body: Record<string, unknown>): string | null {
+        const d = body.detail
+        if (typeof d === 'string') return d
+        if (Array.isArray(d)) {
+          const msgs = d
+            .map((item) =>
+              typeof item === 'object' &&
+              item !== null &&
+              'msg' in item &&
+              typeof (item as { msg: unknown }).msg === 'string'
+                ? (item as { msg: string }).msg
+                : null
+            )
+            .filter(Boolean) as string[]
+          if (msgs.length > 0) return msgs.join('، ')
+        }
+        return null
+      }
+
+      if (!res.ok) {
+        const msg =
+          formatFastApiDetail(parsed) ||
+          `تعذّر إرسال الطلب (${res.status}). جرّبوا بعد قليل أو تواصلوا مع الدعم.`
+        setCheckoutError(msg)
+        setPlacingOrder(false)
+        return
+      }
+
+      const orderNumber =
+        typeof parsed.order_number === 'string' ? parsed.order_number : undefined
+      const orderId =
+        typeof parsed.order_id === 'string' ? parsed.order_id : undefined
+
+      const finalTotalResolved =
+        typeof parsed.total_sar === 'number'
+          ? parsed.total_sar
+          : total() + (upsellAcceptedOk ? 99 : 0)
+
+      const orderSummary = {
+        name: data.name,
+        phone: data.phone,
+        items: [...items],
+        total: total(),
+        upsellAccepted: upsellAcceptedOk,
+        upsellProduct: upsellAcceptedOk && upsell ? upsell : null,
+        upsellPrice: upsellAcceptedOk ? 99 : 0,
+        finalTotal: finalTotalResolved,
+        createdAt: new Date().toISOString(),
+        orderNumber,
+        orderId,
+      }
+      sessionStorage.setItem('nabtalabo_order', JSON.stringify(orderSummary))
+      clearCart()
+      onClose()
+      window.location.href = '/thank-you'
+    } catch {
+      setCheckoutError(
+        'تعذّر الاتصال بالخادم. تأكّدوا من الإنترنت أو جرّبوا بعد قليل.'
+      )
+      setPlacingOrder(false)
+    }
   }
 
   if (showUpsell && upsell && formData) {
     return (
       <UpsellModal
         product={upsell}
-        onAccept={() => finalizeOrder(formData, true)}
-        onSkip={() => finalizeOrder(formData, false)}
+        placingOrder={placingOrder}
+        onAccept={() => void finalizeOrder(formData, true)}
+        onSkip={() => void finalizeOrder(formData, false)}
       />
     )
   }
@@ -88,6 +179,11 @@ export default function CheckoutPopup({ onClose }: Props) {
         </div>
 
         <div className="px-6 py-5 flex flex-col gap-5">
+          {checkoutError && (
+            <div className="rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm px-4 py-3">
+              {checkoutError}
+            </div>
+          )}
           {/* Order Summary */}
           <div className="bg-[#FFFFFF] rounded-xl p-4">
             <p className="text-sm font-bold text-[#1C1C1C] mb-3">ملخص طلبك:</p>
@@ -144,10 +240,10 @@ export default function CheckoutPopup({ onClose }: Props) {
 
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || placingOrder}
               className="w-full bg-[#b8485c] text-white font-bold py-4 rounded-full text-lg hover:bg-[#943c50] transition-colors disabled:opacity-60"
             >
-              تأكيد الطلب
+              {placingOrder ? 'جاري الإرسال...' : 'تأكيد الطلب'}
             </button>
           </form>
 
