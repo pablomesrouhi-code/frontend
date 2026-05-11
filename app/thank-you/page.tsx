@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { PRODUCTS, getProductById } from '@/lib/products'
+import { PRODUCTS } from '@/lib/products'
 import ProductCard from '@/components/product/ProductCard'
 
 type OrderItem = { productId: string; offerQty: number; price: number; nameAr: string }
@@ -21,16 +21,47 @@ type OrderData = {
 
 export default function ThankYouPage() {
   const [order, setOrder] = useState<OrderData | null>(null)
+  const [hydrated, setHydrated] = useState(false)
 
   useEffect(() => {
     const raw = sessionStorage.getItem('nabtalabo_order')
     if (raw) {
       try { setOrder(JSON.parse(raw)) } catch {}
     }
+    setHydrated(true)
   }, [])
 
-  const orderedIds = order?.items.map((i) => i.productId) ?? []
-  if (order?.upsellAccepted && order.upsellProduct) {
+  if (!hydrated) {
+    return (
+      <div className="bg-[#FFFFFF] min-h-screen py-24 flex justify-center px-4">
+        <p className="text-[#5c5656] text-sm">جاري التحميل…</p>
+      </div>
+    )
+  }
+
+  if (!order) {
+    return (
+      <div className="bg-[#FFFFFF] min-h-screen py-12 px-4">
+        <div className="max-w-xl mx-auto text-center rounded-3xl border border-amber-200 bg-amber-50/70 px-6 py-10">
+          <p className="text-amber-900 font-bold text-lg mb-3">لم نجد تفاصيل طلب لهذه الصفحة</p>
+          <p className="text-[#5c5656] text-sm leading-relaxed mb-6">
+            يحدث هذا إذا لم يُكمِّل المتصفّح الطلباً بنجاح (مثل تعطُّل الـ API أو انتهاء الجلسة)، أو تم فتح الرابط يدوياً.
+            تأكدي من ظهور «تم تأكيد الطلب» قبل الخروج، أو جرّبي إتمام الشراء مجدداً بعد التحقق أن{' '}
+            <span dir="ltr" className="font-mono text-xs">/health</span> للـ API يعمل.
+          </p>
+          <Link
+            href="/"
+            className="inline-block bg-[#b8485c] text-white font-bold px-8 py-3 rounded-full hover:bg-[#943c50] transition-colors"
+          >
+            العودة للمتجر وتأكيد الطلب
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  const orderedIds = order.items.map((i) => i.productId)
+  if (order.upsellAccepted && order.upsellProduct) {
     orderedIds.push(order.upsellProduct.id)
   }
   const recommendations = PRODUCTS.filter((p) => !orderedIds.includes(p.id))
@@ -45,8 +76,8 @@ export default function ThankYouPage() {
           </div>
           <h1 className="text-3xl font-bold mb-2">تم استلام طلبك بنجاح!</h1>
           <p className="text-white/80 text-lg">
-            شكراً لكِ {order?.name ? `${order.name}` : ''}. وصلنا طلبك وسيتواصل معك فريقنا لتأكيد التفاصيل وترتيب التوصيل.
-            {order?.orderNumber && (
+            شكراً لكِ {order.name}. وصلنا طلبك وسيتواصل معك فريقنا لتأكيد التفاصيل وترتيب التوصيل.
+            {order.orderNumber && (
               <span className="block mt-2 text-white/90 text-base" dir="ltr">
                 رقم الطلب: <strong className="font-mono">{order.orderNumber}</strong>
               </span>
@@ -60,14 +91,13 @@ export default function ThankYouPage() {
           <div>
             <p className="font-bold text-amber-800">إبقي جوالك قريباً</p>
             <p className="text-sm text-amber-700 mt-1">
-              سيتواصل معك فريق نبتة لابو على رقم {order?.phone ? order.phone : 'جوالك'} لتأكيد الطلب. يرجى الرد بسرعة لضمان التوصيل.
+              سيتواصل معك فريق نبتة لابو على رقم {order.phone} لتأكيد الطلب. يرجى الرد بسرعة لضمان التوصيل.
             </p>
           </div>
         </div>
 
         {/* Order Summary */}
-        {order && (
-          <div className="bg-white rounded-2xl p-6 mb-8 shadow-sm">
+        <div className="bg-white rounded-2xl p-6 mb-8 shadow-sm">
             <h2 className="font-bold text-[#1C1C1C] text-lg mb-4">ملخص طلبك</h2>
             {order.items.map((item) => (
               <div key={item.productId} className="flex justify-between items-center py-2.5 border-b border-gray-100 last:border-0">
@@ -94,7 +124,6 @@ export default function ThankYouPage() {
               <p className="text-sm text-[#b8485c] font-medium">🛡️ الدفع عند الاستلام — لا تدفعي حتى يصل طلبك</p>
             </div>
           </div>
-        )}
 
         {/* How it works from here */}
         <div className="bg-white rounded-2xl p-6 mb-8 shadow-sm">
@@ -104,7 +133,7 @@ export default function ThankYouPage() {
               { icon: '📞', text: 'سيتصل بك فريقنا على رقم جوالك لتأكيد الطلب' },
               { icon: '📦', text: 'بعد التأكيد، يتم تجهيز طلبك وإرساله للتوصيل' },
               { icon: '🚚', text: 'يصل طلبك خلال 2-4 أيام عمل' },
-              { icon: '💳', text: 'تدفعين عند الاستلام، لا مدفوعات مسبقة' },
+              { icon: '💵', text: 'تدفعين نقداً عند الاستلام، بدون مدفوعات مسبقة' },
             ].map((s) => (
               <div key={s.icon} className="flex items-start gap-3">
                 <span className="text-xl shrink-0">{s.icon}</span>
