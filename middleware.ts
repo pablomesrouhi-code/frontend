@@ -2,10 +2,12 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 /**
- * Stop long-lived browser/CDN caching of HTML/RSC so users don’t keep an old checkout bundle
- * (stale Arabic copy, wrong API base). Static files under `/_next/static` stay cacheable.
+ * Production: avoid stale HTML/RSC shell (old checkout copy). Skip in `next dev` so HMR / _next internals stay smooth.
  */
 export function middleware(_request: NextRequest) {
+  if (process.env.NODE_ENV !== 'production') {
+    return NextResponse.next()
+  }
   const res = NextResponse.next()
   res.headers.set(
     'Cache-Control',
@@ -14,6 +16,7 @@ export function middleware(_request: NextRequest) {
   return res
 }
 
+/** Never run on Next internals (static, HMR, etc.) */
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/((?!_next/|favicon.ico).*)'],
 }
