@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link'
 import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -42,13 +43,7 @@ export default function CheckoutPopup({ onClose }: Props) {
       setPlacingOrder(true)
       try {
         const upsellAcceptedOk = upsellAccepted && !!upsell
-        const res = await fetch(`${base}/api/orders`, {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'no-store',
-        credentials: 'omit',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+        const payload = {
           customer_name: data.name,
           phone: data.phone,
           items: items.map((i) => ({
@@ -58,10 +53,29 @@ export default function CheckoutPopup({ onClose }: Props) {
           accepted_upsell: upsellAcceptedOk,
           upsell_product_id:
             upsellAcceptedOk && upsell ? upsell.id : undefined,
+          payment_method: 'cash_on_delivery' as const,
           source_page:
             typeof window !== 'undefined' ? window.location.href : undefined,
-        }),
-      })
+        }
+        const fetchOpts: RequestInit = {
+          method: 'POST',
+          mode: 'cors',
+          cache: 'no-store',
+          credentials: 'omit',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        }
+        let res: Response
+        try {
+          res = await fetch(`${base}/api/orders`, fetchOpts)
+        } catch (e1) {
+          if (e1 instanceof TypeError) {
+            await new Promise((r) => setTimeout(r, 900))
+            res = await fetch(`${base}/api/orders`, fetchOpts)
+          } else {
+            throw e1
+          }
+        }
 
       let parsed: Record<string, unknown> = {}
       try {
@@ -97,11 +111,15 @@ export default function CheckoutPopup({ onClose }: Props) {
           res.status === 403
             ? ' إن كنت تختبرين من خارج السعودية أو مع VPN، جرّبي الرقم 055000000 أو اطلبي من الإدارة تعطيل MaxMind مؤقتاً (MAXMIND_ENABLED=false).'
             : ''
+        const hint502 =
+          res.status === 502 || res.status === 504
+            ? ' الخادم غير متاح مؤقتاً (غالباً الصفحة https://api…/health لا تستجيب — راجع EasyPanel والاتصال بقاعدة البيانات).'
+            : ''
         const hint503 =
           res.status === 503
             ? ' غالباً قاعدة البيانات أو الاتصال DATABASE_URL — راجع سجلات الـ API.'
             : ''
-        setCheckoutError(msg + hint403 + hint503)
+        setCheckoutError(msg + hint403 + hint502 + hint503)
         setPlacingOrder(false)
         return
       }
@@ -255,6 +273,21 @@ export default function CheckoutPopup({ onClose }: Props) {
             <span>الكميات المتاحة محدودة حسب توفر المخزون</span>
           </div>
 
+          {/* COD — single payment path (no cards) */}
+          <div className="rounded-2xl border-2 border-[#c5ddd0] bg-gradient-to-br from-[#f3faf5] to-white px-4 py-3.5 text-right shadow-[0_2px_12px_rgba(22,101,52,0.06)]">
+            <p className="text-[11px] font-bold text-[#166534] tracking-wide">طريقة الدفع لهذا الطلب</p>
+            <p className="text-base font-bold text-[#1C1C1C] mt-1">نقدًا عند الاستلام فقط</p>
+            <p className="text-xs text-[#5c5656] mt-1.5 leading-relaxed">
+              بدون بطاقة ولا تحويل مسبق — تدفعين النقد عند توصيل الطلب. فريقنا يتصل عليك لتأكيد العنوان والمجموع.
+            </p>
+            <Link
+              href="/cod-policy"
+              className="inline-block mt-2 text-xs font-semibold text-[#b8485c] underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b8485c]/40 rounded-sm"
+            >
+              سياسة الدفع عند الاستلام
+            </Link>
+          </div>
+
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <div>
@@ -287,9 +320,8 @@ export default function CheckoutPopup({ onClose }: Props) {
             </button>
           </form>
 
-          {/* COD reassurance */}
-          <p className="text-center text-xs text-[#5c5656]">
-            الدفع عند الاستلام • سنتواصل معك لتأكيد الطلب وترتيب التوصيل
+          <p className="text-center text-xs text-[#5c5656] leading-relaxed">
+            بعد التأكيد: اتصال من الفريق + جدولة التوصيل — الدفع نقدًا عند الاستلام
           </p>
         </div>
       </div>
