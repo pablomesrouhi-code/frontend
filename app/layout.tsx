@@ -5,6 +5,9 @@ import Footer from '@/components/layout/Footer'
 import PreFooterBanners from '@/components/layout/PreFooterBanners'
 import CartDrawer from '@/components/cart/CartDrawer'
 
+// Fresh HTML per request so CDN/browsers don’t keep an old shell referencing stale _next bundles.
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'نبتة لابو | Nabta Labo',
   description: 'علكات وظيفية يومية لدعم جمالك من الداخل، راحة هضمك، وهدوء مسائك. نبتة لابو — روتين يومي صار ألذ وأسهل.',
