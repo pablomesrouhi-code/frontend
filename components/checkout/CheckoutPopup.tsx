@@ -44,6 +44,9 @@ export default function CheckoutPopup({ onClose }: Props) {
         const upsellAcceptedOk = upsellAccepted && !!upsell
         const res = await fetch(`${base}/api/orders`, {
         method: 'POST',
+        mode: 'cors',
+        cache: 'no-store',
+        credentials: 'omit',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           customer_name: data.name,
@@ -131,9 +134,21 @@ export default function CheckoutPopup({ onClose }: Props) {
       onClose()
       window.location.href = '/thank-you'
     } catch (err) {
+      if (typeof window !== 'undefined') {
+        // Helps DevTools diagnostics (no secrets in payload).
+        // eslint-disable-next-line no-console
+        console.error('[nabtalabo checkout] POST /api/orders network error', base, err)
+      }
+      const liveStoreHost = (() => {
+        if (typeof window === 'undefined') return false
+        const hn = window.location.hostname.toLowerCase()
+        return hn === 'nabtalabo.store' || hn === 'www.nabtalabo.store'
+      })()
       const net =
         err instanceof TypeError
-          ? ' تعذّر الاتصال بالـ API (CORS أو إنترنت أو عنوان API خاطئ).'
+          ? liveStoreHost
+            ? ' تعذّر الوصول إلى واجهة الطلبات. تأكّدوا من أن إصدار الموقع بُني بـ NEXT_PUBLIC_API_URL=https://api.nabtalabo.store وأن https://api.nabtalabo.store/health يعمل من المتصفّح؛ إذا كان الـ API متوقّفًا (مهاجرة DB مثلاً) لن يُقبل أي طلب.'
+            : ' تعذّر الاتصال بالـ API (عنوان خاطئ، حاجز شبكة، أو السيرفر غير نشط؛ أحياناً VPN من خارج المملكة مع MaxMind على السيرفر).'
           : ''
       setCheckoutError(
         `تعذّر الاتصال بالخادم.${net} تأكّدوا من الإنترنت أو جرّبوا بعد قليل.`

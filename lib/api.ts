@@ -1,15 +1,11 @@
 /**
  * Base URL for FastAPI from the browser.
  *
- * Priority:
- * 1. **LAN / second device:** if the page is opened on a private IP (e.g. phone → `http://192.168.x.x:3000`)
- *    and `NEXT_PUBLIC_API_URL` is a **loopback** URL (`http://localhost:8000`), the phone would call itself —
- *    we force same-origin **`/nabtalabo-api-proxy`** instead (needs dev rewrites or USE_LOCAL build).
- * 2. **`NEXT_PUBLIC_USE_LOCAL_API=true`:** always use `/nabtalabo-api-proxy` (unless (1) already handled).
- * 3. **`NEXT_PUBLIC_API_URL`** if set (non-empty): use that absolute URL.
- * 4. **`next dev` + LAN hostname + no API URL:** use proxy (local backend on host :8000).
- * 5. On `localhost` / `127.0.0.1` without local flags: production API (dev without local FastAPI).
- * 6. Else production API.
+ * **Production storefront (`nabtalabo.store`):** always resolves to **`NEXT_PUBLIC_API_URL`**
+ * if set and sane; otherwise **`https://api.nabtalabo.store`**. This ignores mistaken
+ * `NEXT_PUBLIC_USE_LOCAL_API`/proxy flags baked into a production bundle (fixes «تعذّر الاتصال»).
+ *
+ * Else (localhost, LAN IPs, Docker dev): see loopback LAN handling and `/nabtalabo-api-proxy` in `next.config.ts`.
  */
 
 const DEFAULT_PRODUCTION_API = 'https://api.nabtalabo.store'
@@ -45,16 +41,37 @@ function isLanIPv4Hostname(h: string): boolean {
   return false
 }
 
+function stripTrailingSlashes(url: string): string {
+  return url.replace(/\/+$/, '')
+}
+
+/** Live site hosts where the browser must never call loopback/proxy URLs. */
+function isDeployedNabtalaboHostname(hostname: string): boolean {
+  const h = hostname.toLowerCase()
+  return (
+    h === 'nabtalabo.store' ||
+    h === 'www.nabtalabo.store'
+  )
+}
+
 export function getPublicApiBase(): string {
-  const raw = process.env.NEXT_PUBLIC_API_URL?.trim()
+  const rawEnv = process.env.NEXT_PUBLIC_API_URL?.trim()
   const isDev = process.env.NODE_ENV === 'development'
 
   if (typeof window !== 'undefined') {
     const h = window.location.hostname
+
+    if (isDeployedNabtalaboHostname(h)) {
+      if (rawEnv && !isLoopbackApiUrl(rawEnv)) {
+        return stripTrailingSlashes(rawEnv)
+      }
+      return stripTrailingSlashes(DEFAULT_PRODUCTION_API)
+    }
+
     // Page on phone/another PC; API URL is loopback — only safe with dev rewrites or local Docker build.
     if (
-      raw &&
-      isLoopbackApiUrl(raw) &&
+      rawEnv &&
+      isLoopbackApiUrl(rawEnv) &&
       h !== 'localhost' &&
       h !== '127.0.0.1' &&
       (isDev || useLocalBackend())
@@ -62,27 +79,27 @@ export function getPublicApiBase(): string {
       return LOCAL_API_PROXY_PREFIX
     }
     // npm run dev -H 0.0.0.0: open http://192.168.x.x:3000 without any API env
-    if (isDev && isLanIPv4Hostname(h) && !raw) {
+    if (isDev && isLanIPv4Hostname(h) && !rawEnv) {
       return LOCAL_API_PROXY_PREFIX
     }
   }
 
-  if (raw) return raw.replace(/\/+$/, '')
+  if (rawEnv) return stripTrailingSlashes(rawEnv)
 
   if (useLocalBackend()) {
     return LOCAL_API_PROXY_PREFIX
   }
 
   if (typeof window !== 'undefined') {
-    const h = window.location.hostname
-    if (h === 'localhost' || h === '127.0.0.1') {
-      return DEFAULT_PRODUCTION_API.replace(/\/+$/, '')
+    const host = window.location.hostname
+    if (host === 'localhost' || host === '127.0.0.1') {
+      return stripTrailingSlashes(DEFAULT_PRODUCTION_API)
     }
   }
 
   if (isDev && typeof window === 'undefined') {
-    return DEFAULT_PRODUCTION_API.replace(/\/+$/, '')
+    return stripTrailingSlashes(DEFAULT_PRODUCTION_API)
   }
 
-  return DEFAULT_PRODUCTION_API.replace(/\/+$/, '')
+  return stripTrailingSlashes(DEFAULT_PRODUCTION_API)
 }
