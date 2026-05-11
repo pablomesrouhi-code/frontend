@@ -153,28 +153,24 @@ export default function CheckoutPopup({ onClose }: Props) {
       window.location.href = '/thank-you'
     } catch (err) {
       if (typeof window !== 'undefined') {
-        // Helps DevTools diagnostics (no secrets in payload).
         // eslint-disable-next-line no-console
-        console.error('[nabtalabo checkout] POST /api/orders network error', base, err)
+        console.error('[nabtalabo checkout] POST /api/orders failed', base, err)
       }
-      const liveStoreHost = (() => {
-        if (typeof window === 'undefined') return false
-        const hn = window.location.hostname.toLowerCase()
-        return hn === 'nabtalabo.store' || hn === 'www.nabtalabo.store'
-      })()
-      const net =
-        err instanceof TypeError
-          ? liveStoreHost
-            ? ' المتجر لم يتلقَّ جواباً من خدمة الطلبات؛ غالباً api.nabtalabo.store لا يعمل (تحققي من مسار الصحة `/health`). إذا رأيتِ نفس الرسائل القديمة التي تذكر «CORS» فقط، فالموقع لم يحمِّل بعد آخر نسخة (أفرغوا كاش المتصفّح أو أعدوا نشر الواجهة و Cloudflare purge إن كان مفعّلاً).'
-            : ' فشل الاتصال قبل أي رد من السيرفر: غالبًا عنوان خاطئ للـ API في البناء، أو شغّل محلي لم يتم ضبطه (انظري دليل nabtalabo-api-proxy)، أو شبكة قطعت الطلب.'
-          : ''
+      const hn =
+        typeof window !== 'undefined' ? window.location.hostname.toLowerCase() : ''
+      const liveStoreHost = hn === 'nabtalabo.store' || hn === 'www.nabtalabo.store'
 
-      const footer =
-        err instanceof TypeError
-          ? ' جرّبوا إعادة المحاولة، أو شبكة مختلفة.'
-          : ' حاولي تحديث الصفحة وإرسال الطلب من جديد.'
-
-      setCheckoutError(`تعذّر الاتصال بالخادم.${net}${footer}`)
+      if (liveStoreHost) {
+        setCheckoutError(
+          'تعذّر إتمام الطلب: خادم الطلبات لا يبدو متصلًا. ادخلوا لوحة الإدارة واحرصوا أن تشتغل خدمة الـ backend وأنَّ https://api.nabtalabo.store/health تجيب نجاحًا، ثم أعيدوا نشر الواجهة إن لم تكونوا على آخر نسخة.'
+        )
+      } else if (err instanceof TypeError) {
+        setCheckoutError(
+          'تعذّر إتمام الطلب: لم يتوصّل المتصفّح بالـ API (شغّلي الباكند، أو جهِّزي NEXT_PUBLIC_API_URL أو USE_LOCAL وفق دليل الكومبوز المحلي، أو جرّبي شبكة أخرى).'
+        )
+      } else {
+        setCheckoutError('تعذّر إتمام الطلب؛ حدّثي الصفحة وأعدي المحاولة.')
+      }
       setPlacingOrder(false)
     }
   },
