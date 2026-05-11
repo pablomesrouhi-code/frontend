@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useCartStore } from '@/stores/cart-store'
 import { getPublicApiBase } from '@/lib/api'
 import { getBestUpsell } from '@/lib/products'
+import { CHECKOUT_UI_REV } from '@/lib/checkout-rev'
 import UpsellModal from './UpsellModal'
 
 const TEST_PHONES = ['055000000']
@@ -166,7 +167,7 @@ export default function CheckoutPopup({ onClose }: Props) {
 
       if (liveStoreHost) {
         setCheckoutError(
-          'تعذّر إتمام الطلب: خادم الطلبات لا يبدو متصلًا. ادخلوا لوحة الإدارة واحرصوا أن تشتغل خدمة الـ backend وأنَّ https://api.nabtalabo.store/health تجيب نجاحًا، ثم أعيدوا نشر الواجهة إن لم تكونوا على آخر نسخة.'
+          'تعذّر إتمام الطلب من المتصفّح. تحقّقوا أنّ https://api.nabtalabo.store/health تجيب OK، وأعيدوا نشر الواجهة بعد آخر تحديث. إذا ظهر نصًا قديماً ومكرّراً عن «CORS» فهذا غالباً ذاكرة تخزين مؤقت — امسحوا بيانات الموقع لـ nabtalabo.store أو نفّذوا Purge على Cloudflare.'
         )
       } else if (err instanceof TypeError) {
         setCheckoutError(
@@ -326,6 +327,9 @@ export default function CheckoutPopup({ onClose }: Props) {
 
           <p className="text-center text-xs text-[#5c5656] leading-relaxed">
             بعد التأكيد: اتصال من الفريق + جدولة التوصيل — الدفع نقدًا عند الاستلام
+          </p>
+          <p className="text-center text-[10px] text-gray-400 tabular-nums" aria-hidden title="نسخة واجهة الدفع المحمّلة">
+            {CHECKOUT_UI_REV}
           </p>
         </div>
       </div>

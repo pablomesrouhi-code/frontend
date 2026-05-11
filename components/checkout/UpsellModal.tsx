@@ -1,7 +1,8 @@
 'use client'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import { Product } from '@/lib/products'
+import type { Product } from '@/lib/products'
+import { CHECKOUT_UI_REV } from '@/lib/checkout-rev'
 
 type Props = {
   product: Product
@@ -142,6 +143,9 @@ export default function UpsellModal({
           >
             لا شكراً، أكملي طلبي
           </button>
+          <p className="text-center text-[10px] text-gray-400 tabular-nums" aria-hidden>
+            {CHECKOUT_UI_REV}
+          </p>
         </div>
       </div>
     </div>
