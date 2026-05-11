@@ -125,14 +125,18 @@ export default function CheckoutPopup({ onClose }: Props) {
       }
 
       const orderNumber =
-        typeof parsed.order_number === 'string' ? parsed.order_number : undefined
+        typeof parsed.order_number === 'string' ? parsed.order_number.trim() : ''
       const orderId =
-        typeof parsed.order_id === 'string' ? parsed.order_id : undefined
+        typeof parsed.order_id === 'string' ? parsed.order_id.trim() : ''
+      const totalSarOk = typeof parsed.total_sar === 'number'
 
-      const finalTotalResolved =
-        typeof parsed.total_sar === 'number'
-          ? parsed.total_sar
-          : total() + (upsellAcceptedOk ? 99 : 0)
+      if (!orderNumber || !orderId || !totalSarOk) {
+        setCheckoutError(
+          'تعذّر تأكيد الطلب: المتصفّح لم يستلم تأكيدًا صالحًا من الخادم (قد يكون بروكسي أو كاش يعيد صفحة بدل الطلب الفعلي). حدّثي الصفحة، جرّبي نافذة خاصة، أو تأكدي من أنّ الطلب على https://api.nabtalabo.store يعمل.'
+        )
+        setPlacingOrder(false)
+        return
+      }
 
       const orderSummary = {
         name: data.name,
@@ -142,7 +146,7 @@ export default function CheckoutPopup({ onClose }: Props) {
         upsellAccepted: upsellAcceptedOk,
         upsellProduct: upsellAcceptedOk && upsell ? upsell : null,
         upsellPrice: upsellAcceptedOk ? 99 : 0,
-        finalTotal: finalTotalResolved,
+        finalTotal: parsed.total_sar as number,
         createdAt: new Date().toISOString(),
         orderNumber,
         orderId,
