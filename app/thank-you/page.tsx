@@ -8,6 +8,7 @@ import {
   trackMeta,
   trackSnap,
   trackTikTok,
+  whenFbqReady,
 } from '@/lib/tracking/client'
 
 type OrderItem = { productId: string; offerQty: number; price: number; nameAr: string }
@@ -38,10 +39,9 @@ export default function ThankYouPage() {
     setHydrated(true)
   }, [])
 
-  /** Meta « Lead » + « Purchase » + counterparts — were never fired from code before (only PageView elsewhere). */
+  /** Purchase / Lead (Meta): wait for `fbq` — DeferredPixels loads it lazily. TT/Snap run same tick once Meta path fires (or timeout). */
   useEffect(() => {
-    if (!order || pixelsFired.current) return
-    pixelsFired.current = true
+    if (!order) return
 
     const contentIds = order.items.map((i) => i.productId)
     if (order.upsellAccepted && order.upsellProduct) {
@@ -53,17 +53,24 @@ export default function ThankYouPage() {
       content_ids: contentIds,
       content_type: 'product',
     }
-    const purchaseEid = newTrackingEventId()
-    const leadEid = newTrackingEventId()
-    trackMeta('Purchase', base, { eventID: purchaseEid })
-    trackMeta('Lead', base, { eventID: leadEid })
 
-    trackTikTok('CompletePayment', {
-      value: order.finalTotal,
-      currency: 'SAR',
-      content_id: contentIds.join(','),
+    const cancel = whenFbqReady(() => {
+      if (pixelsFired.current) return
+      pixelsFired.current = true
+      const purchaseEid = newTrackingEventId()
+      const leadEid = newTrackingEventId()
+      trackMeta('Purchase', base, { eventID: purchaseEid })
+      trackMeta('Lead', base, { eventID: leadEid })
+
+      trackTikTok('CompletePayment', {
+        value: order.finalTotal,
+        currency: 'SAR',
+        content_id: contentIds.join(','),
+      })
+      trackSnap('PURCHASE', { price: order.finalTotal, currency: 'SAR' })
     })
-    trackSnap('PURCHASE', { price: order.finalTotal, currency: 'SAR' })
+
+    return cancel
   }, [order])
 
   if (!hydrated) {

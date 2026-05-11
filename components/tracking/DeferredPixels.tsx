@@ -8,20 +8,23 @@ function sanitizeId(raw: string | undefined): string | null {
   return v
 }
 
-export default function DeferredPixels() {
-  const enabled =
-    process.env.NEXT_PUBLIC_ENABLE_PIXELS === 'true' ||
-    process.env.NEXT_PUBLIC_ENABLE_PIXELS === '1'
+/** Disable all DeferredPixels scripts only when explicitly turned off (EasyPanel often omits ENABLE while IDs are set). */
+function pixelsExplicitlyDisabled(): boolean {
+  const v = process.env.NEXT_PUBLIC_ENABLE_PIXELS?.trim().toLowerCase()
+  return v === 'false' || v === '0' || v === 'no'
+}
 
+export default function DeferredPixels() {
   const metaId = sanitizeId(process.env.NEXT_PUBLIC_META_PIXEL_ID)
   const tiktokId = sanitizeId(process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID)
   const snapId = sanitizeId(process.env.NEXT_PUBLIC_SNAP_PIXEL_ID)
 
+  if (pixelsExplicitlyDisabled()) return null
+  if (!metaId && !tiktokId && !snapId) return null
+
   const raw = process.env.NEXT_PUBLIC_PIXEL_SCRIPT_STRATEGY
   const strategy: 'lazyOnload' | 'afterInteractive' =
     raw === 'afterInteractive' ? 'afterInteractive' : 'lazyOnload'
-
-  if (!enabled) return null
 
   return (
     <>

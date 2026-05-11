@@ -30,6 +30,45 @@ export function fireDeferredPageView(): void {
 
 type MetaTrackOptions = { eventID?: string }
 
+/**
+ * DeferredPixels loads Meta asynchronously (often `lazyOnload`). Checkout may hit /thank-you
+ * before `fbq` exists — polling avoids silently dropping Purchase/Lead.
+ */
+export function whenFbqReady(callback: () => void, options?: { intervalMs?: number; timeoutMs?: number }): () => void {
+  if (typeof window === 'undefined') return () => {}
+  const intervalMs = options?.intervalMs ?? 100
+  const timeoutMs = options?.timeoutMs ?? 10000
+
+  const runSafe = (): void => {
+    try {
+      callback()
+    } catch {
+      /* non-blocking */
+    }
+  }
+
+  if (typeof window.fbq === 'function') {
+    queueMicrotask(runSafe)
+    return () => {}
+  }
+
+  let cleared = false
+  const deadline = Date.now() + timeoutMs
+  const id = window.setInterval(() => {
+    if (cleared) return
+    if (typeof window.fbq === 'function' || Date.now() > deadline) {
+      cleared = true
+      window.clearInterval(id)
+      runSafe()
+    }
+  }, intervalMs)
+
+  return () => {
+    cleared = true
+    window.clearInterval(id)
+  }
+}
+
 export function trackMeta(
   eventName: string,
   params?: Record<string, unknown>,
