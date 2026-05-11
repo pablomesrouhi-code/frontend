@@ -1,8 +1,14 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { PRODUCTS } from '@/lib/products'
 import ProductCard from '@/components/product/ProductCard'
+import {
+  newTrackingEventId,
+  trackMeta,
+  trackSnap,
+  trackTikTok,
+} from '@/lib/tracking/client'
 
 type OrderItem = { productId: string; offerQty: number; price: number; nameAr: string }
 type OrderData = {
@@ -22,6 +28,7 @@ type OrderData = {
 export default function ThankYouPage() {
   const [order, setOrder] = useState<OrderData | null>(null)
   const [hydrated, setHydrated] = useState(false)
+  const pixelsFired = useRef(false)
 
   useEffect(() => {
     const raw = sessionStorage.getItem('nabtalabo_order')
@@ -30,6 +37,34 @@ export default function ThankYouPage() {
     }
     setHydrated(true)
   }, [])
+
+  /** Meta « Lead » + « Purchase » + counterparts — were never fired from code before (only PageView elsewhere). */
+  useEffect(() => {
+    if (!order || pixelsFired.current) return
+    pixelsFired.current = true
+
+    const contentIds = order.items.map((i) => i.productId)
+    if (order.upsellAccepted && order.upsellProduct) {
+      contentIds.push(order.upsellProduct.id)
+    }
+    const base = {
+      value: order.finalTotal,
+      currency: 'SAR',
+      content_ids: contentIds,
+      content_type: 'product',
+    }
+    const purchaseEid = newTrackingEventId()
+    const leadEid = newTrackingEventId()
+    trackMeta('Purchase', base, { eventID: purchaseEid })
+    trackMeta('Lead', base, { eventID: leadEid })
+
+    trackTikTok('CompletePayment', {
+      value: order.finalTotal,
+      currency: 'SAR',
+      content_id: contentIds.join(','),
+    })
+    trackSnap('PURCHASE', { price: order.finalTotal, currency: 'SAR' })
+  }, [order])
 
   if (!hydrated) {
     return (
