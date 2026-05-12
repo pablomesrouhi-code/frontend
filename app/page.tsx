@@ -56,22 +56,48 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-14 md:py-24">
           <div className="grid md:grid-cols-2 gap-12 items-center">
 
-            {/* Text */}
+            {/* النص والشعار + العناوين الرئيسية */}
             <div className="text-right order-2 md:order-1">
-              <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full text-xs font-semibold" style={{ background: '#f1e6e4', color: '#146b70', border: '1px solid #d8c9c6' }}>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#146b70]" />
-                مكمّل غذائي على شكل علكة · سلطة ووضوح يقربان تجربة الصيدلية
+              {/* شعار جانب العناوين الرئيسية (جنب عمود المحتوى، كما جهة السلة بصرياً لكن داخل الهيرو) */}
+              <div className="flex items-start justify-end gap-4 mb-6">
+                <div className="min-w-0 flex-1 text-right">
+                  <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full text-xs font-semibold" style={{ background: '#f1e6e4', color: '#146b70', border: '1px solid #d8c9c6' }}>
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#146b70]" />
+                    مكمّل غذائي على شكل علكة · سلطة ووضوح يقربان تجربة الصيدلية
+                  </div>
+
+                  <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-1" style={{ color: '#1C1C1C' }}>
+                    علكة تحمل تركيبة
+                  </h1>
+                  <p className="text-lg md:text-xl font-semibold mb-2" style={{ color: '#146b70' }}>
+                    بثقة تُشبه صيدليتكِ — قبل أن تكون قطعة حلوى
+                  </p>
+                  <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-5" style={{ color: '#b8485c' }}>
+                    جدّية المكمّل، ولذعة تسهّل الالتزام
+                  </h1>
+                </div>
+                <Link href="/" className="shrink-0 hidden sm:block" aria-label="نبتة لابو — إلى الرئيسية">
+                  <Image
+                    src="/nabta-lab-brand.png"
+                    alt=""
+                    width={200}
+                    height={88}
+                    className="h-14 w-auto max-w-[120px] object-contain object-right"
+                  />
+                </Link>
+              </div>
+              <div className="flex justify-center sm:hidden mb-5">
+                <Link href="/" aria-label="نبتة لابو">
+                  <Image
+                    src="/nabta-lab-brand.png"
+                    alt=""
+                    width={280}
+                    height={120}
+                    className="h-12 w-auto object-contain"
+                  />
+                </Link>
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-1" style={{ color: '#1C1C1C' }}>
-                علكة تحمل تركيبة
-              </h1>
-              <p className="text-lg md:text-xl font-semibold mb-2" style={{ color: '#146b70' }}>
-                بثقة تُشبه صيدليتكِ — قبل أن تكون قطعة حلوى
-              </p>
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-5" style={{ color: '#b8485c' }}>
-                جدّية المكمّل، ولذعة تسهّل الالتزام
-              </h1>
               {/* Gold accent line */}
               <div className="w-16 h-1 rounded-full mb-5" style={{ background: 'linear-gradient(90deg, #c9937e, #d8c9c6)' }} />
 
@@ -125,29 +151,14 @@ export default function HomePage() {
             </div>
 
             <div
-              className="order-1 md:order-2 w-full rounded-3xl bg-white p-3 sm:p-4 md:p-5 relative"
+              className="order-1 md:order-2 w-full rounded-3xl bg-white p-3 sm:p-4 md:p-5"
               style={{
                 border: '1px solid #EADFD6',
                 boxShadow:
                   '0 0 0 1px rgba(184, 104, 116, 0.45), 0 16px 48px rgba(28, 28, 28, 0.07), 0 4px 12px rgba(184, 72, 92, 0.07)',
               }}
             >
-              <div className="rounded-2xl overflow-hidden bg-[#FDF8F9] relative">
-                {/* شعار أمام الصورة */}
-                <div className="absolute top-3 end-3 sm:top-4 sm:end-4 z-10 max-w-[58%] sm:max-w-[48%]" dir="rtl">
-                  <div className="rounded-2xl bg-white/95 backdrop-blur-sm px-2.5 py-2 shadow-lg border border-white/90">
-                    <Image
-                      src="/nabta-lab-brand.png"
-                      alt="نبتة لابو — هنا بتجربة تقترب من صيدلية الثقة"
-                      width={320}
-                      height={140}
-                      className="h-9 sm:h-11 w-auto object-contain object-right mr-auto ml-0"
-                    />
-                    <p className="text-[10px] sm:text-[11px] font-bold text-[#146b70] mt-2 leading-snug text-right">
-                      هنا بتجربة تقترب من ثقة نقطة اعتماد
-                    </p>
-                  </div>
-                </div>
+              <div className="rounded-2xl overflow-hidden bg-[#FDF8F9]">
                 <Image
                   src="/hero-store-trio.jpg"
                   alt="ثلاث علكات Labo Nabta: بروبيوتيك للنساء، مغنيسيوم ١٤ من ١، وجمال الشعر والبشرة والأظافر ببيوتين"

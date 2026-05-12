@@ -1,5 +1,4 @@
 'use client'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -240,25 +239,11 @@ export default function CheckoutPopup({ onClose }: Props) {
         {/* Header */}
         <div className="bg-[#b8485c] px-6 py-5 text-white shrink-0">
           <div className="flex justify-between items-start gap-3">
-            <div className="min-w-0 flex-1 flex items-start gap-3">
-              <div className="shrink-0 rounded-xl bg-white/95 px-2 py-1.5 border border-white/40">
-                <Image
-                  src="/nabta-lab-brand.png"
-                  alt="نبتة لابو"
-                  width={200}
-                  height={88}
-                  className="h-9 sm:h-10 w-auto max-w-[120px] object-contain object-right"
-                />
-              </div>
-              <div className="min-w-0">
-                <p className="text-[11px] font-semibold text-white/95 leading-snug mb-1">
-                  هنا بتجربة تقترب من ثقة نقطة اعتماد — مكمّل غذائي، ليس نقطة تشخّص أو وصف دوري دوائي.
-                </p>
-                <h2 id="checkout-modal-title" className="text-xl font-bold leading-tight">
-                  خطوة أخيرة لتأكيد طلبك
-                </h2>
-                <p className="text-sm text-white/80 mt-1">أدخلي اسمك ورقم جوالك فقط</p>
-              </div>
+            <div className="min-w-0">
+              <h2 id="checkout-modal-title" className="text-xl font-bold">
+                خطوة أخيرة لتأكيد طلبك
+              </h2>
+              <p className="text-sm text-white/80 mt-1">أدخلي اسمك ورقم جوالك فقط</p>
             </div>
             <button type="button" onClick={onClose} className="text-white/70 hover:text-white transition p-1 shrink-0 rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center" aria-label="إغلاق">
               <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>

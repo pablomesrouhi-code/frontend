@@ -15,10 +15,10 @@ const NAV_LINKS = [
 ] as const
 
 const BANNER_MESSAGES = [
-  { icon: '🏥', text: 'نبتة لابو بتجربة تقترب من صيدلية الثقة — مكمّل غذائي على هيئة علكة، مرخّص SFDA؛ لسنا نقطة وصف تشخّص طبيّ' },
-  { icon: '🔬', text: 'مكوّنات موسومة وفق تصنيف الغذاء والدواء؛ وعد لا يخرج عن حدود المكمّل الغذائي' },
-  { icon: '🚚', text: 'الدفع عند الاستلام · شحن إلى جميع مناطق المملكة' },
-  { icon: '🌙', text: 'حلال 100% · ضمان استرجاع 30 يومًا' },
+  { icon: '🔬', text: 'تركيبات مدروسة — شفافية تليق بثقتكِ' },
+  { icon: '🚚', text: 'دفع عند الاستلام · شحن سريع للمملكة' },
+  { icon: '✅', text: 'مرخّص SFDA' },
+  { icon: '🌙', text: 'حلال · ضمان 30 يومًا' },
 ]
 
 export default function Header() {
@@ -64,42 +64,7 @@ export default function Header() {
 
   return (
     <div className="sticky top-0 z-30">
-      {/* Announcement — في المقدمة فوق الهيدر */}
-      <div
-        className="py-2.5 px-4 overflow-hidden"
-        style={{
-          background: LOGO_GRADIENT,
-          borderBottom: '1px solid rgba(0,0,0,0.06)',
-        }}
-      >
-        <div className="flex items-center justify-center gap-3">
-          <div
-            className="flex items-center gap-2 transition-opacity duration-500"
-            style={{ opacity: visible ? 1 : 0 }}
-          >
-            <span className="text-xs">{msg.icon}</span>
-            <span className="text-xs font-semibold tracking-wide text-white drop-shadow-sm text-center max-w-xl leading-snug">
-              {msg.text}
-            </span>
-          </div>
-          <div className="flex items-center gap-1 shrink-0">
-            {BANNER_MESSAGES.map((_, i) => (
-              <div
-                key={i}
-                className="rounded-full transition-all duration-500"
-                style={{
-                  width: i === msgIndex ? '14px' : '4px',
-                  height: '4px',
-                  background: i === msgIndex ? '#FFFFFF' : 'rgba(255,255,255,0.45)',
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Main Header — القائمة والشعار أمام المحتوى تحت الواجهة */}
-      <header className="bg-white border-b border-[#dfd6d4] shadow-sm relative z-40">
+      <header className="bg-white border-b border-[#dfd6d4] shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
           {/* Cart */}
@@ -217,6 +182,40 @@ export default function Header() {
           </nav>
         </div>
       ) : null}
+
+      {/* Announcement Banner */}
+      <div
+        className="py-2 px-4 overflow-hidden"
+        style={{
+          background: LOGO_GRADIENT,
+          borderBottom: '1px solid rgba(0,0,0,0.06)',
+        }}
+      >
+        <div className="flex items-center justify-center gap-2 sm:gap-3">
+          <div
+            className="flex items-center gap-1.5 sm:gap-2 transition-opacity duration-500 min-w-0"
+            style={{ opacity: visible ? 1 : 0 }}
+          >
+            <span className="text-xs shrink-0">{msg.icon}</span>
+            <span className="text-[11px] sm:text-xs font-semibold tracking-wide text-white drop-shadow-sm text-center leading-snug">
+              {msg.text}
+            </span>
+          </div>
+          <div className="flex items-center gap-1 shrink-0">
+            {BANNER_MESSAGES.map((_, i) => (
+              <div
+                key={i}
+                className="rounded-full transition-all duration-500"
+                style={{
+                  width: i === msgIndex ? '14px' : '4px',
+                  height: '4px',
+                  background: i === msgIndex ? '#FFFFFF' : 'rgba(255,255,255,0.45)',
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
