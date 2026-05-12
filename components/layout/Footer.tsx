@@ -19,7 +19,7 @@ export default function Footer() {
       <div
         style={{
           height: '2px',
-          background: 'linear-gradient(90deg, transparent, #2c5f6355, #c9937e66, transparent)',
+          background: 'linear-gradient(90deg, transparent, rgba(20,107,112,0.35), rgba(201,147,126,0.4), transparent)',
         }}
       />
 
@@ -30,14 +30,14 @@ export default function Footer() {
             <Link href="/" className="inline-block mb-4 mx-auto md:mx-0" aria-label="نبتة لابو — الصفحة الرئيسية">
               <Image
                 src="/nabta-lab-brand.png"
-                alt="نبتة لابو — مكمّلات غذائية بثقة مدروسة"
+                alt="نبتة لابو — سلطة ومكمّل غذائي على شكل علكة"
                 width={320}
                 height={140}
                 className="h-14 sm:h-16 w-auto max-w-[240px] object-contain mx-auto md:mx-0 rounded-lg bg-[#faf7f6] p-2 ring-1 ring-white/10"
               />
             </Link>
             <p className="text-sm leading-relaxed text-white/80 mb-4">
-              نبتة لابو: مكملات غذائية على شكل علكات بتركيبات مدروسة وشفافية تليق بثقتكِ — جمال يومي، راحة هضم، وهدوء مسائي، مع معايير جودة وتجربة تسوق واضحة.
+              نبتة لابو — علكة وظيفية بروح صيدلية: ترخيص SFDA وتسميات واضحة، وروابط يومية لجمال البشرة والشعر، راحة بعد الأكل، وهدوء المساء؛ نفس احترافية المكمّل مع راحة الدفع عند الاستلام.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 flex-wrap">
               <div

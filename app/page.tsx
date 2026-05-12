@@ -4,13 +4,13 @@ import { PRODUCTS } from '@/lib/products'
 import ProductCard from '@/components/product/ProductCard'
 import StarRating from '@/components/ui/StarRating'
 
-const ORDER_FLOW_TAGS = ['شفافية في الوعد', 'خصوصية', 'مرونة في الطلب', 'دفع عند الاستلام'] as const
+const ORDER_FLOW_TAGS = ['سلطة كما تقرّ الصيدلية', 'خصوصية', 'مرونة في الطلب', 'دفع عند الاستلام'] as const
 
 const STEPS = [
   {
     icon: '✨',
     title: 'اختاري اللي يحسّ بيومك',
-    desc: 'تجرّبين المنتج اللي يناسبك، وإذا فتحتي السلّة تشوفين اقتراحات خفيفة تكمّل روتينك — من غير ما يصير الطلب «قائمة مهام».',
+    desc: 'تختارين التركيبة وفق احتياجكِ اليومي — كما تفعلين مع المكمّل في الصيدلية — وإن فتحتي السلّة ترين اقتراحات لا تغرّر بوعود طبّية خارج التصنيف.',
   },
   {
     icon: '💎',
@@ -36,7 +36,8 @@ const FAQS = [
   { q: 'كيف يتم تأكيد الطلب؟', a: 'سيتواصل فريقنا معك على رقم جوالك لتأكيد الطلب وترتيب التوصيل.' },
   { q: 'كم يستغرق التوصيل؟', a: 'يتم التوصيل إلى جميع مناطق المملكة خلال 2-4 أيام عمل.' },
   { q: 'هل يمكنني طلب أكثر من منتج؟', a: 'بالتأكيد، يمكنك إضافة أكثر من منتج لسلّتك والاستفادة من الأسعار المميزة.' },
-  { q: 'متى أرى النتائج؟', a: 'تختلف التجربة من شخص لآخر، لكن المداومة على الروتين اليومي هي المفتاح.' },
+  { q: 'هل نبتة لابو صيدلية؟', a: 'نحن متجر مكمّلات غذائيّة على شكل علكة وبروح نقطة الدوّاء من حيث الوضوح والترخيص؛ لا نقدّم وصفًا طبيًا ولا نغيّر علاجًا يصفه طبيب.' },
+  { q: 'متى أرى النتائج؟', a: 'تختلف التجربة من شخص لآخر، لكن المداومة على الروتين اليومي وفق تعليمات المكمّل هي الأقرب لفائدة حقيقية.' },
 ]
 
 const REVIEWS = [
@@ -57,32 +58,33 @@ export default function HomePage() {
 
             {/* Text */}
             <div className="text-right order-2 md:order-1">
-              <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full text-xs font-semibold" style={{ background: '#f1e6e4', color: '#b8485c', border: '1px solid #d8c9c6' }}>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#2c5f63]" />
-                مكمّل غذائي على شكل علكة · جودة تليق بثقتكِ
+              <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full text-xs font-semibold" style={{ background: '#f1e6e4', color: '#146b70', border: '1px solid #d8c9c6' }}>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#146b70]" />
+                مكمّل غذائي على شكل علكة · سلطة ووضوح يقربان تجربة الصيدلية
               </div>
 
               <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-1" style={{ color: '#1C1C1C' }}>
-                روتينك اليومي
+                علكة تحمل تركيبة
               </h1>
-              <p className="text-lg md:text-xl font-semibold mb-2" style={{ color: '#2c5f63' }}>
-                ثقة مدروسة — وليس مجرد «حلوى صحيّة»
+              <p className="text-lg md:text-xl font-semibold mb-2" style={{ color: '#146b70' }}>
+                بثقة تُشبه صيدليتكِ — قبل أن تكون قطعة حلوى
               </p>
               <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-5" style={{ color: '#b8485c' }}>
-                صار ألذ وأسهل
+                جدّية المكمّل، ولذعة تسهّل الالتزام
               </h1>
               {/* Gold accent line */}
               <div className="w-16 h-1 rounded-full mb-5" style={{ background: 'linear-gradient(90deg, #c9937e, #d8c9c6)' }} />
 
               <p className="text-lg leading-relaxed mb-6 max-w-md" style={{ color: '#5c5656' }}>
-                نبتة لابو تجمع بين صورة المختبر وسهولة اليوم: بروبيوتيك وراحة بعد الأكل، مغنيسيوم ومساء أنعم، وكولاجين مع فيتامين C لدعم البشرة والشعر والأظافر — تركيبات واضحة، مرخّصة SFDA، وخطوات بسيطة في يوم واحد.
+                نبتة لابو تقدّم <strong className="font-semibold text-[#1C1C1C]">مكمّلًا غذائيًا على هيئة علكة</strong>
+                {' '}لمن تريد الوضوح نفسه الذي تتوقّعينه عند نقطة الدواء والمكمّل: ترخيص SFDA، مكوّنات موسومة وفق المعتاد، وثلاث وجهات واضحة (جمال الهيكل اليومي، راحة ما بعد الأكل، هدوء المساء) — مع شراء بدون بطاقات، تأكيد بشري، ودفع عند الاستلام.
               </p>
 
               {/* Compliance badges */}
               <div className="flex items-center mb-6 bg-white rounded-xl overflow-hidden w-fit" style={{ border: '1px solid #dfd6d4', boxShadow: '0 1px 4px rgba(26,25,21,0.06)' }}>
                 {[
                   { icon: '🛡', label: 'SFDA', sub: 'هيئة الغذاء والدواء', color: '#b8485c' },
-                  { icon: '🔬', label: 'GMP', sub: 'Certified', color: '#2c5f63' },
+                  { icon: '🔬', label: 'GMP', sub: 'Certified', color: '#146b70' },
                   { icon: '✦', label: 'مكمّل غذائي', sub: 'Dietary Supplement', color: '#c9937e' },
                 ].map((b, i) => (
                   <div key={b.label} className="flex items-center gap-2 px-4 py-2.5" style={{ borderRight: i < 2 ? '1px solid #dfd6d4' : 'none' }}>
@@ -150,9 +152,9 @@ export default function HomePage() {
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: '#2c5f63' }}>ثلاثة روتينات</p>
+            <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: '#146b70' }}>ثلاثة روتينات</p>
             <h2 className="text-3xl font-bold" style={{ color: '#1C1C1C' }}>لكل احتياج روتين واضح</h2>
-            <p className="mt-2 text-sm" style={{ color: '#5c5656' }}>ثلاث مكمّلات على شكل علكة — جمال، هضم، ونوم، بتركيبات منفصلة لكل هدف</p>
+            <p className="mt-2 text-sm" style={{ color: '#5c5656' }}>ثلاث مكمّلات على شكل علكة — كلّها داخل سلطة تصنيف واضح وموسوم وفق المتعارف عليه</p>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             {[
@@ -185,7 +187,7 @@ export default function HomePage() {
               اختاري روتينك اليومي
             </h2>
             <p className="mt-4 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto" style={{ color: '#5c5656' }}>
-              تركيبة لكل هدف، وأسعار واضحة تناسب وتيرتك — من غير مبالغة «حلوى»
+              صياغة مهنية وبنفس وضوح «رفّ الصيدلية»؛ واللذعة تكمّلكِ على الالتزام اليومي
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch min-w-0 w-full">
@@ -200,12 +202,12 @@ export default function HomePage() {
         <div className="absolute inset-0 opacity-[0.35]" style={{ backgroundImage: 'radial-gradient(#c9937e 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 text-xs font-mono px-4 py-1.5 rounded-full mb-4" style={{ background: '#fff', color: '#2c5f63', border: '1px solid #d8c9c6' }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#2c5f63] animate-pulse" />
-              Nabta Labo — Formula Lab
+            <span className="inline-flex items-center gap-2 text-xs font-mono px-4 py-1.5 rounded-full mb-4" style={{ background: '#fff', color: '#146b70', border: '1px solid #d8c9c6' }}>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#146b70] animate-pulse" />
+              Nabta Labo — مختبر تركيب بسلطة مهنية
             </span>
-            <h2 className="text-3xl font-bold" style={{ color: '#1C1C1C' }}>مكوّنات يختارها فريق التركيب بعناية</h2>
-            <p className="mt-2 text-sm" style={{ color: '#5c5656' }}>كل مكوّن موثّق في السياق الغذائي المعتاد — بدعم المراجع العلمية لجودة المكمّل</p>
+            <h2 className="text-3xl font-bold" style={{ color: '#1C1C1C' }}>مكوّنات نختارها بذات الحذر الذي تنتظرينه خلف زجاج الدوّاء</h2>
+            <p className="mt-2 text-sm" style={{ color: '#5c5656' }}>لا نعبّر عن منتج واحد بحلّ لمئات المشكلات؛ كل علكة لهدف واحد وموسوم وفق المعتاد في المكمّل الغذائي</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
@@ -252,10 +254,10 @@ export default function HomePage() {
                   مع نبتة لابو
                 </p>
                 <h2 className="text-3xl sm:text-4xl font-bold leading-tight mb-4" style={{ color: '#1C1C1C' }}>
-                  من الاختيار للتوصيل — بنفس وضوح الصيدلية
+                  من الاختيار للتوصيل — وضوح يشبه نقطة الثقة
                 </h2>
                 <p className="text-base leading-relaxed mb-6 lg:mb-8" style={{ color: '#5c5656' }}>
-                  نبي التجربة تكون هادئة ومهنية: منتجات موصوفة بوضوح، تأكيد بشري قبل الشحن، ودفع عند الاستلام — كما تتوقّعين من متجرٍ يقدّر ثقتكِ.
+                  نعتمد أسلوب صيدلي في ما يمكن قوله وفق تصنيف «مكمّل غذائي»: تأكيد بشري قبل الشحن، دفع عند الاستلام، وصياغة لا تغرّكِ بوعودٍ خارج نطاق المنتج.
                 </p>
                 <div className="flex lg:hidden flex-wrap gap-2 justify-center mb-2">
                   {ORDER_FLOW_TAGS.map((tag) => (
@@ -332,7 +334,7 @@ export default function HomePage() {
             </div>
             <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: '#c9937e' }}>تقييمات العملاء</p>
             <h2 className="text-3xl font-bold" style={{ color: '#1C1C1C' }}>قالت عنا عملاؤنا</h2>
-            <p className="mt-2 text-sm" style={{ color: '#5c5656' }}>تجارب من نساء يخترن وضوح التركيبة وسهولة الروتين</p>
+            <p className="mt-2 text-sm" style={{ color: '#5c5656' }}>تقييمات من نساء يقدّرن التزامًا يشبه نقطة الثقة أمام الدوّاء</p>
           </div>
           <div className="grid sm:grid-cols-2 gap-5">
             {REVIEWS.map((r) => (
@@ -405,9 +407,9 @@ export default function HomePage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           {/* Gold accent */}
           <div className="w-12 h-1 rounded-full mx-auto mb-8" style={{ background: 'linear-gradient(90deg, #c9937e, #d8c9c6)' }} />
-          <h2 className="text-3xl font-bold text-white mb-4">جاهزة لروتين بثقة نبتة لابو؟</h2>
+          <h2 className="text-3xl font-bold text-white mb-4">جاهزة لروتين بسلطة نبتة لابو؟</h2>
           <p className="mb-8 text-lg" style={{ color: 'rgba(255,255,255,0.75)' }}>
-            اختاري المكمّل المناسب لاحتياجكِ — تركيبة مدروسة، ولذّة تسهّل الاستمرار.
+            اختاري المكمّل المناسب — وعدٌ وفق تصنيفه، ومذاقٌ يسهّل أن تبقيه في يومكِ.
           </p>
           <Link
             href="/products"

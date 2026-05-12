@@ -5,7 +5,7 @@ import StarRating from '@/components/ui/StarRating'
 export const metadata = {
   title: 'المنتجات | نبتة لابو',
   description:
-    'مكمّلات غذائية على شكل علكة من نبتة لابو — رونق C للجمال، خفّة بيوتك للهضم، ليل ماج للنوم. تركيبات مدروسة ومرخّصة SFDA.',
+    'علكة تحمل تركيبة مكمّل غذائي من نبتة لابو — رونق C، خفّة بيوتك، ليل ماج. موسوم وفق تصنيف SFDA وبروح نقطة دواء؛ من دون مبالغة «صيدلية» في غير حقها.',
 }
 
 export default function CollectionPage() {
@@ -14,13 +14,13 @@ export default function CollectionPage() {
       {/* Hero */}
       <section className="bg-white border-b border-gray-100 py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
-          <span className="inline-block bg-[#f1e6e4] text-[#2c5f63] text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
-            مكمّلات غذائية · علكة وظيفية
+          <span className="inline-block bg-[#eaf3f4] text-[#146b70] text-sm font-semibold px-4 py-1.5 rounded-full mb-4 border border-[#cce4e7]">
+            مكمّل غذائي · علكة بحضور نقطة اعتماد
           </span>
-          <h1 className="text-4xl sm:text-5xl font-bold text-[#1C1C1C] mb-2 leading-tight">اختاري التركيبة المناسبة لروتينك</h1>
-          <p className="text-[#2c5f63] font-semibold text-sm sm:text-base mb-3 max-w-xl mx-auto">ثقة مدروسة — ثلاثة أهداف، ثلاثة تراخيص واضحة</p>
+          <h1 className="text-4xl sm:text-5xl font-bold text-[#1C1C1C] mb-2 leading-tight">اختاري وجهة الروتين المناسبة لطبيعة يومكِ</h1>
+          <p className="text-[#146b70] font-semibold text-sm sm:text-base mb-3 max-w-xl mx-auto">ثلاثة منتجات · ثلاثة أهداف — دون وعدٍ أن علكة واحدة تحلّ كل شيء</p>
           <p className="text-[#5c5656] text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
-            جمال يومي، راحة هضم، وهدوء مسائي — بصيغة سهلة الالتزام وبنفس جدّية المكمّل الغذائي.
+            جمال شعر وبشرة، راحة ما بعد الأكل، وهدوء مسائي — بلغة مكمّل غذائي يحترم فريق يتحدّث وكأنه أمامكِ في نقطة اعتماد وليس أمام لوحة حلوى.
           </p>
           <div className="flex justify-center mt-5">
             <StarRating rating={4.8} count={378} />
@@ -29,10 +29,13 @@ export default function CollectionPage() {
       </section>
 
       {/* Trust Badges */}
-      <section className="bg-[#b8485c] py-4">
+      <section
+        className="py-4"
+        style={{ background: 'linear-gradient(90deg, #146b70 0%, #125960 42%, #b8485c 100%)' }}
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex flex-wrap justify-center gap-6 text-white text-sm">
-            {['🛡️ دفع عند الاستلام', '✅ تأكيد قبل التوصيل', '🚚 توصيل سريع للمملكة', '🔬 تركيبات بمعايير جودة'].map((b) => (
+            {['🛡️ دفع عند الاستلام', '✅ تأكيد قبل التوصيل', '🚚 توصيل المملكة كاملة', '🔬 مكمّل غذائي بسلطة مهنية'].map((b) => (
               <span key={b} className="font-medium">{b}</span>
             ))}
           </div>
