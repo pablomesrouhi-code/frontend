@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { BRAND_LOGO_SRC } from '@/lib/brand'
 
 const FOOTER_LINKS = [
   { href: '/', label: 'البداية' },
@@ -29,11 +30,11 @@ export default function Footer() {
           <div className="max-w-md mx-auto md:mx-0">
             <Link href="/" className="inline-block mb-4 mx-auto md:mx-0" aria-label="نبتة لابو — البداية">
               <Image
-                src="/nabta-lab-brand.png"
+                src={BRAND_LOGO_SRC}
                 alt="نبتة لابو · مكمّل غذائي على شكل علكة — منتجات وروتينات يومية مرخّصة SFDA"
                 width={320}
                 height={140}
-                className="h-14 sm:h-16 w-auto max-w-[240px] object-contain mx-auto md:mx-0 rounded-lg bg-[#faf7f6] p-2 ring-1 ring-white/10"
+                className="h-14 sm:h-16 w-auto max-w-[240px] object-contain mx-auto md:mx-0"
               />
             </Link>
             <p className="text-sm leading-relaxed text-white/80 mb-4">

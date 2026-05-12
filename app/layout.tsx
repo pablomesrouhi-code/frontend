@@ -1,9 +1,12 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import './globals.css'
+import AnalyticsBeacon from '@/components/analytics/AnalyticsBeacon'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import PreFooterBanners from '@/components/layout/PreFooterBanners'
 import CartDrawer from '@/components/cart/CartDrawer'
+import { BRAND_LOGO_SRC, brandLogoIconType } from '@/lib/brand'
 
 // Fresh HTML per request so CDN/browsers don’t keep an old shell referencing stale _next bundles.
 export const dynamic = 'force-dynamic'
@@ -15,9 +18,9 @@ export const metadata: Metadata = {
   keywords:
     'علكات, علكة غذائية, مكمّل غذائي, سلطة منتج, كولاجين, بروبيوتيك, مغنيسيوم, SFDA, نساء السعودية, نبتة لابو',
   icons: {
-    icon: [{ url: '/nabta-lab-brand.png', type: 'image/png' }],
-    shortcut: '/nabta-lab-brand.png',
-    apple: '/nabta-lab-brand.png',
+    icon: [{ url: BRAND_LOGO_SRC, type: brandLogoIconType(BRAND_LOGO_SRC) }],
+    shortcut: BRAND_LOGO_SRC,
+    apple: BRAND_LOGO_SRC,
   },
 }
 
@@ -38,6 +41,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <PreFooterBanners />
         <Footer />
         <CartDrawer />
+        <Suspense fallback={null}>
+          <AnalyticsBeacon />
+        </Suspense>
       </body>
     </html>
   )
