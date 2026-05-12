@@ -12,12 +12,27 @@ import UpsellModal from './UpsellModal'
 
 const TEST_PHONES = ['055000000']
 
+/** Canonical `05xxxxxxxx` for API payload (matches backend `normalize_sa_phone` intent). */
+function canonicalSaCheckoutPhone(raw: string): string {
+  const t = raw.trim()
+  if (TEST_PHONES.includes(t)) return t
+  const d = t.replace(/\D/g, '')
+  if (d.length === 10 && d.startsWith('05')) return d
+  if (d.length === 9 && d.startsWith('5')) return `0${d}`
+  // e.g. 96650475233 (+966…) → 050475233
+  if (d.startsWith('966') && d.length >= 12 && d[3] === '5') return `0${d.slice(-9)}`
+  return t
+}
+
 const schema = z.object({
   name: z.string().min(2, 'الاسم يجب أن يكون حرفين على الأقل'),
-  phone: z.string().refine(
-    (v) => TEST_PHONES.includes(v) || /^05\d{8}$/.test(v),
-    'يرجى إدخال رقم جوال سعودي صحيح (مثال: 05XXXXXXXX)'
-  ),
+  phone: z
+    .string()
+    .transform(canonicalSaCheckoutPhone)
+    .refine(
+      (v) => TEST_PHONES.includes(v) || /^05\d{8}$/.test(v),
+      'يرجى إدخال جوال سعودي صحيح (05XXXXXXXX أو 9665XXXXXXXX)'
+    ),
 })
 
 type FormValues = z.infer<typeof schema>
@@ -312,7 +327,10 @@ export default function CheckoutPopup({ onClose }: Props) {
                 dir="ltr"
                 className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-left focus:outline-none focus:border-[#b8485c] transition bg-white text-[#1C1C1C]"
               />
-              <p className="text-xs text-[#5c5656] mt-1">مثال: 05XXXXXXXX</p>
+              <p className="text-xs text-[#5c5656] mt-1">
+                مسموح: <span dir="ltr" className="font-mono whitespace-nowrap">05XXXXXXXX</span> أو{' '}
+                <span dir="ltr" className="font-mono whitespace-nowrap">9665XXXXXXXX</span> (مسافات اختيارية)
+              </p>
               {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
             </div>
 
