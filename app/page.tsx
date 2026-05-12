@@ -80,6 +80,7 @@ export default function HomePage() {
                   <Image
                     src="/nabta-lab-brand.png"
                     alt=""
+                    aria-hidden
                     width={200}
                     height={88}
                     className="h-14 w-auto max-w-[120px] object-contain object-right"
@@ -87,10 +88,11 @@ export default function HomePage() {
                 </Link>
               </div>
               <div className="flex justify-center sm:hidden mb-5">
-                <Link href="/" aria-label="نبتة لابو">
+                <Link href="/" aria-label="نبتة لابو — الرئيسية">
                   <Image
                     src="/nabta-lab-brand.png"
                     alt=""
+                    aria-hidden
                     width={280}
                     height={120}
                     className="h-12 w-auto object-contain"
@@ -158,7 +160,21 @@ export default function HomePage() {
                   '0 0 0 1px rgba(184, 104, 116, 0.45), 0 16px 48px rgba(28, 28, 28, 0.07), 0 4px 12px rgba(184, 72, 92, 0.07)',
               }}
             >
-              <div className="rounded-2xl overflow-hidden bg-[#FDF8F9]">
+              <div className="rounded-2xl overflow-hidden bg-[#FDF8F9] relative">
+                <div
+                  className="absolute bottom-2 start-2 sm:bottom-3 sm:start-3 z-10 rounded-lg px-2 py-1.5 sm:px-2.5 sm:py-2 text-right max-w-[5.75rem] sm:max-w-[6.75rem]"
+                  style={{
+                    background: 'linear-gradient(145deg, #ffffffee 0%, #f8fffe 100%)',
+                    border: '1px solid rgba(20,107,112,0.35)',
+                    boxShadow: '0 2px 10px rgba(20,107,112,0.12)',
+                  }}
+                  role="note"
+                  aria-label="شهادة معيارية — مكمّل غذائي مرخّص من هيئة الغذاء والدواء"
+                >
+                  <p className="text-[8px] sm:text-[9px] font-bold text-[#146b70] uppercase tracking-wide leading-none mb-0.5">شهادة</p>
+                  <p className="text-[10px] sm:text-[11px] font-black text-[#1C1C1C] leading-tight">مرخّص SFDA</p>
+                  <p className="text-[7px] sm:text-[8px] text-[#5c5656] leading-tight mt-0.5">مكمّل غذائي</p>
+                </div>
                 <Image
                   src="/hero-store-trio.jpg"
                   alt="ثلاث علكات Labo Nabta: بروبيوتيك للنساء، مغنيسيوم ١٤ من ١، وجمال الشعر والبشرة والأظافر ببيوتين"

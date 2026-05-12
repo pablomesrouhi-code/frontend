@@ -27,10 +27,10 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
           {/* Brand */}
           <div className="max-w-md mx-auto md:mx-0">
-            <Link href="/" className="inline-block mb-4 mx-auto md:mx-0" aria-label="نبتة لابو — الصفحة الرئيسية">
+            <Link href="/" className="inline-block mb-4 mx-auto md:mx-0" aria-label="نبتة لابو — الرئيسية">
               <Image
                 src="/nabta-lab-brand.png"
-                alt="نبتة لابو — سلطة ومكمّل غذائي على شكل علكة"
+                alt="نبتة لابو · مكمّل غذائي على شكل علكة — منتجات وروتينات يومية مرخّصة SFDA"
                 width={320}
                 height={140}
                 className="h-14 sm:h-16 w-auto max-w-[240px] object-contain mx-auto md:mx-0 rounded-lg bg-[#faf7f6] p-2 ring-1 ring-white/10"

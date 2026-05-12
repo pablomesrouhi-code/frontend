@@ -125,11 +125,11 @@ export default function Header() {
           <Link
             href="/"
             className="flex items-center shrink-0 group py-1 -my-0.5"
-            aria-label="نبتة لابو — الصفحة الرئيسية"
+            aria-label="نبتة لابو — الرئيسية"
           >
             <Image
               src="/nabta-lab-brand.png"
-              alt="نبتة لابو — سلطة مكمّل غذائي على شكل علكة"
+              alt="نبتة لابو · مكمّل غذائي على شكل علكة — منتجات وروتينات يومية مرخّصة SFDA"
               width={320}
               height={140}
               priority
