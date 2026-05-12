@@ -36,7 +36,7 @@ const FAQS = [
   { q: 'كيف يتم تأكيد الطلب؟', a: 'سيتواصل فريقنا معك على رقم جوالك لتأكيد الطلب وترتيب التوصيل.' },
   { q: 'كم يستغرق التوصيل؟', a: 'يتم التوصيل إلى جميع مناطق المملكة خلال 2-4 أيام عمل.' },
   { q: 'هل يمكنني طلب أكثر من منتج؟', a: 'بالتأكيد، يمكنك إضافة أكثر من منتج لسلّتك والاستفادة من الأسعار المميزة.' },
-  { q: 'هل نبتة لابو صيدلية؟', a: 'نحن متجر مكمّلات غذائيّة على شكل علكة وبروح نقطة الدوّاء من حيث الوضوح والترخيص؛ لا نقدّم وصفًا طبيًا ولا نغيّر علاجًا يصفه طبيب.' },
+  { q: 'هل نبتة لابو صيدلية؟', a: 'ليس هذا نقطة تشخّص؛ نبتة لابو متجر مكمّلات غذائيّة على شكل علكة، بتجربة تقترب من صيدلية الثقة من حيث الانضباط والتسمية والترخيص — لا وصفًا طبيًا ولا تعديلًا لدواء يصفه طبيب؛ استشيري الطبيب عند أي حالة أو دواء قائم.' },
   { q: 'متى أرى النتائج؟', a: 'تختلف التجربة من شخص لآخر، لكن المداومة على الروتين اليومي وفق تعليمات المكمّل هي الأقرب لفائدة حقيقية.' },
 ]
 
@@ -125,14 +125,29 @@ export default function HomePage() {
             </div>
 
             <div
-              className="order-1 md:order-2 w-full rounded-3xl bg-white p-3 sm:p-4 md:p-5"
+              className="order-1 md:order-2 w-full rounded-3xl bg-white p-3 sm:p-4 md:p-5 relative"
               style={{
                 border: '1px solid #EADFD6',
                 boxShadow:
                   '0 0 0 1px rgba(184, 104, 116, 0.45), 0 16px 48px rgba(28, 28, 28, 0.07), 0 4px 12px rgba(184, 72, 92, 0.07)',
               }}
             >
-              <div className="rounded-2xl overflow-hidden bg-[#FDF8F9]">
+              <div className="rounded-2xl overflow-hidden bg-[#FDF8F9] relative">
+                {/* شعار أمام الصورة */}
+                <div className="absolute top-3 end-3 sm:top-4 sm:end-4 z-10 max-w-[58%] sm:max-w-[48%]" dir="rtl">
+                  <div className="rounded-2xl bg-white/95 backdrop-blur-sm px-2.5 py-2 shadow-lg border border-white/90">
+                    <Image
+                      src="/nabta-lab-brand.png"
+                      alt="نبتة لابو — هنا بتجربة تقترب من صيدلية الثقة"
+                      width={320}
+                      height={140}
+                      className="h-9 sm:h-11 w-auto object-contain object-right mr-auto ml-0"
+                    />
+                    <p className="text-[10px] sm:text-[11px] font-bold text-[#146b70] mt-2 leading-snug text-right">
+                      هنا بتجربة تقترب من ثقة نقطة اعتماد
+                    </p>
+                  </div>
+                </div>
                 <Image
                   src="/hero-store-trio.jpg"
                   alt="ثلاث علكات Labo Nabta: بروبيوتيك للنساء، مغنيسيوم ١٤ من ١، وجمال الشعر والبشرة والأظافر ببيوتين"

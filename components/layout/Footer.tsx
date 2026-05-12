@@ -37,7 +37,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-sm leading-relaxed text-white/80 mb-4">
-              نبتة لابو — علكة وظيفية بروح صيدلية: ترخيص SFDA وتسميات واضحة، وروابط يومية لجمال البشرة والشعر، راحة بعد الأكل، وهدوء المساء؛ نفس احترافية المكمّل مع راحة الدفع عند الاستلام.
+              نبتة لابو — علكة بوظيفة مكمّل غذائي، بتجربة تقترب من ثقة نقطة اعتماد (صيدلية من حيث الصياغة والترخيص، لا من حيث تشخيص أو وصف دواء): تراخيص SFDA، أسئلة وفق تصنيف المكمّل، ودفع عند الاستلام.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 flex-wrap">
               <div
