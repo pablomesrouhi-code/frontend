@@ -282,8 +282,8 @@ export default function CheckoutPopup({ onClose }: Props) {
           {/* Social Proof */}
           <div className="flex items-center gap-2 bg-[#f1e6e4] rounded-xl px-4 py-3">
             <span className="text-xl">⭐</span>
-            <p className="text-sm text-[#b8485c] font-medium">
-              عملاء كثير اختاروا نبتة لابو لأنها سهلة وتدخل في الروتين بدون تعقيد
+            <p className="text-sm text-[#1C1C1C] font-medium">
+              آلاف العميلات يثقن في وضوح تركيباتنا وسهولة الالتزام بالروتين اليومي
             </p>
           </div>
 

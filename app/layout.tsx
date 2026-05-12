@@ -10,8 +10,9 @@ export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'نبتة لابو | Nabta Labo',
-  description: 'علكات وظيفية يومية لدعم جمالك من الداخل، راحة هضمك، وهدوء مسائك. نبتة لابو — روتين يومي صار ألذ وأسهل.',
-  keywords: 'علكات, كولاجين, بروبيوتيك, مغنيسيوم, مكملات, نساء, السعودية, نبتة لابو',
+  description:
+    'مكملات غذائية على شكل علكات — تركيبات مدروسة وثقة قريبة من معايير الصيدلية. جمال يومي، راحة هضم، وهدوء مسائي. السعودية.',
+  keywords: 'علكات, مكملات غذائية, كولاجين, بروبيوتيك, مغنيسيوم, نساء, السعودية, SFDA, نبتة لابو',
   icons: {
     icon: [{ url: '/nabta-lab-brand.png', type: 'image/png' }],
     shortcut: '/nabta-lab-brand.png',

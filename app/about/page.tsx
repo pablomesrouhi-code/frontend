@@ -1,7 +1,10 @@
 import Link from 'next/link'
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 
-export const metadata = { title: 'من نحن | نبتة لابو', description: 'تعرفي على قصة نبتة لابو وفلسفتنا في دعم روتين المرأة اليومي.' }
+export const metadata = {
+  title: 'من نحن | نبتة لابو',
+  description: 'نبتة لابو — مختبر تركيبات لمكملات غذائية على شكل علكات، بثقة وشفافية تليق بعميلتنا في السعودية.',
+}
 
 export default function AboutPage() {
   return (
@@ -10,20 +13,24 @@ export default function AboutPage() {
         <div className="text-center mb-12">
           <div className="w-16 h-16 rounded-full bg-[#b8485c] flex items-center justify-center text-white font-bold text-2xl mx-auto mb-4">N</div>
           <h1 className="text-4xl font-bold text-[#1C1C1C] mb-3">من نحن</h1>
-          <p className="text-xl text-[#5c5656]">نبتة لابو — علكات يومية لروتين أجمل، أخف، وأهدأ</p>
+          <p className="text-xl text-[#5c5656] max-w-2xl mx-auto leading-relaxed">
+            نبتة لابو — مكملات يومية بصيغة علكة:{' '}
+            <span className="text-[#2c5f63] font-semibold">جدية التركيبة</span>
+            {' '}ولذّة التناول في روتين واحد
+          </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-10 items-center mb-14">
           <div className="text-right">
             <h2 className="text-2xl font-bold text-[#1C1C1C] mb-4">فلسفتنا</h2>
             <p className="text-[#5c5656] leading-relaxed text-lg mb-4">
-              نبتة لابو وُلدت من فكرة بسيطة: لماذا يجب أن يكون روتين العناية معقداً؟
+              نبتة لابو تختصر صورة «المكمّل اليومي» في شكل واحد يسهّل الالتزام: علكة وظيفية — ليس بديلاً عن الادّعاء الطبي، بل عن الفوضى والتشتّت بين منتجات كثيرة بلا هوية واضحة.
             </p>
             <p className="text-[#5c5656] leading-relaxed mb-4">
-              نؤمن أن كل امرأة تستحق روتيناً يومياً بسيطاً يدعم جمالها من الداخل، ويمنحها إحساساً بالخفة والهدوء — بدون عبوات معقدة أو جداول تناول مرهقة.
+              نتحدّث بلغة قريبة من صيدلية في ما يهمّك: الشفافية، التسمية، الترخيص، وثبات الجودة — مع بقاء التجربة لطيفة ومناسبة لروتين المرأة السعودية.
             </p>
             <p className="text-[#5c5656] leading-relaxed">
-              لهذا صممنا علكاتنا الوظيفية: لذيذة، سهلة، وتدخل في يومك بدون أي تعقيد.
+              هدفنا أن تشعري أن اختيارك مدروس: تركيبة واضحة، وعد واقعي، وشراء مريح (دفع عند الاستلام وتأكيد قبل التوصيل).
             </p>
           </div>
           <ImagePlaceholder accentColor="#b8485c" bgColor="#f1e6e4" label="نبتة لابو" aspectRatio="4/3" />
@@ -33,9 +40,21 @@ export default function AboutPage() {
           <h2 className="text-2xl font-bold text-[#1C1C1C] mb-6 text-center">قيمنا</h2>
           <div className="grid sm:grid-cols-3 gap-5">
             {[
-              { icon: '🌿', title: 'مكونات مدروسة', desc: 'نختار المكونات بعناية لدعم احتياجاتك اليومية.' },
-              { icon: '❤️', title: 'مصممة لكِ', desc: 'نفكر في المرأة السعودية وروتينها وأولوياتها.' },
-              { icon: '🛡️', title: 'ثقة واضحة', desc: 'دفع عند الاستلام، وتأكيد قبل التوصيل دائماً.' },
+              {
+                icon: '🔬',
+                title: 'تركيبات بمعايير',
+                desc: 'نعتمد منطق المختبر: مكوّنات موثّقة، تركيبات يومية آمنة للاستخدام المنتظم حسب التعليمات.',
+              },
+              {
+                icon: '📋',
+                title: 'شفافية كاملة',
+                desc: 'لا نخفي ما نبيع: مكمّل غذائي، مرخّص SFDA، ومعلومات واضحة في كل مكان تلمسينه في الموقع أو العبوّة.',
+              },
+              {
+                icon: '🛡️',
+                title: 'ثقة في الشراء',
+                desc: 'دفع عند الاستلام وتأكيد قبل التوصيل — لتكوني مطمئنة قبل ما يصل الطلب.',
+              },
             ].map((v) => (
               <div key={v.title} className="text-center">
                 <div className="text-3xl mb-2">{v.icon}</div>

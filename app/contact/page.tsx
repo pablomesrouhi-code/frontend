@@ -6,7 +6,7 @@ export default function ContactPage() {
       <div className="max-w-2xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-10">
           <h1 className="text-4xl font-bold text-[#1C1C1C] mb-3">اتصل بنا</h1>
-          <p className="text-[#5c5656] text-lg">نحن هنا للمساعدة في أي استفسار</p>
+          <p className="text-[#5c5656] text-lg">فريق نبتة لابو جاهز لأسئلتكِ عن الطلبات والتركيبات</p>
         </div>
         <div className="bg-white rounded-3xl p-8 shadow-sm mb-8">
           <div className="flex flex-col gap-5">

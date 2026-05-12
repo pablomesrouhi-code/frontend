@@ -397,8 +397,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {crossSellProducts.length > 0 && (
         <section className="py-10 sm:py-12 md:py-14">
           <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
-            <h2 className="text-2xl font-bold text-[#1C1C1C] mb-3 text-center break-words px-1">كمّلي روتينك مع نبتة لابو</h2>
-            <p className="text-[#5c5656] text-center mb-8 break-words px-1">منتجات تكمّل تجربتك اليومية</p>
+            <h2 className="text-2xl font-bold text-[#1C1C1C] mb-3 text-center break-words px-1">كمّلي روتينك بثقة نبتة لابو</h2>
+            <p className="text-[#5c5656] text-center mb-8 break-words px-1">مكمّلات تكمّل بعضها — بتركيبات منفصلة لكل هدف</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
               {crossSellProducts.map((p) => (
                 <ProductCard key={p.id} product={p} />

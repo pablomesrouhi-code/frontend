@@ -4,7 +4,8 @@ import StarRating from '@/components/ui/StarRating'
 
 export const metadata = {
   title: 'المنتجات | نبتة لابو',
-  description: 'اختاري علكاتك اليومية من نبتة لابو: رونق C للجمال، خفّة بيوتك للهضم، ليل ماج للنوم.',
+  description:
+    'مكمّلات غذائية على شكل علكة من نبتة لابو — رونق C للجمال، خفّة بيوتك للهضم، ليل ماج للنوم. تركيبات مدروسة ومرخّصة SFDA.',
 }
 
 export default function CollectionPage() {
@@ -13,12 +14,13 @@ export default function CollectionPage() {
       {/* Hero */}
       <section className="bg-white border-b border-gray-100 py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
-          <span className="inline-block bg-[#f1e6e4] text-[#b8485c] text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
-            كل المنتجات
+          <span className="inline-block bg-[#f1e6e4] text-[#2c5f63] text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+            مكمّلات غذائية · علكة وظيفية
           </span>
-          <h1 className="text-4xl sm:text-5xl font-bold text-[#1C1C1C] mb-4 leading-tight">اختاري العلكة المناسبة لروتينك</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold text-[#1C1C1C] mb-2 leading-tight">اختاري التركيبة المناسبة لروتينك</h1>
+          <p className="text-[#2c5f63] font-semibold text-sm sm:text-base mb-3 max-w-xl mx-auto">ثقة مدروسة — ثلاثة أهداف، ثلاثة تراخيص واضحة</p>
           <p className="text-[#5c5656] text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
-            ثلاثة احتياجات يومية، ثلاث تركيبات سهلة: الجمال، الخفّة، وهدوء المساء.
+            جمال يومي، راحة هضم، وهدوء مسائي — بصيغة سهلة الالتزام وبنفس جدّية المكمّل الغذائي.
           </p>
           <div className="flex justify-center mt-5">
             <StarRating rating={4.8} count={378} />
@@ -30,7 +32,7 @@ export default function CollectionPage() {
       <section className="bg-[#b8485c] py-4">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex flex-wrap justify-center gap-6 text-white text-sm">
-            {['🛡️ دفع عند الاستلام', '✅ تأكيد قبل التوصيل', '🚚 توصيل سريع للمملكة', '🌿 تركيبة مدروسة'].map((b) => (
+            {['🛡️ دفع عند الاستلام', '✅ تأكيد قبل التوصيل', '🚚 توصيل سريع للمملكة', '🔬 تركيبات بمعايير جودة'].map((b) => (
               <span key={b} className="font-medium">{b}</span>
             ))}
           </div>

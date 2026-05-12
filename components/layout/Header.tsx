@@ -15,8 +15,9 @@ const NAV_LINKS = [
 ] as const
 
 const BANNER_MESSAGES = [
+  { icon: '🔬', text: 'تركيبات مدروسة — جدية وشفافية تليق بثقتكِ في المكمّلات' },
   { icon: '🚚', text: 'الدفع عند الاستلام · شحن سريع لجميع مناطق المملكة' },
-  { icon: '✅', text: 'علكات مرخّصة من هيئة الغذاء والدواء (SFDA)' },
+  { icon: '✅', text: 'مكملات مرخّصة من هيئة الغذاء والدواء (SFDA)' },
   { icon: '🌙', text: 'حلال 100% · ضمان 30 يوم (استرجاع كامل)' },
 ]
 
@@ -129,7 +130,7 @@ export default function Header() {
           >
             <Image
               src="/nabta-lab-brand.png"
-              alt="نبتة لابو — من الطبيعة لراحتك وجمالك"
+              alt="نبتة لابو — مكمّلات غذائية بثقة مدروسة"
               width={320}
               height={140}
               priority

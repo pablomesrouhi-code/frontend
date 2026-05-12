@@ -16,7 +16,12 @@ const FOOTER_LINKS = [
 export default function Footer() {
   return (
     <footer style={{ background: '#1C1C1C', color: 'rgba(255,255,255,0.7)' }}>
-      <div style={{ height: '2px', background: 'linear-gradient(90deg, transparent, #c9937e55, transparent)' }} />
+      <div
+        style={{
+          height: '2px',
+          background: 'linear-gradient(90deg, transparent, #2c5f6355, #c9937e66, transparent)',
+        }}
+      />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-14 text-center md:text-right">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
@@ -25,14 +30,14 @@ export default function Footer() {
             <Link href="/" className="inline-block mb-4 mx-auto md:mx-0" aria-label="نبتة لابو — الصفحة الرئيسية">
               <Image
                 src="/nabta-lab-brand.png"
-                alt="نبتة لابو — من الطبيعة لراحتك وجمالك"
+                alt="نبتة لابو — مكمّلات غذائية بثقة مدروسة"
                 width={320}
                 height={140}
                 className="h-14 sm:h-16 w-auto max-w-[240px] object-contain mx-auto md:mx-0 rounded-lg bg-[#faf7f6] p-2 ring-1 ring-white/10"
               />
             </Link>
             <p className="text-sm leading-relaxed text-white/80 mb-4">
-              علكات وظيفية يومية للمرأة السعودية — جمال، هضم، وهدوء المساء في روتين بسيط وممتع.
+              نبتة لابو: مكملات غذائية على شكل علكات بتركيبات مدروسة وشفافية تليق بثقتكِ — جمال يومي، راحة هضم، وهدوء مسائي، مع معايير جودة وتجربة تسوق واضحة.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 flex-wrap">
               <div

@@ -4,7 +4,7 @@ import { PRODUCTS } from '@/lib/products'
 import ProductCard from '@/components/product/ProductCard'
 import StarRating from '@/components/ui/StarRating'
 
-const ORDER_FLOW_TAGS = ['خصوصية', 'مرونة في الطلب', 'دفع عند الاستلام'] as const
+const ORDER_FLOW_TAGS = ['شفافية في الوعد', 'خصوصية', 'مرونة في الطلب', 'دفع عند الاستلام'] as const
 
 const STEPS = [
   {
@@ -58,13 +58,16 @@ export default function HomePage() {
             {/* Text */}
             <div className="text-right order-2 md:order-1">
               <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full text-xs font-semibold" style={{ background: '#f1e6e4', color: '#b8485c', border: '1px solid #d8c9c6' }}>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#b8485c]" />
-                علكات وظيفية يومية
+                <span className="w-1.5 h-1.5 rounded-full bg-[#2c5f63]" />
+                مكمّل غذائي على شكل علكة · جودة تليق بثقتكِ
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-2" style={{ color: '#1C1C1C' }}>
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-1" style={{ color: '#1C1C1C' }}>
                 روتينك اليومي
               </h1>
+              <p className="text-lg md:text-xl font-semibold mb-2" style={{ color: '#2c5f63' }}>
+                ثقة مدروسة — وليس مجرد «حلوى صحيّة»
+              </p>
               <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-5" style={{ color: '#b8485c' }}>
                 صار ألذ وأسهل
               </h1>
@@ -72,14 +75,14 @@ export default function HomePage() {
               <div className="w-16 h-1 rounded-full mb-5" style={{ background: 'linear-gradient(90deg, #c9937e, #d8c9c6)' }} />
 
               <p className="text-lg leading-relaxed mb-6 max-w-md" style={{ color: '#5c5656' }}>
-                مجموعة علكات نبتة لابو: بروبيوتيك وراحة الهضم بعد الأكل، مغنيسيوم ومساء أنعم، وكولاجين مع فيتامين C لدعم البشرة والشعر والأظافر — خطوات بسيطة في يوم واحد.
+                نبتة لابو تجمع بين صورة المختبر وسهولة اليوم: بروبيوتيك وراحة بعد الأكل، مغنيسيوم ومساء أنعم، وكولاجين مع فيتامين C لدعم البشرة والشعر والأظافر — تركيبات واضحة، مرخّصة SFDA، وخطوات بسيطة في يوم واحد.
               </p>
 
               {/* Compliance badges */}
               <div className="flex items-center mb-6 bg-white rounded-xl overflow-hidden w-fit" style={{ border: '1px solid #dfd6d4', boxShadow: '0 1px 4px rgba(26,25,21,0.06)' }}>
                 {[
                   { icon: '🛡', label: 'SFDA', sub: 'هيئة الغذاء والدواء', color: '#b8485c' },
-                  { icon: '🔬', label: 'GMP', sub: 'Certified', color: '#c9937e' },
+                  { icon: '🔬', label: 'GMP', sub: 'Certified', color: '#2c5f63' },
                   { icon: '✦', label: 'مكمّل غذائي', sub: 'Dietary Supplement', color: '#c9937e' },
                 ].map((b, i) => (
                   <div key={b.label} className="flex items-center gap-2 px-4 py-2.5" style={{ borderRight: i < 2 ? '1px solid #dfd6d4' : 'none' }}>
@@ -147,9 +150,9 @@ export default function HomePage() {
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: '#c9937e' }}>ثلاثة روتينات</p>
-            <h2 className="text-3xl font-bold" style={{ color: '#1C1C1C' }}>لكل احتياج روتين</h2>
-            <p className="mt-2 text-sm" style={{ color: '#5c5656' }}>ثلاثة علكات، ثلاثة احتياجات يومية مختلفة</p>
+            <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: '#2c5f63' }}>ثلاثة روتينات</p>
+            <h2 className="text-3xl font-bold" style={{ color: '#1C1C1C' }}>لكل احتياج روتين واضح</h2>
+            <p className="mt-2 text-sm" style={{ color: '#5c5656' }}>ثلاث مكمّلات على شكل علكة — جمال، هضم، ونوم، بتركيبات منفصلة لكل هدف</p>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             {[
@@ -182,7 +185,7 @@ export default function HomePage() {
               اختاري روتينك اليومي
             </h2>
             <p className="mt-4 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto" style={{ color: '#5c5656' }}>
-              كل منتج مصمم لاحتياج محدد، مع أسعار تناسبك
+              تركيبة لكل هدف، وأسعار واضحة تناسب وتيرتك — من غير مبالغة «حلوى»
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch min-w-0 w-full">
@@ -197,12 +200,12 @@ export default function HomePage() {
         <div className="absolute inset-0 opacity-[0.35]" style={{ backgroundImage: 'radial-gradient(#c9937e 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 text-xs font-mono px-4 py-1.5 rounded-full mb-4" style={{ background: '#fff', color: '#b8485c', border: '1px solid #d8c9c6' }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#b8485c] animate-pulse" />
-              Nabta Labo Research — Formula Lab
+            <span className="inline-flex items-center gap-2 text-xs font-mono px-4 py-1.5 rounded-full mb-4" style={{ background: '#fff', color: '#2c5f63', border: '1px solid #d8c9c6' }}>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2c5f63] animate-pulse" />
+              Nabta Labo — Formula Lab
             </span>
-            <h2 className="text-3xl font-bold" style={{ color: '#1C1C1C' }}>مكوّنات اختارها المختبر بعناية</h2>
-            <p className="mt-2 text-sm" style={{ color: '#5c5656' }}>كل مكوّن في تركيبتنا موثّق ومدعوم علمياً</p>
+            <h2 className="text-3xl font-bold" style={{ color: '#1C1C1C' }}>مكوّنات يختارها فريق التركيب بعناية</h2>
+            <p className="mt-2 text-sm" style={{ color: '#5c5656' }}>كل مكوّن موثّق في السياق الغذائي المعتاد — بدعم المراجع العلمية لجودة المكمّل</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
@@ -249,10 +252,10 @@ export default function HomePage() {
                   مع نبتة لابو
                 </p>
                 <h2 className="text-3xl sm:text-4xl font-bold leading-tight mb-4" style={{ color: '#1C1C1C' }}>
-                  قبل ما يبدأ روتينك — خطوات هادية
+                  من الاختيار للتوصيل — بنفس وضوح الصيدلية
                 </h2>
                 <p className="text-base leading-relaxed mb-6 lg:mb-8" style={{ color: '#5c5656' }}>
-                  نبي تجربة الشراء تكون بنفس هدوء يومك: تشوفين اللي يناسبك، تأكدي الطلب بأقل بيانات، ونوصل لجميع مناطق المملكة — والدفع وقت ما الطلب بين يديك.
+                  نبي التجربة تكون هادئة ومهنية: منتجات موصوفة بوضوح، تأكيد بشري قبل الشحن، ودفع عند الاستلام — كما تتوقّعين من متجرٍ يقدّر ثقتكِ.
                 </p>
                 <div className="flex lg:hidden flex-wrap gap-2 justify-center mb-2">
                   {ORDER_FLOW_TAGS.map((tag) => (
@@ -329,7 +332,7 @@ export default function HomePage() {
             </div>
             <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: '#c9937e' }}>تقييمات العملاء</p>
             <h2 className="text-3xl font-bold" style={{ color: '#1C1C1C' }}>قالت عنا عملاؤنا</h2>
-            <p className="mt-2 text-sm" style={{ color: '#5c5656' }}>تجارب حقيقية من نساء يستخدمن نبتة لابو يومياً</p>
+            <p className="mt-2 text-sm" style={{ color: '#5c5656' }}>تجارب من نساء يخترن وضوح التركيبة وسهولة الروتين</p>
           </div>
           <div className="grid sm:grid-cols-2 gap-5">
             {REVIEWS.map((r) => (
@@ -402,8 +405,10 @@ export default function HomePage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           {/* Gold accent */}
           <div className="w-12 h-1 rounded-full mx-auto mb-8" style={{ background: 'linear-gradient(90deg, #c9937e, #d8c9c6)' }} />
-          <h2 className="text-3xl font-bold text-white mb-4">جاهزة تبدئين روتينك؟</h2>
-          <p className="mb-8 text-lg" style={{ color: 'rgba(255,255,255,0.75)' }}>اختاري المنتج المناسب وابدئي بخطوة واحدة بسيطة.</p>
+          <h2 className="text-3xl font-bold text-white mb-4">جاهزة لروتين بثقة نبتة لابو؟</h2>
+          <p className="mb-8 text-lg" style={{ color: 'rgba(255,255,255,0.75)' }}>
+            اختاري المكمّل المناسب لاحتياجكِ — تركيبة مدروسة، ولذّة تسهّل الاستمرار.
+          </p>
           <Link
             href="/products"
             className="inline-flex items-center gap-2 font-bold px-10 py-4 rounded-full text-base transition-all hover:-translate-y-0.5 hover:shadow-2xl"
