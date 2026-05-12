@@ -2,10 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const FOOTER_LINKS = [
-  { href: '/', label: 'الرئيسية' },
-  { href: '/products', label: 'المنتجات' },
-  { href: '/about', label: 'من نحن' },
-  { href: '/contact', label: 'اتصل بنا' },
+  { href: '/', label: 'البداية' },
+  { href: '/products', label: 'منتجاتنا' },
+  { href: '/about', label: 'عن نبتة لابو' },
+  { href: '/contact', label: 'تواصل معنا' },
   { href: '/privacy-policy', label: 'خصوصية' },
   { href: '/terms', label: 'شروط' },
   { href: '/shipping-policy', label: 'شحن' },
@@ -27,7 +27,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
           {/* Brand */}
           <div className="max-w-md mx-auto md:mx-0">
-            <Link href="/" className="inline-block mb-4 mx-auto md:mx-0" aria-label="نبتة لابو — الرئيسية">
+            <Link href="/" className="inline-block mb-4 mx-auto md:mx-0" aria-label="نبتة لابو — البداية">
               <Image
                 src="/nabta-lab-brand.png"
                 alt="نبتة لابو · مكمّل غذائي على شكل علكة — منتجات وروتينات يومية مرخّصة SFDA"

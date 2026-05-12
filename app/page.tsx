@@ -76,7 +76,7 @@ export default function HomePage() {
                     جدّية المكمّل، ولذعة تسهّل الالتزام
                   </h1>
                 </div>
-                <Link href="/" className="shrink-0 hidden sm:block" aria-label="نبتة لابو — إلى الرئيسية">
+                <Link href="/" className="shrink-0 hidden sm:block" aria-label="نبتة لابو — البداية">
                   <Image
                     src="/nabta-lab-brand.png"
                     alt=""
@@ -88,7 +88,7 @@ export default function HomePage() {
                 </Link>
               </div>
               <div className="flex justify-center sm:hidden mb-5">
-                <Link href="/" aria-label="نبتة لابو — الرئيسية">
+                <Link href="/" aria-label="نبتة لابو — البداية">
                   <Image
                     src="/nabta-lab-brand.png"
                     alt=""

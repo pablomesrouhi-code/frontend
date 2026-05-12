@@ -8,10 +8,10 @@ import { useCartStore } from '@/stores/cart-store'
 const LOGO_GRADIENT = 'linear-gradient(135deg, #b8485c 0%, #943c50 100%)'
 
 const NAV_LINKS = [
-  { href: '/', label: 'الرئيسية' },
-  { href: '/products', label: 'المنتجات' },
-  { href: '/about', label: 'من نحن' },
-  { href: '/contact', label: 'اتصل بنا' },
+  { href: '/', label: 'البداية' },
+  { href: '/products', label: 'منتجاتنا' },
+  { href: '/about', label: 'عن نبتة لابو' },
+  { href: '/contact', label: 'تواصل معنا' },
 ] as const
 
 const BANNER_MESSAGES = [
@@ -125,7 +125,7 @@ export default function Header() {
           <Link
             href="/"
             className="flex items-center shrink-0 group py-1 -my-0.5"
-            aria-label="نبتة لابو — الرئيسية"
+            aria-label="نبتة لابو — البداية"
           >
             <Image
               src="/nabta-lab-brand.png"
