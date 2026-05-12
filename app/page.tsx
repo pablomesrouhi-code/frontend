@@ -58,46 +58,21 @@ export default function HomePage() {
 
             {/* النص والشعار + العناوين الرئيسية */}
             <div className="text-right order-2 md:order-1">
-              {/* شعار جانب العناوين الرئيسية (جنب عمود المحتوى، كما جهة السلة بصرياً لكن داخل الهيرو) */}
-              <div className="flex items-start justify-end gap-4 mb-6">
-                <div className="min-w-0 flex-1 text-right">
-                  <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full text-xs font-semibold" style={{ background: '#f1e6e4', color: '#146b70', border: '1px solid #d8c9c6' }}>
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#146b70]" />
-                    مكمّل غذائي على شكل علكة · سلطة ووضوح يقربان تجربة الصيدلية
-                  </div>
-
-                  <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-1" style={{ color: '#1C1C1C' }}>
-                    علكة تحمل تركيبة
-                  </h1>
-                  <p className="text-lg md:text-xl font-semibold mb-2" style={{ color: '#146b70' }}>
-                    بثقة تُشبه صيدليتكِ — قبل أن تكون قطعة حلوى
-                  </p>
-                  <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-5" style={{ color: '#b8485c' }}>
-                    جدّية المكمّل، ولذعة تسهّل الالتزام
-                  </h1>
+              <div className="mb-6 text-right">
+                <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full text-xs font-semibold" style={{ background: '#f1e6e4', color: '#146b70', border: '1px solid #d8c9c6' }}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#146b70]" />
+                  مكمّل غذائي على شكل علكة · سلطة ووضوح يقربان تجربة الصيدلية
                 </div>
-                <Link href="/" className="shrink-0 hidden sm:block" aria-label="نبتة لابو — البداية">
-                  <Image
-                    src="/nabta-lab-brand.png"
-                    alt=""
-                    aria-hidden
-                    width={200}
-                    height={88}
-                    className="h-14 w-auto max-w-[120px] object-contain object-right"
-                  />
-                </Link>
-              </div>
-              <div className="flex justify-center sm:hidden mb-5">
-                <Link href="/" aria-label="نبتة لابو — البداية">
-                  <Image
-                    src="/nabta-lab-brand.png"
-                    alt=""
-                    aria-hidden
-                    width={280}
-                    height={120}
-                    className="h-12 w-auto object-contain"
-                  />
-                </Link>
+
+                <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-1" style={{ color: '#1C1C1C' }}>
+                  علكة تحمل تركيبة
+                </h1>
+                <p className="text-lg md:text-xl font-semibold mb-2" style={{ color: '#146b70' }}>
+                  بثقة تُشبه صيدليتكِ — قبل أن تكون قطعة حلوى
+                </p>
+                <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-5" style={{ color: '#b8485c' }}>
+                  جدّية المكمّل، ولذعة تسهّل الالتزام
+                </h1>
               </div>
 
               {/* Gold accent line */}
