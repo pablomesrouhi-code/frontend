@@ -65,9 +65,9 @@ export default function Header() {
   return (
     <div className="sticky top-0 z-30">
       <header className="bg-white border-b border-[#dfd6d4] shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-
-          {/* Cart */}
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+          {/* الطرف الأول — السلة */}
+          <div className="shrink-0 flex items-center justify-center min-w-[2.75rem] sm:min-w-0">
           <button
             onClick={openCart}
             className="relative flex items-center gap-2 transition-all px-3 py-2 rounded-full"
@@ -87,28 +87,46 @@ export default function Header() {
               <span className="text-xs font-medium hidden sm:inline" style={{ color: '#5c5656' }}>السلة</span>
             )}
           </button>
+          </div>
 
-          {/* Nav — desktop */}
-          <nav className="hidden md:flex items-center gap-0.5" aria-label="التنقل الرئيسي">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm px-4 py-2 rounded-lg transition-all font-medium"
-                style={{ color: '#5c5656' }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#b8485c'; (e.currentTarget as HTMLElement).style.background = '#f1e6e4'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = '#5c5656'; (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+          {/* الوسط — الشعار + القائمة معاً */}
+          <div className="flex-1 min-w-0 flex items-center justify-center gap-2 sm:gap-3 md:gap-5">
+            <Link
+              href="/"
+              className="flex items-center shrink-0 group py-1 -my-0.5"
+              aria-label="نبتة لابو — البداية"
+            >
+              <Image
+                src="/nabta-lab-brand.png"
+                alt="نبتة لابو · مكمّل غذائي على شكل علكة — منتجات وروتينات يومية مرخّصة SFDA"
+                width={320}
+                height={140}
+                priority
+                sizes="(max-width: 640px) 36vw, 200px"
+                className="h-9 sm:h-10 md:h-11 w-auto max-w-[min(180px,38vw)] sm:max-w-[min(200px,42vw)] object-contain object-right"
+              />
+            </Link>
+            <nav className="hidden md:flex items-center gap-0.5 shrink-0 min-w-0" aria-label="التنقل الرئيسي">
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm px-2.5 lg:px-4 py-2 rounded-lg transition-all font-medium whitespace-nowrap"
+                  style={{ color: '#5c5656' }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#b8485c'; (e.currentTarget as HTMLElement).style.background = '#f1e6e4'; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = '#5c5656'; (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
 
-          {/* Mobile menu */}
-          <div className="flex md:hidden items-center gap-2">
+          {/* الطرف الثاني — قائمة الجوال (الديسكتوب: مساحة متناظرة مع السلة) */}
+          <div className="shrink-0 flex items-center justify-center min-w-[2.75rem] sm:min-w-0">
             <button
               type="button"
-              className="p-2.5 rounded-lg border transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+              className="md:hidden p-2.5 rounded-lg border transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
               style={{ borderColor: '#dfd6d4', color: '#5c5656' }}
               onClick={() => setMenuOpen(true)}
               aria-expanded={menuOpen}
@@ -119,24 +137,8 @@ export default function Header() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
+            <span className="hidden md:inline-block w-[44px] min-w-[44px]" aria-hidden />
           </div>
-
-          {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center shrink-0 group py-1 -my-0.5"
-            aria-label="نبتة لابو — البداية"
-          >
-            <Image
-              src="/nabta-lab-brand.png"
-              alt="نبتة لابو · مكمّل غذائي على شكل علكة — منتجات وروتينات يومية مرخّصة SFDA"
-              width={320}
-              height={140}
-              priority
-              sizes="(max-width: 640px) 42vw, 200px"
-              className="h-10 sm:h-11 w-auto max-w-[min(200px,42vw)] object-contain object-right"
-            />
-          </Link>
         </div>
       </header>
 
