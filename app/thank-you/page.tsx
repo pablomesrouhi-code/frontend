@@ -62,28 +62,6 @@ export default function ThankYouPage() {
       trackMeta('Purchase', base, { eventID: purchaseEid })
       trackMeta('Lead', base, { eventID: leadEid })
 
-      const sheetLines: { product_id: string; offer_qty: number }[] = order.items.map((i) => ({
-        product_id: i.productId,
-        offer_qty: i.offerQty,
-      }))
-      if (order.upsellAccepted && order.upsellProduct) {
-        sheetLines.push({ product_id: order.upsellProduct.id, offer_qty: 1 })
-      }
-      void fetch('/api/sheet-lead-ingest', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          lead_event_id: leadEid,
-          customer_name: order.name,
-          phone: order.phone,
-          total_sar: order.finalTotal,
-          lines: sheetLines,
-          order_number: order.orderNumber ?? undefined,
-        }),
-      }).catch(() => {
-        /* non-blocking */
-      })
-
       trackTikTok('CompletePayment', {
         value: order.finalTotal,
         currency: 'SAR',
