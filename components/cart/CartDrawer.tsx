@@ -1,10 +1,12 @@
 'use client'
+import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useCartStore } from '@/stores/cart-store'
 import { PRODUCTS, getProductById, formatSarAmount } from '@/lib/products'
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
-import CheckoutPopup from '@/components/checkout/CheckoutPopup'
+
+const CheckoutPopup = dynamic(() => import('@/components/checkout/CheckoutPopup'), { ssr: false })
 
 function cartThumb(
   product: ReturnType<typeof getProductById>,
@@ -52,7 +54,7 @@ export default function CartDrawer() {
       {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm"
+          className="fixed inset-0 z-40 bg-black/45"
           onClick={closeCart}
         />
       )}

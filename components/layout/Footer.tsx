@@ -43,7 +43,7 @@ export default function Footer() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 flex-wrap">
               <div
-                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-3 py-2 text-xs text-white/90 backdrop-blur-sm"
+                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-xs text-white/90"
               >
                 <span aria-hidden>🛡️</span>
                 <span>الدفع عند الاستلام فقط</span>

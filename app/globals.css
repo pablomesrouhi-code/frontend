@@ -15,7 +15,7 @@
   --color-border:        #e0d8d6;
   --color-canvas:        #f4f1ef;
 
-  --font-arabic: "IBM Plex Sans Arabic", "Noto Sans Arabic", Arial, sans-serif;
+  --font-arabic: var(--font-plex-arabic, "IBM Plex Sans Arabic"), "Noto Sans Arabic", Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -30,9 +30,16 @@ details[open] > div {
 }
 
 html {
-  scroll-behavior: smooth;
+  /* smooth scroll يكلف إطارات إضافية على الصفحات الطويلة */
+  scroll-behavior: auto;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  details[open] > div {
+    animation: none;
+  }
 }
 
 body {
@@ -46,13 +53,8 @@ body {
     radial-gradient(900px 480px at 100% -18%, rgba(20, 107, 112, 0.075) 0%, transparent 52%),
     radial-gradient(620px 440px at -8% 102%, rgba(184, 72, 92, 0.055) 0%, transparent 48%),
     radial-gradient(ellipse 80% 50% at 50% 100%, rgba(201, 147, 126, 0.04) 0%, transparent 55%);
-  background-attachment: fixed;
-}
-
-@media (max-width: 767px) {
-  body {
-    background-attachment: scroll;
-  }
+  /* fixed كان يسبب تقطيعاً واضحاً عند التمرير (إعادة رسم كامل للخلفية كل إطار) */
+  background-attachment: scroll;
 }
 
 ::selection {

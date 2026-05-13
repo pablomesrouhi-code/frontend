@@ -66,7 +66,7 @@ export default function Header() {
 
   return (
     <div className="sticky top-0 z-30 isolate pt-[max(0px,env(safe-area-inset-top))]">
-      <header className="border-b border-border bg-white/90 shadow-[0_1px_0_rgba(28,28,28,0.04)] backdrop-blur-md backdrop-saturate-150 supports-[backdrop-filter]:bg-white/85">
+      <header className="border-b border-border bg-white/95 shadow-[0_1px_0_rgba(28,28,28,0.04)] supports-[backdrop-filter]:bg-white/90 supports-[backdrop-filter]:backdrop-blur-sm">
         <div className="mx-auto flex min-h-16 max-w-6xl items-center justify-between gap-2 px-4 py-2 sm:px-6 sm:py-2.5">
           {/* Cart */}
           <button

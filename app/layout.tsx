@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Suspense } from 'react'
+import { IBM_Plex_Sans_Arabic } from 'next/font/google'
 import './globals.css'
 import AnalyticsBeacon from '@/components/analytics/AnalyticsBeacon'
 import Header from '@/components/layout/Header'
@@ -8,13 +9,18 @@ import PreFooterBanners from '@/components/layout/PreFooterBanners'
 import CartDrawer from '@/components/cart/CartDrawer'
 import { BRAND_LOGO_SRC, brandLogoIconType } from '@/lib/brand'
 
+const plexArabic = IBM_Plex_Sans_Arabic({
+  subsets: ['arabic', 'latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  display: 'swap',
+  adjustFontFallback: true,
+  variable: '--font-plex-arabic',
+})
+
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL?.trim() || 'https://nabtalabo.store').replace(/\/+$/, '')
 const DEFAULT_TITLE = 'نبتة لابو | Nabta Labo'
 const DEFAULT_DESCRIPTION =
   'نبتة لابو: متجر بتجربة تقترب من ثقة نقطة اعتماد (صيدلية من حيث الانضباط والوضوح) — علكات تحمل تركيبات مكمّل غذائي مرخّص SFDA؛ لسنا نقطة تشخّص أو وصف جرعات. جمال يومي، راحة بعد الأكل، وهدوء مسائي. السعودية.'
-
-// Fresh HTML per request so CDN/browsers don’t keep an old shell referencing stale _next bundles.
-export const dynamic = 'force-dynamic'
 
 export const viewport: Viewport = {
   themeColor: '#146b70',
@@ -50,15 +56,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="ar" dir="rtl" className={plexArabic.variable}>
       <body className="min-h-screen antialiased text-charcoal">
         <Header />
         <main className="min-h-screen min-w-0 isolate pb-[env(safe-area-inset-bottom,0px)]">{children}</main>

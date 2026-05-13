@@ -2,21 +2,14 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 /**
- * Production: avoid stale HTML/RSC shell (old checkout copy). Skip in `next dev` so HMR / _next internals stay smooth.
+ * Middleware kept for future routing (locale, A/B, etc.).
+ * Cache headers for HTML were removed: they forced `no-store` on every page and hurt bfcache / repeat visits.
+ * Static assets under `/_next/static` remain long-cached by Next.js.
  */
 export function middleware(_request: NextRequest) {
-  if (process.env.NODE_ENV !== 'production') {
-    return NextResponse.next()
-  }
-  const res = NextResponse.next()
-  res.headers.set(
-    'Cache-Control',
-    'private, no-store, no-cache, must-revalidate, max-age=0'
-  )
-  return res
+  return NextResponse.next()
 }
 
-/** Never run on Next internals (static, HMR, etc.) */
 export const config = {
   matcher: ['/((?!_next/|favicon.ico).*)'],
 }
