@@ -5,6 +5,14 @@ import StarRating from '@/components/ui/StarRating'
 import ProductPageClient from './ProductPageClient'
 import ProductCard from '@/components/product/ProductCard'
 import ProductPageImageSlot from '@/components/product/ProductPageImageSlot'
+import ProductStickyCta from '@/components/product/ProductStickyCta'
+
+function reviewInitials(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean)
+  const a = parts[0]?.[0] ?? '?'
+  const b = parts[1]?.[0] ?? ''
+  return (a + b).toUpperCase()
+}
 
 export async function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }))
@@ -89,7 +97,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
           <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center min-w-0">
             <div className="order-1 md:order-2 min-w-0">
-              <div className="w-full max-w-[min(100%,380px)] sm:max-w-md mx-auto md:max-w-full overflow-hidden rounded-2xl border border-gray-100 bg-white p-2 sm:p-3 shadow-sm">
+              <div className="w-full max-w-[min(100%,380px)] sm:max-w-md mx-auto md:max-w-none overflow-hidden rounded-2xl border border-gray-100 bg-white p-2 sm:p-3 shadow-sm lg:min-h-[min(480px,52vh)] lg:flex lg:items-center">
                 {pdpHero ? (
                   <Image
                     src={pdpHero.src}
@@ -98,7 +106,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                     height={pdpHero.height}
                     priority
                     sizes="(max-width: 640px) min(380px, 100vw), (max-width: 768px) 90vw, 500px"
-                    className="h-auto w-full max-h-[min(58vh,420px)] sm:max-h-none object-contain"
+                    className="h-auto w-full max-h-[min(58vh,420px)] object-contain sm:max-h-none md:max-h-[min(70vh,560px)] lg:max-h-none"
                   />
                 ) : (
                   <ProductPageImageSlot
@@ -118,95 +126,154 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </div>
             <div className="order-2 md:order-1 min-w-0 max-w-full text-right break-words pt-1 md:pt-0">
               <span
-                className="inline-block text-white text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 rounded-full mb-2 sm:mb-3 break-words text-right max-w-full"
+                className="mb-2 inline-block max-w-full break-words rounded-full px-3 py-1.5 text-right text-xs font-semibold text-white sm:mb-3 sm:px-4 sm:text-sm"
                 style={{ background: product.accentColor }}
               >
                 {product.badgeAr}
               </span>
-              <h1 className="text-[1.65rem] leading-snug sm:text-3xl md:text-4xl font-bold text-[#1C1C1C] mb-2 break-words">{product.nameAr}</h1>
+
+              <p
+                id="pdp-hook"
+                className="scroll-mt-[calc(5.5rem+env(safe-area-inset-top))] text-[1.25rem] font-black leading-snug text-charcoal sm:text-2xl md:text-[1.65rem] md:leading-snug"
+              >
+                {product.heroHeadlineAr}
+              </p>
+
+              <h1 className="mb-2 mt-2 break-words text-2xl font-bold leading-tight text-charcoal sm:text-3xl md:text-4xl">{product.nameAr}</h1>
+
               {product.copyAfterHeroPrice && (
-                <p className="mb-3 text-[13px] sm:text-sm text-[#5c5656] leading-relaxed border-r-2 border-[#dfd6d4] pr-3 break-words">
+                <p className="mb-3 break-words border-r-2 border-border pr-3 text-[13px] leading-relaxed text-muted sm:text-sm">
                   {product.copyAfterHeroPrice}
                 </p>
               )}
-              <p className="text-[15px] sm:text-lg text-[#5c5656] mb-3 sm:mb-4 break-words">{product.heroHeadlineAr}</p>
-              <div className="mb-4">
+
+              <div className="mb-3 sm:mb-4">
                 <StarRating rating={product.rating} count={product.reviewCount} />
               </div>
-              <p className="text-[#5c5656] leading-relaxed mb-4 sm:mb-6 text-[15px] sm:text-base break-words">{product.heroSubAr}</p>
-              <div className="flex flex-wrap gap-2 mb-5 sm:mb-6 justify-end">
-                {product.ingredients.map((ing) => (
-                  <span key={ing} className="text-sm bg-[#FFFFFF] text-[#5c5656] px-3 py-1 rounded-full border border-gray-200 max-w-full break-words">
+
+              <p className="mb-4 break-words text-[15px] leading-relaxed text-muted sm:mb-6 sm:text-base">{product.heroSubAr}</p>
+
+              <p className="mb-2 text-xs font-bold text-authority">خلاصة تركيبية</p>
+              <div className="mb-4 flex flex-wrap items-center justify-end gap-2">
+                {product.ingredients.slice(0, 3).map((ing) => (
+                  <span
+                    key={ing}
+                    className="max-w-full break-words rounded-full border border-border bg-white px-3 py-1 text-sm text-muted"
+                  >
                     {ing}
                   </span>
                 ))}
+                {product.ingredients.length > 3 && (
+                  <a
+                    href="#pdp-ingredients"
+                    className="rounded-full border border-dashed border-authority/45 bg-authority/[0.06] px-3 py-1 text-xs font-bold text-authority hover:bg-authority/10"
+                  >
+                    + المكوّنات كاملة
+                  </a>
+                )}
               </div>
-              <ProductPageClient product={product} />
+
+              <div id="pdp-buy-anchor" className="scroll-mt-[calc(4.5rem+env(safe-area-inset-top))]">
+                <ProductPageClient product={product} />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Trust Strip */}
-      <div className="bg-[#b8485c] py-2.5 sm:py-3">
-        <div className="max-w-6xl mx-auto px-3 sm:px-6 flex flex-wrap justify-center gap-x-4 gap-y-2 sm:gap-6 text-white text-[11px] sm:text-sm leading-snug text-center">
-          {['🛡️ دفع عند الاستلام', '✅ تأكيد قبل التوصيل', '🌿 تركيبة مدروسة', '🚚 توصيل للمملكة'].map((b) => (
-            <span key={b} className="max-[380px]:basis-[44%] max-[380px]:text-center">{b}</span>
-          ))}
+      <div className="bg-gradient-to-l from-primary to-primary-dark py-3 sm:py-3.5">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-6 gap-y-2 px-3 text-center text-[11px] font-semibold leading-snug text-white sm:gap-8 sm:text-sm">
+          <span className="max-[380px]:basis-[48%]">🛡️ دفع عند الاستلام</span>
+          <span className="max-[380px]:basis-[48%]">🚚 شحن سريع لجميع المناطق</span>
+          <span className="max-[380px]:basis-[48%]">📞 تأكيد هاتفي قبل الشحن</span>
+          <span className="max-[380px]:basis-[48%]">↩️ ضمان ذهبي 30 يوم — استرجاع كامل حسب السياسة</span>
         </div>
       </div>
 
       {/* Pain / Desire - alternating */}
-      <section className="py-10 sm:py-12 md:py-14 bg-white">
-        <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
-          <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-center min-w-0">
-            <div className="text-right min-w-0 max-w-full break-words">
-              <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-3 sm:mb-4 break-words">لماذا تحتاجينه؟</h2>
-              <p className="text-[#5c5656] leading-relaxed text-base sm:text-lg break-words">{product.painCopy}</p>
+      <section className="bg-white py-10 sm:py-12 md:py-16">
+        <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
+          <h2 className="mb-8 text-center text-xl font-black text-charcoal sm:mb-10 sm:text-2xl md:text-start">
+            وش تغيّر مع روتين واضح؟
+          </h2>
+
+          <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-10">
+            <div className="order-2 space-y-5 text-right lg:order-2 lg:col-span-5">
+              <div className="rounded-3xl border border-primary/25 bg-peach-soft/50 p-5 shadow-sm ring-1 ring-black/[0.03] sm:p-6">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">اليوميات</p>
+                <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">لماذا يهمّ هذا المنتج؟</h3>
+                <p className="mt-3 text-base leading-relaxed text-muted">{product.painCopy}</p>
+              </div>
+              <div className="rounded-3xl border border-authority/30 bg-authority/[0.05] p-5 shadow-sm sm:p-6">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-authority">ضمن سلطة المكمّل</p>
+                <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">كيف يدعم خطتك اليومية؟</h3>
+                <ul className="mt-4 flex flex-col gap-3">
+                  {product.benefits.slice(0, 4).map((b) => (
+                    <li key={b} className="flex items-start gap-3 rounded-2xl bg-white px-4 py-3 ring-1 ring-border/70">
+                      <span
+                        className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-black text-white"
+                        style={{ background: product.accentColor }}
+                      >
+                        ✓
+                      </span>
+                      <span className="min-w-0 flex-1 text-[15px] leading-relaxed text-charcoal">{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-            <div className="w-full max-w-[min(100%,440px)] md:max-w-full mx-auto md:mx-0 min-w-0 overflow-hidden rounded-2xl border border-gray-100 bg-white p-2 sm:p-3">
-              {painPdpPhoto ? (
-                <Image
-                  src={painPdpPhoto.src}
-                  alt={painPdpPhoto.alt}
-                  width={painPdpPhoto.width}
-                  height={painPdpPhoto.height}
-                  sizes="(max-width: 768px) min(440px, 100vw), 480px"
-                  className="h-auto w-full max-h-[min(62vh,480px)] md:max-h-none object-contain"
-                />
-              ) : (
-                <ProductPageImageSlot
-                  width={product.painSectionImage?.width ?? product.coverWidth}
-                  height={product.painSectionImage?.height ?? product.coverHeight}
-                  accentColor={product.accentColor}
-                  labelAr="مساحة صورة — قسم «لماذا تحتاجينه؟»"
-                  className="max-h-[min(62vh,480px)] md:max-h-none"
-                />
-              )}
+
+            <div className="order-1 lg:order-1 lg:col-span-7">
+              <div className="mx-auto max-w-xl overflow-hidden rounded-3xl border border-border bg-white p-2 shadow-md md:mx-0 lg:max-w-none lg:min-h-[min(520px,58vh)]">
+                {painPdpPhoto ? (
+                  <Image
+                    src={painPdpPhoto.src}
+                    alt={painPdpPhoto.alt}
+                    width={painPdpPhoto.width}
+                    height={painPdpPhoto.height}
+                    sizes="(max-width:1024px) min(560px, 100vw), 56vw"
+                    className="h-auto max-h-[min(64vh,520px)] w-full rounded-2xl object-cover object-center lg:h-full lg:max-h-none lg:min-h-[420px]"
+                  />
+                ) : (
+                  <ProductPageImageSlot
+                    width={product.painSectionImage?.width ?? product.coverWidth}
+                    height={product.painSectionImage?.height ?? product.coverHeight}
+                    accentColor={product.accentColor}
+                    labelAr="مساحة صورة — قسم «لماذا تحتاجينه؟»"
+                    className="max-h-[min(64vh,520px)] lg:min-h-[420px]"
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Benefits */}
-      <section className="py-10 sm:py-12 md:py-14 bg-[#fafafa] sm:bg-transparent">
-        <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
-          <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-6 sm:mb-8 text-center break-words px-1">الفوائد الرئيسية</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 min-w-0">
-            {product.benefits.map((b) => (
-              <div key={b} className="bg-white rounded-2xl p-4 sm:p-5 flex items-start gap-3 sm:gap-4 shadow-sm min-w-0 ring-1 ring-[#eae2df]/80 sm:ring-0">
+      {product.benefits.length > 4 ? (
+      <section className="border-t border-border bg-peach-soft/20 py-10 sm:py-12 md:py-14">
+        <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
+          <h2 className="mb-6 text-center text-xl font-black text-charcoal sm:text-2xl">تكميلات لفهم أوسع للفائدة اليومية</h2>
+          <div className="mx-auto grid max-w-3xl grid-cols-1 gap-3 sm:gap-4">
+            {product.benefits.slice(4).map((b) => (
+              <div
+                key={b}
+                className="flex min-w-0 items-start gap-3 rounded-2xl bg-white px-5 py-4 shadow-sm ring-1 ring-border/80"
+              >
                 <div
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-white shrink-0 mt-0.5"
+                  className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-black text-white"
                   style={{ background: product.accentColor }}
                 >
                   ✓
                 </div>
-                <p className="text-[#1C1C1C] leading-relaxed min-w-0 flex-1 break-words text-right">{b}</p>
+                <p className="min-w-0 flex-1 text-right leading-relaxed text-charcoal">{b}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
+      ) : null}
 
       {/* bloc إضافي اختياري — صورة + قصة قصيرة */}
       {product.extraStory && (
@@ -275,18 +342,18 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       )}
 
       {/* Ingredients deep dive - alternating */}
-      <section className="py-10 sm:py-12 md:py-14 bg-white">
-        <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
-          <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-center min-w-0">
-            <div className="w-full max-w-[min(100%,440px)] md:max-w-full mx-auto md:mx-0 min-w-0 overflow-hidden rounded-2xl border border-gray-100 bg-white p-2 sm:p-3 order-2 md:order-1">
+      <section id="pdp-ingredients" className="scroll-mt-28 bg-white py-10 sm:py-12 md:py-16">
+        <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
+          <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-12">
+            <div className="order-2 min-w-0 overflow-hidden rounded-3xl border border-border bg-white p-2 shadow-sm lg:order-1 lg:col-span-7">
               {ingredientsPdpPhoto ? (
                 <Image
                   src={ingredientsPdpPhoto.src}
                   alt={ingredientsPdpPhoto.alt}
                   width={ingredientsPdpPhoto.width}
                   height={ingredientsPdpPhoto.height}
-                  sizes="(max-width: 768px) min(440px, 100vw), 480px"
-                  className="h-auto w-full max-h-[min(58vh,440px)] md:max-h-none object-contain"
+                  sizes="(max-width:1024px) min(560px, 100vw), 58vw"
+                  className="h-auto max-h-[min(58vh,440px)] w-full rounded-2xl object-cover object-center lg:max-h-none lg:min-h-[440px]"
                 />
               ) : (
                 <ProductPageImageSlot
@@ -294,23 +361,31 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   height={product.ingredientsSectionImage?.height ?? product.coverHeight}
                   accentColor={product.accentColor}
                   labelAr="مساحة صورة — المكوّنات / تفاصيل العبوة"
-                  className="max-h-[min(58vh,440px)] md:max-h-none"
+                  className="max-h-[min(58vh,440px)] lg:min-h-[440px]"
                 />
               )}
             </div>
-            <div className="text-right min-w-0 max-w-full break-words order-1 md:order-2">
-              <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-4 break-words">المكونات الفعّالة</h2>
-              <div className="flex flex-col gap-2.5 sm:gap-3 min-w-0">
+            <div className="order-1 min-w-0 max-w-full break-words text-right lg:order-2 lg:col-span-5">
+              <h2 className="mb-2 text-xl font-black text-charcoal sm:text-2xl">المكوّنات واللسان العلمي</h2>
+              <p className="mb-6 text-sm leading-relaxed text-muted">
+                تفاصيل وفق تصنيف «مكمّل غذائي» — كل بند أسفله إشارة داعمة وفق المتعارف؛ النتيجة اليومية تختلف بحسب الشخص والالتزام بالروتين.
+              </p>
+              <div className="flex flex-col gap-3 sm:gap-4">
                 {product.ingredients.map((ing) => (
-                  <div key={ing} className="bg-[#FFFFFF] rounded-xl px-4 sm:px-5 py-3.5 sm:py-4 min-w-0 border border-[#eae2df] md:border-gray-100">
-                    <p className="font-bold text-[#1C1C1C] break-words">{ing}</p>
-                    <p className="text-sm text-[#5c5656] mt-1 break-words">
-                      {ing === 'كولاجين' && 'بروتين أساسي يدعم بنية البشرة والشعر والأظافر في روتين يومي ثابت.'}
-                      {ing === 'فيتامين C' && 'يساعد على دعم وظائف الجسم الطبيعية ويكمّل تأثير الكولاجين.'}
-                      {ing === 'بروبيوتيك' && 'بكتيريا نافعة تدعم التوازن الطبيعي للجهاز الهضمي.'}
-                      {ing === 'ألياف' && 'تساعد في دعم حركة الهضم الطبيعية وإحساس الخفة.'}
-                      {ing === 'مغنيسيوم' && 'معدن ضروري يساعد في دعم وظائف الجهاز العصبي الطبيعية والاسترخاء.'}
-                      {ing === 'L-Theanine' && 'حمض أميني طبيعي من الشاي الأخضر، يساعد في دعم الاسترخاء دون النعاس.'}
+                  <div
+                    key={ing}
+                    className="min-w-0 rounded-2xl border border-border bg-[#fdfcfc] px-5 py-4 shadow-[0_1px_8px_rgba(28,28,28,0.04)] md:border-charcoal/[0.06]"
+                  >
+                    <p className="text-base font-black text-charcoal">{ing}</p>
+                    <p className="mt-2 border-t border-border/80 pt-2 text-sm leading-relaxed text-muted">
+                      {ing === 'كولاجين' &&
+                        'بروتين هيكلي يدعم بنية الجلد الشعر والأظافر ضمن نظام متكامل ومتوازن — حسب احتياج المنظومات الطبيعية.'}
+                      {ing === 'فيتامين C' && 'يثبّت وظيفة الغذائية المعتادة ويدعم امتصاص الكولاجين كجزء من روتين داخلي منتظم.'}
+                      {ing === 'بروبيوتيك' && 'بكتيريا نافعة تدعم التوازن الطبيعي للجهاز الهضمي وفق منتج هذا التصنيف.'}
+                      {ing === 'ألياف' && 'تدعم حركة الهضم الطبيعية وإحساس الخفة بعد الوجبات ضمن نمط غذائي متوازن.'}
+                      {ing === 'مغنيسيوم' &&
+                        'معدن يدعم مسارات الاسترخاء والجهاز العصبي مع تناول مناسب حسب تعليمات العبوة المعتمدة.'}
+                      {ing === 'L-Theanine' && 'من مصادر طبيعية معروفة؛ يُستخدم في سياق دعم الاسترخاء ضمن المنتج كمكمّل غذائي.'}
                     </p>
                   </div>
                 ))}
@@ -328,8 +403,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             style={{ background: product.bgColor }}
           >
             <div className="text-3xl sm:text-4xl mb-2 sm:mb-3">🌿</div>
-            <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-2 sm:mb-3 break-words">كيفية الاستخدام</h2>
-            <p className="text-[#5c5656] leading-relaxed text-[15px] sm:text-lg break-words">{product.howToUse}</p>
+            <h2 className="break-words text-xl font-black text-charcoal sm:text-2xl">كيفية الاستخدام</h2>
+            <p className="mt-4 break-words text-[15px] leading-relaxed text-muted sm:text-lg">{product.howToUse}</p>
+            <p className="mt-4 rounded-2xl bg-white/60 px-4 py-3 text-sm leading-relaxed text-charcoal ring-1 ring-black/[0.04]">
+              <strong className="text-authority">التزام الأسابيع الأولى يفرق؛</strong> كثير عميلات يلاحظن أن الروتين يصبح «تلقائيًا» قبل أن يكتمل شهر — والنتيجة المرئية أو الإحساسية{' '}
+              <strong className="text-charcoal">تختلف</strong> حسب الشخص والنوم والتغذية. التزموا تعليمات العبوة المعتمدة.
+            </p>
           </div>
         </div>
       </section>
@@ -364,19 +443,41 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       )}
 
       {/* Reviews */}
-      <section className="py-10 sm:py-12 md:py-14 bg-white">
-        <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8 min-w-0">
-            <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] break-words text-right">تقييمات العملاء</h2>
-            <StarRating rating={product.rating} count={product.reviewCount} />
+      <section className="overflow-x-hidden bg-peach-soft/15 py-10 sm:py-12 md:py-16">
+        <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
+          <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="text-right">
+              <h2 className="text-xl font-black text-charcoal sm:text-2xl">مراجعات عميلات</h2>
+              <p className="mt-1 text-sm text-muted">تقييمات إرشادية — النتيجة شخصية ولها علاقة بالالتزام بالروتين</p>
+            </div>
+            <div className="shrink-0 self-end sm:self-center">
+              <StarRating rating={product.rating} count={product.reviewCount} />
+            </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 min-w-0">
+
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
             {product.reviews.map((r, idx) => (
-              <div key={`${product.id}-r-${idx}`} className="bg-[#FFFFFF] rounded-2xl p-4 sm:p-5 min-w-0 break-words border border-[#eae2df]/90">
-                <StarRating rating={r.rating} size="sm" />
-                <p className="text-[#1C1C1C] mt-3 leading-relaxed break-words">&ldquo;{r.text}&rdquo;</p>
-                <p className="text-sm font-semibold text-[#5c5656] mt-3 break-words">— {r.name}</p>
-              </div>
+              <article
+                key={`${product.id}-r-${idx}`}
+                className="flex min-w-0 flex-col gap-4 rounded-3xl border border-border bg-white p-5 shadow-sm ring-1 ring-black/[0.02] sm:flex-row sm:p-6"
+              >
+                <div className="flex shrink-0 flex-row items-center gap-4 border-b border-border pb-4 sm:w-52 sm:flex-col sm:border-b-0 sm:border-s sm:pb-0 sm:ps-6 md:w-56">
+                  <div
+                    className="flex h-[4.25rem] w-[4.25rem] shrink-0 items-center justify-center rounded-2xl text-lg font-black text-white shadow-inner sm:h-24 sm:w-24 sm:text-2xl"
+                    style={{ background: product.accentColor }}
+                    aria-hidden
+                  >
+                    {reviewInitials(r.name)}
+                  </div>
+                  <div className="min-w-0 flex-1 text-right sm:flex-none sm:w-full">
+                    <StarRating rating={r.rating} size="sm" />
+                    <p className="mt-2 font-black text-charcoal">{r.name}</p>
+                  </div>
+                </div>
+                <blockquote className="min-w-0 flex-1 text-[15px] leading-relaxed text-charcoal">
+                  «{r.text}»
+                </blockquote>
+              </article>
             ))}
           </div>
           {product.afterReviewsBanner && (
@@ -429,6 +530,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
       </section>
+
+      <ProductStickyCta
+        product={{
+          id: product.id,
+          nameAr: product.nameAr,
+          accentColor: product.accentColor,
+          bgColor: product.bgColor,
+        }}
+      />
     </div>
   )
 }

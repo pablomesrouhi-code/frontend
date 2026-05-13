@@ -102,22 +102,34 @@ export default function ProductPageClient({ product }: { product: Product }) {
           </span>
         </button>
 
-        <p className="text-center text-[11px] sm:text-xs leading-relaxed text-[#6e6663] flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/85 px-3 py-1 shadow-sm ring-1 ring-black/[0.04]">
+        <p className="text-center text-[11px] sm:text-xs leading-relaxed text-muted flex flex-wrap items-center justify-center gap-x-2 gap-y-2">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 shadow-sm ring-1 ring-black/[0.05]">
             <span aria-hidden className="text-emerald-600 text-sm leading-none">
               ✓
             </span>
             دفع عند الاستلام
           </span>
-          <span className="hidden sm:inline text-[#c4bbb7]" aria-hidden>
-            |
+          <span className="hidden sm:inline text-border" aria-hidden>
+            ·
           </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/85 px-3 py-1 shadow-sm ring-1 ring-black/[0.04]">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 shadow-sm ring-1 ring-black/[0.05]">
             <span aria-hidden className="text-[#c9937e] text-sm leading-none">
               ☎
             </span>
-            تأكيد الطلب قبل التوصيل
+            تأكيد هاتفي قبل الشحن
           </span>
+          <span className="hidden md:inline text-border" aria-hidden>
+            ·
+          </span>
+          <a
+            href="/returns-refunds"
+            className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-muted shadow-sm ring-1 ring-authority/20 transition-colors hover:bg-authority/[0.07] hover:text-charcoal"
+          >
+            <span aria-hidden className="text-authority">
+              ↩
+            </span>
+            ضمان 30 يوم — استرجاع كامل <span className="sr-only">(تفاصيل السياسة)</span>
+          </a>
         </p>
       </div>
     </div>
