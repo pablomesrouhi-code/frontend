@@ -33,13 +33,11 @@ export const metadata: Metadata = {
     siteName: 'نبتة لابو',
     locale: 'ar_SA',
     type: 'website',
-    images: [{ url: BRAND_LOGO_SRC, alt: 'شعار نبتة لابو — مكمّل غذائي على شكل علكة' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: [BRAND_LOGO_SRC],
   },
 }
 
