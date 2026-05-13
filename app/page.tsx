@@ -49,7 +49,7 @@ const REVIEWS = [
 
 export default function HomePage() {
   return (
-    <div style={{ background: '#faf9f8' }}>
+    <div>
 
       {/* ─── Hero ─── */}
       <section style={{ background: 'linear-gradient(135deg, #f1e6e4 0%, #FFFFFF 60%, #FFFFFF 100%)' }}>

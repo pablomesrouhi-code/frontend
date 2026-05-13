@@ -13,6 +13,7 @@
   --color-authority:     #146b70;
   --color-muted:         #5c5656;
   --color-border:        #e0d8d6;
+  --color-canvas:        #f4f1ef;
 
   --font-arabic: "IBM Plex Sans Arabic", "Noto Sans Arabic", Arial, sans-serif;
 }
@@ -32,8 +33,23 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-arabic);
-  background-color: #faf9f8;
   color: var(--color-charcoal);
   direction: rtl;
   -webkit-font-smoothing: antialiased;
+  background-color: var(--color-canvas);
+  background-image:
+    radial-gradient(900px 480px at 100% -18%, rgba(20, 107, 112, 0.075) 0%, transparent 52%),
+    radial-gradient(620px 440px at -8% 102%, rgba(184, 72, 92, 0.055) 0%, transparent 48%),
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(201, 147, 126, 0.04) 0%, transparent 55%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: rgba(20, 107, 112, 0.18);
+  color: var(--color-charcoal);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-authority);
+  outline-offset: 2px;
 }

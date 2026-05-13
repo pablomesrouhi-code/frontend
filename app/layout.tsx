@@ -52,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body style={{ fontFamily: "'IBM Plex Sans Arabic', Arial, sans-serif" }}>
+      <body className="min-h-screen antialiased text-charcoal">
         <Header />
         <main className="min-h-screen min-w-0">{children}</main>
         <PreFooterBanners />

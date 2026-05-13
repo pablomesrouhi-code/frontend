@@ -16,11 +16,12 @@ const FOOTER_LINKS = [
 
 export default function Footer() {
   return (
-    <footer style={{ background: '#1C1C1C', color: 'rgba(255,255,255,0.7)' }}>
+    <footer className="bg-charcoal text-white/75">
       <div
         style={{
           height: '2px',
-          background: 'linear-gradient(90deg, transparent, rgba(20,107,112,0.35), rgba(201,147,126,0.4), transparent)',
+          background:
+            'linear-gradient(90deg, transparent, rgba(20,107,112,0.55), rgba(184,72,92,0.45), transparent)',
         }}
       />
 
@@ -42,15 +43,14 @@ export default function Footer() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 flex-wrap">
               <div
-                className="inline-flex items-center gap-2 text-xs px-3 py-2 rounded-full text-white/90"
-                style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}
+                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-3 py-2 text-xs text-white/90 backdrop-blur-sm"
               >
                 <span aria-hidden>🛡️</span>
                 <span>الدفع عند الاستلام فقط</span>
               </div>
               <a
                 href="mailto:contact@nabtalabo.store"
-                className="text-sm font-medium text-white hover:text-[#c9937e] transition-colors break-all"
+                className="break-all text-sm font-medium text-white transition-colors hover:text-peach"
               >
                 contact@nabtalabo.store
               </a>

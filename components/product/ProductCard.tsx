@@ -6,8 +6,7 @@ import { Product } from '@/lib/products'
 export default function ProductCard({ product }: { product: Product }) {
   return (
     <div
-      className="h-full min-w-0 bg-white rounded-3xl overflow-hidden flex flex-col group transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-      style={{ border: '1px solid #dfd6d4', boxShadow: '0 2px 8px rgba(26,25,21,0.06)' }}
+      className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border bg-white shadow-[0_2px_8px_rgba(26,25,21,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-authority/30 hover:shadow-[0_20px_48px_-12px_rgba(20,107,112,0.14)]"
     >
       <Link href={`/products/${product.slug}`} className="block shrink-0 overflow-hidden bg-[#FAFAFA]">
         <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">

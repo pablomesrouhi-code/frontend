@@ -25,18 +25,17 @@ const BANNERS = [
 
 export default function PreFooterBanners() {
   return (
-    <section className="bg-white border-t border-[#dfd6d4]" aria-label="مزايا التسوق">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+    <section className="border-t border-border bg-white" aria-label="مزايا التسوق">
+      <div className="mx-auto max-w-6xl px-4 py-3 sm:px-6 sm:py-4">
         <div
-          className="rounded-xl border border-[#dfd6d4] bg-white px-3 py-3 sm:px-6 sm:py-3.5"
-          style={{ boxShadow: '0 1px 6px rgba(0,0,0,0.04)' }}
+          className="rounded-xl border border-border bg-white px-3 py-3 shadow-[0_1px_8px_rgba(20,107,112,0.05)] sm:px-6 sm:py-3.5"
         >
           <div className="flex flex-wrap items-start justify-evenly md:justify-between gap-x-2 gap-y-4">
             {BANNERS.map((b, i) => (
               <Fragment key={b.title}>
                 {i > 0 && (
                   <span
-                    className="hidden md:block shrink-0 w-px bg-[#d5cdc9] self-stretch my-1"
+                    className="my-1 hidden w-px shrink-0 self-stretch bg-border md:block"
                     style={{ minHeight: '3rem' }}
                     aria-hidden
                   />
@@ -46,10 +45,10 @@ export default function PreFooterBanners() {
                     {b.icon}
                   </span>
                   <div className="min-w-0">
-                    <p className="text-[11px] sm:text-xs font-bold text-[#1C1C1C] leading-snug break-words">
+                    <p className="break-words text-[11px] font-bold leading-snug text-charcoal sm:text-xs">
                       {b.title}
                     </p>
-                    <p className="text-[10px] sm:text-[11px] text-[#5c5656] leading-relaxed mt-0.5 break-words">
+                    <p className="mt-0.5 break-words text-[10px] leading-relaxed text-muted sm:text-[11px]">
                       {b.desc}
                     </p>
                   </div>

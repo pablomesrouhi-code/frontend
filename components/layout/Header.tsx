@@ -6,7 +6,8 @@ import { usePathname } from 'next/navigation'
 import { useCartStore } from '@/stores/cart-store'
 import { BRAND_LOGO_SRC } from '@/lib/brand'
 
-const LOGO_GRADIENT = 'linear-gradient(135deg, #b8485c 0%, #943c50 100%)'
+const BANNER_GRADIENT =
+  'linear-gradient(90deg, #146b70 0%, #115d62 42%, rgba(148,60,80,0.98) 100%)'
 
 const NAV_LINKS = [
   { href: '/', label: 'البداية' },
@@ -65,27 +66,24 @@ export default function Header() {
 
   return (
     <div className="sticky top-0 z-30">
-      <header className="bg-white border-b border-[#dfd6d4] shadow-sm">
+      <header className="border-b border-border bg-white/90 shadow-sm backdrop-blur-md backdrop-saturate-150 supports-[backdrop-filter]:bg-white/85">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
           {/* Cart */}
           <button
             onClick={openCart}
-            className="relative flex items-center gap-2 transition-all px-3 py-2 rounded-full"
-            style={{ border: '1.5px solid #dfd6d4' }}
-            onMouseEnter={e => (e.currentTarget as HTMLElement).style.borderColor = '#b8485c'}
-            onMouseLeave={e => (e.currentTarget as HTMLElement).style.borderColor = '#dfd6d4'}
+            className="relative flex items-center gap-2 rounded-full border-[1.5px] border-border px-3 py-2 transition-colors hover:border-primary"
             aria-label="السلة"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" style={{ color: '#b8485c' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
             {count > 0 ? (
-              <span className="text-white text-xs font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center" style={{ background: '#b8485c' }}>
+              <span className="min-w-[20px] rounded-full bg-primary px-1.5 py-0.5 text-center text-xs font-bold text-white">
                 {count}
               </span>
             ) : (
-              <span className="text-xs font-medium hidden sm:inline" style={{ color: '#5c5656' }}>السلة</span>
+              <span className="hidden text-xs font-medium text-muted sm:inline">السلة</span>
             )}
           </button>
 
@@ -95,10 +93,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm px-4 py-2 rounded-lg transition-all font-medium"
-                style={{ color: '#5c5656' }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#b8485c'; (e.currentTarget as HTMLElement).style.background = '#f1e6e4'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = '#5c5656'; (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
+                className="rounded-lg px-4 py-2 text-sm font-medium text-muted transition-colors hover:bg-peach-tint hover:text-primary"
               >
                 {link.label}
               </Link>
@@ -109,8 +104,7 @@ export default function Header() {
           <div className="flex md:hidden items-center gap-2">
             <button
               type="button"
-              className="p-2.5 rounded-lg border transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
-              style={{ borderColor: '#dfd6d4', color: '#5c5656' }}
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-border p-2.5 text-muted transition-colors hover:border-primary hover:text-charcoal"
               onClick={() => setMenuOpen(true)}
               aria-expanded={menuOpen}
               aria-controls="mobile-nav-menu"
@@ -144,11 +138,10 @@ export default function Header() {
       {/* Mobile full-screen nav */}
       {menuOpen ? (
         <div className="md:hidden fixed inset-0 z-50 flex flex-col bg-white" id="mobile-nav-menu" role="dialog" aria-modal="true" aria-label="قائمة التصفح">
-          <div className="shrink-0 flex items-center justify-between px-4 h-16 border-b border-[#dfd6d4] bg-white">
+          <div className="flex h-16 shrink-0 items-center justify-between border-b border-border bg-white px-4">
             <button
               type="button"
-              className="p-2.5 rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center"
-              style={{ color: '#5c5656' }}
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg p-2.5 text-muted"
               onClick={() => setMenuOpen(false)}
               aria-label="إغلاق القائمة"
             >
@@ -156,7 +149,7 @@ export default function Header() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            <span className="text-sm font-semibold" style={{ color: '#3d3838' }}>القائمة</span>
+            <span className="text-sm font-semibold text-charcoal">القائمة</span>
             <span className="w-11" aria-hidden />
           </div>
           <nav className="flex-1 overflow-y-auto px-4 py-6" aria-label="التنقل الرئيسي">
@@ -167,11 +160,9 @@ export default function Header() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="flex items-center text-base font-medium py-4 px-3 rounded-xl transition-colors min-h-[48px]"
-                      style={{
-                        color: active ? '#b8485c' : '#5c5656',
-                        background: active ? '#f1e6e4' : 'transparent',
-                      }}
+                      className={`flex min-h-[48px] items-center rounded-xl px-3 py-4 text-base font-medium transition-colors ${
+                        active ? 'bg-peach-tint text-primary' : 'text-muted'
+                      }`}
                       onClick={() => setMenuOpen(false)}
                     >
                       {link.label}
@@ -188,7 +179,7 @@ export default function Header() {
       <div
         className="py-2 px-4 overflow-hidden"
         style={{
-          background: LOGO_GRADIENT,
+          background: BANNER_GRADIENT,
           borderBottom: '1px solid rgba(0,0,0,0.06)',
         }}
       >
