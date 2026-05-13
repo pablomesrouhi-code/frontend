@@ -17,16 +17,20 @@ const nextConfig: NextConfig = {
   output: "standalone",
   async rewrites() {
     const base = backendInternalProxyTarget();
-    const proxy = [
-      {
-        source: "/nabtalabo-api-proxy/:path*",
-        destination: `${base}/:path*`,
-      },
+    const cond =
+      useLocalBackendProxyFlag() || process.env.NODE_ENV === "development";
+    if (!cond) {
+      return [];
+    }
+    /**
+     * General FastAPI relay for callers using `/nabtalabo-api-proxy/*`.
+     * `/api/admin` and `/api/analytics/*` use Route Handlers in `app/api/*` (stable with Turbopack).
+     */
+    const beforeFiles = [
+      { source: "/nabtalabo-api-proxy/:path*", destination: `${base}/:path*` },
     ];
-    if (useLocalBackendProxyFlag()) return proxy;
-    // `next dev` only (build uses NODE_ENV=production — no extra surface)
-    if (process.env.NODE_ENV === "development") return proxy;
-    return [];
+
+    return { beforeFiles };
   },
 };
 
