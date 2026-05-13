@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-/** Match rewrite enablement in `next.config.ts` (dev or explicit local-proxy flag). */
+/** Escape hatch إن كان `NODE_ENV` غير `development` لكن تحتاج الترحيل المحلي */
+function adminProxyForced(): boolean {
+  const v = process.env.ADMIN_PROXY_FORCE?.trim()?.toLowerCase()
+  return v === '1' || v === 'true' || v === 'yes'
+}
+
+/** Match rewrite enablement في `next.config.ts` مع خيارات إضافية */
 export function allowLocalFastapiProxy(): boolean {
+  if (adminProxyForced()) return true
   if (process.env.NODE_ENV === 'development') return true
   const v = process.env.NEXT_PUBLIC_USE_LOCAL_API?.trim()?.toLowerCase()
   return v === 'true' || v === '1'
@@ -25,7 +32,7 @@ const HOP_HEADERS = new Set([
 ])
 
 /**
- * Server-side relay to uvicorn/FastAPI. Keeps `/api/admin` fetch same-origin during `next dev`.
+ * Server-side relay إلى uvicorn/FastAPI لواجهات `/api/admin` و`/api/analytics`.
  */
 export async function relayToFastapi(
   request: NextRequest,
@@ -78,10 +85,13 @@ export async function relayToFastapi(
       cache: 'no-store',
     })
   } catch {
+    const hintDocker =
+      ' إن كان Next يعمل داخل Docker والـ FastAPI خارج الحاوية: BACKEND_INTERNAL_URL=http://host.docker.internal:8000 (ويندوز/ماك) أو عنوان خدمة الـ compose.'
     return NextResponse.json(
       {
         detail:
-          `Cannot reach FastAPI at ${origin}. Run uvicorn and check BACKEND_INTERNAL_URL.`,
+          `Cannot reach FastAPI at ${origin}.${hintDocker}` +
+          ' أو شغّل `uvicorn` على نفس الآلة ثم تأكّد من المنفذ.',
       },
       { status: 502 },
     )
