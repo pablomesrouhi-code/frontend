@@ -36,7 +36,13 @@ export async function createBrandOgImageResponse(): Promise<ImageResponse> {
         <img
           src={logoSrc}
           alt=""
-          style={{ height: 460, maxWidth: 920, width: 'auto', objectFit: 'contain' }}
+          width={520}
+          height={560}
+          style={{
+            objectFit: 'contain',
+            objectPosition: 'center',
+            display: 'block',
+          }}
         />
       </div>
     ),
