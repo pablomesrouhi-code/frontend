@@ -58,29 +58,37 @@ export default function CartDrawer() {
       )}
       {/* Drawer */}
       {isOpen && (
-        <div className="fixed top-0 left-0 h-full w-full max-w-md bg-[#FFFFFF] z-50 shadow-2xl flex flex-col overflow-hidden">
+        <div className="fixed inset-y-0 start-0 z-50 flex h-[100dvh] max-h-[100dvh] w-full max-w-md flex-col overflow-hidden border-e border-border/80 bg-white shadow-2xl max-sm:rounded-e-3xl">
           {/* Header */}
-          <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 bg-white">
-            <button onClick={closeCart} className="p-2 hover:bg-gray-100 rounded-full transition">
+          <div
+            className="flex shrink-0 items-center justify-between border-b border-border bg-white px-4 py-4 sm:px-5"
+            style={{ paddingTop: 'max(1rem, env(safe-area-inset-top))' }}
+          >
+            <button
+              type="button"
+              onClick={closeCart}
+              className="touch-manipulation -m-2 flex min-h-11 min-w-11 items-center justify-center rounded-full text-charcoal ring-1 ring-transparent transition-colors hover:bg-peach-tint hover:ring-border/80"
+              aria-label="إغلاق السلّة"
+            >
               <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            <h2 className="text-lg font-bold text-[#1C1C1C]">سلّتك</h2>
-            <span className="text-sm text-[#5c5656]">{items.length} منتج</span>
+            <h2 className="text-lg font-bold text-charcoal">سلّتك</h2>
+            <span className="tabular-nums text-sm text-muted">{items.length} منتج</span>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-5 py-4 flex flex-col gap-4">
+          <div className="flex flex-1 flex-col gap-4 overflow-y-auto overscroll-y-contain px-4 py-4 touch-pan-y sm:px-5">
             {items.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-16 gap-4">
                 <div className="w-16 h-16 rounded-full bg-[#f1e6e4] flex items-center justify-center text-2xl">🛒</div>
-                <p className="text-[#5c5656] text-center">سلّتك فارغة، أضيفي منتجاتك المفضلة!</p>
+                <p className="max-w-[22rem] text-center text-muted leading-relaxed">سلّتك فارغة، أضيفي منتجاتك المفضلة!</p>
               </div>
             ) : (
               <>
                 {/* Cart Items */}
                 {items.map((item) => (
-                  <div key={item.productId} className="bg-white rounded-xl p-4 flex gap-3 shadow-sm">
+                  <div key={item.productId} className="flex gap-3 rounded-2xl border border-border/90 bg-white p-4 shadow-sm">
                     {cartThumb(getProductById(item.productId), 'md', item.accentColor, item.bgColor)}
                     <div className="flex-1 min-w-0">
                       <p className="font-bold text-[#1C1C1C] text-sm">{item.nameAr}</p>
@@ -90,8 +98,10 @@ export default function CartDrawer() {
                       <p className="font-bold text-[#b8485c] mt-1">{item.price} ريال</p>
                     </div>
                     <button
+                      type="button"
                       onClick={() => removeItem(item.productId)}
-                      className="text-gray-400 hover:text-red-500 transition p-1 self-start"
+                      className="touch-manipulation self-start rounded-lg p-2 text-muted transition-colors hover:bg-red-50 hover:text-red-600 min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0"
+                      aria-label="حذف من السلّة"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -106,7 +116,7 @@ export default function CartDrawer() {
                     <p className="text-sm font-bold text-[#1C1C1C] mb-3">كمّلي روتينك:</p>
                     <div className="flex flex-col gap-2">
                       {crossSells.map((p) => (
-                        <div key={p.id} className="bg-white rounded-xl p-3 flex gap-3 items-center shadow-sm">
+                        <div key={p.id} className="flex items-center gap-3 rounded-xl border border-border/80 bg-peach-soft/30 p-3 shadow-sm">
                           {cartThumb(getProductById(p.id), 'sm', p.accentColor, p.bgColor)}
                           <div className="flex-1 min-w-0">
                             <p className="font-semibold text-sm text-[#1C1C1C]">{p.nameAr}</p>
@@ -117,7 +127,7 @@ export default function CartDrawer() {
                             onClick={() => {
                               addItem({ productId: p.id, offerQty: 1, price: 199, nameAr: p.nameAr, accentColor: p.accentColor, bgColor: p.bgColor })
                             }}
-                            className="bg-[#b8485c] text-white text-xs font-bold px-3 py-2 rounded-full hover:bg-[#943c50] transition shrink-0"
+                            className="touch-manipulation shrink-0 rounded-full bg-primary px-4 py-2.5 text-xs font-bold text-white shadow-sm transition-colors hover:bg-primary-dark active:scale-[0.98] min-h-11 flex items-center justify-center"
                           >
                             أضيفي
                           </button>
@@ -132,15 +142,22 @@ export default function CartDrawer() {
 
           {/* Footer */}
           {items.length > 0 && (
-            <div className="px-5 py-4 bg-white border-t border-gray-200 flex flex-col gap-3">
-              <div className="flex justify-between items-center">
-                <span className="font-bold text-[#1C1C1C]">المجموع:</span>
-                <span className="text-xl font-bold text-[#b8485c]">{total()} ريال</span>
+            <div
+              className="flex shrink-0 flex-col gap-3 border-t border-border bg-white px-4 py-4 sm:px-5"
+              style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-charcoal">المجموع:</span>
+                <span className="tabular-nums text-xl font-bold text-primary">{total()} ريال</span>
               </div>
-              <p className="text-xs text-[#5c5656] text-center">الدفع عند الاستلام • تأكيد الطلب قبل التوصيل</p>
+              <p className="text-center text-[11px] leading-relaxed text-muted sm:text-xs">الدفع عند الاستلام • تأكيد الطلب قبل التوصيل</p>
               <button
-                onClick={() => { closeCart(); setShowCheckout(true) }}
-                className="w-full bg-[#b8485c] text-white font-bold py-4 rounded-full text-lg hover:bg-[#943c50] transition-colors"
+                type="button"
+                onClick={() => {
+                  closeCart()
+                  setShowCheckout(true)
+                }}
+                className="touch-manipulation w-full rounded-full bg-primary py-4 text-lg font-bold text-white shadow-[0_8px_24px_rgba(184,72,92,0.28)] transition-all hover:bg-primary-dark active:scale-[0.99]"
               >
                 إكمال الطلب
               </button>

@@ -22,7 +22,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
       <div style={{ height: '3px', background: `linear-gradient(90deg, transparent, ${product.accentColor}66, transparent)` }} />
 
-      <div className="p-6 sm:p-7 flex flex-1 flex-col gap-4 min-h-0 min-w-0">
+      <div className="flex flex-1 flex-col gap-4 p-5 min-h-0 min-w-0 sm:p-7 sm:gap-4">
         <div className="flex flex-wrap items-center justify-end gap-2">
           <span
             className="text-sm font-bold px-3 py-1.5 rounded-full text-white tracking-wide"
@@ -32,14 +32,14 @@ export default function ProductCard({ product }: { product: Product }) {
           </span>
         </div>
 
-        <h3 className="text-2xl sm:text-3xl font-bold text-[#1C1C1C] leading-tight tracking-tight break-words">
+        <h3 className="text-[1.35rem] leading-snug font-bold text-charcoal tracking-tight break-words sm:text-3xl md:text-[1.875rem]">
           {product.nameAr}
         </h3>
-        <p className="text-sm sm:text-base text-[#5c5656] leading-relaxed line-clamp-3 break-words">{product.subtitleAr}</p>
+        <p className="line-clamp-3 break-words text-sm leading-relaxed text-muted sm:text-base">{product.subtitleAr}</p>
 
         <Link
           href={`/products/${product.slug}`}
-          className="mt-auto w-full flex items-center justify-between px-5 py-3.5 rounded-2xl font-bold text-base group/btn transition-all"
+          className="mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold transition-all active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100 group/btn"
           style={{ background: '#FFFFFF', color: product.accentColor, border: `2px solid ${product.accentColor}44` }}
           onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = product.accentColor; (e.currentTarget as HTMLElement).style.color = '#fff'; }}
           onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#FFFFFF'; (e.currentTarget as HTMLElement).style.color = product.accentColor; }}

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Suspense } from 'react'
 import './globals.css'
 import AnalyticsBeacon from '@/components/analytics/AnalyticsBeacon'
@@ -15,6 +15,13 @@ const DEFAULT_DESCRIPTION =
 
 // Fresh HTML per request so CDN/browsers don’t keep an old shell referencing stale _next bundles.
 export const dynamic = 'force-dynamic'
+
+export const viewport: Viewport = {
+  themeColor: '#146b70',
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -54,7 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-screen antialiased text-charcoal">
         <Header />
-        <main className="min-h-screen min-w-0">{children}</main>
+        <main className="min-h-screen min-w-0 isolate pb-[env(safe-area-inset-bottom,0px)]">{children}</main>
         <PreFooterBanners />
         <Footer />
         <CartDrawer />

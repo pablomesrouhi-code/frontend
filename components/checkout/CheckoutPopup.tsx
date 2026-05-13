@@ -315,7 +315,7 @@ export default function CheckoutPopup({ onClose }: Props) {
               <input
                 {...register('name')}
                 placeholder="اسمك الكريم"
-                className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-right focus:outline-none focus:border-[#b8485c] transition bg-white text-[#1C1C1C]"
+                className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-[0.875rem] text-right text-charcoal shadow-sm transition-colors focus:border-[#b8485c] focus:outline-none"
               />
               {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
             </div>
@@ -325,7 +325,7 @@ export default function CheckoutPopup({ onClose }: Props) {
                 {...register('phone')}
                 placeholder="05XXXXXXXX"
                 dir="ltr"
-                className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-left focus:outline-none focus:border-[#b8485c] transition bg-white text-[#1C1C1C]"
+                className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-[0.875rem] text-left text-charcoal shadow-sm transition-colors focus:border-[#b8485c] focus:outline-none"
               />
               <p className="text-xs text-[#5c5656] mt-1">
                 مسموح: <span dir="ltr" className="font-mono whitespace-nowrap">05XXXXXXXX</span> أو{' '}
@@ -337,7 +337,7 @@ export default function CheckoutPopup({ onClose }: Props) {
             <button
               type="submit"
               disabled={isSubmitting || placingOrder}
-              className="w-full bg-[#b8485c] text-white font-bold py-4 rounded-full text-lg hover:bg-[#943c50] transition-colors disabled:opacity-60"
+              className="touch-manipulation w-full rounded-full bg-[#b8485c] py-4 text-lg font-bold text-white transition-all hover:bg-[#943c50] active:scale-[0.99] disabled:opacity-60 motion-reduce:active:scale-100"
             >
               {placingOrder ? 'جاري الإرسال...' : 'تأكيد الطلب'}
             </button>

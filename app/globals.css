@@ -29,19 +29,30 @@ details[open] > div {
   animation: faq-open 0.25s ease forwards;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 body {
   font-family: var(--font-arabic);
   color: var(--color-charcoal);
   direction: rtl;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background-color: var(--color-canvas);
   background-image:
     radial-gradient(900px 480px at 100% -18%, rgba(20, 107, 112, 0.075) 0%, transparent 52%),
     radial-gradient(620px 440px at -8% 102%, rgba(184, 72, 92, 0.055) 0%, transparent 48%),
     radial-gradient(ellipse 80% 50% at 50% 100%, rgba(201, 147, 126, 0.04) 0%, transparent 55%);
   background-attachment: fixed;
+}
+
+@media (max-width: 767px) {
+  body {
+    background-attachment: scroll;
+  }
 }
 
 ::selection {
