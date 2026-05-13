@@ -8,19 +8,38 @@ import PreFooterBanners from '@/components/layout/PreFooterBanners'
 import CartDrawer from '@/components/cart/CartDrawer'
 import { BRAND_LOGO_SRC, brandLogoIconType } from '@/lib/brand'
 
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL?.trim() || 'https://nabtalabo.store').replace(/\/+$/, '')
+const DEFAULT_TITLE = 'نبتة لابو | Nabta Labo'
+const DEFAULT_DESCRIPTION =
+  'نبتة لابو: متجر بتجربة تقترب من ثقة نقطة اعتماد (صيدلية من حيث الانضباط والوضوح) — علكات تحمل تركيبات مكمّل غذائي مرخّص SFDA؛ لسنا نقطة تشخّص أو وصف جرعات. جمال يومي، راحة بعد الأكل، وهدوء مسائي. السعودية.'
+
 // Fresh HTML per request so CDN/browsers don’t keep an old shell referencing stale _next bundles.
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'نبتة لابو | Nabta Labo',
-  description:
-    'نبتة لابو: متجر بتجربة تقترب من ثقة نقطة اعتماد (صيدلية من حيث الانضباط والوضوح) — علكات تحمل تركيبات مكمّل غذائي مرخّص SFDA؛ لسنا نقطة تشخّص أو وصف جرعات. جمال يومي، راحة بعد الأكل، وهدوء مسائي. السعودية.',
+  metadataBase: new URL(SITE_URL),
+  title: DEFAULT_TITLE,
+  description: DEFAULT_DESCRIPTION,
   keywords:
     'علكات, علكة غذائية, مكمّل غذائي, سلطة منتج, كولاجين, بروبيوتيك, مغنيسيوم, SFDA, نساء السعودية, نبتة لابو',
   icons: {
     icon: [{ url: BRAND_LOGO_SRC, type: brandLogoIconType(BRAND_LOGO_SRC) }],
     shortcut: BRAND_LOGO_SRC,
     apple: BRAND_LOGO_SRC,
+  },
+  openGraph: {
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    siteName: 'نبتة لابو',
+    locale: 'ar_SA',
+    type: 'website',
+    images: [{ url: BRAND_LOGO_SRC, alt: 'شعار نبتة لابو — مكمّل غذائي على شكل علكة' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    images: [BRAND_LOGO_SRC],
   },
 }
 
