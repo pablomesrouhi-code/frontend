@@ -93,8 +93,10 @@ export default function CollectionPage() {
       {/* Products Grid */}
       <section className="py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch min-w-0 w-full">
-            {PRODUCTS.map((p) => <ProductCard key={p.id} product={p} />)}
+          <div className="grid min-w-0 w-full grid-cols-1 items-stretch gap-6 md:grid-cols-2 md:gap-8 xl:grid-cols-3">
+            {PRODUCTS.map((p) => (
+              <ProductCard key={p.id} product={p} layout="list" />
+            ))}
           </div>
         </div>
       </section>

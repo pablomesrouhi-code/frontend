@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useCartStore } from '@/stores/cart-store'
-import { PRODUCTS, getProductById } from '@/lib/products'
+import { PRODUCTS, getProductById, formatSarAmount } from '@/lib/products'
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 import CheckoutPopup from '@/components/checkout/CheckoutPopup'
 
@@ -95,7 +95,7 @@ export default function CartDrawer() {
                       <p className="text-xs text-[#5c5656] mt-0.5">
                         {item.offerQty === 1 ? 'قطعة واحدة' : item.offerQty === 2 ? 'قطعتين' : '3 قطع'}
                       </p>
-                      <p className="font-bold text-[#b8485c] mt-1">{item.price} ريال</p>
+                      <p className="mt-1 font-bold text-[#b8485c] tabular-nums">{formatSarAmount(item.price)}</p>
                     </div>
                     <button
                       type="button"
@@ -121,7 +121,7 @@ export default function CartDrawer() {
                           <div className="flex-1 min-w-0">
                             <p className="font-semibold text-sm text-[#1C1C1C]">{p.nameAr}</p>
                             <p className="text-xs text-[#5c5656] truncate">{p.subtitleAr}</p>
-                            <p className="text-sm font-bold text-[#b8485c] mt-0.5">199 ريال</p>
+                            <p className="mt-0.5 text-sm font-bold text-[#b8485c] tabular-nums">{formatSarAmount(199)}</p>
                           </div>
                           <button
                             onClick={() => {
@@ -148,7 +148,7 @@ export default function CartDrawer() {
             >
               <div className="flex items-center justify-between">
                 <span className="font-bold text-charcoal">المجموع:</span>
-                <span className="tabular-nums text-xl font-bold text-primary">{total()} ريال</span>
+                <span className="tabular-nums text-xl font-bold text-primary">{formatSarAmount(total())}</span>
               </div>
               <p className="text-center text-[11px] leading-relaxed text-muted sm:text-xs">الدفع عند الاستلام • تأكيد الطلب قبل التوصيل</p>
               <button

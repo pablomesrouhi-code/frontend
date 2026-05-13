@@ -1,5 +1,16 @@
 'use client'
-import { OFFERS } from '@/lib/products'
+import { OFFERS, formatSarAmount } from '@/lib/products'
+
+const UNIT_COMPARE = 199
+
+function savingsForQty(qty: 1 | 2 | 3): number | null {
+  if (qty === 1) return null
+  const full = UNIT_COMPARE * qty
+  const offer = OFFERS.find((o) => o.qty === qty)?.price
+  if (offer == null) return null
+  const s = full - offer
+  return s > 0 ? s : null
+}
 
 type Props = {
   selected: 1 | 2 | 3
@@ -11,30 +22,33 @@ type Props = {
 export default function OfferSelector({ selected, onChange, accentColor = '#b8485c' }: Props) {
   return (
     <div className="min-w-0 max-w-full">
-      <div className="mb-4 flex flex-col gap-2 text-right">
-        <p className="text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: accentColor }}>
-          الأسعار الحالية
+      <div className="mb-4 flex flex-col gap-1.5 text-right sm:mb-5 sm:gap-2">
+        <p className="text-[10px] font-black uppercase tracking-[0.18em] sm:text-xs" style={{ color: accentColor }}>
+          اختيار العرض
         </p>
-        <p className="text-[15px] sm:text-base font-bold text-[#1C1C1C] leading-snug">اختاري العرض اللي يطابقكم</p>
+        <p className="text-base font-black leading-snug text-charcoal sm:text-lg md:text-xl md:leading-tight">
+          أسعار واضحة — تختارين العدد اللي يناسبك
+        </p>
         <span
-          className="ms-auto h-[3px] w-12 rounded-full"
+          className="ms-auto h-1 w-16 rounded-full sm:w-20"
           style={{ background: `linear-gradient(270deg, ${accentColor}, transparent)` }}
           aria-hidden
         />
       </div>
-      <div className="flex flex-col gap-2.5 min-w-0">
+      <div className="flex min-w-0 flex-col gap-2.5 sm:gap-3">
         {OFFERS.map((offer) => {
           const active = selected === offer.qty
+          const save = savingsForQty(offer.qty)
           return (
             <button
               type="button"
               key={offer.qty}
               onClick={() => onChange(offer.qty)}
-              className={`relative flex flex-wrap sm:flex-nowrap items-center justify-between gap-x-2 gap-y-2 rounded-2xl border-2 px-4 py-4 sm:py-3.5 min-h-[3.25rem] text-right cursor-pointer min-w-0 max-w-full touch-manipulation overflow-hidden transition-all duration-300 ease-out ${
+              className={`relative flex min-h-[3.5rem] flex-wrap items-center justify-between gap-x-2.5 gap-y-2 rounded-2xl border-2 px-4 py-3 text-right sm:min-h-[3.75rem] sm:flex-nowrap sm:rounded-3xl sm:px-5 sm:py-4 ${
                 active
                   ? 'shadow-[0_8px_30px_-8px_rgba(28,28,28,0.12),0_0_0_1px_rgba(255,255,255,0.85)_inset]'
                   : 'border-gray-200/90 bg-white/90 hover:border-gray-300 hover:bg-white hover:shadow-md active:scale-[0.99]'
-              }`}
+              } cursor-pointer touch-manipulation overflow-hidden transition-all duration-300 ease-out`}
               style={
                 active
                   ? {
@@ -52,24 +66,24 @@ export default function OfferSelector({ selected, onChange, accentColor = '#b848
                   aria-hidden
                 />
               )}
-              <div className="flex items-center gap-3 min-w-0 flex-1 justify-end relative z-[1]">
+              <div className="relative z-[1] flex min-w-0 flex-1 items-center justify-end gap-3.5">
                 <div
-                  className="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors"
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-[2.5px] transition-colors sm:h-7 sm:w-7"
                   style={{
                     borderColor: active ? accentColor : '#d4cbc7',
                     background: active ? 'white' : 'transparent',
-                    boxShadow: active ? `0 0 0 3px color-mix(in srgb, ${accentColor} 22%, transparent)` : undefined,
+                    boxShadow: active ? `0 0 0 4px color-mix(in srgb, ${accentColor} 22%, transparent)` : undefined,
                   }}
                 >
                   {active && (
-                    <span className="w-3 h-3 rounded-full transition-transform duration-200 scale-100" style={{ background: accentColor }} />
+                    <span className="h-3 w-3 rounded-full transition-transform duration-200 scale-100 sm:h-3.5 sm:w-3.5" style={{ background: accentColor }} />
                   )}
                 </div>
-                <div className="flex flex-wrap items-center justify-end gap-x-2 gap-y-1 min-w-0">
-                  <span className="font-bold text-[#1C1C1C] break-words text-right text-[15px] sm:text-base">{offer.label}</span>
+                <div className="flex min-w-0 flex-wrap items-center justify-end gap-x-2 gap-y-1">
+                  <span className="break-words text-right text-sm font-bold text-[#1C1C1C] sm:text-base">{offer.label}</span>
                   {offer.badge && (
                     <span
-                      className="text-[11px] font-bold uppercase tracking-wide text-white px-2.5 py-1 rounded-full shrink-0 shadow-sm"
+                      className="shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wide text-white shadow-sm sm:px-3 sm:py-1 sm:text-[11px]"
                       style={{ background: `linear-gradient(135deg, ${accentColor}, color-mix(in srgb, ${accentColor} 70%, #1a1a1a))` }}
                     >
                       {offer.badge}
@@ -77,13 +91,16 @@ export default function OfferSelector({ selected, onChange, accentColor = '#b848
                   )}
                 </div>
               </div>
-              <span
-                className="font-extrabold tabular-nums shrink-0 whitespace-nowrap text-lg sm:text-xl ms-auto sm:ms-0 relative z-[1]"
-                style={{ color: accentColor }}
-              >
-                {offer.price}
-                <span className="text-sm sm:text-base font-bold me-1">ريال</span>
-              </span>
+              <div className="relative z-[1] ms-auto flex shrink-0 flex-col items-end gap-0.5 sm:ms-0">
+                <span className="text-lg font-black tabular-nums whitespace-nowrap sm:text-xl" style={{ color: accentColor }}>
+                  {formatSarAmount(offer.price)}
+                </span>
+                {save != null && (
+                  <span className="rounded-full bg-emerald-600/12 px-2 py-0.5 text-[10px] font-black leading-snug text-emerald-900 ring-1 ring-emerald-600/30 sm:px-2.5 sm:text-[11px] sm:leading-snug">
+                    وفّر {formatSarAmount(save)} عن نفس العدد لو اشتريتِه بالقطعة الواحدة
+                  </span>
+                )}
+              </div>
             </button>
           )
         })}

@@ -420,23 +420,43 @@ export default function HomePage() {
       </section>
 
       {/* ─── Final CTA ─── */}
-      <section className="py-20" style={{ background: 'linear-gradient(135deg, #b8485c 0%, #943c50 100%)' }}>
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-          {/* Gold accent */}
-          <div className="w-12 h-1 rounded-full mx-auto mb-8" style={{ background: 'linear-gradient(90deg, #c9937e, #d8c9c6)' }} />
-          <h2 className="text-3xl font-bold text-white mb-4">جاهزة لروتين بسلطة نبتة لابو؟</h2>
-          <p className="mb-8 text-lg" style={{ color: 'rgba(255,255,255,0.75)' }}>
-            اختاري المكمّل المناسب — وعدٌ وفق تصنيفه، ومذاقٌ يسهّل أن تبقيه في يومكِ.
+      <section className="relative overflow-hidden py-20 sm:py-24">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(155deg, #0f3a3d 0%, #146b70 32%, #1a5c5f 55%, #6b3038 88%, #943c50 100%)',
+          }}
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -top-24 start-1/2 h-[28rem] w-[min(140%,56rem)] -translate-x-1/2 rounded-full opacity-[0.22] blur-3xl"
+          style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.95) 0%, transparent 68%)' }}
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.35]"
+          style={{
+            backgroundImage:
+              'radial-gradient(ellipse 90% 55% at 100% 0%, rgba(201,147,126,0.35) 0%, transparent 50%), radial-gradient(ellipse 70% 50% at 0% 100%, rgba(184,72,92,0.2) 0%, transparent 55%)',
+          }}
+          aria-hidden
+        />
+        <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6">
+          <div className="mx-auto mb-6 h-1 w-14 rounded-full sm:mb-8 sm:w-16" style={{ background: 'linear-gradient(90deg, #c9937e, rgba(255,255,255,0.55))' }} />
+          <h2 className="mb-4 text-3xl font-black leading-tight text-white sm:text-4xl">جاهزة لروتين بسلطة نبتة لابو؟</h2>
+          <p className="mx-auto mb-9 max-w-xl text-base leading-relaxed text-white/85 sm:mb-10 sm:text-lg">
+            تصفّحي التركيبات، واقرأي الغلاف والأسئلة — ثم اختاري ما يلائم يومكِ. مكمّل غذائي بمكوّنات موسومة، مع دفع عند الاستلام وتأكيد قبل التوصيل.
           </p>
           <Link
             href="/products"
-            className="inline-flex items-center gap-2 font-bold px-10 py-4 rounded-full text-base transition-all hover:-translate-y-0.5 hover:shadow-2xl"
-            style={{ background: '#c9937e', color: '#fff', boxShadow: '0 4px 20px rgba(184,72,92,0.35)' }}
+            className="inline-flex items-center gap-2 rounded-full px-11 py-4 text-base font-black text-[#1C1C1C] shadow-[0_12px_40px_-8px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-0.5 hover:shadow-2xl sm:text-lg"
+            style={{ background: 'linear-gradient(145deg, #fdf6f3 0%, #c9937e 100%)', color: '#1C1C1C' }}
           >
             تسوقي الآن
-            <span>←</span>
+            <span aria-hidden>←</span>
           </Link>
-          <p className="text-sm mt-4" style={{ color: 'rgba(255,255,255,0.45)' }}>دفع عند الاستلام · تأكيد قبل التوصيل · ضمان 30 يوم</p>
+          <p className="mt-6 text-sm font-semibold text-white/75 sm:text-base">دفع عند الاستلام · تأكيد قبل التوصيل · ضمان 30 يوم</p>
         </div>
       </section>
 

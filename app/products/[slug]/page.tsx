@@ -5,7 +5,6 @@ import StarRating from '@/components/ui/StarRating'
 import ProductPageClient from './ProductPageClient'
 import ProductCard from '@/components/product/ProductCard'
 import ProductPageImageSlot from '@/components/product/ProductPageImageSlot'
-import ProductStickyCta from '@/components/product/ProductStickyCta'
 
 function reviewInitials(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean)
@@ -90,14 +89,37 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         }
       : null
 
+  const magnetLine =
+    product.pdpMagnetLineAr ??
+    'مكمّل غذائي وفق الغلاف — اختاري العرض المناسب من خانة الطلب أسفل الصفحة.'
+
   return (
     <div className="bg-[#FFFFFF] min-w-0 overflow-x-hidden">
-      {/* Hero */}
-      <section className="bg-white py-7 sm:py-10 md:py-16 border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
-          <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center min-w-0">
-            <div className="order-1 md:order-2 min-w-0">
-              <div className="w-full max-w-[min(100%,380px)] sm:max-w-md mx-auto md:max-w-none overflow-hidden rounded-2xl border border-gray-100 bg-white p-2 sm:p-3 shadow-sm lg:min-h-[min(480px,52vh)] lg:flex lg:items-center">
+      {/* Hero — خلفية ملوّنة، عرض واضح، أول سطر جذّاب */}
+      <section
+        className="relative min-w-0 overflow-hidden border-b border-white/50 py-5 sm:py-7 md:py-10"
+        style={{
+          background: `linear-gradient(168deg, #ffffff 0%, color-mix(in srgb, ${product.bgColor} 72%, #fff) 38%, color-mix(in srgb, ${product.accentColor} 9%, #fff) 100%)`,
+        }}
+      >
+        <div
+          className="pointer-events-none absolute -top-28 -end-20 h-72 w-72 rounded-full opacity-[0.18] blur-3xl sm:h-96 sm:w-96"
+          style={{ background: product.accentColor }}
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -bottom-24 -start-16 h-64 w-64 rounded-full opacity-[0.12] blur-3xl"
+          style={{ background: product.accentColor }}
+          aria-hidden
+        />
+        <div className="relative z-[1] mx-auto max-w-6xl min-w-0 px-4 sm:px-6">
+          {/* موبايل: صورة فوق؛ ديسكتوب: صورة بجانب النص (كالسابق) */}
+          <div className="grid min-w-0 grid-cols-1 items-start gap-5 sm:gap-6 md:grid-cols-2 md:items-start md:gap-8 lg:gap-10">
+            <div className="order-1 min-w-0 md:order-2 md:pt-0">
+              <div
+                className="mx-auto w-full max-w-md overflow-hidden rounded-2xl border-2 bg-white/95 p-1.5 shadow-lg backdrop-blur-sm sm:max-w-lg sm:rounded-3xl sm:p-2 md:mx-0 md:max-w-none"
+                style={{ borderColor: `color-mix(in srgb, ${product.accentColor} 30%, #e8e0de)` }}
+              >
                 {pdpHero ? (
                   <Image
                     src={pdpHero.src}
@@ -105,8 +127,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                     width={pdpHero.width}
                     height={pdpHero.height}
                     priority
-                    sizes="(max-width: 640px) min(380px, 100vw), (max-width: 768px) 90vw, 500px"
-                    className="h-auto w-full max-h-[min(58vh,420px)] object-contain sm:max-h-none md:max-h-[min(70vh,560px)] lg:max-h-none"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 560px"
+                    className="h-auto w-full max-h-[min(44vh,320px)] object-contain sm:max-h-[min(48vh,380px)] md:max-h-[min(58vh,440px)] lg:max-h-[min(72vh,520px)]"
                   />
                 ) : (
                   <ProductPageImageSlot
@@ -114,51 +136,68 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                     height={product.coverHeight}
                     accentColor={product.accentColor}
                     labelAr="مساحة صورة الهيرو — غلاف المنتج"
-                    className="max-h-[min(58vh,420px)] sm:max-h-none"
+                    className="max-h-[min(44vh,320px)] sm:max-h-[min(48vh,380px)] md:max-h-[min(58vh,440px)] lg:max-h-[min(72vh,520px)]"
                   />
                 )}
               </div>
               {product.captionUnderHeroImage && (
-                <p className="mt-3 px-1 text-[13px] sm:text-sm text-[#5c5656] leading-relaxed text-center md:text-right max-w-[min(100%,380px)] sm:max-w-md mx-auto md:max-w-none break-words">
+                <p className="mx-auto mt-2 max-w-xl break-words text-center text-[11px] leading-snug text-muted sm:mt-3 sm:text-xs md:mx-0 md:text-right">
                   {product.captionUnderHeroImage}
                 </p>
               )}
             </div>
-            <div className="order-2 md:order-1 min-w-0 max-w-full text-right break-words pt-1 md:pt-0">
+            <div className="order-2 min-w-0 text-pretty break-words text-right md:order-1 md:max-w-xl lg:max-w-none">
               <span
-                className="mb-2 inline-block max-w-full break-words rounded-full px-3 py-1.5 text-right text-xs font-semibold text-white sm:mb-3 sm:px-4 sm:text-sm"
-                style={{ background: product.accentColor }}
+                className="mb-2 inline-flex max-w-full items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-black text-white shadow sm:mb-3 sm:gap-2 sm:px-3.5 sm:py-1.5 sm:text-xs"
+                style={{
+                  background: `linear-gradient(120deg, ${product.accentColor} 0%, color-mix(in srgb, ${product.accentColor} 65%, #1a1a1a) 100%)`,
+                  boxShadow: `0 10px 28px -12px ${product.accentColor}99`,
+                }}
               >
+                <span aria-hidden className="opacity-95">
+                  ✦
+                </span>
                 {product.badgeAr}
               </span>
 
               <p
+                className="mb-3 border-r-2 pe-2.5 text-sm font-semibold leading-snug text-charcoal sm:mb-4 sm:pe-3 sm:text-[0.9375rem]"
+                style={{ borderColor: product.accentColor }}
+              >
+                {magnetLine}
+              </p>
+
+              <h1 className="mb-2 break-words text-2xl font-black leading-tight tracking-tight text-charcoal sm:text-3xl sm:leading-[1.15]">
+                {product.nameAr}
+              </h1>
+
+              <p
                 id="pdp-hook"
-                className="scroll-mt-[calc(5.5rem+env(safe-area-inset-top))] text-[1.25rem] font-black leading-snug text-charcoal sm:text-2xl md:text-[1.65rem] md:leading-snug"
+                className="scroll-mt-[calc(5.5rem+env(safe-area-inset-top))] mb-3 text-pretty text-[0.9375rem] font-bold leading-snug text-charcoal sm:mb-4 sm:text-base"
               >
                 {product.heroHeadlineAr}
               </p>
 
-              <h1 className="mb-2 mt-2 break-words text-2xl font-bold leading-tight text-charcoal sm:text-3xl md:text-4xl">{product.nameAr}</h1>
-
               {product.copyAfterHeroPrice && (
-                <p className="mb-3 break-words border-r-2 border-border pr-3 text-[13px] leading-relaxed text-muted sm:text-sm">
+                <p className="mb-4 break-words text-xs leading-relaxed text-muted sm:mb-5 sm:text-sm">
                   {product.copyAfterHeroPrice}
                 </p>
               )}
 
-              <div className="mb-3 sm:mb-4">
+              <div className="mb-4 sm:mb-5">
                 <StarRating rating={product.rating} count={product.reviewCount} />
               </div>
 
-              <p className="mb-4 break-words text-[15px] leading-relaxed text-muted sm:mb-6 sm:text-base">{product.heroSubAr}</p>
+              <p className="mb-5 text-xs leading-relaxed text-muted sm:mb-6 sm:text-[13px] sm:leading-relaxed">
+                {product.heroSubAr}
+              </p>
 
-              <p className="mb-2 text-xs font-bold text-authority">خلاصة تركيبية</p>
-              <div className="mb-4 flex flex-wrap items-center justify-end gap-2">
+              <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-authority sm:text-[11px]">خلاصة تركيبية</p>
+              <div className="mb-3 flex flex-wrap items-center justify-end gap-1.5 sm:mb-4 sm:gap-2">
                 {product.ingredients.slice(0, 3).map((ing) => (
                   <span
                     key={ing}
-                    className="max-w-full break-words rounded-full border border-border bg-white px-3 py-1 text-sm text-muted"
+                    className="max-w-full break-words rounded-full border border-border bg-white/90 px-2.5 py-0.5 text-xs text-charcoal shadow-sm sm:px-3 sm:py-1 sm:text-sm"
                   >
                     {ing}
                   </span>
@@ -182,32 +221,68 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       </section>
 
       {/* Trust Strip */}
-      <div className="bg-gradient-to-l from-primary to-primary-dark py-3 sm:py-3.5">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-6 gap-y-2 px-3 text-center text-[11px] font-semibold leading-snug text-white sm:gap-8 sm:text-sm">
+      <div
+        className="relative overflow-hidden border-b border-white/10 py-3.5 sm:py-4"
+        style={{
+          background: `linear-gradient(95deg, ${product.accentColor} 0%, color-mix(in srgb, ${product.accentColor} 55%, #1a1012) 48%, #146b70 100%)`,
+        }}
+      >
+        <div
+          className="pointer-events-none absolute inset-0 opacity-30"
+          style={{
+            backgroundImage: `radial-gradient(ellipse 80% 120% at 100% 50%, #fff 0%, transparent 55%)`,
+          }}
+          aria-hidden
+        />
+        <div className="relative mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-5 gap-y-2.5 px-3 text-center text-[11px] font-bold leading-snug text-white/95 drop-shadow-sm sm:gap-x-8 sm:text-sm">
           <span className="max-[380px]:basis-[48%]">🛡️ دفع عند الاستلام</span>
-          <span className="max-[380px]:basis-[48%]">🚚 شحن سريع لجميع المناطق</span>
+          <span className="max-[380px]:basis-[48%]">🚚 شحن لجميع المناطق</span>
           <span className="max-[380px]:basis-[48%]">📞 تأكيد هاتفي قبل الشحن</span>
-          <span className="max-[380px]:basis-[48%]">↩️ ضمان ذهبي 30 يوم — استرجاع كامل حسب السياسة</span>
+          <a
+            href="/returns-refunds"
+            className="max-[380px]:basis-[48%] text-white/95 underline decoration-white/40 underline-offset-2 transition hover:text-white hover:decoration-white"
+          >
+            ↩️ ضمان 30 يوم — حسب السياسة
+          </a>
         </div>
       </div>
 
+      <p className="border-b border-border bg-gradient-to-l from-peach-soft/40 via-white to-authority/[0.06] py-3 text-center text-[11px] font-semibold leading-relaxed text-charcoal sm:py-3.5 sm:text-sm">
+        <span className="text-muted">نفس رحلة عميلات قبلك:</span> إعلان → صفحة → طلب → تأكيد → توصيل.{' '}
+        <strong className="font-bold text-charcoal">التفاصيل الدقيّة على الغلاف</strong>
+        <span className="text-muted"> — وقرّري براحتك.</span>
+      </p>
+
       {/* Pain / Desire - alternating */}
-      <section className="bg-white py-10 sm:py-12 md:py-16">
+      <section
+        className="border-b border-border/70 py-10 sm:py-12 md:py-16"
+        style={{
+          background: `linear-gradient(180deg, #fff 0%, color-mix(in srgb, ${product.bgColor} 35%, #fff) 100%)`,
+        }}
+      >
         <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
-          <h2 className="mb-8 text-center text-xl font-black text-charcoal sm:mb-10 sm:text-2xl md:text-start">
-            وش تغيّر مع روتين واضح؟
-          </h2>
+          <div className="mx-auto mb-8 max-w-3xl text-center md:mx-0 md:max-w-none md:text-start">
+            <p className="mb-2 inline-block rounded-full bg-charcoal/90 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white sm:text-xs">
+              المشكل اللي تجي منه غالبًا
+            </p>
+            <h2 className="mt-2 text-xl font-black leading-snug text-charcoal sm:text-2xl md:text-3xl">
+              وقت تفتحين الصفحة وأنت ما محتاجة «كلام كبير» — تحتاجين خطوة تثبت معاكِ
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
+              الإعلان عطاكِ فكرة سريعة؛ هنا تجين التفاصيل بلا مبالغة: وش غادي يكمّلك روتينك، ووش نقدّمو من خدمة وتوصيل.
+            </p>
+          </div>
 
           <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-10">
             <div className="order-2 space-y-5 text-right lg:order-2 lg:col-span-5">
               <div className="rounded-3xl border border-primary/25 bg-peach-soft/50 p-5 shadow-sm ring-1 ring-black/[0.03] sm:p-6">
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">اليوميات</p>
-                <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">لماذا يهمّ هذا المنتج؟</h3>
+                <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">لاش هاد المنتج ممكن يفيدكم؟</h3>
                 <p className="mt-3 text-base leading-relaxed text-muted">{product.painCopy}</p>
               </div>
               <div className="rounded-3xl border border-authority/30 bg-authority/[0.05] p-5 shadow-sm sm:p-6">
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-authority">ضمن سلطة المكمّل</p>
-                <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">كيف يدعم خطتك اليومية؟</h3>
+                <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">كيف غادي يكمّل نهاركم بأسلوب واقعي؟</h3>
                 <ul className="mt-4 flex flex-col gap-3">
                   {product.benefits.slice(0, 4).map((b) => (
                     <li key={b} className="flex items-start gap-3 rounded-2xl bg-white px-4 py-3 ring-1 ring-border/70">
@@ -254,7 +329,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {product.benefits.length > 4 ? (
       <section className="border-t border-border bg-peach-soft/20 py-10 sm:py-12 md:py-14">
         <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
-          <h2 className="mb-6 text-center text-xl font-black text-charcoal sm:text-2xl">تكميلات لفهم أوسع للفائدة اليومية</h2>
+          <h2 className="mb-2 text-center text-xl font-black text-charcoal sm:text-2xl">مزايا إضافية بلا تضليل</h2>
+          <p className="mx-auto mb-8 max-w-2xl text-center text-sm text-muted">
+            نقاط تكمّل اللي قبل؛ مو وعود علاج وبلا ادّعاء واحد للجميع.
+          </p>
           <div className="mx-auto grid max-w-3xl grid-cols-1 gap-3 sm:gap-4">
             {product.benefits.slice(4).map((b) => (
               <div
@@ -366,9 +444,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               )}
             </div>
             <div className="order-1 min-w-0 max-w-full break-words text-right lg:order-2 lg:col-span-5">
-              <h2 className="mb-2 text-xl font-black text-charcoal sm:text-2xl">المكوّنات واللسان العلمي</h2>
+              <p className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-muted">شفافية</p>
+              <h2 className="mb-2 text-xl font-black text-charcoal sm:text-2xl md:text-3xl">المكوّنات وبأسلوب واضح</h2>
               <p className="mb-6 text-sm leading-relaxed text-muted">
-                تفاصيل وفق تصنيف «مكمّل غذائي» — كل بند أسفله إشارة داعمة وفق المتعارف؛ النتيجة اليومية تختلف بحسب الشخص والالتزام بالروتين.
+                كل شي أساسي موجود على الغلاف المعتمد لمنتجكم؛ هنا خلّينا تعريف مختصر يساعدك تفهمين الفورمولا بدون لفّ. هذا المنتج بتصنيف مكمّل غذائي — مش دواء ومش توصيف طبي.
               </p>
               <div className="flex flex-col gap-3 sm:gap-4">
                 {product.ingredients.map((ing) => (
@@ -402,12 +481,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             className="rounded-2xl p-5 sm:p-8 min-w-0 max-w-full break-words"
             style={{ background: product.bgColor }}
           >
-            <div className="text-3xl sm:text-4xl mb-2 sm:mb-3">🌿</div>
-            <h2 className="break-words text-xl font-black text-charcoal sm:text-2xl">كيفية الاستخدام</h2>
+            <div className="mb-2 text-3xl sm:mb-3 sm:text-4xl">🌿</div>
+            <h2 className="break-words text-xl font-black text-charcoal sm:text-2xl">وش تسوين بالضبط؟ (روتين بسيط)</h2>
             <p className="mt-4 break-words text-[15px] leading-relaxed text-muted sm:text-lg">{product.howToUse}</p>
             <p className="mt-4 rounded-2xl bg-white/60 px-4 py-3 text-sm leading-relaxed text-charcoal ring-1 ring-black/[0.04]">
-              <strong className="text-authority">التزام الأسابيع الأولى يفرق؛</strong> كثير عميلات يلاحظن أن الروتين يصبح «تلقائيًا» قبل أن يكتمل شهر — والنتيجة المرئية أو الإحساسية{' '}
-              <strong className="text-charcoal">تختلف</strong> حسب الشخص والنوم والتغذية. التزموا تعليمات العبوة المعتمدة.
+              <strong className="text-authority">أسابيع أولى بانتظام تفرق أكثر من «جرعة وحدة معجزة»؛</strong> كثير من عميلاتنا يقلّبوها عادة قبل ما يكمل الشهر والإحساس أو المظهر{' '}
+              <strong className="text-charcoal">يختلف</strong> حسب الشخص والنوم والأكل والالتزام.{' '}
+              <span className="text-muted">تلزم تعليمات الغلاف المعتمد؛ كلام الصفحة تكميلي ومش بديل له.</span>
             </p>
           </div>
         </div>
@@ -442,13 +522,27 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </section>
       )}
 
-      {/* Reviews */}
-      <section className="overflow-x-hidden bg-peach-soft/15 py-10 sm:py-12 md:py-16">
+      {/* Reviews — فوق بطاقات «كمّلي السلة» */}
+      <section
+        id="pdp-reviews"
+        className="scroll-mt-28 overflow-x-hidden border-t border-border/60 py-10 sm:py-12 md:py-16"
+        style={{
+          background: `linear-gradient(180deg, color-mix(in srgb, ${product.bgColor} 55%, #fff) 0%, #fff 55%, color-mix(in srgb, ${product.accentColor} 5%, #fff) 100%)`,
+        }}
+      >
         <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
-          <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="mb-8 flex flex-col gap-4 border-b border-border/80 pb-8 sm:flex-row sm:items-end sm:justify-between md:mb-10">
             <div className="text-right">
-              <h2 className="text-xl font-black text-charcoal sm:text-2xl">مراجعات عميلات</h2>
-              <p className="mt-1 text-sm text-muted">تقييمات إرشادية — النتيجة شخصية ولها علاقة بالالتزام بالروتين</p>
+              <p
+                className="mb-2 inline-flex rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-sm sm:text-xs"
+                style={{ background: product.accentColor }}
+              >
+                إثبات اجتماعي
+              </p>
+              <h2 className="mt-1 text-xl font-black text-charcoal sm:text-2xl md:text-3xl">وش قالت عميلات اختارت المنتج؟</h2>
+              <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">
+                آراء شخصية؛ النتيجة تختلف حسب الجسم والنوم والأكل والالتزام اليومي. للأسئلة التفصيلية راجعي قسم الأسئلة في آخر الصفحة.
+              </p>
             </div>
             <div className="shrink-0 self-end sm:self-center">
               <StarRating rating={product.rating} count={product.reviewCount} />
@@ -474,7 +568,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                     <p className="mt-2 font-black text-charcoal">{r.name}</p>
                   </div>
                 </div>
-                <blockquote className="min-w-0 flex-1 text-[15px] leading-relaxed text-charcoal">
+                <blockquote className="min-w-0 flex-1 text-[15px] leading-relaxed text-charcoal md:text-base">
                   «{r.text}»
                 </blockquote>
               </article>
@@ -496,27 +590,68 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
       {/* Cross-sells */}
       {crossSellProducts.length > 0 && (
-        <section className="py-10 sm:py-12 md:py-14">
+        <section className="border-t border-border bg-white py-10 sm:py-12 md:py-14">
           <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
-            <h2 className="text-2xl font-bold text-[#1C1C1C] mb-3 text-center break-words px-1">
-              أكملي روتينك على خطّة واضحة — كما تختارين على رفّ المكمّل
+            <p className="mb-2 text-center text-xs font-black uppercase tracking-[0.2em] text-primary">كمّلي السلة بحكمة</p>
+            <h2 className="text-2xl font-black text-charcoal mb-3 text-center break-words px-1 sm:text-3xl">
+              غالبًا عميلاتنا يكمّلوا روتين كامل قبل ما تصير العروض أغلى
             </h2>
-            <p className="text-[#5c5656] text-center mb-8 break-words px-1">
-              كل علكة لهدف منفصل؛ التركيبات تكمّل بعضها بحسب يومكِ لا بإعلان واحد عن «حبة سحرية»
+            <p className="mx-auto mb-10 max-w-2xl text-center text-[15px] leading-relaxed text-muted break-words px-1 sm:text-lg">
+              إعلان واحد ما يحل اليوم كامل؛ كل منتج له دوره (صبح، بعد الأكل، مساء). اختاري اللي يطابقكم — مو لازم تاخذي كلشي مرّة وحدة، بس الوضوح قبل الطلب{' '}
+              <strong className="font-bold text-charcoal">يوفّر وقت وردّات أكثر تنظيمًا</strong>.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
               {crossSellProducts.map((p) => (
-                <ProductCard key={p.id} product={p} />
+                <ProductCard key={p.id} product={p} layout="list" />
               ))}
             </div>
           </div>
         </section>
       )}
 
+      <section
+        id="pdp-return-to-offer"
+        className="scroll-mt-[calc(4.75rem+env(safe-area-inset-top))] border-y border-border bg-gradient-to-bl from-peach-soft/50 via-white to-authority/[0.06] py-12 sm:py-14 md:py-16"
+      >
+        <div className="mx-auto flex max-w-3xl flex-col items-center px-4 text-center sm:px-6">
+          <p className="mb-3 text-xs font-black uppercase tracking-[0.26em]" style={{ color: product.accentColor }}>
+            جاهزة من القرار؟
+          </p>
+          <h2 className="text-2xl font-black leading-snug text-charcoal sm:text-3xl">طلعي لفوق؛ نفس العربات والخصم موجودين في خانة الأسعار فوق الصفحة</h2>
+          <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-muted sm:text-lg">
+            اختاري الخانة المناسبة (قطعة واحدة أو عرض القطعتين أو الثلاث)، «أضيفي للسلة» يفتح لك تأكيد الطلب.{' '}
+            <strong className="font-semibold text-charcoal">ودفع كاش وقت التسليم</strong>
+            إن كان هذا اللي مخليكِ مرتاحة أكثر قبل ما تكمّلي.
+          </p>
+          <div className="mt-8 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:justify-center">
+            <a
+              href="#pdp-buy-anchor"
+              className="inline-flex min-h-[48px] min-w-[min(100%,240px)] items-center justify-center rounded-2xl px-8 py-3.5 text-base font-black text-white shadow-lg transition-[transform,filter] hover:brightness-105 active:translate-y-[1px]"
+              style={{
+                background: `linear-gradient(145deg, ${product.accentColor} 0%, color-mix(in srgb, ${product.accentColor} 82%, black) 100%)`,
+                boxShadow: `0 14px 40px -14px ${product.accentColor}88`,
+              }}
+            >
+              رجوع إلى العرض والطلب (↑)
+            </a>
+            <a
+              href="#pdp-reviews"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-2xl border-2 border-border bg-white px-7 py-3.5 text-base font-bold text-charcoal shadow-sm ring-1 ring-black/[0.04] transition hover:bg-peach-soft/30"
+            >
+              ارجعي لآراء العميلات
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="py-10 sm:py-12 md:py-14 bg-white">
         <div className="max-w-3xl mx-auto px-3 sm:px-6 min-w-0">
-          <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-6 sm:mb-8 text-center break-words">أسئلة شائعة</h2>
+          <p className="mb-2 text-center text-xs font-black uppercase tracking-[0.22em] text-authority">نحطّكم في الصورة قبل الدفع عند الباب</p>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-charcoal mb-2 text-center break-words">كل اللي بعد يخوف من الإعلانات — نقوله بوضوح</h2>
+          <p className="mx-auto mb-8 max-w-lg text-center text-sm leading-relaxed text-muted sm:mb-10 sm:text-[15px]">
+            الأسئلة هذي أكثر الشي تجي ورا TikTok/Snapchat. شوفيهم براحة؛ ومستعدين نجاوب أثناء التأكيد الهاتفي أيضًا.
+          </p>
           <div className="flex flex-col gap-2.5 sm:gap-3 min-w-0">
             {product.faqs.map((faq) => (
               <details key={faq.q} className="bg-[#FFFFFF] rounded-2xl overflow-hidden group min-w-0 border border-[#dfd6d4]">
@@ -530,15 +665,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
       </section>
-
-      <ProductStickyCta
-        product={{
-          id: product.id,
-          nameAr: product.nameAr,
-          accentColor: product.accentColor,
-          bgColor: product.bgColor,
-        }}
-      />
     </div>
   )
 }

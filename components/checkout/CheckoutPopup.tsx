@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCartStore } from '@/stores/cart-store'
 import { getPublicApiBase } from '@/lib/api'
-import { getBestUpsell } from '@/lib/products'
+import { getBestUpsell, formatSarAmount } from '@/lib/products'
 import { CHECKOUT_UI_REV } from '@/lib/checkout-rev'
 import UpsellModal from './UpsellModal'
 
@@ -270,12 +270,12 @@ export default function CheckoutPopup({ onClose }: Props) {
                 <span className="text-sm text-[#1C1C1C] min-w-0 flex-1 text-right leading-snug break-words">
                   {item.nameAr} — {item.offerQty === 1 ? 'قطعة' : item.offerQty === 2 ? 'قطعتين' : '3 قطع'}
                 </span>
-                <span className="font-bold text-[#b8485c] text-sm shrink-0 tabular-nums">{item.price} ريال</span>
+                <span className="shrink-0 text-sm font-bold tabular-nums text-[#b8485c]">{formatSarAmount(item.price)}</span>
               </div>
             ))}
             <div className="flex justify-between items-center mt-2 pt-2">
               <span className="font-bold text-[#1C1C1C]">المجموع</span>
-              <span className="font-bold text-[#b8485c] text-lg">{total()} ريال</span>
+              <span className="text-lg font-bold tabular-nums text-[#b8485c]">{formatSarAmount(total())}</span>
             </div>
           </div>
 

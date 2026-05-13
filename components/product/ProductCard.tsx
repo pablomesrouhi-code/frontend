@@ -1,53 +1,146 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Product } from '@/lib/products'
+import { Product, getPriceForQty, formatSarAmount } from '@/lib/products'
 
-export default function ProductCard({ product }: { product: Product }) {
+type Props = {
+  product: Product
+  /** `list` = صفحة المنتجات: صورة بجانب النص على الديسكتوب + سعر بارز. `grid` = بطاقة عمودية للصفحة الرئيسية وشبكات ضيقة */
+  layout?: 'list' | 'grid'
+}
+
+function PriceBlock({ product }: { product: Product }) {
+  const priceOne = getPriceForQty(1)
+  const priceThree = getPriceForQty(3)
+
   return (
-    <div
-      className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border bg-white shadow-[0_2px_8px_rgba(26,25,21,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-authority/30 hover:shadow-[0_20px_48px_-12px_rgba(20,107,112,0.14)]"
+    <div className="text-right">
+      <p className="text-[11px] font-bold uppercase tracking-wide text-muted">سعر القطعة</p>
+      <p className="text-3xl font-black tabular-nums sm:text-4xl" style={{ color: product.accentColor }}>
+        {formatSarAmount(priceOne)}
+      </p>
+      <p className="mt-1 text-xs leading-snug text-muted">
+        3 قطع بـ <span className="font-bold text-charcoal tabular-nums">{formatSarAmount(priceThree)}</span> من صفحة المنتج
+      </p>
+    </div>
+  )
+}
+
+function CtaRow({ product }: { product: Product }) {
+  return (
+    <Link
+      href={`/products/${product.slug}`}
+      className="group/btn mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold transition-all active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100"
+      style={{ background: '#FFFFFF', color: product.accentColor, border: `2px solid ${product.accentColor}44` }}
+      onMouseEnter={(e) => {
+        ;(e.currentTarget as HTMLElement).style.background = product.accentColor
+        ;(e.currentTarget as HTMLElement).style.color = '#fff'
+      }}
+      onMouseLeave={(e) => {
+        ;(e.currentTarget as HTMLElement).style.background = '#FFFFFF'
+        ;(e.currentTarget as HTMLElement).style.color = product.accentColor
+      }}
     >
-      <Link href={`/products/${product.slug}`} className="block shrink-0 overflow-hidden bg-[#FAFAFA]">
-        <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">
+      <span>اكتشفي المنتج</span>
+      <span className="transition-transform group-hover/btn:-translate-x-1">←</span>
+    </Link>
+  )
+}
+
+export default function ProductCard({ product, layout = 'grid' }: Props) {
+  if (layout === 'grid') {
+    return (
+      <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border bg-white shadow-[0_2px_8px_rgba(26,25,21,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-authority/30 hover:shadow-[0_20px_48px_-12px_rgba(20,107,112,0.14)]">
+        <Link href={`/products/${product.slug}`} className="relative block shrink-0 overflow-hidden bg-[#FAFAFA]">
+          <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">
+            <Image
+              src={product.coverImage}
+              alt={product.nameAr}
+              fill
+              sizes="(max-width: 767px) 100vw, 33vw"
+              className="object-cover object-center"
+            />
+          </div>
+        </Link>
+
+        <div
+          className="h-[3px] w-full shrink-0"
+          style={{ background: `linear-gradient(90deg, transparent, ${product.accentColor}66, transparent)` }}
+          aria-hidden
+        />
+
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:gap-4 sm:p-7">
+          <div className="flex flex-wrap items-center justify-end gap-2">
+            <span
+              className="rounded-full px-3 py-1.5 text-sm font-bold tracking-wide text-white"
+              style={{ background: product.accentColor }}
+            >
+              {product.badgeAr}
+            </span>
+          </div>
+
+          <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight text-charcoal sm:text-3xl md:text-[1.875rem]">
+            {product.nameAr}
+          </h3>
+
+          <p className="line-clamp-3 break-words text-sm leading-relaxed text-muted sm:text-base">{product.subtitleAr}</p>
+
+          <CtaRow product={product} />
+        </div>
+      </article>
+    )
+  }
+
+  return (
+    <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border bg-white shadow-[0_2px_8px_rgba(26,25,21,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-authority/30 hover:shadow-[0_20px_48px_-12px_rgba(20,107,112,0.14)] md:flex-row md:items-stretch">
+      <Link
+        href={`/products/${product.slug}`}
+        className="relative block w-full shrink-0 overflow-hidden bg-[#FAFAFA] md:w-[min(42%,280px)] md:max-w-[300px] md:self-stretch lg:w-[40%] lg:max-w-none"
+      >
+        <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.02] md:absolute md:inset-0 md:aspect-auto md:h-full md:min-h-[260px]">
           <Image
             src={product.coverImage}
             alt={product.nameAr}
             fill
-            sizes="(max-width: 767px) 100vw, 33vw"
+            sizes="(max-width: 767px) 100vw, (max-width: 1200px) 45vw, 320px"
             className="object-cover object-center"
           />
         </div>
       </Link>
 
-      <div style={{ height: '3px', background: `linear-gradient(90deg, transparent, ${product.accentColor}66, transparent)` }} />
+      <div
+        className="h-[3px] w-full shrink-0 md:hidden"
+        style={{ background: `linear-gradient(90deg, transparent, ${product.accentColor}66, transparent)` }}
+        aria-hidden
+      />
+      <div
+        className="hidden w-[3px] shrink-0 self-stretch md:block"
+        style={{ background: `linear-gradient(180deg, transparent, ${product.accentColor}55, transparent)` }}
+        aria-hidden
+      />
 
-      <div className="flex flex-1 flex-col gap-4 p-5 min-h-0 min-w-0 sm:p-7 sm:gap-4">
-        <div className="flex flex-wrap items-center justify-end gap-2">
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:gap-4 sm:p-6 md:py-7 md:ps-6 md:pe-7">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <span
-            className="text-sm font-bold px-3 py-1.5 rounded-full text-white tracking-wide"
+            className="rounded-full px-3 py-1.5 text-sm font-bold tracking-wide text-white"
             style={{ background: product.accentColor }}
           >
             {product.badgeAr}
           </span>
         </div>
 
-        <h3 className="text-[1.35rem] leading-snug font-bold text-charcoal tracking-tight break-words sm:text-3xl md:text-[1.875rem]">
+        <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight text-charcoal sm:text-2xl lg:text-[1.65rem]">
           {product.nameAr}
         </h3>
-        <p className="line-clamp-3 break-words text-sm leading-relaxed text-muted sm:text-base">{product.subtitleAr}</p>
 
-        <Link
-          href={`/products/${product.slug}`}
-          className="mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold transition-all active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100 group/btn"
-          style={{ background: '#FFFFFF', color: product.accentColor, border: `2px solid ${product.accentColor}44` }}
-          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = product.accentColor; (e.currentTarget as HTMLElement).style.color = '#fff'; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#FFFFFF'; (e.currentTarget as HTMLElement).style.color = product.accentColor; }}
-        >
-          <span>اكتشفي المنتج</span>
-          <span className="transition-transform group-hover/btn:-translate-x-1">←</span>
-        </Link>
+        <div className="flex flex-wrap items-end justify-between gap-3 border-b border-border/80 pb-4">
+          <PriceBlock product={product} />
+        </div>
+
+        <p className="line-clamp-3 break-words text-sm leading-relaxed text-muted sm:text-[15px]">{product.subtitleAr}</p>
+
+        <CtaRow product={product} />
       </div>
-    </div>
+    </article>
   )
 }
