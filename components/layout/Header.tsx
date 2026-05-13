@@ -67,7 +67,7 @@ export default function Header() {
   return (
     <div className="sticky top-0 z-30">
       <header className="border-b border-border bg-white/90 shadow-sm backdrop-blur-md backdrop-saturate-150 supports-[backdrop-filter]:bg-white/85">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+        <div className="mx-auto flex min-h-16 max-w-6xl items-center justify-between gap-2 px-4 py-2 sm:px-6 sm:py-2.5">
           {/* Cart */}
           <button
             onClick={openCart}
@@ -115,10 +115,10 @@ export default function Header() {
             </button>
           </div>
 
-          {/* Logo */}
+          {/* Logo + nom (عربي + français) */}
           <Link
             href="/"
-            className="group -my-0.5 flex shrink-0 items-center py-1"
+            className="group flex min-w-0 max-w-[min(100%,calc(100vw-9rem))] shrink items-center gap-2 py-0.5 sm:gap-2.5"
             aria-label="نبتة لابو — البداية"
           >
             <Image
@@ -127,9 +127,22 @@ export default function Header() {
               width={320}
               height={140}
               priority
-              sizes="(max-width: 640px) 42vw, 200px"
-              className="h-10 w-auto max-w-[min(200px,42vw)] object-contain object-right sm:h-11"
+              sizes="(max-width: 640px) 38vw, 180px"
+              className="h-9 w-auto max-w-[min(128px,32vw)] shrink-0 object-contain object-right sm:h-10 sm:max-w-[min(160px,36vw)]"
             />
+            <span className="hidden h-9 w-px shrink-0 bg-border/75 sm:block" aria-hidden />
+            <span className="min-w-0 text-right leading-tight">
+              <span className="block truncate text-sm font-extrabold tracking-tight text-charcoal sm:text-base" lang="ar">
+                نبتة لابو
+              </span>
+              <span
+                className="mt-0.5 block truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-muted sm:text-[11px]"
+                lang="fr"
+                translate="no"
+              >
+                Nabta Labo
+              </span>
+            </span>
           </Link>
         </div>
       </header>
