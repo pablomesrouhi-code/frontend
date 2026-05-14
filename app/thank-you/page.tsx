@@ -1,8 +1,8 @@
 'use client'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { PRODUCTS, type Product } from '@/lib/products'
+import { PRODUCTS, type Product, formatSarAmount, getPriceForQty } from '@/lib/products'
 import {
   newTrackingEventId,
   trackMeta,
@@ -45,9 +45,52 @@ function productTone(accent?: string): string {
   return accent
 }
 
+function IconSuccess({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+      <circle cx="24" cy="24" r="22" fill="currentColor" fillOpacity="0.12" />
+      <circle cx="24" cy="24" r="22" stroke="currentColor" strokeWidth="2" strokeOpacity="0.35" />
+      <path
+        d="M15 24.5l6 6L34 18"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+function IconPhone({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+      <path
+        d="M6.5 4.5h3l1.2 3.2-2.1 1.2a12.1 12.1 0 006.6 6.6l1.2-2.1 3.2 1.2v3c0 .8-.6 1.5-1.4 1.6-4.8.5-14.5-9.2-14-14 .1-.8.8-1.4 1.6-1.4z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+function IconCopy({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+      <path
+        d="M8 8V5a2 2 0 012-2h9a2 2 0 012 2v11a2 2 0 01-2 2h-3M8 8H5a2 2 0 00-2 2v11a2 2 0 002 2h9a2 2 0 002-2v-3"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 export default function ThankYouPage() {
   const [order, setOrder] = useState<OrderData | null>(null)
   const [hydrated, setHydrated] = useState(false)
+  const [copied, setCopied] = useState(false)
   const pixelsFired = useRef(false)
 
   useEffect(() => {
@@ -55,10 +98,24 @@ export default function ThankYouPage() {
     if (raw) {
       try {
         setOrder(JSON.parse(raw))
-      } catch {}
+      } catch {
+        /* ignore */
+      }
     }
     setHydrated(true)
   }, [])
+
+  const copyOrderRef = useCallback(async () => {
+    const ref = order?.orderNumber?.trim()
+    if (!ref || typeof navigator === 'undefined' || !navigator.clipboard) return
+    try {
+      await navigator.clipboard.writeText(ref)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 2200)
+    } catch {
+      /* ignore */
+    }
+  }, [order?.orderNumber])
 
   const callWindowOk = order ? isRiyadhCallWindow(new Date(order.createdAt)) : false
 
@@ -74,7 +131,6 @@ export default function ThankYouPage() {
     [orderedIds],
   )
 
-  /** Same-line cross-sell hints from catalogue (first match per ordered id). */
   const suggestedExtras = useMemo(() => {
     if (!order) return [] as Product[]
     const seen = new Set<string>()
@@ -129,49 +185,62 @@ export default function ThankYouPage() {
 
   if (!hydrated) {
     return (
-      <div className="flex min-h-screen justify-center bg-canvas px-4 py-24">
-        <p className="text-sm text-muted">جاري التحميل…</p>
+      <div className="min-h-screen bg-canvas px-4 pb-28 pt-8">
+        <div className="mx-auto max-w-2xl animate-pulse space-y-4">
+          <div className="h-36 rounded-3xl bg-white/80 ring-1 ring-border/80" />
+          <div className="h-24 rounded-2xl bg-white/60 ring-1 ring-border/60" />
+          <div className="h-64 rounded-3xl bg-white/70 ring-1 ring-border/70" />
+        </div>
       </div>
     )
   }
 
   if (!order) {
     return (
-      <div className="min-h-screen bg-white px-4 py-12">
-        <div className="mx-auto max-w-xl rounded-3xl border border-amber-200 bg-amber-50/70 px-6 py-10 text-center">
-          <p className="mb-3 text-lg font-bold text-amber-900">لم نجد تفاصيل طلب لهذه الصفحة</p>
+      <div className="min-h-screen bg-canvas px-4 py-12">
+        <div className="mx-auto max-w-xl rounded-3xl border border-amber-200/90 bg-white px-6 py-10 text-center shadow-sm ring-1 ring-amber-100">
+          <p className="mb-2 text-lg font-black text-charcoal">ما لقيناش تفاصيل الطلب</p>
           <p className="mb-6 text-sm leading-relaxed text-muted">
-            يحدث هذا إذا لم يُكمَّل المتصفّح الطلب بنجاح (مثل تعطُّل الـ API)، أو تم فتح الرابط يدويًا.
-            تأكّدي من رسالة النجاح بعد خطوة الإتمام، أو أعيدي الطلب بعد التحقق من عمل الـ API.
+            غالباً الصفحة تفتحت من رابط مباشر، أو الطلب ما اكتملش بنجاح. رجعي للمتجر وأكملي الطلب، أو تواصلي معنا إذا
+            دفعتي وتأكدتي من الخطأ.
           </p>
-          <Link
-            href="/"
-            className="inline-block rounded-full bg-primary px-8 py-3 font-bold text-white transition-colors hover:bg-primary-dark"
-          >
-            العودة للمتجر
-          </Link>
+          <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
+            <Link
+              href="/products"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-2xl bg-primary px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-primary-dark"
+            >
+              تصفّح المنتجات
+            </Link>
+            <Link
+              href="/"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-2xl border border-border bg-white px-6 py-3 text-sm font-bold text-charcoal hover:bg-peach-tint/50"
+            >
+              الصفحة الرئيسية
+            </Link>
+          </div>
         </div>
       </div>
     )
   }
 
+  const fromPrice = formatSarAmount(getPriceForQty(1))
+
   return (
-    <div className="min-h-screen bg-canvas pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-2">
-      {/* ——— Confirmation banner — unknown caller + COD priority — */}
-      <div className="mx-auto mb-6 max-w-2xl px-4 sm:px-6">
-        <div className="overflow-hidden rounded-2xl border-2 border-authority/35 bg-gradient-to-br from-authority/[0.08] via-white to-peach-tint shadow-[0_8px_32px_-8px_rgba(20,107,112,0.18)]">
-          <div className="flex items-start gap-3 px-4 py-4 sm:px-5 sm:py-5">
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-authority text-2xl text-white shadow-inner sm:h-14 sm:w-14" aria-hidden>
-              📞
+    <div className="min-h-screen bg-canvas pb-[max(7.5rem,env(safe-area-inset-bottom,0px)+6rem)] pt-2">
+      {/* Conversion: أهم رسالة أولاً */}
+      <div className="mx-auto mb-5 max-w-2xl px-4 sm:px-6">
+        <div className="overflow-hidden rounded-2xl border border-authority/25 bg-white shadow-[0_8px_28px_-12px_rgba(20,107,112,0.2)] ring-1 ring-black/[0.02]">
+          <div className="h-1 bg-gradient-to-l from-authority to-primary/80" aria-hidden />
+          <div className="flex items-start gap-3 px-4 py-4 sm:gap-4 sm:px-5 sm:py-5">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-authority/10 text-authority sm:h-14 sm:w-14">
+              <IconPhone className="h-6 w-6 sm:h-7 sm:w-7" />
             </span>
             <div className="min-w-0 flex-1 text-right">
-              <p className="text-base font-black leading-snug text-charcoal sm:text-lg">
-                الخطوة الأهم الآن: الردّ على اتصال التأكيد
-              </p>
+              <p className="text-base font-black leading-snug text-charcoal sm:text-lg">ردّي على اتصال التأكيد — هادي أهم خطوة</p>
               <p className="mt-2 text-sm leading-relaxed text-muted">
-                قد يظهر الرقم غير مسجّل لديك — هو من فريق <strong className="text-charcoal">نبتة لابو</strong> لتأكيد{' '}
-                <strong className="text-charcoal">العنوان</strong> و<strong className="text-charcoal">موعد التوصيل</strong> قبل الشحن (
-                نظام الدفع عند الاستلام). ردُّك السريع يساعِدُنا على تأكيد طلبك أولًا وتجهيزه بثقة أكبر.
+                الرقم قد يبان غير مسجّل: فريق <strong className="text-charcoal">نبتة لابو</strong> كيتصل باش يثبّت{' '}
+                <strong className="text-charcoal">العنوان</strong> و<strong className="text-charcoal">موعد التوصيل</strong> قبل
+                الشحن (دفع عند الاستلام). ردّ سريع = تأكيد أسرع وتجهيز أنظف.
               </p>
             </div>
           </div>
@@ -179,66 +248,77 @@ export default function ThankYouPage() {
       </div>
 
       <div className="mx-auto max-w-2xl px-4 sm:px-6">
-        {/* ——— Success hero — لا اسم ولا جوال في الصفحة — */}
-        <div className="mb-6 rounded-3xl bg-gradient-to-br from-primary to-primary-dark p-8 text-center text-white shadow-[0_12px_40px_rgba(184,72,92,0.35)]">
-          <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-white/25 text-4xl shadow-inner backdrop-blur-sm">
-            ✅
-          </div>
-          <h1 className="text-2xl font-black leading-tight sm:text-3xl">طلبُك مسجَّل بنجاح</h1>
-          <p className="mt-3 text-[15px] leading-relaxed text-white/85 sm:text-base">
-            شكرًا لثقتك مع نبتة لابو. الخطوة التالية لتأكيد الطلب ستكون اتصالًا قصيرًا من الفريق قبل الشحن —
-            وبعد التأكيد نجهّز الطلب للتوصيل داخل المملكة مع الدفع النقد عند الاستلام.
-          </p>
-          {order.orderNumber && (
-            <p className="mt-4 inline-block rounded-full bg-black/15 px-4 py-2 text-[13px] text-white backdrop-blur-sm" dir="ltr">
-              رقم المرجع: <strong className="ml-1 font-mono">{order.orderNumber}</strong>
+        <div className="mb-6 overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_12px_40px_-18px_rgba(26,25,21,0.12)] ring-1 ring-black/[0.03]">
+          <div className="bg-gradient-to-br from-primary via-primary to-primary-dark px-6 pb-8 pt-10 text-center text-white sm:px-10 sm:pb-10 sm:pt-12">
+            <div className="mx-auto mb-5 flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-full bg-white/20 text-white shadow-inner backdrop-blur-sm sm:h-20 sm:w-20">
+              <IconSuccess className="h-14 w-14 sm:h-16 sm:w-16" />
+            </div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/75">Nabta Labo</p>
+            <h1 className="mt-2 text-2xl font-black leading-tight sm:text-3xl">تم استلام طلبك — شكرًا على ثقتك</h1>
+            <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-white/90 sm:text-base">
+              الطلب مسجّل عندنا. غادي نتواصلو معاك باش نأكدو التفاصيل؛ الدفع كاش عند الاستلام فقط — بلا بطاقة ولا دفع مسبق.
             </p>
-          )}
+            {order.orderNumber ? (
+              <div className="mt-6 flex flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-3">
+                <p
+                  className="inline-flex flex-wrap items-center justify-center gap-2 rounded-2xl bg-black/20 px-4 py-2.5 text-[13px] text-white backdrop-blur-sm"
+                  dir="ltr"
+                >
+                  <span className="text-white/80">رقم المرجع</span>
+                  <strong className="font-mono text-sm tracking-tight text-white sm:text-base">{order.orderNumber}</strong>
+                </p>
+                <button
+                  type="button"
+                  onClick={() => void copyOrderRef()}
+                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-2xl border border-white/40 bg-white/15 px-4 py-2 text-sm font-bold text-white transition-[background-color,border-color] hover:bg-white/25"
+                >
+                  <IconCopy className="h-4 w-4 shrink-0 opacity-90" />
+                  {copied ? 'تم النسخ' : 'نسخ رقم الطلب'}
+                </button>
+              </div>
+            ) : null}
+          </div>
         </div>
 
-        {/* ——— Call SLA — وقت السعودية — */}
         <div
           className={`mb-6 rounded-2xl border px-5 py-4 sm:py-5 ${
             callWindowOk
-              ? 'border-teal-200 bg-gradient-to-br from-teal-50/90 to-white'
-              : 'border-amber-200 bg-gradient-to-br from-amber-50 to-white'
+              ? 'border-teal-200/90 bg-gradient-to-br from-teal-50/95 to-white'
+              : 'border-amber-200/90 bg-gradient-to-br from-amber-50/90 to-white'
           }`}
         >
           <p className={`text-base font-black ${callWindowOk ? 'text-authority' : 'text-amber-900'}`}>
-            {callWindowOk ? 'نتصل لتأكيد الطلب خلال أقل من عشر دقائق تقريبًا' : 'طلبُك خارج ساعات الاتصال المباشر'}
+            {callWindowOk ? 'نتصل لتأكيد الطلب خلال دقائق (تقريبًا)' : 'طلبك خارج ساعات الاتصال المباشر'}
           </p>
           <p className="mt-2 text-sm leading-relaxed text-muted">
             {callWindowOk ? (
               <>
-                ساعات المتابعة (بتوقيت السعودية): من <strong className="text-charcoal">9 صباحًا</strong> إلى{' '}
-                <strong className="text-charcoal">9 مساءً</strong>. إذا جاء الطلب الآن ضمن هذا الإطار، فاحتسبي أن الاتصال قادم قريبًا على
-                رقم تمّ إدخاله مع الطلب.
+                ساعات المتابعة (بتوقيت السعودية): <strong className="text-charcoal">9 ص — 9 م</strong>. إذا الطلب دابا ضمن
+                النافذة، استعدي لرنة من فريق نبتة لابو على الرقم اللي سجّلتي به.
               </>
             ) : (
               <>
-                هذا الطلب وُضع خارج نافذة الاتصال السريعة. سيتابع فريق نبتة لابو الطلب وبإذن الله تتلقين اتصال
-                تأكيد <strong className="text-charcoal">في وقت مبكر من صباح يوم العمل التالي</strong> (ضمن ذات الساعات 9
-                ص — 9 م بتوقيت السعودية)، أو في أول فرصة بعد إعادة تشغيل جدولة المكالمات.
+                غادي نتابع الطلب وبإذن الله تتواصلي معاك <strong className="text-charcoal">فصباح يوم العمل الجاي</strong>{' '}
+                ضمن نفس الساعات (9 ص — 9 م، توقيت السعودية).
               </>
             )}
           </p>
           <ul className="mt-4 space-y-2 text-right text-sm text-muted">
             <li className="flex items-start gap-2">
-              <span className="text-lg leading-none text-primary">•</span>
-              <span>لا نطلب بيانات بطاقة؛ التأكيد يخص العنوان والموعد قبل الشحن.</span>
+              <span className="mt-0.5 text-authority">✓</span>
+              <span>ما كنطلبوش بيانات بطاقة؛ المكالمة للعنوان والموعد قبل الشحن.</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-lg leading-none text-primary">•</span>
-              <span>إن كانت لديك حاجة عاجلة، يمكن المراسلة عبر بريد الموقع من صفحة «تواصل معنا».</span>
+              <span className="mt-0.5 text-authority">✓</span>
+              <span>عندك استعجال؟ صفحة «تواصل معنا» — ذكّري برقم المرجع فوق.</span>
             </li>
           </ul>
         </div>
 
-        {/* ——— Order summary — عمود واحد؛ العنوان لا يشارك مساحته مع السعر — */}
         <div className="mb-6 rounded-3xl border border-border bg-white p-5 shadow-sm sm:p-6">
           <div className="mb-5 flex flex-col gap-1 border-b border-border pb-4 text-right">
             <h2 className="text-lg font-black text-charcoal sm:text-xl">ملخص الطلب</h2>
-            <p className="text-xs text-muted">الكميات وسعر كل بند؛ المجموع في الأسفل</p>
+            <p className="text-xs text-muted">الكميات والأسعار كما تم اعتمادها عند الإرسال</p>
           </div>
 
           <ul className="flex flex-col gap-4">
@@ -260,8 +340,9 @@ export default function ThankYouPage() {
                       </span>
                     </div>
                     <div className="shrink-0 text-left sm:text-right" dir="ltr">
-                      <p className="whitespace-nowrap text-lg font-black tabular-nums text-primary sm:text-xl">{item.price}</p>
-                      <p className="text-[10px] font-semibold uppercase tracking-wider text-muted">SAR</p>
+                      <p className="sar-price whitespace-nowrap text-lg font-black tabular-nums text-primary sm:text-xl">
+                        {formatSarAmount(item.price)}
+                      </p>
                     </div>
                   </div>
                 </li>
@@ -274,12 +355,12 @@ export default function ThankYouPage() {
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="min-w-0 text-right">
                   <span className="mr-2 inline-block rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-bold text-primary">
-                    عرض مكمِّل
+                    عرض مكمّل
                   </span>
                   <p className="mt-1 break-words text-sm font-bold text-charcoal">{order.upsellProduct.nameAr}</p>
                 </div>
-                <p className="shrink-0 text-lg font-black tabular-nums text-primary" dir="ltr">
-                  {order.upsellPrice} <span className="text-xs font-semibold text-muted">SAR</span>
+                <p className="sar-price shrink-0 text-lg font-black tabular-nums text-primary" dir="ltr">
+                  {formatSarAmount(order.upsellPrice)}
                 </p>
               </div>
             </div>
@@ -288,37 +369,32 @@ export default function ThankYouPage() {
           <div className="mt-6 flex flex-col gap-3 border-t border-border pt-5">
             <div className="flex flex-wrap items-end justify-between gap-2">
               <span className="text-base font-black text-charcoal">الإجمالي</span>
-              <span className="text-3xl font-black tabular-nums text-primary" dir="ltr">
-                {order.finalTotal}
-                <span className="ms-2 text-base font-bold text-muted">ريال سعودي</span>
+              <span className="sar-price text-3xl font-black tabular-nums text-primary" dir="ltr">
+                {formatSarAmount(order.finalTotal)}
               </span>
             </div>
             <div className="rounded-2xl border border-authority/25 bg-authority/[0.06] px-4 py-3 text-sm leading-relaxed text-charcoal">
-              <strong className="text-authority">دفع عند الاستلام</strong> فقط — لا نطلب رسومًا مسبقة على البطاقة. تُدفع القيمة
-              نقدًا عند تسليم الشحنة.
+              <strong className="text-authority">دفع عند الاستلام</strong> فقط — القيمة تُدفع نقدًا عند تسليم الشحنة، بلا
+              رسوم مسبقة على البطاقة.
             </div>
           </div>
         </div>
 
-        {/* ——— Path to delivery — copy يدعم التأكيد والتوصيل — */}
         <div className="mb-6 rounded-3xl border border-border bg-white p-5 shadow-sm sm:p-6">
-          <h2 className="mb-5 text-lg font-black text-charcoal">من تأكيد المكالمة إلى نتائج الرِوتين</h2>
+          <h2 className="mb-5 text-lg font-black text-charcoal">ماذا يحدث بعد ذلك؟</h2>
           <ol className="space-y-4 text-right">
             {[
               {
-                title: 'اتصال قصير بثقة',
-                body:
-                  'نؤكّد معك عنوان التوصيل والملاحظات المهمة. لا حاجة لبطاقات — فقط جوابًا واضحًا لإتمام تأكيد الطلب.',
+                title: 'مكالمة تأكيد قصيرة',
+                body: 'نثبت العنوان والملاحظات المهمة. ما محتاجين بطاقة — غير جواب واضح باش نكمّلو التجهيز.',
               },
               {
-                title: 'تجهيز ومراجعة',
-                body:
-                  'بعد الموافقة، يُطبَّق نفس الانضباط الذي تبحثين عنه في نقاط الجودة: تجهيز وترقيم الطلب للشحن داخل المملكة.',
+                title: 'تجهيز وترقيم للشحن',
+                body: 'بعد الموافقة كنوجّو الطلب داخل المملكة بنفس الانضباط اللي كتشوفيه فالموقع.',
               },
               {
-                title: 'توصيل ودفع نقدًا',
-                body:
-                  'تستلمين الشحنة بحسب الموعد المتفق عليه؛ تدفعين نقدًا عند الاستلام. التزامك بالمداومة على المكمِّل جزء أساسي من تجربة تفيد أكثر مع الوقت.',
+                title: 'توصيل + دفع كاش',
+                body: 'تستلمي الشحنة حسب الموعد؛ الدفع كاش عند الاستلام. الالتزام بالجرعة حسب الغلاف يبقى أساس التجربة.',
               },
             ].map((step, idx) => (
               <li key={step.title} className="flex gap-4">
@@ -334,86 +410,112 @@ export default function ThankYouPage() {
           </ol>
         </div>
 
-        {/* ——— Social proof — */}
-        <div className="mb-6 rounded-3xl border border-border bg-gradient-to-br from-white to-peach-tint/50 p-5 sm:p-6">
-          <h2 className="mb-4 text-lg font-black text-charcoal">لماذا ترتاحين للمكالمة؟</h2>
-          <div className="flex flex-wrap gap-3">
-            <div className="min-w-[9rem] flex-1 rounded-2xl bg-white px-4 py-3 text-center shadow-sm ring-1 ring-border/70">
+        <div className="mb-6 rounded-3xl border border-border bg-gradient-to-br from-white to-peach-tint/40 p-5 sm:p-6">
+          <h2 className="mb-4 text-lg font-black text-charcoal">ليش ترتاحي للمكالمة؟</h2>
+          <div className="grid gap-3 sm:grid-cols-3">
+            <div className="rounded-2xl bg-white px-4 py-3 text-center shadow-sm ring-1 ring-border/70">
               <p className="text-2xl font-black tabular-nums text-authority">4.8</p>
-              <p className="text-[11px] font-semibold text-muted">تقييم متوسط تجارب عميلات</p>
+              <p className="text-[11px] font-semibold leading-snug text-muted">متوسط تقييم تجارب عميلات</p>
             </div>
-            <div className="min-w-[9rem] flex-1 rounded-2xl bg-white px-4 py-3 text-center shadow-sm ring-1 ring-border/70">
-              <p className="text-2xl">🛡️</p>
-              <p className="mt-1 text-[11px] font-semibold leading-snug text-charcoal">مكمّلات بتراخيص يُراعى فيها وضوح التصنيف</p>
+            <div className="rounded-2xl bg-white px-4 py-3 text-center shadow-sm ring-1 ring-border/70">
+              <p className="text-lg font-black text-charcoal">SFDA</p>
+              <p className="mt-1 text-[11px] font-semibold leading-snug text-muted">مكمّلات غذائية بترخيص وتصنيف واضح</p>
             </div>
-            <div className="min-w-[9rem] flex-1 rounded-2xl bg-white px-4 py-3 text-center shadow-sm ring-1 ring-border/70">
-              <p className="text-sm font-black text-charcoal">دفع عند الاستلام</p>
-              <p className="text-[11px] text-muted">بدون وسطاء دفع قبل التسليم</p>
+            <div className="rounded-2xl bg-white px-4 py-3 text-center shadow-sm ring-1 ring-border/70">
+              <p className="text-sm font-black text-charcoal">كاش عند الاستلام</p>
+              <p className="mt-1 text-[11px] text-muted">بلا وسطاء دفع قبل التسليم</p>
             </div>
           </div>
           <div className="mt-5 rounded-2xl border border-border bg-white px-4 py-4">
             <div className="flex items-start gap-3">
-              <span className="text-peach text-lg">★★★★★</span>
+              <span className="shrink-0 text-amber-500" aria-hidden>
+                ★★★★★
+              </span>
               <p className="min-w-0 text-sm italic leading-relaxed text-charcoal">
-                «التزام اليوم مع المكمِّل أسهل بلذعة؛ والتنسيق قبل الشحن يعطيك انطباع صيدلي منظم وليس أي متجر.»
+                «التنسيق قبل الشحن يعطي انطباع منظم؛ والالتزام بالروتين أسهل بلذعة.»
               </p>
             </div>
-            <p className="mt-3 text-[11px] text-muted">تجربة عميلات — عنوان موجَّه لطبيعة المنتجات الغذائية المكمّلة</p>
+            <p className="mt-3 text-[11px] text-muted">تجربة عميلات — مكمّلات غذائية وفق الغلاف المعتمد</p>
           </div>
         </div>
 
-        {/* ——— Suggested pairing (حقول catalogue crossSells) — */}
         {suggestedExtras.length > 0 && (
           <div className="mb-8 rounded-3xl border border-authority/20 bg-white p-5 shadow-sm">
-            <h2 className="mb-1 text-lg font-black text-charcoal">مقترحات قبل التأكيد</h2>
-            <p className="mb-4 text-sm text-muted">
-              إذا رغبتِ بدمج أكثر من روتين، يمكنك طلب ذلك أثناء الاتصال مع الفريق قبل الشحن حيث يسمح المخزون — أو بطلب ثانٍ
-              من الموقع.
+            <h2 className="mb-1 text-lg font-black text-charcoal">كمّلي الطلبية — قبل أو بعد المكالمة</h2>
+            <p className="mb-4 text-sm leading-relaxed text-muted">
+              هاد المنتجات كتكمّل اللي طلبتي. تقدري تزيدي من الموقع الآن، أو تطلبي الدمج وقت اتصال التأكيد إذا السماح
+              بالمخزون.
             </p>
             <div className="flex flex-col gap-3">
               {suggestedExtras.map((p) => (
-                <SuggestedRow key={`x-${p.id}`} product={p} />
+                <SuggestedRow key={`x-${p.id}`} product={p} fromPrice={fromPrice} />
               ))}
             </div>
           </div>
         )}
 
-        {/* ——— Full catalogue reco — */}
         {recommendations.length > 0 ? (
           <div className="mb-10">
-            <h2 className="mb-1 text-center text-2xl font-black text-charcoal">كمّلي روتين المنزل قبل الشحن أو لاحقًا</h2>
-            <p className="mb-8 text-center text-sm text-muted">
-              منتجات متوافقة مع نفس الانضباط في التسمية؛ التحقق والدفع بعد التسليم كنظامكم الحالي.
+            <h2 className="mb-2 text-center text-2xl font-black leading-snug text-charcoal sm:text-3xl">
+              زيدي منتج قبل ما يوصل الطلب
+            </h2>
+            <p className="mx-auto mb-8 max-w-lg text-center text-sm leading-relaxed text-muted">
+              نفس نظام الدفع عند الاستلام والتوصيل داخل المملكة. طلب جديد = تجهيز منفصل — من الأحسن تجمّعي اللي بغيتي
+              قبل التأكيد إذا بغيتي توفّري على الشحن.
             </p>
             <div className="grid gap-6 sm:grid-cols-2">
               {recommendations.map((p) => (
                 <div key={p.id} className="min-h-0">
-                  <ThankYouMiniCard product={p} />
+                  <ThankYouMiniCard product={p} fromPrice={fromPrice} />
                 </div>
               ))}
             </div>
           </div>
         ) : (
-          <div className="mb-10 rounded-3xl border border-border bg-white p-8 text-center">
-            <p className="text-lg font-black text-charcoal">جمعتِ تشكيلة كاملة — أحسنتِ</p>
-            <p className="mx-auto mt-2 max-w-md text-sm text-muted leading-relaxed">
-              في زيارتك القادمة جرّبي استكمال قطع احتياطية أو إهداء؛ التوصيل والدفع عند الاستلام يبقى كما اعتمدتُم.
+          <div className="mb-10 rounded-3xl border border-border bg-white p-8 text-center shadow-sm">
+            <p className="text-lg font-black text-charcoal">جمعتي تشكيلة قوية</p>
+            <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">
+              في الزيارة الجاية جرّبي هدية أو قطع احتياطية؛ الدفع عند الاستلام كيبقى كما هو.
             </p>
             <Link
               href="/products"
-              className="mt-6 inline-block rounded-full bg-primary px-8 py-3 text-sm font-bold text-white hover:bg-primary-dark"
+              className="mt-6 inline-flex min-h-[48px] items-center justify-center rounded-full bg-primary px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-primary-dark"
             >
               تصفّح كل المنتجات
             </Link>
           </div>
         )}
 
-        <div className="flex flex-col items-center gap-3 pb-6 text-center">
-          <Link href="/contact" className="text-sm font-bold text-authority underline-offset-4 hover:underline">
-            تواصل معنا — أسئلة بعد الطلب
+        <div className="flex flex-col items-stretch gap-3 pb-4 sm:flex-row sm:justify-center">
+          <Link
+            href="/products"
+            className="inline-flex min-h-[48px] items-center justify-center rounded-2xl border border-border bg-white px-6 py-3 text-sm font-bold text-charcoal shadow-sm hover:bg-peach-tint/60"
+          >
+            متجر المنتجات
           </Link>
-          <Link href="/" className="inline-block rounded-full bg-charcoal px-10 py-3.5 font-bold text-white hover:bg-charcoal/90">
-            متجر البداية
+          <Link
+            href="/contact"
+            className="inline-flex min-h-[48px] items-center justify-center rounded-2xl bg-charcoal px-6 py-3 text-sm font-bold text-white hover:bg-charcoal/90"
+          >
+            تواصل بعد الطلب
+          </Link>
+        </div>
+      </div>
+
+      {/* شريط إجراءات ثابت — CRO */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border/80 bg-white/95 px-4 py-3 shadow-[0_-8px_32px_-12px_rgba(26,25,21,0.12)] backdrop-blur-md supports-[backdrop-filter]:bg-white/88 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+        <div className="mx-auto flex max-w-2xl gap-2 sm:gap-3">
+          <Link
+            href="/products"
+            className="flex min-h-[48px] flex-[1.15] items-center justify-center rounded-2xl bg-primary px-3 text-center text-sm font-black text-white shadow-sm transition-colors hover:bg-primary-dark sm:text-base"
+          >
+            زيدي على طلبك
+          </Link>
+          <Link
+            href="/"
+            className="flex min-h-[48px] flex-1 items-center justify-center rounded-2xl border border-border bg-white px-3 text-center text-sm font-bold text-charcoal hover:bg-peach-tint/50 sm:text-base"
+          >
+            الرئيسية
           </Link>
         </div>
       </div>
@@ -421,41 +523,52 @@ export default function ThankYouPage() {
   )
 }
 
-function SuggestedRow({ product }: { product: Product }) {
+function SuggestedRow({ product, fromPrice }: { product: Product; fromPrice: string }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-border bg-peach-soft/30 p-3">
+    <div className="flex items-center gap-3 rounded-2xl border border-border bg-peach-soft/25 p-3 sm:p-4">
       <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-border bg-white">
         <Image src={product.coverImage} alt={product.nameAr} fill className="object-cover" sizes="64px" />
       </div>
       <div className="min-w-0 flex-1 text-right">
         <p className="truncate font-bold text-charcoal">{product.nameAr}</p>
         <p className="line-clamp-1 text-xs text-muted">{product.subtitleAr}</p>
+        <p className="mt-1 text-[11px] font-semibold text-authority">من {fromPrice}</p>
       </div>
       <Link
         href={`/products/${product.slug}`}
-        className="touch-manipulation shrink-0 rounded-full bg-primary px-4 py-2.5 text-xs font-bold text-white active:scale-[0.98]"
+        className="touch-manipulation shrink-0 rounded-2xl bg-primary px-4 py-2.5 text-xs font-black text-white shadow-sm transition-transform active:scale-[0.98] sm:px-5 sm:text-sm"
       >
-        صفحة المنتج
+        اطلبي
       </Link>
     </div>
   )
 }
 
-function ThankYouMiniCard({ product }: { product: Product }) {
+function ThankYouMiniCard({ product, fromPrice }: { product: Product; fromPrice: string }) {
   return (
-    <article className="flex h-full min-h-[11rem] flex-col overflow-hidden rounded-3xl border border-border bg-white shadow-sm transition-[box-shadow,border-color] hover:border-authority/30 hover:shadow-md">
+    <article className="flex h-full min-h-[12rem] flex-col overflow-hidden rounded-3xl border border-border bg-white shadow-sm transition-[box-shadow,border-color] hover:border-authority/35 hover:shadow-md">
       <div className="relative aspect-[16/11] w-full shrink-0 bg-peach-soft/40">
-        <Image src={product.coverImage} alt={product.nameAr} fill className="object-cover" sizes="(max-width:640px) 100vw, 50vw" />
+        <Image
+          src={product.coverImage}
+          alt={product.nameAr}
+          fill
+          className="object-cover"
+          sizes="(max-width:640px) 100vw, 50vw"
+        />
       </div>
       <div className="flex flex-1 flex-col p-4 text-right">
         <p className="text-xs font-bold text-authority">{product.badgeAr}</p>
         <h3 className="mt-1 line-clamp-2 text-base font-black text-charcoal">{product.nameAr}</h3>
         <p className="mt-1 line-clamp-2 flex-1 text-xs leading-relaxed text-muted">{product.subtitleAr}</p>
+        <p className="mt-2 text-sm font-black text-primary">
+          <span className="sar-price tabular-nums">{fromPrice}</span>
+          <span className="mr-1.5 text-[10px] font-semibold text-muted">(قطعة — عروض أخرى فالصفحة)</span>
+        </p>
         <Link
           href={`/products/${product.slug}`}
-          className="mt-3 touch-manipulation text-center text-sm font-bold text-primary underline-offset-2 hover:underline"
+          className="mt-4 flex min-h-[44px] w-full items-center justify-center rounded-2xl bg-charcoal text-center text-sm font-black text-white transition-colors hover:bg-charcoal/90"
         >
-          عرض وتفاصيل المنتج
+          اطلبي من صفحة المنتج
         </Link>
       </div>
     </article>
