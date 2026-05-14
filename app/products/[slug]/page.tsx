@@ -5,6 +5,7 @@ import StarRating from '@/components/ui/StarRating'
 import ProductPageClient from './ProductPageClient'
 import ProductCard from '@/components/product/ProductCard'
 import ProductPageImageSlot from '@/components/product/ProductPageImageSlot'
+import PdpDeliveryPaymentSection from '@/components/product/PdpDeliveryPaymentSection'
 
 function reviewInitials(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean)
@@ -643,6 +644,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
       </section>
+
+      <PdpDeliveryPaymentSection accentColor={product.accentColor} bgColor={product.bgColor} />
 
       {/* FAQ */}
       <section className="py-10 sm:py-12 md:py-14 bg-white">
