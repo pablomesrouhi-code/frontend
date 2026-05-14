@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { PRODUCTS, getProductBySlug, getProductById } from '@/lib/products'
-import { PRODUCT_PHOTO_QUALITY, coverFrameAspect } from '@/lib/image-defaults'
 import StarRating from '@/components/ui/StarRating'
 import ProductPageClient from './ProductPageClient'
 import ProductCard from '@/components/product/ProductCard'
@@ -119,31 +118,26 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <div className="grid min-w-0 grid-cols-1 items-start gap-5 sm:gap-6 md:grid-cols-2 md:items-start md:gap-8 lg:gap-10">
             <div className="order-1 min-w-0 md:order-2 md:pt-0">
               <div
-                className="mx-auto w-full max-w-md overflow-hidden rounded-2xl border-2 bg-gradient-to-b from-white to-[#f7f4f3] shadow-lg backdrop-blur-sm sm:max-w-lg sm:rounded-3xl md:mx-0 md:max-w-none"
+                className="mx-auto w-full max-w-md overflow-hidden rounded-2xl border-2 bg-white/95 p-1.5 shadow-lg backdrop-blur-sm sm:max-w-lg sm:rounded-3xl sm:p-2 md:mx-0 md:max-w-none"
                 style={{ borderColor: `color-mix(in srgb, ${product.accentColor} 30%, #e8e0de)` }}
               >
                 {pdpHero ? (
-                  <div
-                    className="relative mx-auto w-full max-h-[min(78vh,680px)] max-w-full"
-                    style={{ aspectRatio: coverFrameAspect(pdpHero.width, pdpHero.height) }}
-                  >
-                    <Image
-                      src={pdpHero.src}
-                      alt={pdpHero.alt}
-                      fill
-                      priority
-                      quality={PRODUCT_PHOTO_QUALITY}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 720px"
-                      className="object-contain object-center"
-                    />
-                  </div>
+                  <Image
+                    src={pdpHero.src}
+                    alt={pdpHero.alt}
+                    width={pdpHero.width}
+                    height={pdpHero.height}
+                    priority
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 560px"
+                    className="h-auto w-full max-h-[min(44vh,320px)] object-contain sm:max-h-[min(48vh,380px)] md:max-h-[min(58vh,440px)] lg:max-h-[min(72vh,520px)]"
+                  />
                 ) : (
                   <ProductPageImageSlot
                     width={product.coverWidth}
                     height={product.coverHeight}
                     accentColor={product.accentColor}
                     labelAr="مساحة صورة الهيرو — غلاف المنتج"
-                    className="min-h-[200px]"
+                    className="max-h-[min(44vh,320px)] sm:max-h-[min(48vh,380px)] md:max-h-[min(58vh,440px)] lg:max-h-[min(72vh,520px)]"
                   />
                 )}
               </div>
@@ -307,28 +301,23 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </div>
 
             <div className="order-1 lg:order-1 lg:col-span-7">
-              <div className="mx-auto max-w-xl overflow-hidden rounded-3xl border border-border bg-white p-0 shadow-md md:mx-0 lg:max-w-none">
+              <div className="mx-auto max-w-xl overflow-hidden rounded-3xl border border-border bg-white p-2 shadow-md md:mx-0 lg:max-w-none lg:min-h-[min(520px,58vh)]">
                 {painPdpPhoto ? (
-                  <div
-                    className="relative mx-auto w-full max-h-[min(82vh,760px)] max-w-full"
-                    style={{ aspectRatio: coverFrameAspect(painPdpPhoto.width, painPdpPhoto.height) }}
-                  >
-                    <Image
-                      src={painPdpPhoto.src}
-                      alt={painPdpPhoto.alt}
-                      fill
-                      quality={PRODUCT_PHOTO_QUALITY}
-                      sizes="(max-width:1024px) min(560px, 100vw), 720px"
-                      className="object-contain object-center"
-                    />
-                  </div>
+                  <Image
+                    src={painPdpPhoto.src}
+                    alt={painPdpPhoto.alt}
+                    width={painPdpPhoto.width}
+                    height={painPdpPhoto.height}
+                    sizes="(max-width:1024px) min(560px, 100vw), 56vw"
+                    className="h-auto max-h-[min(64vh,520px)] w-full rounded-2xl object-cover object-center lg:h-full lg:max-h-none lg:min-h-[420px]"
+                  />
                 ) : (
                   <ProductPageImageSlot
                     width={product.painSectionImage?.width ?? product.coverWidth}
                     height={product.painSectionImage?.height ?? product.coverHeight}
                     accentColor={product.accentColor}
                     labelAr="مساحة صورة — قسم «لماذا تحتاجينه؟»"
-                    className="min-h-[200px]"
+                    className="max-h-[min(64vh,520px)] lg:min-h-[420px]"
                   />
                 )}
               </div>
@@ -375,28 +364,23 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-3 sm:mb-4 break-words">{product.extraStory.titleAr}</h2>
                 <p className="text-[#5c5656] leading-relaxed text-base sm:text-lg break-words">{product.extraStory.bodyAr}</p>
               </div>
-              <div className="mx-auto w-full max-w-[min(100%,440px)] overflow-hidden rounded-2xl border border-[#dfd6d4] bg-white p-0 md:mx-0 md:max-w-full">
+              <div className="w-full max-w-[min(100%,440px)] md:max-w-full mx-auto md:mx-0 min-w-0 overflow-hidden rounded-2xl border border-[#dfd6d4] bg-white p-2 sm:p-3">
                 {usePdpProductImages ? (
-                  <div
-                    className="relative mx-auto w-full max-h-[min(80vh,720px)] max-w-full"
-                    style={{ aspectRatio: coverFrameAspect(product.extraStory.width, product.extraStory.height) }}
-                  >
-                    <Image
-                      src={product.extraStory.src}
-                      alt={product.extraStory.alt}
-                      fill
-                      quality={PRODUCT_PHOTO_QUALITY}
-                      sizes="(max-width: 768px) min(440px, 100vw), 560px"
-                      className="object-contain object-center"
-                    />
-                  </div>
+                  <Image
+                    src={product.extraStory.src}
+                    alt={product.extraStory.alt}
+                    width={product.extraStory.width}
+                    height={product.extraStory.height}
+                    sizes="(max-width: 768px) min(440px, 100vw), 480px"
+                    className="h-auto w-full max-h-[min(62vh,480px)] md:max-h-none object-contain"
+                  />
                 ) : (
                   <ProductPageImageSlot
                     width={product.extraStory.width}
                     height={product.extraStory.height}
                     accentColor={product.accentColor}
                     labelAr="مساحة صورة — اللمسة الإضافية"
-                    className="min-h-[200px]"
+                    className="max-h-[min(62vh,480px)] md:max-h-none"
                   />
                 )}
               </div>
@@ -440,28 +424,23 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <section id="pdp-ingredients" className="scroll-mt-28 bg-white py-10 sm:py-12 md:py-16">
         <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
           <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-12">
-            <div className="order-2 min-w-0 overflow-hidden rounded-3xl border border-border bg-white p-0 shadow-sm lg:order-1 lg:col-span-7">
+            <div className="order-2 min-w-0 overflow-hidden rounded-3xl border border-border bg-white p-2 shadow-sm lg:order-1 lg:col-span-7">
               {ingredientsPdpPhoto ? (
-                <div
-                  className="relative mx-auto w-full max-h-[min(80vh,720px)] max-w-full"
-                  style={{ aspectRatio: coverFrameAspect(ingredientsPdpPhoto.width, ingredientsPdpPhoto.height) }}
-                >
-                  <Image
-                    src={ingredientsPdpPhoto.src}
-                    alt={ingredientsPdpPhoto.alt}
-                    fill
-                    quality={PRODUCT_PHOTO_QUALITY}
-                    sizes="(max-width:1024px) min(560px, 100vw), 720px"
-                    className="object-contain object-center"
-                  />
-                </div>
+                <Image
+                  src={ingredientsPdpPhoto.src}
+                  alt={ingredientsPdpPhoto.alt}
+                  width={ingredientsPdpPhoto.width}
+                  height={ingredientsPdpPhoto.height}
+                  sizes="(max-width:1024px) min(560px, 100vw), 58vw"
+                  className="h-auto max-h-[min(58vh,440px)] w-full rounded-2xl object-cover object-center lg:max-h-none lg:min-h-[440px]"
+                />
               ) : (
                 <ProductPageImageSlot
                   width={product.ingredientsSectionImage?.width ?? product.coverWidth}
                   height={product.ingredientsSectionImage?.height ?? product.coverHeight}
                   accentColor={product.accentColor}
                   labelAr="مساحة صورة — المكوّنات / تفاصيل العبوة"
-                  className="min-h-[200px]"
+                  className="max-h-[min(58vh,440px)] lg:min-h-[440px]"
                 />
               )}
             </div>

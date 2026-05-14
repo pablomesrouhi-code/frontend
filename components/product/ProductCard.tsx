@@ -2,7 +2,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Product, getPriceForQty, formatSarAmount } from '@/lib/products'
-import { PRODUCT_PHOTO_QUALITY, coverFrameAspect } from '@/lib/image-defaults'
 
 type Props = {
   product: Product
@@ -49,20 +48,17 @@ function CtaRow({ product }: { product: Product }) {
 }
 
 export default function ProductCard({ product, layout = 'grid' }: Props) {
-  const frameAspect = coverFrameAspect(product.coverWidth, product.coverHeight)
-
   if (layout === 'grid') {
     return (
       <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-authority/25 hover:shadow-[0_20px_48px_-14px_rgba(20,107,112,0.13)]">
         <Link href={`/products/${product.slug}`} className="relative block shrink-0 overflow-hidden bg-[#FAFAFA]">
-          <div className="relative w-full" style={{ aspectRatio: frameAspect }}>
+          <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">
             <Image
               src={product.coverImage}
               alt={product.nameAr}
               fill
-              sizes="(max-width: 767px) 100vw, 40vw"
-              quality={PRODUCT_PHOTO_QUALITY}
-              className="object-contain object-center"
+              sizes="(max-width: 767px) 100vw, 33vw"
+              className="object-cover object-center"
             />
           </div>
         </Link>
@@ -96,19 +92,18 @@ export default function ProductCard({ product, layout = 'grid' }: Props) {
   }
 
   return (
-    <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-authority/25 hover:shadow-[0_20px_48px_-14px_rgba(20,107,112,0.13)] md:flex-row md:items-start">
+    <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-authority/25 hover:shadow-[0_20px_48px_-14px_rgba(20,107,112,0.13)] md:flex-row md:items-stretch">
       <Link
         href={`/products/${product.slug}`}
-        className="relative block w-full shrink-0 overflow-hidden bg-[#FAFAFA] md:w-[min(42%,280px)] md:max-w-[300px] md:self-start lg:w-[40%] lg:max-w-none"
+        className="relative block w-full shrink-0 overflow-hidden bg-[#FAFAFA] md:w-[min(42%,280px)] md:max-w-[300px] md:self-stretch lg:w-[40%] lg:max-w-none"
       >
-        <div className="relative w-full" style={{ aspectRatio: frameAspect }}>
+        <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.02] md:absolute md:inset-0 md:aspect-auto md:h-full md:min-h-[260px]">
           <Image
             src={product.coverImage}
             alt={product.nameAr}
             fill
-            sizes="(max-width: 767px) 100vw, (max-width: 1200px) 45vw, 360px"
-            quality={PRODUCT_PHOTO_QUALITY}
-            className="object-contain object-center"
+            sizes="(max-width: 767px) 100vw, (max-width: 1200px) 45vw, 320px"
+            className="object-cover object-center"
           />
         </div>
       </Link>

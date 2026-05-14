@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { PRODUCT_PHOTO_QUALITY } from '@/lib/image-defaults'
 
 export const metadata = {
   title: 'من نحن | نبتة لابو',
@@ -20,7 +19,6 @@ export default function AboutPage() {
               width={360}
               height={160}
               priority
-              quality={PRODUCT_PHOTO_QUALITY}
               className="h-16 sm:h-[4.75rem] w-auto max-w-[280px] object-contain mx-auto"
             />
             <p className="mt-3 text-sm font-bold text-[#146b70] leading-snug max-w-xs">
@@ -58,7 +56,6 @@ export default function AboutPage() {
                 alt="شعار نبتة لابو"
                 width={400}
                 height={180}
-                quality={PRODUCT_PHOTO_QUALITY}
                 className="w-full h-auto object-contain"
               />
               <p className="mt-6 text-center text-sm font-semibold text-[#146b70] leading-relaxed border-t border-[#cce7ea] pt-5">

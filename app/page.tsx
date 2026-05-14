@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { PRODUCTS } from '@/lib/products'
-import { PRODUCT_PHOTO_QUALITY, coverFrameAspect } from '@/lib/image-defaults'
 import ProductCard from '@/components/product/ProductCard'
 import StarRating from '@/components/ui/StarRating'
 
@@ -129,39 +128,37 @@ export default function HomePage() {
             </div>
 
             <div
-              className="order-1 md:order-2 w-full overflow-hidden rounded-3xl bg-white"
+              className="order-1 md:order-2 w-full rounded-3xl bg-white p-3 sm:p-4 md:p-5"
               style={{
                 border: '1px solid #EADFD6',
                 boxShadow:
                   '0 0 0 1px rgba(184, 104, 116, 0.2), 0 22px 60px -24px rgba(28, 28, 28, 0.1), 0 8px 24px -10px rgba(184, 72, 92, 0.09), inset 0 1px 0 rgba(255,255,255,0.85)',
               }}
             >
-              <div className="relative w-full overflow-hidden bg-[#FDF8F9]">
-                <div className="relative w-full max-h-[min(70vh,620px)] max-w-full" style={{ aspectRatio: coverFrameAspect(1024, 1024) }}>
-                  <div
-                    className="absolute bottom-2 start-2 z-10 sm:bottom-3 sm:start-3 rounded-lg px-2 py-1.5 sm:px-2.5 sm:py-2 text-right max-w-[5.75rem] sm:max-w-[6.75rem]"
-                    style={{
-                      background: 'linear-gradient(145deg, #ffffffee 0%, #f8fffe 100%)',
-                      border: '1px solid rgba(20,107,112,0.35)',
-                      boxShadow: '0 2px 10px rgba(20,107,112,0.12)',
-                    }}
-                    role="note"
-                    aria-label="شهادة معيارية — مكمّل غذائي مرخّص من هيئة الغذاء والدواء"
-                  >
-                    <p className="text-[8px] sm:text-[9px] font-bold text-[#146b70] uppercase tracking-wide leading-none mb-0.5">شهادة</p>
-                    <p className="text-[10px] sm:text-[11px] font-black text-[#1C1C1C] leading-tight">مرخّص SFDA</p>
-                    <p className="text-[7px] sm:text-[8px] text-[#5c5656] leading-tight mt-0.5">مكمّل غذائي</p>
-                  </div>
-                  <Image
-                    src="/hero-store-trio.jpg"
-                    alt="ثلاث علكات Labo Nabta: بروبيوتيك للنساء، مغنيسيوم ١٤ من ١، وجمال الشعر والبشرة والأظافر ببيوتين"
-                    fill
-                    priority
-                    quality={PRODUCT_PHOTO_QUALITY}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 640px"
-                    className="object-contain object-center"
-                  />
+              <div className="rounded-2xl overflow-hidden bg-[#FDF8F9] relative">
+                <div
+                  className="absolute bottom-2 start-2 sm:bottom-3 sm:start-3 z-10 rounded-lg px-2 py-1.5 sm:px-2.5 sm:py-2 text-right max-w-[5.75rem] sm:max-w-[6.75rem]"
+                  style={{
+                    background: 'linear-gradient(145deg, #ffffffee 0%, #f8fffe 100%)',
+                    border: '1px solid rgba(20,107,112,0.35)',
+                    boxShadow: '0 2px 10px rgba(20,107,112,0.12)',
+                  }}
+                  role="note"
+                  aria-label="شهادة معيارية — مكمّل غذائي مرخّص من هيئة الغذاء والدواء"
+                >
+                  <p className="text-[8px] sm:text-[9px] font-bold text-[#146b70] uppercase tracking-wide leading-none mb-0.5">شهادة</p>
+                  <p className="text-[10px] sm:text-[11px] font-black text-[#1C1C1C] leading-tight">مرخّص SFDA</p>
+                  <p className="text-[7px] sm:text-[8px] text-[#5c5656] leading-tight mt-0.5">مكمّل غذائي</p>
                 </div>
+                <Image
+                  src="/hero-store-trio.jpg"
+                  alt="ثلاث علكات Labo Nabta: بروبيوتيك للنساء، مغنيسيوم ١٤ من ١، وجمال الشعر والبشرة والأظافر ببيوتين"
+                  width={1024}
+                  height={1024}
+                  priority
+                  sizes="(max-width: 768px) 100vw, 560px"
+                  className="block h-auto w-full object-contain"
+                />
               </div>
             </div>
           </div>

@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useCartStore } from '@/stores/cart-store'
 import { BRAND_LOGO_SRC } from '@/lib/brand'
-import { PRODUCT_PHOTO_QUALITY } from '@/lib/image-defaults'
 
 const BANNER_GRADIENT =
   'linear-gradient(90deg, #146b70 0%, #115d62 42%, rgba(148,60,80,0.98) 100%)'
@@ -68,30 +67,28 @@ export default function Header() {
   return (
     <div className="sticky top-0 z-30 isolate pt-[max(0px,env(safe-area-inset-top))] [transform:translate3d(0,0,0)]">
       <header className="border-b border-border bg-white/95 shadow-[0_1px_0_rgba(28,28,28,0.05),0_8px_32px_-28px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] supports-[backdrop-filter]:bg-white/[0.93] supports-[backdrop-filter]:backdrop-blur-sm">
-        <div className="mx-auto flex min-h-16 max-w-6xl w-full items-center justify-between gap-2 px-4 py-2 sm:px-6 sm:py-2.5">
-          <div className="flex shrink-0 items-center gap-2">
-            {/* Cart — في RTL يظهر جهة البداية */}
-            <button
-              type="button"
-              onClick={openCart}
-              className="relative flex touch-manipulation items-center gap-2 rounded-full border-[1.5px] border-border px-3 py-2 transition-[color,background-color,border-color,transform,box-shadow] duration-200 ease-out hover:border-primary hover:shadow-[0_4px_14px_-6px_rgba(184,72,92,0.12)] active:scale-[0.98]"
-              aria-label="السلة"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-              {count > 0 ? (
-                <span className="min-w-[20px] rounded-full bg-primary px-1.5 py-0.5 text-center text-xs font-bold text-white">
-                  {count}
-                </span>
-              ) : (
-                <span className="hidden text-xs font-medium text-muted sm:inline">السلة</span>
-              )}
-            </button>
-          </div>
+        <div className="mx-auto flex min-h-16 max-w-6xl items-center justify-between gap-2 px-4 py-2 sm:px-6 sm:py-2.5">
+          {/* Cart */}
+          <button
+            type="button"
+            onClick={openCart}
+            className="relative flex touch-manipulation items-center gap-2 rounded-full border-[1.5px] border-border px-3 py-2 transition-[color,background-color,border-color,transform,box-shadow] duration-200 ease-out hover:border-primary hover:shadow-[0_4px_14px_-6px_rgba(184,72,92,0.12)] active:scale-[0.98]"
+            aria-label="السلة"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            {count > 0 ? (
+              <span className="min-w-[20px] rounded-full bg-primary px-1.5 py-0.5 text-center text-xs font-bold text-white">
+                {count}
+              </span>
+            ) : (
+              <span className="hidden text-xs font-medium text-muted sm:inline">السلة</span>
+            )}
+          </button>
 
-          {/* Nav — desktop: وسط الشريط */}
-          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 md:flex" aria-label="التنقل الرئيسي">
+          {/* Nav — desktop */}
+          <nav className="hidden items-center gap-0.5 md:flex" aria-label="التنقل الرئيسي">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
@@ -103,67 +100,57 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* min-w-0 + shrink: باش اللوجو ما يدفعش زر القائمة برّا الشاشة فالعرض الضيق */}
-          <div className="flex min-w-0 shrink items-center justify-end gap-2 md:shrink-0">
-            {/* Mobile menu — ديما باين، فوق اللوجو فـ stacking */}
-            <div className="relative z-10 flex shrink-0 items-center md:hidden">
-              <button
-                type="button"
-                className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-xl border border-border p-2.5 text-muted transition-[color,border-color,background-color] duration-200 ease-out hover:border-primary/80 hover:bg-peach-tint/40 hover:text-charcoal"
-                onClick={() => setMenuOpen(true)}
-                aria-expanded={menuOpen}
-                aria-controls="mobile-nav-menu"
-                aria-label="فتح القائمة"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Logo + nom — خلفية خفيفة كالهوية الأولى */}
-            <Link
-              href="/"
-              className="group flex min-w-0 max-w-[min(52vw,calc(100vw-9.5rem))] shrink items-center gap-2 overflow-hidden rounded-2xl border border-[#e8e0de]/90 bg-gradient-to-l from-white via-white to-peach-tint/45 px-2.5 py-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.92),0_2px_12px_-6px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.03] transition-[box-shadow,border-color,background-color] duration-200 ease-out hover:border-primary/25 hover:to-peach-tint/70 hover:shadow-[0_4px_18px_-8px_rgba(184,72,92,0.12)] sm:max-w-[min(100%,calc(100vw-10rem))] sm:gap-2.5 sm:rounded-[1.15rem] sm:px-3 sm:py-2 md:max-w-[min(100%,calc(100vw-10rem))] md:shrink-0"
-              aria-label="نبتة لابو — البداية"
+          {/* Mobile menu */}
+          <div className="flex items-center md:hidden">
+            <button
+              type="button"
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-border p-2.5 text-muted transition-[color,border-color,background-color] duration-200 ease-out hover:border-primary/80 hover:bg-peach-tint/40 hover:text-charcoal"
+              onClick={() => setMenuOpen(true)}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-nav-menu"
+              aria-label="فتح القائمة"
             >
-              <Image
-                src={BRAND_LOGO_SRC}
-                alt="نبتة لابو · مكمّل غذائي على شكل علكة — منتجات وروتينات يومية مرخّصة SFDA"
-                width={320}
-                height={140}
-                priority
-                quality={PRODUCT_PHOTO_QUALITY}
-                sizes="(max-width: 640px) 38vw, 180px"
-                className="h-9 w-auto max-w-[min(128px,32vw)] shrink-0 object-contain object-right sm:h-10 sm:max-w-[min(160px,36vw)]"
-              />
-              <span className="hidden h-9 w-px shrink-0 bg-border/75 sm:block" aria-hidden />
-              <span className="min-w-0 text-right leading-tight">
-                <span className="block truncate text-sm font-extrabold tracking-tight text-charcoal sm:text-base" lang="ar">
-                  نبتة لابو
-                </span>
-                <span
-                  className="mt-0.5 block truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-muted sm:text-[11px]"
-                  lang="fr"
-                  translate="no"
-                >
-                  Nabta Labo
-                </span>
-              </span>
-            </Link>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
           </div>
+
+          {/* Logo + nom (عربي + français) */}
+          <Link
+            href="/"
+            className="group flex min-w-0 max-w-[min(100%,calc(100vw-9rem))] shrink items-center gap-2 py-0.5 sm:gap-2.5"
+            aria-label="نبتة لابو — البداية"
+          >
+            <Image
+              src={BRAND_LOGO_SRC}
+              alt="نبتة لابو · مكمّل غذائي على شكل علكة — منتجات وروتينات يومية مرخّصة SFDA"
+              width={320}
+              height={140}
+              priority
+              sizes="(max-width: 640px) 38vw, 180px"
+              className="h-9 w-auto max-w-[min(128px,32vw)] shrink-0 object-contain object-right sm:h-10 sm:max-w-[min(160px,36vw)]"
+            />
+            <span className="hidden h-9 w-px shrink-0 bg-border/75 sm:block" aria-hidden />
+            <span className="min-w-0 text-right leading-tight">
+              <span className="block truncate text-sm font-extrabold tracking-tight text-charcoal sm:text-base" lang="ar">
+                نبتة لابو
+              </span>
+              <span
+                className="mt-0.5 block truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-muted sm:text-[11px]"
+                lang="fr"
+                translate="no"
+              >
+                Nabta Labo
+              </span>
+            </span>
+          </Link>
         </div>
       </header>
 
       {/* Mobile full-screen nav */}
       {menuOpen ? (
-        <div
-          className="fixed inset-0 z-50 flex h-[100dvh] max-h-[100dvh] flex-col overflow-hidden bg-white md:hidden"
-          id="mobile-nav-menu"
-          role="dialog"
-          aria-modal="true"
-          aria-label="قائمة التصفح"
-        >
+        <div className="fixed inset-0 z-50 flex flex-col bg-white md:hidden" id="mobile-nav-menu" role="dialog" aria-modal="true" aria-label="قائمة التصفح">
           <div className="flex h-16 shrink-0 items-center justify-between border-b border-border bg-white px-4">
             <button
               type="button"
@@ -178,7 +165,7 @@ export default function Header() {
             <span className="text-sm font-semibold text-charcoal">القائمة</span>
             <span className="w-11 shrink-0" aria-hidden />
           </div>
-          <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-6" aria-label="التنقل الرئيسي">
+          <nav className="flex-1 overflow-y-auto px-4 py-6" aria-label="التنقل الرئيسي">
             <ul className="flex flex-col gap-1">
               {NAV_LINKS.map((link) => {
                 const active = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href))

@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useCartStore } from '@/stores/cart-store'
 import { PRODUCTS, getProductById, formatSarAmount } from '@/lib/products'
-import { PRODUCT_PHOTO_QUALITY } from '@/lib/image-defaults'
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 
 const CheckoutPopup = dynamic(() => import('@/components/checkout/CheckoutPopup'), { ssr: false })
@@ -28,8 +27,7 @@ function cartThumb(
         alt={product.nameAr}
         fill
         sizes={size === 'sm' ? '48px' : '64px'}
-        quality={PRODUCT_PHOTO_QUALITY}
-        className="object-contain object-center p-0.5"
+        className="object-cover object-center"
       />
     </div>
   )
