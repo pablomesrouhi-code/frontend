@@ -1,4 +1,5 @@
 import PolicyLayout from '@/components/ui/PolicyLayout'
+import { CONTACT_EMAIL } from '@/lib/site'
 export const metadata = { title: 'الشروط والأحكام | نبتة لابو' }
 export default function Terms() {
   return (
@@ -12,7 +13,12 @@ export default function Terms() {
       <h2>الأسعار</h2>
       <p>الأسعار المعروضة بالريال السعودي وتشمل ضريبة القيمة المضافة إذا انطبقت. نحتفظ بحق تغيير الأسعار دون إشعار مسبق.</p>
       <h2>التواصل</h2>
-      <p>لأي استفسار: hello@NabtaLabo.store</p>
+      <p>
+        لأي استفسار:{' '}
+        <a href={`mailto:${CONTACT_EMAIL}`} className="font-semibold text-authority underline-offset-2 hover:underline">
+          {CONTACT_EMAIL}
+        </a>
+      </p>
     </PolicyLayout>
   )
 }

@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { BRAND_LOGO_SRC } from '@/lib/brand'
+import { CONTACT_EMAIL } from '@/lib/site'
+import { PRODUCT_PHOTO_QUALITY } from '@/lib/image-defaults'
 
 const FOOTER_LINKS = [
   { href: '/', label: 'البداية' },
@@ -35,6 +37,8 @@ export default function Footer() {
                 alt="نبتة لابو · مكمّل غذائي على شكل علكة — منتجات وروتينات يومية مرخّصة SFDA"
                 width={320}
                 height={140}
+                quality={PRODUCT_PHOTO_QUALITY}
+                sizes="(max-width: 768px) 240px, 280px"
                 className="h-14 sm:h-16 w-auto max-w-[240px] object-contain mx-auto md:mx-0"
               />
             </Link>
@@ -49,10 +53,10 @@ export default function Footer() {
                 <span>الدفع عند الاستلام فقط</span>
               </div>
               <a
-                href="mailto:contact@nabtalabo.store"
+                href={`mailto:${CONTACT_EMAIL}`}
                 className="break-all text-sm font-medium text-white transition-colors duration-200 ease-out hover:text-peach"
               >
-                contact@nabtalabo.store
+                {CONTACT_EMAIL}
               </a>
             </div>
           </div>

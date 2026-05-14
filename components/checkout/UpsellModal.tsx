@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { formatSarAmount, type Product } from '@/lib/products'
+import { PRODUCT_PHOTO_QUALITY } from '@/lib/image-defaults'
 import { CHECKOUT_UI_REV } from '@/lib/checkout-rev'
 
 type Props = {
@@ -104,13 +105,14 @@ export default function UpsellModal({
 
           {/* Product */}
           <div className="bg-[#FFFFFF] rounded-2xl p-4 flex gap-4 items-start min-w-0">
-            <div className="relative w-20 h-20 shrink-0 overflow-hidden rounded-xl border border-gray-100 bg-white">
+            <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-gray-100 bg-[#faf9f8]">
               <Image
                 src={product.coverImage}
                 alt={product.nameAr}
-                width={product.coverWidth}
-                height={product.coverHeight}
-                className="object-contain object-center w-full h-full p-0.5"
+                fill
+                sizes="80px"
+                quality={PRODUCT_PHOTO_QUALITY}
+                className="object-contain object-center p-1"
               />
             </div>
             <div className="flex-1 min-w-0">
