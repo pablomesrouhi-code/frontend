@@ -12,7 +12,7 @@ export default function AboutPage() {
     <div className="bg-[#FFFFFF] py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-12">
-          <div className="relative z-10 inline-flex flex-col items-center justify-center mx-auto mb-5 rounded-3xl bg-white px-8 py-6 shadow-xl border border-[#e8f1f2]">
+          <div className="relative z-10 inline-flex flex-col items-center justify-center mx-auto mb-5 rounded-3xl border border-[#e8f1f2]/90 bg-white px-8 py-6 shadow-[0_8px_36px_-14px_rgba(20,107,112,0.12)] ring-1 ring-black/[0.025]">
             <Image
               src="/nabta-lab-brand.png"
               alt="نبتة لابو — بحضور يقترب من صيدلية الثقة"
@@ -50,7 +50,7 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="order-1 md:order-1 relative z-20 flex justify-center md:justify-end">
-            <div className="w-full max-w-md rounded-3xl bg-gradient-to-br from-[#eaf3f4] to-white border-2 border-[#cce7ea] p-8 sm:p-10 shadow-xl">
+            <div className="w-full max-w-md rounded-3xl border-2 border-[#cce7ea]/90 bg-gradient-to-br from-[#eaf3f4] to-white p-8 shadow-[0_10px_40px_-16px_rgba(20,107,112,0.14)] ring-1 ring-black/[0.02] sm:p-10">
               <Image
                 src="/nabta-lab-brand.png"
                 alt="شعار نبتة لابو"
@@ -65,7 +65,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="relative z-30 -mt-4 md:-mt-6 bg-[#faf9f8] rounded-3xl p-8 mb-10 border border-[#e0dcd9] shadow-md">
+        <div className="relative z-30 -mt-4 md:-mt-6 rounded-3xl border border-[#e0dcd9]/90 bg-[#faf9f8] p-8 shadow-[0_4px_28px_-10px_rgba(26,25,21,0.07)] ring-1 ring-black/[0.02] mb-10 sm:p-9">
           <h2 className="text-2xl font-bold text-[#1C1C1C] mb-6 text-center">لماذا العلكة؟</h2>
           <p className="text-[#5c5656] text-center leading-relaxed max-w-2xl mx-auto mb-8">
             لأن جزءًا كبيرًا من الفائدة في المكمّل هو الاستمرار، والعلكة اليومية تخفّف عنكِ عائق النسيان — بينما المحتوى يبقى ما هو: مكمّل غذائي بضوابط الغذاء والدواء، لا حلويات «صحّية» بلا اسم تصنيف.

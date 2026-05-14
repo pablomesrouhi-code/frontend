@@ -65,14 +65,14 @@ export default function Header() {
   const msg = BANNER_MESSAGES[msgIndex]
 
   return (
-    <div className="sticky top-0 z-30 isolate pt-[max(0px,env(safe-area-inset-top))]">
-      <header className="border-b border-border bg-white/95 shadow-[0_1px_0_rgba(28,28,28,0.04)] supports-[backdrop-filter]:bg-white/90 supports-[backdrop-filter]:backdrop-blur-sm">
+    <div className="sticky top-0 z-30 isolate pt-[max(0px,env(safe-area-inset-top))] [transform:translate3d(0,0,0)]">
+      <header className="border-b border-border bg-white/95 shadow-[0_1px_0_rgba(28,28,28,0.05),0_8px_32px_-28px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] supports-[backdrop-filter]:bg-white/[0.93] supports-[backdrop-filter]:backdrop-blur-sm">
         <div className="mx-auto flex min-h-16 max-w-6xl items-center justify-between gap-2 px-4 py-2 sm:px-6 sm:py-2.5">
           {/* Cart */}
           <button
             type="button"
             onClick={openCart}
-            className="relative flex touch-manipulation items-center gap-2 rounded-full border-[1.5px] border-border px-3 py-2 transition-colors hover:border-primary active:scale-[0.98]"
+            className="relative flex touch-manipulation items-center gap-2 rounded-full border-[1.5px] border-border px-3 py-2 transition-[color,background-color,border-color,transform,box-shadow] duration-200 ease-out hover:border-primary hover:shadow-[0_4px_14px_-6px_rgba(184,72,92,0.12)] active:scale-[0.98]"
             aria-label="السلة"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
@@ -93,7 +93,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="rounded-lg px-4 py-2 text-sm font-medium text-muted transition-colors hover:bg-peach-tint hover:text-primary"
+                className="rounded-xl px-4 py-2 text-sm font-medium text-muted transition-[color,background-color] duration-200 ease-out hover:bg-peach-tint/90 hover:text-primary"
               >
                 {link.label}
               </Link>
@@ -104,7 +104,7 @@ export default function Header() {
           <div className="flex items-center md:hidden">
             <button
               type="button"
-              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-border p-2.5 text-muted transition-colors hover:border-primary hover:text-charcoal"
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-border p-2.5 text-muted transition-[color,border-color,background-color] duration-200 ease-out hover:border-primary/80 hover:bg-peach-tint/40 hover:text-charcoal"
               onClick={() => setMenuOpen(true)}
               aria-expanded={menuOpen}
               aria-controls="mobile-nav-menu"
@@ -173,7 +173,7 @@ export default function Header() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className={`flex min-h-[48px] items-center rounded-xl px-3 py-4 text-base font-medium transition-colors ${
+                      className={`flex min-h-[48px] items-center rounded-xl px-3 py-4 text-base font-medium transition-[color,background-color] duration-200 ease-out ${
                         active ? 'bg-peach-tint text-primary' : 'text-muted'
                       }`}
                       onClick={() => setMenuOpen(false)}

@@ -43,14 +43,14 @@ export default function Footer() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 flex-wrap">
               <div
-                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-xs text-white/90"
+                className="inline-flex items-center gap-2 rounded-full border border-white/18 bg-white/[0.09] px-3 py-2 text-xs text-white/92 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
               >
                 <span aria-hidden>🛡️</span>
                 <span>الدفع عند الاستلام فقط</span>
               </div>
               <a
                 href="mailto:contact@nabtalabo.store"
-                className="break-all text-sm font-medium text-white transition-colors hover:text-peach"
+                className="break-all text-sm font-medium text-white transition-colors duration-200 ease-out hover:text-peach"
               >
                 contact@nabtalabo.store
               </a>
@@ -65,7 +65,7 @@ export default function Footer() {
             {FOOTER_LINKS.map((l, i) => (
               <span key={l.href} className="inline-flex items-center gap-1">
                 {i > 0 && <span className="text-white/25 px-0.5 select-none" aria-hidden>|</span>}
-                <Link href={l.href} className="hover:text-white transition-colors whitespace-nowrap px-1 py-0.5">
+                <Link href={l.href} className="rounded-sm px-1 py-0.5 whitespace-nowrap transition-colors duration-200 ease-out hover:text-white">
                   {l.label}
                 </Link>
               </span>

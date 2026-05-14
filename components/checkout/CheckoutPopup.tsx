@@ -270,12 +270,16 @@ export default function CheckoutPopup({ onClose }: Props) {
                 <span className="text-sm text-[#1C1C1C] min-w-0 flex-1 text-right leading-snug break-words">
                   {item.nameAr} — {item.offerQty === 1 ? 'قطعة' : item.offerQty === 2 ? 'قطعتين' : '3 قطع'}
                 </span>
-                <span className="shrink-0 text-sm font-bold tabular-nums text-[#b8485c]">{formatSarAmount(item.price)}</span>
+                <span className="shrink-0 text-sm font-bold text-[#b8485c]">
+                  <span className="sar-price tabular-nums">{formatSarAmount(item.price)}</span>
+                </span>
               </div>
             ))}
             <div className="flex justify-between items-center mt-2 pt-2">
               <span className="font-bold text-[#1C1C1C]">المجموع</span>
-              <span className="text-lg font-bold tabular-nums text-[#b8485c]">{formatSarAmount(total())}</span>
+              <span className="text-lg font-bold text-[#b8485c]">
+                <span className="sar-price tabular-nums">{formatSarAmount(total())}</span>
+              </span>
             </div>
           </div>
 

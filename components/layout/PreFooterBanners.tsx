@@ -28,7 +28,7 @@ export default function PreFooterBanners() {
     <section className="border-t border-border bg-white" aria-label="مزايا التسوق">
       <div className="mx-auto max-w-6xl px-4 py-3 sm:px-6 sm:py-4">
         <div
-          className="rounded-xl border border-border bg-white px-3 py-3 shadow-[0_1px_8px_rgba(20,107,112,0.05)] sm:px-6 sm:py-3.5"
+          className="rounded-2xl border border-border/60 bg-white px-3 py-3 shadow-[0_4px_24px_-10px_rgba(26,25,21,0.07)] ring-1 ring-black/[0.02] sm:rounded-[1.125rem] sm:px-6 sm:py-3.5"
         >
           <div className="flex flex-wrap items-start justify-evenly md:justify-between gap-x-2 gap-y-4">
             {BANNERS.map((b, i) => (

@@ -16,21 +16,34 @@
   --color-canvas:        #f4f1ef;
 
   --font-arabic: var(--font-plex-arabic, "IBM Plex Sans Arabic"), "Noto Sans Arabic", Arial, sans-serif;
+
+  /* ظلال موحّدة للبطاقات — استخدمها عبر shadow-* إن لزم لاحقاً */
+  --shadow-card: 0 2px 14px -2px rgb(26 25 21 / 0.05), 0 0 0 1px rgb(26 25 21 / 0.03);
+  --shadow-card-hover: 0 12px 40px -12px rgb(20 107 112 / 0.12), 0 4px 14px -4px rgb(26 25 21 / 0.06);
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * { box-sizing: border-box; }
 
 @keyframes faq-open {
-  from { opacity: 0; transform: translateY(-6px); }
+  from { opacity: 0; transform: translateY(-4px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 details[open] > div {
-  animation: faq-open 0.25s ease forwards;
+  animation: faq-open 0.22s var(--ease-out-soft) forwards;
+}
+
+details > summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
 }
 
 html {
-  /* smooth scroll يكلف إطارات إضافية على الصفحات الطويلة */
   scroll-behavior: auto;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -48,21 +61,76 @@ body {
   direction: rtl;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: auto;
   background-color: var(--color-canvas);
   background-image:
-    radial-gradient(900px 480px at 100% -18%, rgba(20, 107, 112, 0.075) 0%, transparent 52%),
-    radial-gradient(620px 440px at -8% 102%, rgba(184, 72, 92, 0.055) 0%, transparent 48%),
-    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(201, 147, 126, 0.04) 0%, transparent 55%);
-  /* fixed كان يسبب تقطيعاً واضحاً عند التمرير (إعادة رسم كامل للخلفية كل إطار) */
+    radial-gradient(980px 520px at 100% -14%, rgba(20, 107, 112, 0.065) 0%, transparent 54%),
+    radial-gradient(680px 460px at -6% 104%, rgba(184, 72, 92, 0.048) 0%, transparent 50%),
+    radial-gradient(ellipse 85% 52% at 50% 100%, rgba(201, 147, 126, 0.035) 0%, transparent 58%);
   background-attachment: scroll;
 }
 
 ::selection {
-  background: rgba(20, 107, 112, 0.18);
+  background: rgba(20, 107, 112, 0.16);
   color: var(--color-charcoal);
+}
+
+/* لمسة خفيفة على عرض السعر — أرقام tabular + عمق بصري خفيف */
+.sar-price {
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.5), 0 -0.5px 0 rgb(0 0 0 / 0.04);
+}
+
+/* على نص أبيض فوق تدرّج داكن */
+.sar-price-dark {
+  text-shadow: 0 1px 1px rgb(0 0 0 / 0.28);
+}
+
+/* عروض قطعتين/ثلاث — لمعة خفيفة تجذب العين بدون صخب */
+@keyframes offer-badge-shine-sweep {
+  0%, 72%, 100% {
+    transform: translateX(-140%);
+    opacity: 0;
+  }
+  78% {
+    opacity: 0.85;
+  }
+  88% {
+    transform: translateX(140%);
+    opacity: 0;
+  }
+}
+
+.offer-badge-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 38%,
+    rgb(255 255 255 / 0.3) 50%,
+    transparent 62%,
+    transparent 100%
+  );
+  animation: offer-badge-shine-sweep 4.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .offer-badge-shine::after {
+    animation: none;
+    opacity: 0;
+  }
+
+  .offer-tier-glow-blob {
+    opacity: 0.08;
+  }
 }
 
 :focus-visible {
   outline: 2px solid var(--color-authority);
-  outline-offset: 2px;
+  outline-offset: 3px;
+  border-radius: 2px;
 }

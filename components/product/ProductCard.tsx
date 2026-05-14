@@ -17,10 +17,10 @@ function PriceBlock({ product }: { product: Product }) {
     <div className="text-right">
       <p className="text-[11px] font-bold uppercase tracking-wide text-muted">سعر القطعة</p>
       <p className="text-3xl font-black tabular-nums sm:text-4xl" style={{ color: product.accentColor }}>
-        {formatSarAmount(priceOne)}
+        <span className="sar-price">{formatSarAmount(priceOne)}</span>
       </p>
       <p className="mt-1 text-xs leading-snug text-muted">
-        3 قطع بـ <span className="font-bold text-charcoal tabular-nums">{formatSarAmount(priceThree)}</span> من صفحة المنتج
+        3 قطع بـ <span className="font-bold text-charcoal"><span className="sar-price">{formatSarAmount(priceThree)}</span></span> من صفحة المنتج
       </p>
     </div>
   )
@@ -30,7 +30,7 @@ function CtaRow({ product }: { product: Product }) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group/btn mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold transition-all active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100"
+      className="group/btn mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold transition-[color,background-color,border-color,transform] duration-200 ease-out active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100"
       style={{ background: '#FFFFFF', color: product.accentColor, border: `2px solid ${product.accentColor}44` }}
       onMouseEnter={(e) => {
         ;(e.currentTarget as HTMLElement).style.background = product.accentColor
@@ -50,7 +50,7 @@ function CtaRow({ product }: { product: Product }) {
 export default function ProductCard({ product, layout = 'grid' }: Props) {
   if (layout === 'grid') {
     return (
-      <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border bg-white shadow-[0_2px_8px_rgba(26,25,21,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-authority/30 hover:shadow-[0_20px_48px_-12px_rgba(20,107,112,0.14)]">
+      <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-authority/25 hover:shadow-[0_20px_48px_-14px_rgba(20,107,112,0.13)]">
         <Link href={`/products/${product.slug}`} className="relative block shrink-0 overflow-hidden bg-[#FAFAFA]">
           <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">
             <Image
@@ -92,7 +92,7 @@ export default function ProductCard({ product, layout = 'grid' }: Props) {
   }
 
   return (
-    <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border bg-white shadow-[0_2px_8px_rgba(26,25,21,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-authority/30 hover:shadow-[0_20px_48px_-12px_rgba(20,107,112,0.14)] md:flex-row md:items-stretch">
+    <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-authority/25 hover:shadow-[0_20px_48px_-14px_rgba(20,107,112,0.13)] md:flex-row md:items-stretch">
       <Link
         href={`/products/${product.slug}`}
         className="relative block w-full shrink-0 overflow-hidden bg-[#FAFAFA] md:w-[min(42%,280px)] md:max-w-[300px] md:self-stretch lg:w-[40%] lg:max-w-none"

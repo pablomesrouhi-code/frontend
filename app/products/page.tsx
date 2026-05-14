@@ -12,9 +12,9 @@ export default function CollectionPage() {
   return (
     <div className="bg-[#FFFFFF]">
       {/* Hero */}
-      <section className="bg-white border-b border-gray-100 py-12">
+      <section className="border-b border-border/70 bg-white py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
-          <span className="inline-block bg-[#eaf3f4] text-[#146b70] text-sm font-semibold px-4 py-1.5 rounded-full mb-4 border border-[#cce4e7]">
+          <span className="mb-4 inline-block rounded-full border border-[#cce4e7]/90 bg-[#eaf3f4] px-4 py-1.5 text-sm font-semibold text-[#146b70] shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] ring-1 ring-[#146b70]/[0.06]">
             مكمّل غذائي · علكة بحضور نقطة اعتماد
           </span>
           <h1 className="text-4xl sm:text-5xl font-bold text-[#1C1C1C] mb-2 leading-tight">اختاري وجهة الروتين المناسبة لطبيعة يومكِ</h1>
@@ -46,7 +46,7 @@ export default function CollectionPage() {
       <section className="py-10 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 overflow-x-auto">
           <h2 className="text-xl font-bold text-[#1C1C1C] mb-5 text-center">قارني بين المنتجات</h2>
-          <table className="w-full text-sm border-collapse">
+          <table className="w-full overflow-hidden rounded-xl border-collapse border border-border/60 text-sm shadow-[0_4px_24px_-10px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02]">
             <thead>
               <tr className="bg-[#FFFFFF]">
                 <th className="p-3 text-right font-bold text-[#1C1C1C] border border-gray-200">المنتج</th>
@@ -62,7 +62,7 @@ export default function CollectionPage() {
                 ['أفضل وقت', 'الصباح', 'بعد الوجبات', 'المساء'],
                 ['السعر', '199 ريال', '199 ريال', '199 ريال'],
               ].map(([label, ...vals]) => (
-                <tr key={label} className="border-b border-gray-100 hover:bg-[#FFFFFF] transition">
+                <tr key={label} className="border-b border-gray-100/90 transition-colors duration-200 ease-out hover:bg-[#faf9f8]">
                   <td className="p-3 font-semibold text-[#1C1C1C] border border-gray-200">{label}</td>
                   {vals.map((v, i) => (
                     <td key={i} className="p-3 text-center text-[#5c5656] border border-gray-200">{v}</td>
@@ -77,7 +77,7 @@ export default function CollectionPage() {
       {/* Bundle nudge */}
       <section className="py-6">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="bg-[#b8485c] rounded-2xl px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col items-center justify-between gap-4 rounded-2xl border border-white/10 bg-[#b8485c] px-6 py-5 shadow-[0_12px_40px_-16px_rgba(148,60,80,0.45)] ring-1 ring-black/[0.06] sm:flex-row">
             <div className="text-white">
               <p className="font-bold text-lg">جربي الثلاثة معاً</p>
               <p className="text-white/80 text-sm">رونق C + خفّة بيوتك + ليل ماج = روتين كامل من الصباح للمساء</p>
@@ -107,7 +107,7 @@ export default function CollectionPage() {
           <h2 className="text-2xl font-bold text-[#1C1C1C] mb-8">ماذا قالت عملاؤنا؟</h2>
           <div className="grid md:grid-cols-3 gap-5">
             {PRODUCTS.map((p) => (
-              <div key={p.id} className="bg-[#FFFFFF] rounded-2xl p-5 text-right">
+              <div key={p.id} className="rounded-2xl border border-border/55 bg-[#FFFFFF] p-5 text-right shadow-[0_4px_22px_-8px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02]">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-semibold px-2 py-1 rounded-full text-white" style={{ background: p.accentColor }}>{p.nameAr}</span>
                   <StarRating rating={p.rating} size="sm" />

@@ -39,6 +39,7 @@ export default function OfferSelector({ selected, onChange, accentColor = '#b848
         {OFFERS.map((offer) => {
           const active = selected === offer.qty
           const save = savingsForQty(offer.qty)
+          const multi = offer.qty > 1
           return (
             <button
               type="button"
@@ -46,9 +47,9 @@ export default function OfferSelector({ selected, onChange, accentColor = '#b848
               onClick={() => onChange(offer.qty)}
               className={`relative flex min-h-[3.5rem] flex-wrap items-center justify-between gap-x-2.5 gap-y-2 rounded-2xl border-2 px-4 py-3 text-right sm:min-h-[3.75rem] sm:flex-nowrap sm:rounded-3xl sm:px-5 sm:py-4 ${
                 active
-                  ? 'shadow-[0_8px_30px_-8px_rgba(28,28,28,0.12),0_0_0_1px_rgba(255,255,255,0.85)_inset]'
-                  : 'border-gray-200/90 bg-white/90 hover:border-gray-300 hover:bg-white hover:shadow-md active:scale-[0.99]'
-              } cursor-pointer touch-manipulation overflow-hidden transition-all duration-300 ease-out`}
+                  ? 'shadow-[0_8px_32px_-10px_rgba(28,28,28,0.1),inset_0_1px_0_rgba(255,255,255,0.88)]'
+                  : 'border-gray-200/90 bg-white/95 hover:border-gray-300/95 hover:bg-white hover:shadow-[0_6px_22px_-10px_rgba(26,25,21,0.08)] active:scale-[0.99]'
+              } cursor-pointer touch-manipulation overflow-hidden transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out`}
               style={
                 active
                   ? {
@@ -59,6 +60,13 @@ export default function OfferSelector({ selected, onChange, accentColor = '#b848
                   : undefined
               }
             >
+              {multi && (
+                <span
+                  className="offer-tier-glow-blob pointer-events-none absolute inset-y-3 end-3 z-0 h-8 w-8 rounded-full opacity-[0.14] blur-md sm:end-4 sm:h-9 sm:w-9"
+                  style={{ background: accentColor }}
+                  aria-hidden
+                />
+              )}
               {active && (
                 <span
                   className="pointer-events-none absolute start-0 top-0 bottom-0 w-[4px]"
@@ -83,21 +91,24 @@ export default function OfferSelector({ selected, onChange, accentColor = '#b848
                   <span className="break-words text-right text-sm font-bold text-[#1C1C1C] sm:text-base">{offer.label}</span>
                   {offer.badge && (
                     <span
-                      className="shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wide text-white shadow-sm sm:px-3 sm:py-1 sm:text-[11px]"
+                      className="offer-badge-shine relative shrink-0 overflow-hidden rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wide text-white shadow-sm sm:px-3 sm:py-1 sm:text-[11px]"
                       style={{ background: `linear-gradient(135deg, ${accentColor}, color-mix(in srgb, ${accentColor} 70%, #1a1a1a))` }}
                     >
-                      {offer.badge}
+                      <span className="relative z-[1]">{offer.badge}</span>
                     </span>
                   )}
                 </div>
               </div>
-              <div className="relative z-[1] ms-auto flex shrink-0 flex-col items-end gap-0.5 sm:ms-0">
-                <span className="text-lg font-black tabular-nums whitespace-nowrap sm:text-xl" style={{ color: accentColor }}>
+              <div className="relative z-[1] ms-auto flex min-w-0 shrink flex-col items-end gap-0.5 sm:ms-0">
+                <span
+                  className="sar-price text-lg font-black tabular-nums whitespace-nowrap sm:text-xl"
+                  style={{ color: accentColor }}
+                >
                   {formatSarAmount(offer.price)}
                 </span>
                 {save != null && (
-                  <span className="rounded-full bg-emerald-600/12 px-2 py-0.5 text-[10px] font-black leading-snug text-emerald-900 ring-1 ring-emerald-600/30 sm:px-2.5 sm:text-[11px] sm:leading-snug">
-                    وفّر {formatSarAmount(save)} عن نفس العدد لو اشتريتِه بالقطعة الواحدة
+                  <span className="max-w-full rounded-full bg-emerald-600/12 px-2 py-0.5 text-end text-[10px] font-black leading-snug text-emerald-900 [overflow-wrap:anywhere] ring-1 ring-emerald-600/30 sm:px-2.5 sm:text-[11px] sm:leading-snug">
+                    وفّر <bdi className="tabular-nums font-black">{formatSarAmount(save)}</bdi> مقارنة بالوحدة
                   </span>
                 )}
               </div>

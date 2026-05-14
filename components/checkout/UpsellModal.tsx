@@ -117,8 +117,12 @@ export default function UpsellModal({
               <p className="font-bold text-[#1C1C1C] break-words">{product.nameAr}</p>
               <p className="text-xs text-[#5c5656] mt-1 leading-relaxed break-words">{product.subtitleAr}</p>
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-2">
-                <span className="text-2xl font-bold tabular-nums text-[#b8485c]">{formatSarAmount(99)}</span>
-                <span className="text-sm text-gray-400 line-through tabular-nums">{formatSarAmount(199)}</span>
+                <span className="text-2xl font-bold text-[#b8485c]">
+                  <span className="sar-price tabular-nums">{formatSarAmount(99)}</span>
+                </span>
+                <span className="text-sm text-gray-400 line-through">
+                  <span className="sar-price tabular-nums">{formatSarAmount(199)}</span>
+                </span>
                 <span className="text-xs bg-[#f1e6e4] text-[#943c50] px-2 py-0.5 rounded-full font-bold">
                   50% خصم
                 </span>
@@ -133,7 +137,13 @@ export default function UpsellModal({
             disabled={placingOrder}
             className="w-full bg-[#b8485c] text-white font-bold py-4 rounded-full text-lg hover:bg-[#943c50] transition-colors disabled:opacity-60"
           >
-            {placingOrder ? 'جاري الإرسال...' : `أضيفيه لطلبي بـ ${formatSarAmount(99)}`}
+            {placingOrder ? (
+              'جاري الإرسال...'
+            ) : (
+              <>
+                أضيفيه لطلبي بـ <span className="sar-price sar-price-dark tabular-nums">{formatSarAmount(99)}</span>
+              </>
+            )}
           </button>
           <button
             type="button"

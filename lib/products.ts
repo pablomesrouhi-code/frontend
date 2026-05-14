@@ -420,7 +420,7 @@ export function getPriceForQty(qty: 1 | 2 | 3): number {
   return map[qty]
 }
 
-/** عرض موحّد: الرقم ملاصق لـ «ريال» ثم «سعودي» (مثلاً 199ريال سعودي). U+200E بعد الرقم يقلّل فراغ بصري في RTL. */
+/** عرض موحّد: الرقم ملاصق لـ «ريال سعودي» بدون رموز اتجاه خفية (تظهر أحياناً كفراغ غريب). */
 export function formatSarAmount(amount: number): string {
-  return `${amount}\u200eريال سعودي`
+  return `${amount}ريال سعودي`
 }

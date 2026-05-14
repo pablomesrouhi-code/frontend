@@ -56,7 +56,7 @@ export default function ProductPageClient({ product }: { product: Product }) {
 
   return (
     <div
-      className="relative min-w-0 max-w-full overflow-hidden rounded-[1.35rem] border border-white/70 p-5 shadow-[0_4px_6px_-1px_rgba(26,24,21,0.04),0_20px_50px_-24px_rgba(26,24,21,0.14),inset_0_1px_0_0_rgba(255,255,255,0.92)] sm:rounded-3xl sm:p-6"
+      className="relative min-w-0 max-w-full overflow-hidden rounded-[1.35rem] border border-white/75 p-5 shadow-[0_2px_8px_-2px_rgba(26,24,21,0.04),0_24px_56px_-28px_rgba(26,24,21,0.11),inset_0_1px_0_0_rgba(255,255,255,0.94)] ring-1 ring-black/[0.02] sm:rounded-3xl sm:p-6"
       style={{
         background: `linear-gradient(165deg, #ffffff 0%, color-mix(in srgb, ${product.bgColor} 35%, white) 55%, color-mix(in srgb, ${product.bgColor} 18%, white) 100%)`,
       }}
@@ -97,7 +97,8 @@ export default function ProductPageClient({ product }: { product: Product }) {
           <span className="relative z-[1] flex items-center justify-center gap-3 flex-row-reverse">
             <CartIcon className="h-5 w-5 shrink-0 opacity-95 transition-transform duration-300 group-hover:scale-110 sm:h-6 sm:w-6" />
             <span className="text-center text-[0.9375rem] font-extrabold leading-snug sm:text-base sm:leading-normal md:text-lg">
-              أضيفي للسلة وكمّلي — <span className="tabular-nums">{formatSarAmount(getPriceForQty(selectedQty))}</span>
+              أضيفي للسلة وكمّلي —{' '}
+              <span className="sar-price sar-price-dark tabular-nums">{formatSarAmount(getPriceForQty(selectedQty))}</span>
               <span className="text-white/95"> ، </span>
               <span className="block text-[0.92em] font-extrabold sm:inline">والدفع عند الباب</span>
             </span>

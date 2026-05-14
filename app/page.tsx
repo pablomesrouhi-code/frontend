@@ -84,7 +84,7 @@ export default function HomePage() {
               </p>
 
               {/* Compliance badges */}
-              <div className="flex items-center mb-6 bg-white rounded-xl overflow-hidden w-fit" style={{ border: '1px solid #dfd6d4', boxShadow: '0 1px 4px rgba(26,25,21,0.06)' }}>
+              <div className="flex items-center mb-6 bg-white rounded-xl overflow-hidden w-fit" style={{ border: '1px solid #e8e0dd', boxShadow: '0 2px 10px -2px rgba(26,25,21,0.05), inset 0 1px 0 rgba(255,255,255,0.95)' }}>
                 {[
                   { icon: '🛡', label: 'SFDA', sub: 'هيئة الغذاء والدواء', color: '#b8485c' },
                   { icon: '🔬', label: 'GMP', sub: 'Certified', color: '#146b70' },
@@ -105,7 +105,7 @@ export default function HomePage() {
                 <Link
                   href="/products"
                   className="inline-flex items-center gap-2 font-bold px-8 py-4 rounded-full text-base transition-all hover:shadow-xl hover:-translate-y-0.5"
-                  style={{ background: '#b8485c', color: '#fff', boxShadow: '0 4px 16px rgba(184,72,92,0.28)' }}
+                  style={{ background: '#b8485c', color: '#fff', boxShadow: '0 10px 32px -8px rgba(184,72,92,0.38), 0 2px 8px -2px rgba(184,72,92,0.22)' }}
                 >
                   تسوقي الآن
                   <span>←</span>
@@ -132,7 +132,7 @@ export default function HomePage() {
               style={{
                 border: '1px solid #EADFD6',
                 boxShadow:
-                  '0 0 0 1px rgba(184, 104, 116, 0.45), 0 16px 48px rgba(28, 28, 28, 0.07), 0 4px 12px rgba(184, 72, 92, 0.07)',
+                  '0 0 0 1px rgba(184, 104, 116, 0.2), 0 22px 60px -24px rgba(28, 28, 28, 0.1), 0 8px 24px -10px rgba(184, 72, 92, 0.09), inset 0 1px 0 rgba(255,255,255,0.85)',
               }}
             >
               <div className="rounded-2xl overflow-hidden bg-[#FDF8F9] relative">
@@ -236,7 +236,7 @@ export default function HomePage() {
               <div
                 key={ing.code}
                 className="rounded-2xl p-5 flex flex-col gap-3 bg-white"
-                style={{ border: '1px solid #d8c9c6', boxShadow: '0 2px 8px rgba(184,72,92,0.09)' }}
+                style={{ border: '1px solid #d8c9c6', boxShadow: '0 4px 22px -8px rgba(184,72,92,0.1), inset 0 1px 0 rgba(255,255,255,0.65)' }}
               >
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded-md" style={{ background: '#f1e6e4', color: '#b8485c' }}>{ing.code}</span>
@@ -264,7 +264,7 @@ export default function HomePage() {
       {/* ─── How it works — split + timeline ─── */}
       <section className="py-20" style={{ background: '#f1e6e4' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="rounded-3xl bg-white overflow-hidden" style={{ border: '1px solid #d8c9c6', boxShadow: '0 8px 32px rgba(184,72,92,0.1)' }}>
+          <div className="rounded-3xl bg-white overflow-hidden" style={{ border: '1px solid #dfd8d5', boxShadow: '0 12px 48px -20px rgba(184,72,92,0.12), 0 0 0 1px rgba(26,25,21,0.02)' }}>
             <div className="grid lg:grid-cols-12 gap-0">
               <div className="lg:col-span-5 p-8 sm:p-10 lg:p-12 text-center lg:text-right border-b lg:border-b-0 lg:border-s border-[#e0dad7]" style={{ background: 'linear-gradient(180deg, #eae2df 0%, #FFFFFF 55%)' }}>
                 <p className="text-sm font-bold tracking-widest uppercase mb-3" style={{ color: '#b8485c' }}>
@@ -358,7 +358,7 @@ export default function HomePage() {
               <div
                 key={r.name}
                 className="rounded-2xl p-6 flex flex-col gap-4"
-                style={{ background: '#fff', border: '1px solid #dfd6d4', boxShadow: '0 2px 8px rgba(26,25,21,0.04)' }}
+                style={{ background: '#fff', border: '1px solid #ebe4e0', boxShadow: '0 4px 22px -8px rgba(26,25,21,0.06), inset 0 1px 0 rgba(255,255,255,0.9)' }}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex gap-0.5">
@@ -408,7 +408,7 @@ export default function HomePage() {
                 className="rounded-2xl overflow-hidden group"
                 style={{ border: '1px solid #d8c9c6', background: '#fff' }}
               >
-                <summary className="px-6 py-4 font-semibold cursor-pointer list-none flex items-center justify-between transition hover:bg-[#eae2df]" style={{ color: '#1C1C1C', background: '#fff' }}>
+                <summary className="flex cursor-pointer list-none items-center justify-between rounded-t-xl px-6 py-4 font-semibold transition-colors duration-200 ease-out hover:bg-[#f5f0ed]" style={{ color: '#1C1C1C', background: '#fff' }}>
                   {faq.q}
                   <span style={{ color: '#b8485c' }} className="group-open:rotate-180 transition-transform duration-200 text-xs shrink-0 mr-3">▼</span>
                 </summary>
