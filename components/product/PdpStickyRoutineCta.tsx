@@ -38,16 +38,14 @@ export default function PdpStickyRoutineCta({ visible, accentColor, accentDeep, 
             type="button"
             onClick={onClick}
             tabIndex={visible ? 0 : -1}
-            className="flex w-full touch-manipulation flex-col items-center gap-0.5 rounded-xl px-4 py-2 text-white shadow-sm transition-[transform,filter] active:scale-[0.99]"
+            className="flex w-full touch-manipulation flex-row items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-white shadow-sm transition-[transform,filter] active:scale-[0.99]"
             style={{
               background: `linear-gradient(145deg, ${accentColor} 0%, ${accentDeep} 100%)`,
               boxShadow: `0 4px 16px -4px ${accentColor}55`,
             }}
           >
+            <span className="text-[13px] font-extrabold leading-snug sm:text-sm">ابدئي روتين الشباب الآن</span>
             <ArrowUp className="h-4 w-4 shrink-0 opacity-95 pdp-cta-arrow-nudge" />
-            <span className="text-center text-[13px] font-extrabold leading-snug sm:text-sm">
-              ابدئي routine شغّال الآن
-            </span>
           </button>
         </div>
       </div>
