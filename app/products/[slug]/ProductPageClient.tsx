@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Product, getPriceForQty, formatSarAmount } from '@/lib/products'
 import { useCartStore } from '@/stores/cart-store'
 import OfferSelector from '@/components/product/OfferSelector'
+import PdpMorningRoutineNote from '@/components/product/PdpMorningRoutineNote'
 import PdpStickyRoutineCta from '@/components/product/PdpStickyRoutineCta'
 
 function shadeTowardBlack(hex: string, t: number) {
@@ -99,6 +100,8 @@ export default function ProductPageClient({ product }: { product: Product }) {
 
       <div className="relative flex min-w-0 max-w-full flex-col gap-5 sm:gap-6">
         <OfferSelector selected={selectedQty} onChange={(qty) => setSelectedQty(qty)} accentColor={accent} />
+
+        <PdpMorningRoutineNote accentColor={accent} />
 
         <div className="h-px w-full bg-gradient-to-l from-transparent via-[#dfd6d4] to-transparent" aria-hidden />
 

@@ -27,7 +27,7 @@ export default function OfferSelector({ selected, onChange, accentColor = '#b848
           اختيار العرض
         </p>
         <p className="text-base font-black leading-snug text-charcoal sm:text-lg md:text-xl md:leading-tight">
-          أسعار واضحة — تختارين العدد اللي يناسبك
+          أسعار واضحة — تختارين العرض قبل الطلب
         </p>
         <span
           className="ms-auto h-1 w-16 rounded-full sm:w-20"
