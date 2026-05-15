@@ -1,8 +1,9 @@
 'use client'
-import { useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Product, getPriceForQty, formatSarAmount } from '@/lib/products'
 import { useCartStore } from '@/stores/cart-store'
 import OfferSelector from '@/components/product/OfferSelector'
+import PdpStickyRoutineCta from '@/components/product/PdpStickyRoutineCta'
 
 function shadeTowardBlack(hex: string, t: number) {
   const h = hex.replace('#', '')
@@ -38,9 +39,31 @@ function CartIcon({ className }: { className?: string }) {
 
 export default function ProductPageClient({ product }: { product: Product }) {
   const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(1)
+  const [stickyCtaVisible, setStickyCtaVisible] = useState(false)
+  const priceBlockRef = useRef<HTMLDivElement>(null)
   const { addItem, openCart } = useCartStore()
   const accent = product.accentColor
   const accentDeep = shadeTowardBlack(accent, 0.28)
+
+  useEffect(() => {
+    const el = priceBlockRef.current
+    if (!el) return
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return
+        const scrolledPast = !entry.isIntersecting && entry.boundingClientRect.top < 0
+        setStickyCtaVisible(scrolledPast)
+      },
+      { root: null, threshold: 0, rootMargin: '-8px 0px 0px 0px' },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  const scrollToPrice = useCallback(() => {
+    document.getElementById('pdp-buy-anchor')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }, [])
 
   function handleAdd() {
     addItem({
@@ -55,7 +78,9 @@ export default function ProductPageClient({ product }: { product: Product }) {
   }
 
   return (
+    <>
     <div
+      ref={priceBlockRef}
       className="relative min-w-0 max-w-full overflow-hidden rounded-[1.35rem] border border-white/75 p-5 shadow-[0_2px_8px_-2px_rgba(26,24,21,0.04),0_24px_56px_-28px_rgba(26,24,21,0.11),inset_0_1px_0_0_rgba(255,255,255,0.94)] ring-1 ring-black/[0.02] sm:rounded-3xl sm:p-6"
       style={{
         background: `linear-gradient(165deg, #ffffff 0%, color-mix(in srgb, ${product.bgColor} 35%, white) 55%, color-mix(in srgb, ${product.bgColor} 18%, white) 100%)`,
@@ -119,5 +144,13 @@ export default function ProductPageClient({ product }: { product: Product }) {
         </p>
       </div>
     </div>
+
+    <PdpStickyRoutineCta
+      visible={stickyCtaVisible}
+      accentColor={accent}
+      accentDeep={accentDeep}
+      onClick={scrollToPrice}
+    />
+    </>
   )
 }

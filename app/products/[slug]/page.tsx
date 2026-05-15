@@ -95,7 +95,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     'مكمّل غذائي وفق الغلاف — اختاري العرض المناسب من خانة الطلب أسفل الصفحة.'
 
   return (
-    <div className="bg-[#FFFFFF] min-w-0 overflow-x-hidden">
+    <div className="bg-[#FFFFFF] min-w-0 overflow-x-hidden pb-[calc(3.75rem+env(safe-area-inset-bottom,0px))]">
       {/* Hero — خلفية ملوّنة، عرض واضح، أول سطر جذّاب */}
       <section
         className="relative min-w-0 overflow-hidden border-b border-white/50 py-5 sm:py-7 md:py-10"
