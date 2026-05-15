@@ -133,7 +133,7 @@ export default function CheckoutPopup({ onClose }: Props) {
             : ''
         const hint503 =
           res.status === 503
-            ? ' غالباً قاعدة البيانات أو الاتصال DATABASE_URL — راجع سجلات الـ API.'
+            ? ' تحققي من https://api.nabtalabo.store/ready (يجب أن يعيد ok)، وأن خدمة الـ API تعمل بدون SKIP_AUTO_MIGRATE=true بحيث تُطبَّق مهاجرات قاعدة البيانات. راجع أيضاً DATABASE_URL وسجلات الـ API.'
             : ''
         setCheckoutError(msg + hint403 + hint502 + hint503)
         setPlacingOrder(false)
