@@ -125,10 +125,14 @@ export default function ProductPageClient({ product }: { product: Product }) {
           <span className="relative z-[1] flex items-center justify-center gap-3 flex-row-reverse">
             <CartIcon className="h-5 w-5 shrink-0 opacity-95 transition-transform duration-300 group-hover:scale-110 sm:h-6 sm:w-6" />
             <span className="text-center text-[0.9375rem] font-extrabold leading-snug sm:text-base sm:leading-normal md:text-lg">
-              أضيفي للسلة وكمّلي —{' '}
-              <span className="sar-price sar-price-dark tabular-nums">{formatSarAmount(getPriceForQty(selectedQty))}</span>
-              <span className="text-white/95"> ، </span>
-              <span className="block text-[0.92em] font-extrabold sm:inline">والدفع عند الباب</span>
+              <span className="block sm:inline">ابدئي روتين الشباب الآن</span>
+              <span className="mx-1 text-white/90 sm:inline" aria-hidden>
+                {' '}
+                —{' '}
+              </span>
+              <span className="sar-price sar-price-dark tabular-nums">
+                {formatSarAmount(getPriceForQty(selectedQty))}
+              </span>
             </span>
           </span>
         </button>
@@ -152,6 +156,7 @@ export default function ProductPageClient({ product }: { product: Product }) {
       visible={stickyCtaVisible}
       accentColor={accent}
       accentDeep={accentDeep}
+      formattedPrice={formatSarAmount(getPriceForQty(selectedQty))}
       onClick={scrollToPrice}
     />
     </>

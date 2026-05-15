@@ -6,6 +6,8 @@ type Props = {
   visible: boolean
   accentColor: string
   accentDeep: string
+  /** Prix affiché (ex. via formatSarAmount) — suit l’offre sélectionnée. */
+  formattedPrice: string
   onClick: () => void
 }
 
@@ -24,7 +26,13 @@ function ArrowUp({ className, style }: { className?: string; style?: CSSProperti
 }
 
 /** شريط سفلي صغير — يظهر بعد ما يختفي قسم السعر من الشاشة */
-export default function PdpStickyRoutineCta({ visible, accentColor, accentDeep, onClick }: Props) {
+export default function PdpStickyRoutineCta({
+  visible,
+  accentColor,
+  accentDeep,
+  formattedPrice,
+  onClick,
+}: Props) {
   return (
     <div
       aria-hidden={!visible}
@@ -44,8 +52,15 @@ export default function PdpStickyRoutineCta({ visible, accentColor, accentDeep, 
               boxShadow: `0 4px 16px -4px ${accentColor}55`,
             }}
           >
-            <span className="text-[13px] font-extrabold leading-snug sm:text-sm">ابدئي روتين الشباب الآن</span>
-            <ArrowUp className="h-4 w-4 shrink-0 opacity-95 pdp-cta-arrow-nudge" />
+            <span className="flex flex-col items-center gap-0.5 text-center">
+              <span className="flex flex-row-reverse items-center justify-center gap-2">
+                <span className="text-[13px] font-extrabold leading-snug sm:text-sm">
+                  ابدئي روتين الشباب الآن
+                </span>
+                <ArrowUp className="h-4 w-4 shrink-0 opacity-95 pdp-cta-arrow-nudge" />
+              </span>
+              <span className="text-[11px] font-bold tabular-nums text-white/95 sm:text-xs">{formattedPrice}</span>
+            </span>
           </button>
         </div>
       </div>
