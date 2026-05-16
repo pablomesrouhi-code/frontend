@@ -1,10 +1,10 @@
-import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { PRODUCTS, getProductBySlug, getProductById } from '@/lib/products'
 import StarRating from '@/components/ui/StarRating'
 import ProductPageClient from './ProductPageClient'
 import ProductCard from '@/components/product/ProductCard'
 import ProductPageImageSlot from '@/components/product/ProductPageImageSlot'
+import PdpSquareImage from '@/components/product/PdpSquareImage'
 import PdpDeliveryPaymentSection from '@/components/product/PdpDeliveryPaymentSection'
 
 function reviewInitials(name: string) {
@@ -37,58 +37,28 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     .map((id) => getProductById(id))
     .filter(Boolean) as typeof PRODUCTS
 
-  /** صور أقسام إضافية على الـ PDP — حالياً رونق C فقط؛ الباقي يبقى placeholders في الأقسام الأخرى */
-  const usePdpProductImages = product.id === 'rawnaq-c'
+  const pdpHeroSrc = product.pdpHeroImage?.src ?? product.coverImage
+  const pdpHeroAlt = product.pdpHeroImage?.alt ?? product.nameAr
+  const pdpHeroWidth = product.pdpHeroImage?.width ?? product.coverWidth
+  const pdpHeroHeight = product.pdpHeroImage?.height ?? product.coverHeight
 
-  const pdpHero =
-    product.pdpHeroImage != null
-      ? {
-          src: product.pdpHeroImage.src,
-          width: product.pdpHeroImage.width,
-          height: product.pdpHeroImage.height,
-          alt: product.pdpHeroImage.alt ?? product.nameAr,
-        }
-      : usePdpProductImages
-        ? {
-            src: product.coverImage,
-            width: product.coverWidth,
-            height: product.coverHeight,
-            alt: product.nameAr,
-          }
-        : null
-
-  /** قسم «لماذا تحتاجينه؟»: رونق C يعرض شبكة الصور؛ أي منتج عنده `painSectionImage` صورة خاصّة أيضاً */
-  const painPdpPhoto = usePdpProductImages
+  const painPdpPhoto = product.painSectionImage
     ? {
-        src: product.painSectionImage?.src ?? product.coverImage,
-        width: product.painSectionImage?.width ?? product.coverWidth,
-        height: product.painSectionImage?.height ?? product.coverHeight,
-        alt: product.painSectionImage?.alt ?? `${product.nameAr} — لماذا تحتاجينه`,
+        src: product.painSectionImage.src,
+        alt: product.painSectionImage.alt,
+        width: product.painSectionImage.width,
+        height: product.painSectionImage.height,
       }
-    : product.painSectionImage != null
-      ? {
-          src: product.painSectionImage.src,
-          width: product.painSectionImage.width,
-          height: product.painSectionImage.height,
-          alt: product.painSectionImage.alt,
-        }
-      : null
+    : null
 
-  const ingredientsPdpPhoto = usePdpProductImages
+  const ingredientsPdpPhoto = product.ingredientsSectionImage
     ? {
-        src: product.ingredientsSectionImage?.src ?? product.coverImage,
-        width: product.ingredientsSectionImage?.width ?? product.coverWidth,
-        height: product.ingredientsSectionImage?.height ?? product.coverHeight,
-        alt: product.ingredientsSectionImage?.alt ?? `${product.nameAr} — المكونات`,
+        src: product.ingredientsSectionImage.src,
+        alt: product.ingredientsSectionImage.alt,
+        width: product.ingredientsSectionImage.width,
+        height: product.ingredientsSectionImage.height,
       }
-    : product.ingredientsSectionImage != null
-      ? {
-          src: product.ingredientsSectionImage.src,
-          width: product.ingredientsSectionImage.width,
-          height: product.ingredientsSectionImage.height,
-          alt: product.ingredientsSectionImage.alt,
-        }
-      : null
+    : null
 
   const magnetLine =
     product.pdpMagnetLineAr ??
@@ -118,28 +88,18 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <div className="grid min-w-0 grid-cols-1 items-start gap-5 sm:gap-6 md:grid-cols-2 md:items-start md:gap-8 lg:gap-10">
             <div className="order-1 min-w-0 md:order-2 md:pt-0">
               <div
-                className="mx-auto w-full max-w-md overflow-hidden rounded-2xl border-2 bg-white/95 p-1.5 shadow-lg backdrop-blur-sm sm:max-w-lg sm:rounded-3xl sm:p-2 md:mx-0 md:max-w-none"
+                className="mx-auto w-full max-w-md rounded-2xl border-2 bg-white/95 p-1.5 shadow-lg backdrop-blur-sm sm:max-w-lg sm:rounded-3xl sm:p-2 md:mx-0 md:max-w-none"
                 style={{ borderColor: `color-mix(in srgb, ${product.accentColor} 30%, #e8e0de)` }}
               >
-                {pdpHero ? (
-                  <Image
-                    src={pdpHero.src}
-                    alt={pdpHero.alt}
-                    width={pdpHero.width}
-                    height={pdpHero.height}
-                    priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 560px"
-                    className="h-auto w-full max-h-[min(44vh,320px)] object-contain sm:max-h-[min(48vh,380px)] md:max-h-[min(58vh,440px)] lg:max-h-[min(72vh,520px)]"
-                  />
-                ) : (
-                  <ProductPageImageSlot
-                    width={product.coverWidth}
-                    height={product.coverHeight}
-                    accentColor={product.accentColor}
-                    labelAr="مساحة صورة الهيرو — غلاف المنتج"
-                    className="max-h-[min(44vh,320px)] sm:max-h-[min(48vh,380px)] md:max-h-[min(58vh,440px)] lg:max-h-[min(72vh,520px)]"
-                  />
-                )}
+                <PdpSquareImage
+                  src={pdpHeroSrc}
+                  alt={pdpHeroAlt}
+                  width={pdpHeroWidth}
+                  height={pdpHeroHeight}
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 560px"
+                  maxWidthClass="max-w-[min(100%,520px)]"
+                />
               </div>
               {product.captionUnderHeroImage && (
                 <p className="mx-auto mt-2 max-w-xl break-words text-center text-[11px] leading-snug text-muted sm:mt-3 sm:text-xs md:mx-0 md:text-right">
@@ -301,23 +261,22 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </div>
 
             <div className="order-1 lg:order-1 lg:col-span-7">
-              <div className="mx-auto max-w-xl overflow-hidden rounded-3xl border border-border bg-white p-2 shadow-md md:mx-0 lg:max-w-none lg:min-h-[min(520px,58vh)]">
+              <div className="mx-auto max-w-xl md:mx-0 lg:max-w-none">
                 {painPdpPhoto ? (
-                  <Image
+                  <PdpSquareImage
                     src={painPdpPhoto.src}
                     alt={painPdpPhoto.alt}
                     width={painPdpPhoto.width}
                     height={painPdpPhoto.height}
                     sizes="(max-width:1024px) min(560px, 100vw), 56vw"
-                    className="h-auto max-h-[min(64vh,520px)] w-full rounded-2xl object-cover object-center lg:h-full lg:max-h-none lg:min-h-[420px]"
+                    maxWidthClass="max-w-full"
                   />
                 ) : (
                   <ProductPageImageSlot
-                    width={product.painSectionImage?.width ?? product.coverWidth}
-                    height={product.painSectionImage?.height ?? product.coverHeight}
+                    width={product.coverWidth}
+                    height={product.coverHeight}
                     accentColor={product.accentColor}
                     labelAr="مساحة صورة — قسم «لماذا تحتاجينه؟»"
-                    className="max-h-[min(64vh,520px)] lg:min-h-[420px]"
                   />
                 )}
               </div>
@@ -364,25 +323,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-3 sm:mb-4 break-words">{product.extraStory.titleAr}</h2>
                 <p className="text-[#5c5656] leading-relaxed text-base sm:text-lg break-words">{product.extraStory.bodyAr}</p>
               </div>
-              <div className="w-full max-w-[min(100%,440px)] md:max-w-full mx-auto md:mx-0 min-w-0 overflow-hidden rounded-2xl border border-[#dfd6d4] bg-white p-2 sm:p-3">
-                {usePdpProductImages ? (
-                  <Image
-                    src={product.extraStory.src}
-                    alt={product.extraStory.alt}
-                    width={product.extraStory.width}
-                    height={product.extraStory.height}
-                    sizes="(max-width: 768px) min(440px, 100vw), 480px"
-                    className="h-auto w-full max-h-[min(62vh,480px)] md:max-h-none object-contain"
-                  />
-                ) : (
-                  <ProductPageImageSlot
-                    width={product.extraStory.width}
-                    height={product.extraStory.height}
-                    accentColor={product.accentColor}
-                    labelAr="مساحة صورة — اللمسة الإضافية"
-                    className="max-h-[min(62vh,480px)] md:max-h-none"
-                  />
-                )}
+              <div className="w-full max-w-[min(100%,440px)] md:max-w-full mx-auto md:mx-0 min-w-0">
+                <PdpSquareImage
+                  src={product.extraStory.src}
+                  alt={product.extraStory.alt}
+                  width={product.extraStory.width}
+                  height={product.extraStory.height}
+                  sizes="(max-width: 768px) min(440px, 100vw), 480px"
+                  maxWidthClass="max-w-full"
+                />
               </div>
             </div>
           </div>
@@ -424,23 +373,22 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <section id="pdp-ingredients" className="scroll-mt-28 bg-white py-10 sm:py-12 md:py-16">
         <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
           <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-12">
-            <div className="order-2 min-w-0 overflow-hidden rounded-3xl border border-border bg-white p-2 shadow-sm lg:order-1 lg:col-span-7">
+            <div className="order-2 min-w-0 lg:order-1 lg:col-span-7">
               {ingredientsPdpPhoto ? (
-                <Image
+                <PdpSquareImage
                   src={ingredientsPdpPhoto.src}
                   alt={ingredientsPdpPhoto.alt}
                   width={ingredientsPdpPhoto.width}
                   height={ingredientsPdpPhoto.height}
                   sizes="(max-width:1024px) min(560px, 100vw), 58vw"
-                  className="h-auto max-h-[min(58vh,440px)] w-full rounded-2xl object-cover object-center lg:max-h-none lg:min-h-[440px]"
+                  maxWidthClass="max-w-full"
                 />
               ) : (
                 <ProductPageImageSlot
-                  width={product.ingredientsSectionImage?.width ?? product.coverWidth}
-                  height={product.ingredientsSectionImage?.height ?? product.coverHeight}
+                  width={product.coverWidth}
+                  height={product.coverHeight}
                   accentColor={product.accentColor}
                   labelAr="مساحة صورة — المكوّنات / تفاصيل العبوة"
-                  className="max-h-[min(58vh,440px)] lg:min-h-[440px]"
                 />
               )}
             </div>
