@@ -7,6 +7,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import PreFooterBanners from '@/components/layout/PreFooterBanners'
 import CartDrawer from '@/components/cart/CartDrawer'
+import BrandIntroSplash from '@/components/brand/BrandIntroSplash'
 import { BRAND_LOGO_SRC, brandLogoIconType } from '@/lib/brand'
 
 const plexArabic = IBM_Plex_Sans_Arabic({
@@ -58,6 +59,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ar" dir="rtl" className={plexArabic.variable}>
       <body className="min-h-screen antialiased text-charcoal">
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('nbta-splash-active');document.body.classList.add('nbta-intro-lock');}}catch(e){}})();`,
+          }}
+        />
+        <BrandIntroSplash />
         <Header />
         <main className="min-h-screen min-w-0 isolate pb-[env(safe-area-inset-bottom,0px)]">{children}</main>
         <PreFooterBanners />
