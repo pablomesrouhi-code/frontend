@@ -68,24 +68,17 @@ export default function BrandIntroSplash() {
           <span className="nbta-brand-splash__ring" />
         </div>
 
-        <h1 className="nbta-brand-splash__title">
-          <span className="nbta-brand-splash__word">
-            <span className="nbta-brand-splash__char">{'\u0646'}</span>
-            <span className="nbta-brand-splash__char">{'\u0628'}</span>
-            <span className="nbta-brand-splash__char">{'\u062A'}</span>
-            <span className="nbta-brand-splash__char">{'\u0629'}</span>
-          </span>
-          <span className="nbta-brand-splash__word nbta-brand-splash__word--accent">
-            <span className="nbta-brand-splash__char">{'\u0644'}</span>
-            <span className="nbta-brand-splash__char">{'\u0627'}</span>
-            <span className="nbta-brand-splash__char">{'\u0628'}</span>
-            <span className="nbta-brand-splash__char">{'\u0648'}</span>
-          </span>
+        <h1 className="nbta-brand-splash__title" lang="ar">
+          <span className="nbta-brand-splash__word nbta-brand-splash__word--first">نبتة</span>
+          <span className="nbta-brand-splash__sep" aria-hidden />
+          <span className="nbta-brand-splash__word nbta-brand-splash__word--accent">لابو</span>
         </h1>
 
-        <p className="nbta-brand-splash__en">Nabta Labo</p>
-        <p className="nbta-brand-splash__tag">
-          {'\u0645\u0643\u0645\u0651\u0644 \u063A\u0630\u0627\u0626\u064A \u00B7 \u0639\u0644\u0643\u0629 \u064A\u0648\u0645\u064A\u0629 \u00B7 \u0627\u0644\u0633\u0639\u0648\u062F\u064A\u0629'}
+        <p className="nbta-brand-splash__en" lang="en">
+          Nabta Labo
+        </p>
+        <p className="nbta-brand-splash__tag" lang="ar">
+          مكمّل غذائي · علكة يومية · السعودية
         </p>
 
         <div className="nbta-brand-splash__bar" aria-hidden>

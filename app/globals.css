@@ -247,60 +247,82 @@ html.nbta-splash-active body > *:not(#nbta-brand-intro):not(script) {
 
 .nbta-brand-splash__title {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: baseline;
   justify-content: center;
-  gap: 0.45rem 0.65rem;
+  gap: 0;
   margin: 0;
-  font-size: clamp(2rem, 8vw, 2.75rem);
+  padding: 0 0.15rem;
+  font-size: clamp(2.25rem, 10vw, 3.125rem);
   font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  line-height: 1;
+  letter-spacing: 0;
+  text-align: center;
+  direction: rtl;
   color: var(--color-charcoal);
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 .nbta-brand-splash__word {
-  display: inline-flex;
-  gap: 0.02em;
+  display: inline-block;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(0.85rem);
+  filter: blur(3px);
+  animation: nbta-splash-word-in 0.72s var(--ease-out-soft) forwards;
+}
+
+.nbta-brand-splash__word--first {
+  animation-delay: 0.42s;
 }
 
 .nbta-brand-splash__word--accent {
   color: var(--color-primary);
+  animation-delay: 0.58s;
 }
 
-.nbta-brand-splash__char {
+.nbta-brand-splash__sep {
   display: inline-block;
+  width: 1px;
+  height: 0.72em;
+  margin: 0 0.62rem;
+  align-self: center;
+  flex-shrink: 0;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in srgb, var(--color-border) 70%, var(--color-charcoal)) 18%,
+    transparent
+  );
   opacity: 0;
-  transform: translateY(1.1rem) scale(0.92);
-  animation: nbta-splash-char 0.55s var(--ease-out-soft) forwards;
+  transform: scaleY(0.4);
+  animation: nbta-splash-sep-in 0.5s var(--ease-out-soft) 0.54s forwards;
 }
-
-.nbta-brand-splash__word:nth-child(1) .nbta-brand-splash__char:nth-child(1) { animation-delay: 0.38s; }
-.nbta-brand-splash__word:nth-child(1) .nbta-brand-splash__char:nth-child(2) { animation-delay: 0.46s; }
-.nbta-brand-splash__word:nth-child(1) .nbta-brand-splash__char:nth-child(3) { animation-delay: 0.54s; }
-.nbta-brand-splash__word:nth-child(1) .nbta-brand-splash__char:nth-child(4) { animation-delay: 0.62s; }
-.nbta-brand-splash__word:nth-child(2) .nbta-brand-splash__char:nth-child(1) { animation-delay: 0.72s; }
-.nbta-brand-splash__word:nth-child(2) .nbta-brand-splash__char:nth-child(2) { animation-delay: 0.8s; }
-.nbta-brand-splash__word:nth-child(2) .nbta-brand-splash__char:nth-child(3) { animation-delay: 0.88s; }
-.nbta-brand-splash__word:nth-child(2) .nbta-brand-splash__char:nth-child(4) { animation-delay: 0.96s; }
 
 .nbta-brand-splash__en {
-  margin: 0.65rem 0 0;
-  font-size: 0.72rem;
+  margin: 0.75rem 0 0;
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--color-authority);
   opacity: 0;
-  animation: nbta-splash-fade-up 0.6s var(--ease-out-soft) 1.05s forwards;
+  animation: nbta-splash-fade-up 0.55s var(--ease-out-soft) 0.92s forwards;
 }
 
 .nbta-brand-splash__tag {
-  margin: 0.5rem 0 0;
-  font-size: 0.8rem;
+  margin: 0.55rem 0 0;
+  max-width: 20rem;
+  font-size: 0.8125rem;
   font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: 0;
   color: var(--color-muted);
   opacity: 0;
-  animation: nbta-splash-fade-up 0.6s var(--ease-out-soft) 1.2s forwards;
+  animation: nbta-splash-fade-up 0.55s var(--ease-out-soft) 1.05s forwards;
 }
 
 .nbta-brand-splash__bar {
@@ -348,8 +370,19 @@ html.nbta-splash-active body > *:not(#nbta-brand-intro):not(script) {
   50% { opacity: 0.85; transform: scale(1.06); }
 }
 
-@keyframes nbta-splash-char {
-  to { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes nbta-splash-word-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes nbta-splash-sep-in {
+  to {
+    opacity: 0.85;
+    transform: scaleY(1);
+  }
 }
 
 @keyframes nbta-splash-fade-up {
@@ -367,7 +400,8 @@ html.nbta-splash-active body > *:not(#nbta-brand-intro):not(script) {
   .nbta-brand-splash__glow,
   .nbta-brand-splash__logo-wrap,
   .nbta-brand-splash__ring,
-  .nbta-brand-splash__char,
+  .nbta-brand-splash__word,
+  .nbta-brand-splash__sep,
   .nbta-brand-splash__en,
   .nbta-brand-splash__tag,
   .nbta-brand-splash__bar,
