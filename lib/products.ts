@@ -192,8 +192,8 @@ export const PRODUCTS: Product[] = [
     bgColor: '#eae2df',
     pdpHeroImage: {
       src: '/products/khiffabiotic-hero.png',
-      width: 1200,
-      height: 900,
+      width: 1024,
+      height: 1024,
       alt: 'لابو نابتا — علكات بروبيوتيك؛ دعم الهضم والمناعة وفق الغلاف المعتمد للمنتج الظاهر بالصورة (تعبير شخصي قبل وبعد تختلف التجربة).',
     },
     coverImage: '/products/khiffabiotic.png',
