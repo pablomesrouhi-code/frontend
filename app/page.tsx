@@ -128,14 +128,14 @@ export default function HomePage() {
             </div>
 
             <div
-              className="order-1 md:order-2 w-full rounded-3xl bg-white p-3 sm:p-4 md:p-5"
+              className="order-1 md:order-2 w-full rounded-3xl bg-white p-2 sm:p-2.5 md:p-3"
               style={{
                 border: '1px solid #EADFD6',
                 boxShadow:
                   '0 0 0 1px rgba(184, 104, 116, 0.2), 0 22px 60px -24px rgba(28, 28, 28, 0.1), 0 8px 24px -10px rgba(184, 72, 92, 0.09), inset 0 1px 0 rgba(255,255,255,0.85)',
               }}
             >
-              <div className="rounded-2xl overflow-hidden bg-[#FDF8F9] relative">
+              <div className="rounded-2xl overflow-hidden bg-[#FDF8F9] relative aspect-square w-full">
                 <div
                   className="absolute bottom-2 start-2 sm:bottom-3 sm:start-3 z-10 rounded-lg px-2 py-1.5 sm:px-2.5 sm:py-2 text-right max-w-[5.75rem] sm:max-w-[6.75rem]"
                   style={{
@@ -153,11 +153,10 @@ export default function HomePage() {
                 <Image
                   src="/hero-store-trio.png"
                   alt="ثلاث علكات Labo Nabta: بروبيوتيك للنساء، مغنيسيوم ١٤ من ١، وجمال الشعر والبشرة والأظافر ببيوتين"
-                  width={1080}
-                  height={1080}
+                  fill
                   priority
-                  sizes="(max-width: 768px) 100vw, 560px"
-                  className="block h-auto w-full object-contain"
+                  sizes="(max-width: 768px) 100vw, min(50vw, 640px)"
+                  className="object-cover scale-[1.06]"
                 />
               </div>
             </div>
