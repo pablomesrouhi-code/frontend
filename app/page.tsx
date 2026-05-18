@@ -152,7 +152,7 @@ export default function HomePage() {
                 </div>
                 <Image
                   src="/hero-store-trio.png"
-                  alt="نبتة لابو — ثلاث علكات: بروبيوتيك للنساء، مغنيسيوم 14 في 1، وجمال الشعر والبشرة والأظافر"
+                  alt="ثلاث علكات Labo Nabta: بروبيوتيك للنساء، مغنيسيوم ١٤ من ١، وجمال الشعر والبشرة والأظافر ببيوتين"
                   width={1024}
                   height={1024}
                   priority
