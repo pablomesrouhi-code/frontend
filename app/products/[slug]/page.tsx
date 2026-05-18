@@ -338,21 +338,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </section>
       )}
 
-      {product.pdpMidSectionImage && (
-        <section className="border-t border-[#eae2df] bg-white py-10 sm:py-12 md:py-14">
-          <div className="mx-auto max-w-xl min-w-0 px-3 sm:max-w-2xl sm:px-6">
-            <PdpSquareImage
-              src={product.pdpMidSectionImage.src}
-              alt={product.pdpMidSectionImage.alt}
-              width={product.pdpMidSectionImage.width}
-              height={product.pdpMidSectionImage.height}
-              sizes="(max-width: 768px) min(440px, 100vw), 560px"
-              maxWidthClass="max-w-full"
-            />
-          </div>
-        </section>
-      )}
-
       {/* إقناع إضافي — بعد الشرح واللمسات؛ قبل التفصيل المكوّنات */}
       {product.persuasionBlock && (
         <section
