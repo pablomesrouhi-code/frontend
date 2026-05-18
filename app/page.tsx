@@ -153,8 +153,8 @@ export default function HomePage() {
                 <Image
                   src="/hero-store-trio.png"
                   alt="ثلاث علكات Labo Nabta: بروبيوتيك للنساء، مغنيسيوم ١٤ من ١، وجمال الشعر والبشرة والأظافر ببيوتين"
-                  width={1024}
-                  height={1024}
+                  width={1080}
+                  height={1080}
                   priority
                   sizes="(max-width: 768px) 100vw, 560px"
                   className="block h-auto w-full object-contain"
