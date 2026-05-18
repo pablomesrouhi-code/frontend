@@ -78,7 +78,7 @@ export const PRODUCTS: Product[] = [
     badgeAr: 'روتين الجمال اليومي',
     accentColor: '#b8485c',
     bgColor: '#f1e6e4',
-    coverImage: '/products/rawnaq-c.png',
+    coverImage: '/products/rawnaq-c-cover.jpg',
     coverWidth: 1024,
     coverHeight: 1024,
     ingredientsSectionImage: {
@@ -88,7 +88,7 @@ export const PRODUCTS: Product[] = [
       alt: 'رونق C — صورة منتج بالعبوة والفاكهة؛ تعرض تفاصيل المكمّل الغذائي بجانب مكوّنات طبيعية.',
     },
     painSectionImage: {
-      src: '/products/rawnaq-c-before-after.png',
+      src: '/products/rawnaq-c-pain.jpg',
       width: 1024,
       height: 1024,
       alt: 'مثال توضيحي قبل وبعد؛ علكات Hair Skin & Nails — نتائج المظهر تختلف بين الأشخاص والالتزام بالروتين.',
