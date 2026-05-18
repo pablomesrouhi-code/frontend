@@ -81,6 +81,12 @@ export const PRODUCTS: Product[] = [
     coverImage: '/products/rawnaq-c-cover.jpg',
     coverWidth: 1024,
     coverHeight: 1024,
+    pdpHeroImage: {
+      src: '/products/rawnaq-c-hero.jpg',
+      width: 1024,
+      height: 1024,
+      alt: 'مثال توضيحي قبل وبعد — رونق C',
+    },
     ingredientsSectionImage: {
       src: '/products/rawnaq-c-ingredients.png',
       width: 1024,
