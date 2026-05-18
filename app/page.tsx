@@ -151,8 +151,8 @@ export default function HomePage() {
                   <p className="text-[7px] sm:text-[8px] text-[#5c5656] leading-tight mt-0.5">مكمّل غذائي</p>
                 </div>
                 <Image
-                  src="/hero-store-trio.jpg"
-                  alt="ثلاث علكات Labo Nabta: بروبيوتيك للنساء، مغنيسيوم ١٤ من ١، وجمال الشعر والبشرة والأظافر ببيوتين"
+                  src="/hero-store-trio.png"
+                  alt="نبتة لابو — ثلاث علكات: بروبيوتيك للنساء، مغنيسيوم 14 في 1، وجمال الشعر والبشرة والأظافر"
                   width={1024}
                   height={1024}
                   priority
