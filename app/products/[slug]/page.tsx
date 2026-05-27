@@ -224,26 +224,26 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
           <div className="mx-auto mb-8 max-w-3xl text-center md:mx-0 md:max-w-none md:text-start">
             <p className="mb-2 inline-block rounded-full bg-charcoal/90 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white sm:text-xs">
-              المشكل اللي تجي منه غالبًا
+              هل هذا يشبه يومكِ؟
             </p>
             <h2 className="mt-2 text-xl font-black leading-snug text-charcoal sm:text-2xl md:text-3xl">
-              وقت تفتحين الصفحة وأنت ما محتاجة «كلام كبير» — تحتاجين خطوة تثبت معاكِ
+              المشكلة مو نقص منتجات — نقص روتين واحد يثبت
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
-              الإعلان عطاكِ فكرة سريعة؛ هنا تجين التفاصيل بلا مبالغة: وش غادي يكمّلك روتينك، ووش نقدّمو من خدمة وتوصيل.
+              وصلتِ من الإعلان وتبغين تفاصيل واضحة قبل الطلب: وش يفيدك المكمّل، كيف تستخدمينه، وكيف نوصّل ونؤكّد معاكِ — بلا مبالغة ولا وعود طبية.
             </p>
           </div>
 
           <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-10">
             <div className="order-2 space-y-5 text-right lg:order-2 lg:col-span-5">
               <div className="rounded-3xl border border-primary/25 bg-peach-soft/50 p-5 shadow-sm ring-1 ring-black/[0.03] sm:p-6">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">اليوميات</p>
-                <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">لاش هاد المنتج ممكن يفيدكم؟</h3>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">تعرفين هذا الإحساس؟</p>
+                <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">ليش يختارونه أصلاً؟</h3>
                 <p className="mt-3 text-base leading-relaxed text-muted">{product.painCopy}</p>
               </div>
               <div className="rounded-3xl border border-authority/30 bg-authority/[0.05] p-5 shadow-sm sm:p-6">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-authority">ضمن سلطة المكمّل</p>
-                <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">كيف غادي يكمّل نهاركم بأسلوب واقعي؟</h3>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-authority">بأسلوب واقعي</p>
+                <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">وش يقدر يكمّل روتينك؟</h3>
                 <ul className="mt-4 flex flex-col gap-3">
                   {product.benefits.slice(0, 4).map((b) => (
                     <li key={b} className="flex items-start gap-3 rounded-2xl bg-white px-4 py-3 ring-1 ring-border/70">

@@ -1,0 +1,20 @@
+# After push to main: trigger EasyPanel rebuild (one-time setup required).
+# GitHub repo → Settings → Secrets → Actions → EASY_PANEL_DEPLOY_URL
+# Value = Deploy webhook URL from EasyPanel (service → Deploy / Webhook).
+
+name: Deploy production
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  easypanel-redeploy:
+    runs-on: ubuntu-latest
+    if: ${{ secrets.EASY_PANEL_DEPLOY_URL != '' }}
+    steps:
+      - name: Trigger EasyPanel rebuild
+        run: |
+          curl -fsS -X POST "$EASY_PANEL_DEPLOY_URL" || curl -fsS "$EASY_PANEL_DEPLOY_URL"
+        env:
+          EASY_PANEL_DEPLOY_URL: ${{ secrets.EASY_PANEL_DEPLOY_URL }}
