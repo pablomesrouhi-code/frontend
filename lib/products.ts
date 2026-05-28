@@ -203,7 +203,7 @@ export const PRODUCTS: Product[] = [
     coverWidth: 1024,
     coverHeight: 769,
     painSectionImage: {
-      src: '/products/khiffabiotic-pain-v7.jpg',
+      src: '/products/khiffabiotic-pain-v8.jpg',
       width: 640,
       height: 640,
       alt: 'صورة توضيحية لإحساس ثقل وانزعاج بعد الأكل؛ تختلف شدّة الإحساس بين الأشخاص — خفّة بيوتك مكمّل يكمّل نمطاً معيشياً متوازناً حسب الغلاف المعتمد.',
