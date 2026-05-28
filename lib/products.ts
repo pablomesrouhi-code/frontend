@@ -1,5 +1,3 @@
-const PACKSHOT_V = '?v=pack20260529'
-
 export type Product = {
   id: string
   slug: string
@@ -81,17 +79,17 @@ export const PRODUCTS: Product[] = [
     badgeAr: 'روتين الجمال اليومي',
     accentColor: '#b8485c',
     bgColor: '#f1e6e4',
-    coverImage: `/products/rawnaq-c-cover.jpg${PACKSHOT_V}`,
+    coverImage: '/products/rawnaq-c-cover.jpg',
     coverWidth: 1024,
     coverHeight: 1024,
     pdpHeroImage: {
-      src: `/products/rawnaq-c-hero.jpg${PACKSHOT_V}`,
+      src: '/products/rawnaq-c-hero.jpg',
       width: 1024,
       height: 1024,
-      alt: 'رونق C — علكات Hair Skin & Nails (OEM) على غلاف وردي؛ كولاجين وفيتامين C حسب الغلاف المعتمد.',
+      alt: 'مثال توضيحي قبل وبعد — رونق C',
     },
     ingredientsSectionImage: {
-      src: `/products/rawnaq-c-hero.jpg${PACKSHOT_V}`,
+      src: '/products/rawnaq-c-ingredients.png',
       width: 1024,
       height: 1024,
       alt: 'رونق C — صورة منتج بالعبوة والفاكهة؛ تعرض تفاصيل المكمّل الغذائي بجانب مكوّنات طبيعية.',
@@ -196,12 +194,12 @@ export const PRODUCTS: Product[] = [
     accentColor: '#a86b5e',
     bgColor: '#eae2df',
     pdpHeroImage: {
-      src: `/products/khiffabiotic-hero.jpg${PACKSHOT_V}`,
+      src: '/products/khiffabiotic-hero.png',
       width: 1024,
       height: 1024,
-      alt: 'خفّة بيوتك — عبوة LABO NABTA Probiotic Gummies للنساء؛ بروبيوتيك وألياف حسب الغلاف المعتمد.',
+      alt: 'لابو نابتا — علكات بروبيوتيك؛ دعم الهضم والمناعة وفق الغلاف المعتمد للمنتج الظاهر بالصورة (تعبير شخصي قبل وبعد تختلف التجربة).',
     },
-    coverImage: `/products/khiffabiotic.jpg${PACKSHOT_V}`,
+    coverImage: '/products/khiffabiotic.jpg',
     coverWidth: 1024,
     coverHeight: 1024,
     painSectionImage: {
@@ -211,10 +209,10 @@ export const PRODUCTS: Product[] = [
       alt: 'صورة توضيحية لإحساس صعوبة الهضم والانتفاخ والغازات بعد الأكل؛ تختلف شدّة الإحساس بين الأشخاص — منتجكم يكمّل نمطاً معيشياً متوازناً حسب الغلاف المعتمد.',
     },
     ingredientsSectionImage: {
-      src: `/products/khiffabiotic-hero.jpg${PACKSHOT_V}`,
+      src: '/products/khiffabiotic-ingredients.png',
       width: 1024,
       height: 1024,
-      alt: 'خفّة بيوتك — عبوة Probiotic Gummies؛ بروبيوتيك وألياف حسب الغلاف المعتمد.',
+      alt: 'لابو نابتا — علكات بروبيوتيك بطعم التوت وفق الغلاف المعروض؛ كمّلي المعلومات مع الوصف العربي ومكوّنات الفورمولا أدناه.',
     },
     captionUnderHeroImage:
       'مكمّل غذائي لتسهيل الالتزام بعد الوجبات — راجعي دائماً الغلاف المعتمد وتعليمات الاستعمال.',
@@ -304,12 +302,12 @@ export const PRODUCTS: Product[] = [
     accentColor: '#b8485c',
     bgColor: '#faf7f6',
     pdpHeroImage: {
-      src: `/products/laylmag-hero.jpg${PACKSHOT_V}`,
+      src: '/products/laylmag-hero.png',
       width: 1024,
       height: 1024,
-      alt: 'ليل ماج — عبوة 14 in 1 Magnesium مع غطاء أبيض؛ مغنيسيوم وL-Theanine حسب الغلاف المعتمد.',
+      alt: 'ليل ماج — تصويرة تسويقية قبل/بعد عن روتين النوم مع عبوة مغنيسيوم؛ تختلف التجربة بين الأشخاص — راجعي الغلاف المعتمد لمنتجكم.',
     },
-    coverImage: `/products/laylmag.jpg${PACKSHOT_V}`,
+    coverImage: '/products/laylmag.jpg',
     coverWidth: 1024,
     coverHeight: 1024,
     painSectionImage: {
@@ -319,10 +317,10 @@ export const PRODUCTS: Product[] = [
       alt: 'صورة توضيحية لتعبير الأرق أو صعوبة النوم وسط يوم عمل؛ تختلف الحدة بين الأشخاص — المكمّل يدعم الاسترخاء المسائي ضمن نوم صحي وليس علاجاً طبياً.',
     },
     ingredientsSectionImage: {
-      src: `/products/laylmag-hero.jpg${PACKSHOT_V}`,
+      src: '/products/laylmag-ingredients.png',
       width: 1024,
       height: 1024,
-      alt: 'ليل ماج — عبوة 14 in 1 Magnesium؛ مغنيسيوم وL-Theanine حسب الغلاف المعتمد.',
+      alt: 'ليل ماج — عبوة علكات مغنيسيوم في إطار مسائي هادئ؛ نص الغلاف في الصورة قد يختلف عن منتجكم المعتمد — كمّلي التفاصيل مع المكوّنات المذكورة أسفل الصفحة والغلاف الرسمي.',
     },
     captionUnderHeroImage:
       'مكمّل للاسترخاء المسائي ضمن نوم صحيّ؛ لو عندكم أرق مستمر أو أدوية نام، الغلاف + الطبيب هم المرجع.',
