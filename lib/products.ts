@@ -17,6 +17,8 @@ export type Product = {
   coverImage: string
   coverWidth: number
   coverHeight: number
+  /** صورة بطاقة الصفحة الرئيسية فقط — إن وُجدت تُعرض على `/` بدل `coverImage` */
+  homeCardImage?: string
   /** صورة هيرو صفحة المنتج؛ إن وُجدت تُعرض بدل المساحة الفارغة (ولا تبدّل غلاف البطاقة `coverImage` إلا للعرض تحت هذا الحقل فقط هنا) */
   pdpHeroImage?: { src: string; width: number; height: number; alt?: string }
   /** صورة قسم «لماذا تحتاجينه؟»؛ إن لم تُحدَّد يُعرَض غلاف المنتج مرة ثانية */
@@ -82,6 +84,7 @@ export const PRODUCTS: Product[] = [
     coverImage: '/products/rawnaq-c-cover.jpg',
     coverWidth: 1024,
     coverHeight: 1024,
+    homeCardImage: '/products/rawnaq-c-home.jpg',
     pdpHeroImage: {
       src: '/products/rawnaq-c-hero.jpg',
       width: 1024,
@@ -199,9 +202,10 @@ export const PRODUCTS: Product[] = [
       height: 1024,
       alt: 'لابو نابتا — علكات بروبيوتيك؛ دعم الهضم والمناعة وفق الغلاف المعتمد للمنتج الظاهر بالصورة (تعبير شخصي قبل وبعد تختلف التجربة).',
     },
-    coverImage: '/products/khiffabiotic.jpg',
+    coverImage: '/products/khiffabiotic.png',
     coverWidth: 1024,
-    coverHeight: 1024,
+    coverHeight: 769,
+    homeCardImage: '/products/khiffabiotic.jpg',
     painSectionImage: {
       src: '/products/khiffabiotic-pain.png',
       width: 1024,
@@ -307,9 +311,10 @@ export const PRODUCTS: Product[] = [
       height: 1024,
       alt: 'ليل ماج — تصويرة تسويقية قبل/بعد عن روتين النوم مع عبوة مغنيسيوم؛ تختلف التجربة بين الأشخاص — راجعي الغلاف المعتمد لمنتجكم.',
     },
-    coverImage: '/products/laylmag.jpg',
+    coverImage: '/products/laylmag.png',
     coverWidth: 1024,
-    coverHeight: 1024,
+    coverHeight: 769,
+    homeCardImage: '/products/laylmag.jpg',
     painSectionImage: {
       src: '/products/laylmag-pain.png',
       width: 1024,

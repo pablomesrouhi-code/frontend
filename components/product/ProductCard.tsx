@@ -7,6 +7,8 @@ type Props = {
   product: Product
   /** `list` = صفحة المنتجات: صورة بجانب النص على الديسكتوب + سعر بارز. `grid` = بطاقة عمودية للصفحة الرئيسية وشبكات ضيقة */
   layout?: 'list' | 'grid'
+  /** بطاقة الرئيسية فقط — تعرض `homeCardImage` إن وُجدت */
+  useHomeCardImage?: boolean
 }
 
 function PriceBlock({ product }: { product: Product }) {
@@ -47,14 +49,16 @@ function CtaRow({ product }: { product: Product }) {
   )
 }
 
-export default function ProductCard({ product, layout = 'grid' }: Props) {
+export default function ProductCard({ product, layout = 'grid', useHomeCardImage = false }: Props) {
+  const cardImage = useHomeCardImage && product.homeCardImage ? product.homeCardImage : product.coverImage
+
   if (layout === 'grid') {
     return (
       <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-authority/25 hover:shadow-[0_20px_48px_-14px_rgba(20,107,112,0.13)]">
         <Link href={`/products/${product.slug}`} className="relative block shrink-0 overflow-hidden bg-[#FAFAFA]">
           <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">
             <Image
-              src={product.coverImage}
+              src={cardImage}
               alt={product.nameAr}
               fill
               sizes="(max-width: 767px) 100vw, 33vw"
@@ -99,7 +103,7 @@ export default function ProductCard({ product, layout = 'grid' }: Props) {
       >
         <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.02] md:absolute md:inset-0 md:aspect-auto md:h-full md:min-h-[260px]">
           <Image
-            src={product.coverImage}
+            src={cardImage}
             alt={product.nameAr}
             fill
             sizes="(max-width: 767px) 100vw, (max-width: 1200px) 45vw, 320px"
