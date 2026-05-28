@@ -203,10 +203,10 @@ export const PRODUCTS: Product[] = [
     coverWidth: 1024,
     coverHeight: 769,
     painSectionImage: {
-      src: '/products/khiffabiotic-pain-v8.jpg',
-      width: 640,
-      height: 640,
-      alt: 'صورة توضيحية لإحساس ثقل وانزعاج بعد الأكل؛ تختلف شدّة الإحساس بين الأشخاص — خفّة بيوتك مكمّل يكمّل نمطاً معيشياً متوازناً حسب الغلاف المعتمد.',
+      src: '/products/khiffabiotic-pain.png',
+      width: 1024,
+      height: 1024,
+      alt: 'صورة توضيحية لإحساس صعوبة الهضم والانتفاخ والغازات بعد الأكل؛ تختلف شدّة الإحساس بين الأشخاص — منتجكم يكمّل نمطاً معيشياً متوازناً حسب الغلاف المعتمد.',
     },
     ingredientsSectionImage: {
       src: '/products/khiffabiotic-ingredients.png',
