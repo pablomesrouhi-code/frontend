@@ -8,8 +8,6 @@ import Footer from '@/components/layout/Footer'
 import PreFooterBanners from '@/components/layout/PreFooterBanners'
 import ClientCartDrawer from '@/components/layout/ClientCartDrawer'
 import BrandIntroSplash from '@/components/brand/BrandIntroSplash'
-import { BRAND_LOGO_SRC, brandLogoIconType } from '@/lib/brand'
-
 const plexArabic = IBM_Plex_Sans_Arabic({
   subsets: ['arabic', 'latin'],
   weight: ['400', '600', '700'],
@@ -19,6 +17,36 @@ const plexArabic = IBM_Plex_Sans_Arabic({
 })
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL?.trim() || 'https://nabtalabo.store').replace(/\/+$/, '')
+
+const ORG_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: 'نبتة لابو',
+      alternateName: ['Nabta Labo', 'NabtaLabo'],
+      url: SITE_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/apple-icon`,
+        width: 180,
+        height: 180,
+      },
+      image: `${SITE_URL}/opengraph-image`,
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: 'نبتة لابو',
+      alternateName: 'Nabta Labo',
+      publisher: { '@id': `${SITE_URL}/#organization` },
+      inLanguage: 'ar-SA',
+    },
+  ],
+}
+
 const DEFAULT_TITLE = 'نبتة لابو | Nabta Labo'
 const DEFAULT_DESCRIPTION =
   'نبتة لابو: متجر بتجربة تقترب من ثقة نقطة اعتماد (صيدلية من حيث الانضباط والوضوح) — علكات تحمل تركيبات مكمّل غذائي مرخّص SFDA؛ لسنا نقطة تشخّص أو وصف جرعات. جمال يومي، راحة بعد الأكل، وهدوء مسائي. السعودية.'
@@ -32,14 +60,17 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: DEFAULT_TITLE,
+  applicationName: 'نبتة لابو',
+  title: {
+    default: DEFAULT_TITLE,
+    template: '%s | نبتة لابو',
+  },
   description: DEFAULT_DESCRIPTION,
   keywords:
-    'علكات, علكة غذائية, مكمّل غذائي, سلطة منتج, كولاجين, بروبيوتيك, مغنيسيوم, SFDA, نساء السعودية, نبتة لابو',
+    'علكات, علكة غذائية, مكمّل غذائي, سلطة منتج, كولاجين, بروبيوتيك, مغنيسيوم, SFDA, نساء السعودية, نبتة لابو, Nabta Labo',
   icons: {
-    icon: [{ url: BRAND_LOGO_SRC, type: brandLogoIconType(BRAND_LOGO_SRC) }],
-    shortcut: BRAND_LOGO_SRC,
-    apple: BRAND_LOGO_SRC,
+    icon: [{ url: '/icon', sizes: '32x32', type: 'image/png' }],
+    apple: [{ url: '/apple-icon', sizes: '180x180', type: 'image/png' }],
   },
   openGraph: {
     title: DEFAULT_TITLE,
@@ -47,6 +78,7 @@ export const metadata: Metadata = {
     siteName: 'نبتة لابو',
     locale: 'ar_SA',
     type: 'website',
+    url: SITE_URL,
   },
   twitter: {
     card: 'summary_large_image',
@@ -59,6 +91,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ar" dir="rtl" className={plexArabic.variable}>
       <body className="min-h-screen antialiased text-charcoal">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_JSON_LD) }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{if(window.sessionStorage.getItem('nbta-intro-seen'))return;if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('nbta-splash-active');document.body.classList.add('nbta-intro-lock');}}catch(e){}})();`,

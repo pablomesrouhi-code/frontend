@@ -4,8 +4,8 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { BRAND_LOGO_SRC } from '@/lib/brand'
 
-const PLAY_MS = 1400
-const EXIT_MS = 350
+const PLAY_MS = 850
+const EXIT_MS = 280
 const INTRO_SEEN_KEY = 'nbta-intro-seen'
 
 function clearIntroLock() {
