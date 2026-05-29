@@ -132,7 +132,6 @@ export default function Header() {
                 alt="نبتة لابو · مكمّل غذائي على شكل علكة — منتجات وروتينات يومية مرخّصة SFDA"
                 width={320}
                 height={140}
-                priority
                 sizes="(max-width: 640px) 38vw, 180px"
                 className="h-9 w-auto max-w-[min(128px,32vw)] shrink-0 object-contain object-right sm:h-10 sm:max-w-[min(160px,36vw)]"
               />

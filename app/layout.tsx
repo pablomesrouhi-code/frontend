@@ -6,13 +6,13 @@ import AnalyticsBeacon from '@/components/analytics/AnalyticsBeacon'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import PreFooterBanners from '@/components/layout/PreFooterBanners'
-import CartDrawer from '@/components/cart/CartDrawer'
+import ClientCartDrawer from '@/components/layout/ClientCartDrawer'
 import BrandIntroSplash from '@/components/brand/BrandIntroSplash'
 import { BRAND_LOGO_SRC, brandLogoIconType } from '@/lib/brand'
 
 const plexArabic = IBM_Plex_Sans_Arabic({
   subsets: ['arabic', 'latin'],
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['400', '600', '700'],
   display: 'swap',
   adjustFontFallback: true,
   variable: '--font-plex-arabic',
@@ -61,7 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen antialiased text-charcoal">
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('nbta-splash-active');document.body.classList.add('nbta-intro-lock');}}catch(e){}})();`,
+            __html: `(function(){try{if(window.sessionStorage.getItem('nbta-intro-seen'))return;if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('nbta-splash-active');document.body.classList.add('nbta-intro-lock');}}catch(e){}})();`,
           }}
         />
         <BrandIntroSplash />
@@ -69,7 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="min-h-screen min-w-0 isolate pb-[env(safe-area-inset-bottom,0px)]">{children}</main>
         <PreFooterBanners />
         <Footer />
-        <CartDrawer />
+        <ClientCartDrawer />
         <Suspense fallback={null}>
           <AnalyticsBeacon />
         </Suspense>

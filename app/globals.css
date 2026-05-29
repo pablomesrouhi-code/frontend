@@ -159,10 +159,7 @@ body {
 /* —— شاشة افتتاح العلامة —— */
 body.nbta-intro-lock {
   overflow: hidden;
-}
-
-html.nbta-splash-active body > *:not(#nbta-brand-intro):not(script) {
-  visibility: hidden;
+  touch-action: none;
 }
 
 .nbta-brand-splash {
@@ -190,9 +187,15 @@ html.nbta-splash-active body > *:not(#nbta-brand-intro):not(script) {
 .nbta-brand-splash__glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(64px);
+  filter: blur(40px);
   opacity: 0;
   animation: nbta-splash-glow 1.4s var(--ease-out-soft) 0.15s forwards;
+}
+
+@media (min-width: 768px) {
+  .nbta-brand-splash__glow {
+    filter: blur(64px);
+  }
 }
 
 .nbta-brand-splash__glow--teal {
