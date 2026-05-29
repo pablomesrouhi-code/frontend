@@ -70,13 +70,13 @@ export const metadata: Metadata = {
     'علكات, علكة غذائية, مكمّل غذائي, سلطة منتج, كولاجين, بروبيوتيك, مغنيسيوم, SFDA, نساء السعودية, نبتة لابو, Nabta Labo',
   icons: {
     icon: [
-      { url: '/nabta-lab-icon.ico?v=5', sizes: '48x48', type: 'image/x-icon' },
-      { url: '/nabta-lab-icon-32.png?v=5', sizes: '32x32', type: 'image/png' },
-      { url: '/nabta-lab-icon-48.png?v=5', sizes: '48x48', type: 'image/png' },
-      { url: '/nabta-lab-icon-512.png?v=5', sizes: '512x512', type: 'image/png' },
+      { url: '/nabta-lab-icon.ico?v=6', sizes: '48x48', type: 'image/x-icon' },
+      { url: '/nabta-lab-icon-32.png?v=6', sizes: '32x32', type: 'image/png' },
+      { url: '/nabta-lab-icon-48.png?v=6', sizes: '48x48', type: 'image/png' },
+      { url: '/nabta-lab-icon-512.png?v=6', sizes: '512x512', type: 'image/png' },
     ],
-    apple: [{ url: '/nabta-lab-icon-180.png?v=5', sizes: '180x180', type: 'image/png' }],
-    shortcut: ['/nabta-lab-icon.ico?v=5'],
+    apple: [{ url: '/nabta-lab-icon-180.png?v=6', sizes: '180x180', type: 'image/png' }],
+    shortcut: ['/nabta-lab-icon.ico?v=6'],
   },
   openGraph: {
     title: DEFAULT_TITLE,

@@ -1,5 +1,5 @@
 /**
- * Full Nabta Labo brand mark (nabta-lab-brand.png) on solid white — all sizes, no crop.
+ * Full Nabta Labo brand on white, clipped to a circle (WhatsApp-style app icon).
  */
 import { writeFile } from 'node:fs/promises'
 import path from 'node:path'
@@ -64,9 +64,28 @@ async function loadFullBrandLogo() {
     .toBuffer()
 }
 
-/** High-quality: rasterize brand once at 512px, then downscale. */
-async function brandOnWhiteSquare(size) {
-  const pad = Math.max(2, Math.round(size * 0.04))
+/** Circle mask — transparent outside (tabs / Google show round like WhatsApp). */
+function circleMaskSvg(size) {
+  const r = size / 2
+  return Buffer.from(
+    `<svg width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="${r}" cy="${r}" r="${r}" fill="white"/>
+    </svg>`,
+  )
+}
+
+async function applyCircleMask(squarePng, size) {
+  return sharp(squarePng)
+    .resize(size, size)
+    .ensureAlpha()
+    .composite([{ input: circleMaskSvg(size), blend: 'dest-in' }])
+    .png({ compressionLevel: 9 })
+    .toBuffer()
+}
+
+/** Full brand on white square, then clip to circle. */
+async function brandOnRoundIcon(size) {
+  const pad = Math.max(3, Math.round(size * 0.06))
   const inner = size - pad * 2
   const brand = await loadFullBrandLogo()
 
@@ -86,7 +105,7 @@ async function brandOnWhiteSquare(size) {
     .png()
     .toBuffer()
 
-  return sharp({
+  const square = await sharp({
     create: {
       width: size,
       height: size,
@@ -96,16 +115,18 @@ async function brandOnWhiteSquare(size) {
   })
     .composite([{ input: logoOnWhite, gravity: 'centre' }])
     .flatten({ background: WHITE })
-    .png({ compressionLevel: 9 })
+    .png()
     .toBuffer()
+
+  return applyCircleMask(square, size)
 }
 
 async function main() {
-  const icon16 = await brandOnWhiteSquare(16)
-  const icon32 = await brandOnWhiteSquare(32)
-  const icon48 = await brandOnWhiteSquare(48)
-  const icon180 = await brandOnWhiteSquare(180)
-  const icon512 = await brandOnWhiteSquare(512)
+  const icon16 = await brandOnRoundIcon(16)
+  const icon32 = await brandOnRoundIcon(32)
+  const icon48 = await brandOnRoundIcon(48)
+  const icon180 = await brandOnRoundIcon(180)
+  const icon512 = await brandOnRoundIcon(512)
 
   const files = [
     ['nabta-lab-icon-16.png', icon16],
@@ -127,7 +148,7 @@ async function main() {
   await writeFile(path.join(publicDir, 'favicon.ico'), ico)
   await writeFile(path.join(appDir, 'favicon.ico'), ico)
 
-  console.log('Wrote full Nabta Labo brand icons on white (#fff)')
+  console.log('Wrote round Nabta Labo brand icons (circle clip, white fill)')
 }
 
 main().catch((err) => {
