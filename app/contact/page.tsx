@@ -1,3 +1,5 @@
+import { BRAND_CONTACT_EMAIL } from '@/lib/brand'
+
 export const metadata = { title: 'اتصل بنا | نبتة لابو' }
 
 export default function ContactPage() {
@@ -13,8 +15,8 @@ export default function ContactPage() {
         <div className="bg-white rounded-3xl border border-border/45 p-8 shadow-[0_4px_28px_-10px_rgba(26,25,21,0.07)] ring-1 ring-black/[0.02] sm:p-10 mb-8">
           <div className="flex flex-col gap-5">
             {[
-              { icon: '📧', label: 'البريد الإلكتروني', val: 'hello@NabtaLabo.store' },
-              { icon: '🌐', label: 'الموقع الإلكتروني', val: 'NabtaLabo.store' },
+              { icon: '📧', label: 'البريد الإلكتروني', val: BRAND_CONTACT_EMAIL, href: `mailto:${BRAND_CONTACT_EMAIL}` },
+              { icon: '🌐', label: 'الموقع الإلكتروني', val: 'nabtalabo.store', href: 'https://nabtalabo.store' },
               { icon: '🚚', label: 'التوصيل', val: 'جميع مناطق المملكة العربية السعودية' },
               { icon: '⏰', label: 'أوقات العمل', val: 'الأحد - الخميس، 9 صباحاً - 6 مساءً' },
             ].map((c) => (
@@ -22,7 +24,15 @@ export default function ContactPage() {
                 <span className="text-2xl shrink-0">{c.icon}</span>
                 <div>
                   <p className="text-sm text-[#5c5656]">{c.label}</p>
-                  <p className="font-semibold text-[#1C1C1C]">{c.val}</p>
+                  <p className="font-semibold text-[#1C1C1C]">
+                    {'href' in c && c.href ? (
+                      <a href={c.href} className="hover:text-[#b8485c] transition-colors">
+                        {c.val}
+                      </a>
+                    ) : (
+                      c.val
+                    )}
+                  </p>
                 </div>
               </div>
             ))}

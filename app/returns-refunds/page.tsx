@@ -1,4 +1,5 @@
 import PolicyLayout from '@/components/ui/PolicyLayout'
+import { BRAND_CONTACT_EMAIL } from '@/lib/brand'
 export const metadata = { title: 'الإرجاع والاسترداد | نبتة لابو' }
 export default function ReturnsRefunds() {
   return (
@@ -8,7 +9,13 @@ export default function ReturnsRefunds() {
       <h2>المنتجات المفتوحة</h2>
       <p>لا يمكن استرداد المنتجات المفتوحة أو المستخدمة لاعتبارات الصحة والسلامة، إلا في حالة وجود عيب تصنيعي.</p>
       <h2>كيفية طلب الإرجاع</h2>
-      <p>للتواصل بشأن الإرجاع: hello@NabtaLabo.store — يرجى ذكر رقم الطلب وسبب الإرجاع.</p>
+      <p>
+        للتواصل بشأن الإرجاع:{' '}
+        <a href={`mailto:${BRAND_CONTACT_EMAIL}`} className="text-primary hover:underline">
+          {BRAND_CONTACT_EMAIL}
+        </a>{' '}
+        — يرجى ذكر رقم الطلب وسبب الإرجاع.
+      </p>
       <h2>الاسترداد</h2>
       <p>بعد استلام المنتج والتحقق منه، يتم إجراء الاسترداد خلال 5-7 أيام عمل.</p>
     </PolicyLayout>

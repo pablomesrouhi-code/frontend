@@ -8,6 +8,7 @@ import Footer from '@/components/layout/Footer'
 import PreFooterBanners from '@/components/layout/PreFooterBanners'
 import ClientCartDrawer from '@/components/layout/ClientCartDrawer'
 import BrandIntroSplash from '@/components/brand/BrandIntroSplash'
+import { BRAND_CONTACT_EMAIL } from '@/lib/brand'
 const plexArabic = IBM_Plex_Sans_Arabic({
   subsets: ['arabic', 'latin'],
   weight: ['400', '600', '700'],
@@ -27,6 +28,7 @@ const ORG_JSON_LD = {
       name: 'نبتة لابو',
       alternateName: ['Nabta Labo', 'NabtaLabo'],
       url: SITE_URL,
+      email: BRAND_CONTACT_EMAIL,
       logo: {
         '@type': 'ImageObject',
         url: `${SITE_URL}/nabta-lab-icon-180.png`,

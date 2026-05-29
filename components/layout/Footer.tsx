@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { BRAND_LOGO_SRC } from '@/lib/brand'
+import { BRAND_LOGO_SRC, BRAND_CONTACT_EMAIL } from '@/lib/brand'
 
 const FOOTER_LINKS = [
   { href: '/', label: 'البداية' },
@@ -49,10 +49,10 @@ export default function Footer() {
                 <span>الدفع عند الاستلام فقط</span>
               </div>
               <a
-                href="mailto:contact@nabtalabo.store"
+                href={`mailto:${BRAND_CONTACT_EMAIL}`}
                 className="break-all text-sm font-medium text-white transition-colors duration-200 ease-out hover:text-peach"
               >
-                contact@nabtalabo.store
+                {BRAND_CONTACT_EMAIL}
               </a>
             </div>
           </div>
