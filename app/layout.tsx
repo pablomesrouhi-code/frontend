@@ -29,7 +29,7 @@ const ORG_JSON_LD = {
       url: SITE_URL,
       logo: {
         '@type': 'ImageObject',
-        url: `${SITE_URL}/apple-touch-icon.png`,
+        url: `${SITE_URL}/nabta-lab-icon-180.png`,
         width: 180,
         height: 180,
       },
@@ -70,12 +70,13 @@ export const metadata: Metadata = {
     'علكات, علكة غذائية, مكمّل غذائي, سلطة منتج, كولاجين, بروبيوتيك, مغنيسيوم, SFDA, نساء السعودية, نبتة لابو, Nabta Labo',
   icons: {
     icon: [
-      { url: '/favicon.ico?v=4', sizes: '48x48', type: 'image/x-icon' },
-      { url: '/favicon-32.png?v=4', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon-48.png?v=4', sizes: '48x48', type: 'image/png' },
+      { url: '/nabta-lab-icon.ico?v=5', sizes: '48x48', type: 'image/x-icon' },
+      { url: '/nabta-lab-icon-32.png?v=5', sizes: '32x32', type: 'image/png' },
+      { url: '/nabta-lab-icon-48.png?v=5', sizes: '48x48', type: 'image/png' },
+      { url: '/nabta-lab-icon-512.png?v=5', sizes: '512x512', type: 'image/png' },
     ],
-    apple: [{ url: '/apple-touch-icon.png?v=4', sizes: '180x180', type: 'image/png' }],
-    shortcut: ['/favicon.ico?v=4'],
+    apple: [{ url: '/nabta-lab-icon-180.png?v=5', sizes: '180x180', type: 'image/png' }],
+    shortcut: ['/nabta-lab-icon.ico?v=5'],
   },
   openGraph: {
     title: DEFAULT_TITLE,

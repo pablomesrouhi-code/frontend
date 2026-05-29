@@ -1,6 +1,5 @@
 /**
- * Favicon + apple-touch: Nabta Labo on solid white (#fff).
- * Small sizes: arch + نبتة لابو (top crop). Apple-touch: full mark.
+ * Full Nabta Labo brand mark (nabta-lab-brand.png) on solid white — all sizes, no crop.
  */
 import { writeFile } from 'node:fs/promises'
 import path from 'node:path'
@@ -14,7 +13,7 @@ const publicDir = path.join(root, 'public')
 const appDir = path.join(root, 'app')
 
 const LOGO_FILE = process.env.BRAND_LOGO_FILE?.trim() || 'nabta-lab-brand.png'
-const WHITE = { r: 255, g: 255, b: 255 }
+const WHITE = '#ffffff'
 
 function contentBounds(data, width, height) {
   let minX = width
@@ -41,7 +40,8 @@ function contentBounds(data, width, height) {
   }
 }
 
-async function loadLogoRaster(cropTopFraction) {
+/** Full brand logo cutout (transparent bg), no cropping. */
+async function loadFullBrandLogo() {
   const logoPath = path.join(publicDir, LOGO_FILE.replace(/^\//, ''))
 
   const { data, info } = await sharp(logoPath)
@@ -57,60 +57,77 @@ async function loadLogoRaster(cropTopFraction) {
   }
 
   const box = contentBounds(data, info.width, info.height)
-  let extract = { ...box }
 
-  if (cropTopFraction != null && cropTopFraction > 0 && cropTopFraction < 1) {
-    extract.height = Math.max(1, Math.round(box.height * cropTopFraction))
-  }
+  return sharp(data, { raw: info })
+    .extract(box)
+    .png()
+    .toBuffer()
+}
 
-  const cutout = await sharp(data, { raw: info })
-    .extract(extract)
+/** High-quality: rasterize brand once at 512px, then downscale. */
+async function brandOnWhiteSquare(size) {
+  const pad = Math.max(2, Math.round(size * 0.04))
+  const inner = size - pad * 2
+  const brand = await loadFullBrandLogo()
+
+  const logoOnWhite = await sharp(brand)
+    .resize(512, 512, {
+      fit: 'contain',
+      background: WHITE,
+      kernel: sharp.kernel.lanczos3,
+    })
+    .flatten({ background: WHITE })
+    .resize(inner, inner, {
+      fit: 'contain',
+      background: WHITE,
+      kernel: sharp.kernel.lanczos3,
+    })
+    .flatten({ background: WHITE })
     .png()
     .toBuffer()
 
-  return sharp(cutout)
-}
-
-async function logoOnWhite(size, { cropTopFraction }) {
-  const pad = size <= 48 ? 2 : Math.round(size * 0.07)
-  const inner = size - pad * 2
-
-  const logoBuf = await loadLogoRaster(cropTopFraction)
-    .then((img) =>
-      img
-        .resize(inner, inner, {
-          fit: 'contain',
-          background: { ...WHITE, alpha: 1 },
-        })
-        .flatten({ background: '#ffffff' })
-        .png()
-        .toBuffer(),
-    )
-
   return sharp({
-    create: { width: size, height: size, channels: 3, background: { ...WHITE, alpha: 1 } },
+    create: {
+      width: size,
+      height: size,
+      channels: 3,
+      background: WHITE,
+    },
   })
-    .composite([{ input: logoBuf, gravity: 'centre' }])
-    .flatten({ background: '#ffffff' })
+    .composite([{ input: logoOnWhite, gravity: 'centre' }])
+    .flatten({ background: WHITE })
     .png({ compressionLevel: 9 })
     .toBuffer()
 }
 
 async function main() {
-  const icon16 = await logoOnWhite(16, { cropTopFraction: 0.52 })
-  const icon32 = await logoOnWhite(32, { cropTopFraction: 0.52 })
-  const icon48 = await logoOnWhite(48, { cropTopFraction: 0.52 })
-  const apple180 = await logoOnWhite(180, { cropTopFraction: null })
+  const icon16 = await brandOnWhiteSquare(16)
+  const icon32 = await brandOnWhiteSquare(32)
+  const icon48 = await brandOnWhiteSquare(48)
+  const icon180 = await brandOnWhiteSquare(180)
+  const icon512 = await brandOnWhiteSquare(512)
 
-  await writeFile(path.join(publicDir, 'favicon-32.png'), icon32)
-  await writeFile(path.join(publicDir, 'favicon-48.png'), icon48)
-  await writeFile(path.join(publicDir, 'apple-touch-icon.png'), apple180)
+  const files = [
+    ['nabta-lab-icon-16.png', icon16],
+    ['nabta-lab-icon-32.png', icon32],
+    ['nabta-lab-icon-48.png', icon48],
+    ['nabta-lab-icon-180.png', icon180],
+    ['nabta-lab-icon-512.png', icon512],
+    ['apple-touch-icon.png', icon180],
+    ['favicon-32.png', icon32],
+    ['favicon-48.png', icon48],
+  ]
+
+  for (const [name, buf] of files) {
+    await writeFile(path.join(publicDir, name), buf)
+  }
 
   const ico = await toIco([icon16, icon32, icon48])
+  await writeFile(path.join(publicDir, 'nabta-lab-icon.ico'), ico)
   await writeFile(path.join(publicDir, 'favicon.ico'), ico)
   await writeFile(path.join(appDir, 'favicon.ico'), ico)
 
-  console.log('Wrote favicons (arch+wordmark for tabs, full logo for apple-touch)')
+  console.log('Wrote full Nabta Labo brand icons on white (#fff)')
 }
 
 main().catch((err) => {
