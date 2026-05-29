@@ -70,12 +70,12 @@ export const metadata: Metadata = {
     'علكات, علكة غذائية, مكمّل غذائي, سلطة منتج, كولاجين, بروبيوتيك, مغنيسيوم, SFDA, نساء السعودية, نبتة لابو, Nabta Labo',
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: '48x48', type: 'image/x-icon' },
-      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon-48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/favicon.ico?v=4', sizes: '48x48', type: 'image/x-icon' },
+      { url: '/favicon-32.png?v=4', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-48.png?v=4', sizes: '48x48', type: 'image/png' },
     ],
-    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
-    shortcut: ['/favicon-48.png'],
+    apple: [{ url: '/apple-touch-icon.png?v=4', sizes: '180x180', type: 'image/png' }],
+    shortcut: ['/favicon.ico?v=4'],
   },
   openGraph: {
     title: DEFAULT_TITLE,
