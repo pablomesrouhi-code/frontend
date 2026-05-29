@@ -25,13 +25,22 @@ function canonicalSaCheckoutPhone(raw: string): string {
 }
 
 const schema = z.object({
-  name: z.string().min(2, 'الاسم يجب أن يكون حرفين على الأقل'),
+  name: z
+    .string()
+    .trim()
+    .min(2, 'الاسم يجب أن يكون حرفين على الأقل')
+    .refine((v) => /[\u0600-\u06FFa-zA-Z]/.test(v), 'يرجى إدخال اسمك الحقيقي')
+    .refine((v) => !/^[\d\s\-+().]+$/.test(v), 'الاسم لا يمكن أن يكون أرقاماً فقط')
+    .refine((v) => {
+      const c = v.replace(/\s/g, '')
+      return c.length >= 2 && !/^(.)\1{2,}$/.test(c)
+    }, 'يرجى إدخال اسم صحيح'),
   phone: z
     .string()
     .transform(canonicalSaCheckoutPhone)
     .refine(
-      (v) => TEST_PHONES.includes(v) || /^05\d{8}$/.test(v),
-      'يرجى إدخال جوال سعودي صحيح (05XXXXXXXX أو 9665XXXXXXXX)'
+      (v) => TEST_PHONES.includes(v) || /^05(?:0|[3-9])\d{7}$/.test(v),
+      'يرجى إدخال جوال سعودي صحيح (05XXXXXXXX)'
     ),
 })
 
@@ -168,9 +177,10 @@ export default function CheckoutPopup({ onClose }: Props) {
         orderId,
       }
       sessionStorage.setItem('nabtalabo_order', JSON.stringify(orderSummary))
+      sessionStorage.setItem('nbta-skip-intro', '1')
       clearCart()
       onClose()
-      window.location.href = '/thank-you'
+      window.location.replace('/thank-you')
     } catch (err) {
       if (typeof window !== 'undefined') {
         // eslint-disable-next-line no-console

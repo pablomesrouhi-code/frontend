@@ -87,21 +87,29 @@ function IconCopy({ className }: { className?: string }) {
   )
 }
 
+function readStoredOrder(): OrderData | null {
+  if (typeof window === 'undefined') return null
+  const raw = sessionStorage.getItem('nabtalabo_order')
+  if (!raw) return null
+  try {
+    return JSON.parse(raw) as OrderData
+  } catch {
+    return null
+  }
+}
+
+function productCardImage(product: Product): string {
+  return product.homeCardImage ?? product.coverImage
+}
+
 export default function ThankYouPage() {
-  const [order, setOrder] = useState<OrderData | null>(null)
-  const [hydrated, setHydrated] = useState(false)
+  const [order, setOrder] = useState<OrderData | null>(() => readStoredOrder())
+  const [hydrated, setHydrated] = useState(() => typeof window !== 'undefined')
   const [copied, setCopied] = useState(false)
   const pixelsFired = useRef(false)
 
   useEffect(() => {
-    const raw = sessionStorage.getItem('nabtalabo_order')
-    if (raw) {
-      try {
-        setOrder(JSON.parse(raw))
-      } catch {
-        /* ignore */
-      }
-    }
+    setOrder(readStoredOrder())
     setHydrated(true)
   }, [])
 
@@ -184,15 +192,7 @@ export default function ThankYouPage() {
   }, [order])
 
   if (!hydrated) {
-    return (
-      <div className="min-h-screen bg-canvas px-4 pb-24 pt-10 sm:pt-14">
-        <div className="mx-auto max-w-lg animate-pulse space-y-5">
-          <div className="h-48 rounded-[1.75rem] bg-white shadow-[var(--shadow-card)] ring-1 ring-black/[0.04]" />
-          <div className="h-32 rounded-2xl bg-white/90 ring-1 ring-border/60" />
-          <div className="h-56 rounded-[1.75rem] bg-white/90 ring-1 ring-border/60" />
-        </div>
-      </div>
-    )
+    return null
   }
 
   if (!order) {
@@ -456,7 +456,7 @@ function SuggestedRow({ product, fromPrice }: { product: Product; fromPrice: str
   return (
     <div className="flex items-center gap-3 rounded-xl border border-border/80 bg-white px-3 py-2.5">
       <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-border/60 bg-peach-soft/30">
-        <Image src={product.coverImage} alt={product.nameAr} fill className="object-cover" sizes="56px" />
+        <Image src={productCardImage(product)} alt={product.nameAr} fill className="object-cover" sizes="56px" />
       </div>
       <div className="min-w-0 flex-1 text-right">
         <p className="truncate text-sm font-medium text-charcoal">{product.nameAr}</p>
@@ -478,7 +478,7 @@ function ThankYouMiniCard({ product, fromPrice }: { product: Product; fromPrice:
     <article className="flex h-full flex-col overflow-hidden rounded-[1.35rem] border border-border bg-white shadow-sm transition-shadow hover:shadow-md">
       <div className="relative aspect-[4/3] w-full shrink-0 bg-peach-soft/35">
         <Image
-          src={product.coverImage}
+          src={productCardImage(product)}
           alt={product.nameAr}
           fill
           className="object-cover"

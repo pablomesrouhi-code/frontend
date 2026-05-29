@@ -1,6 +1,7 @@
 'use client'
 
 import { useLayoutEffect, useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import { BRAND_LOGO_SRC } from '@/lib/brand'
 
@@ -9,6 +10,7 @@ const EXIT_MS = 550
 
 /** Shows on every visit before the storefront (no sessionStorage skip). */
 export default function BrandIntroSplash() {
+  const pathname = usePathname()
   const [show, setShow] = useState(true)
   const [exiting, setExiting] = useState(false)
   const ran = useRef(false)
@@ -16,6 +18,21 @@ export default function BrandIntroSplash() {
   useLayoutEffect(() => {
     if (ran.current) return
     ran.current = true
+
+    if (pathname === '/thank-you' || pathname.startsWith('/thank-you/')) {
+      setShow(false)
+      return
+    }
+
+    try {
+      if (window.sessionStorage.getItem('nbta-skip-intro') === '1') {
+        window.sessionStorage.removeItem('nbta-skip-intro')
+        setShow(false)
+        return
+      }
+    } catch {
+      /* ignore */
+    }
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduced) {
@@ -39,7 +56,7 @@ export default function BrandIntroSplash() {
       document.documentElement.classList.remove('nbta-splash-active')
       document.body.classList.remove('nbta-intro-lock')
     }
-  }, [])
+  }, [pathname])
 
   if (!show) return null
 
