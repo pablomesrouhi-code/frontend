@@ -17,7 +17,7 @@ export type Product = {
   coverImage: string
   coverWidth: number
   coverHeight: number
-  /** صورة بطاقة الصفحة الرئيسية فقط — إن وُجدت تُعرض على `/` بدل `coverImage` */
+  /** صورة OEM للبطاقات في قسم «كمّلي السلة» بصفحة المنتج — إن وُجدت */
   homeCardImage?: string
   /** صورة هيرو صفحة المنتج؛ إن وُجدت تُعرض بدل المساحة الفارغة (ولا تبدّل غلاف البطاقة `coverImage` إلا للعرض تحت هذا الحقل فقط هنا) */
   pdpHeroImage?: { src: string; width: number; height: number; alt?: string }

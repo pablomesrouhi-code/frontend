@@ -208,7 +208,7 @@ export default function HomePage() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch min-w-0 w-full">
-            {PRODUCTS.map((p) => <ProductCard key={p.id} product={p} useHomeCardImage />)}
+            {PRODUCTS.map((p) => <ProductCard key={p.id} product={p} />)}
           </div>
         </div>
       </section>

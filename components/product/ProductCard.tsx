@@ -7,7 +7,7 @@ type Props = {
   product: Product
   /** `list` = صفحة المنتجات: صورة بجانب النص على الديسكتوب + سعر بارز. `grid` = بطاقة عمودية للصفحة الرئيسية وشبكات ضيقة */
   layout?: 'list' | 'grid'
-  /** بطاقة الرئيسية فقط — تعرض `homeCardImage` إن وُجدت */
+  /** بطاقات cross-sell بصفحة المنتج — تعرض `homeCardImage` (OEM) إن وُجدت */
   useHomeCardImage?: boolean
 }
 
