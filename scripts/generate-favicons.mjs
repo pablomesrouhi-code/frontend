@@ -1,8 +1,7 @@
 /**
- * Builds favicon + apple-touch assets from nabta-lab-brand.png on a light tile.
- * Strips near-black background so tabs / Google never show a black square.
+ * Favicon + apple-touch: Nabta Labo logo on solid white (#fff), fully opaque.
  */
-import { readFile, writeFile } from 'node:fs/promises'
+import { writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
@@ -13,13 +12,16 @@ const publicDir = path.join(root, 'public')
 const appDir = path.join(root, 'app')
 
 const LOGO_FILE = process.env.BRAND_LOGO_FILE?.trim() || 'nabta-lab-brand.png'
-const TILE = { r: 255, g: 255, b: 255 }
-const TILE_EDGE = { r: 241, g: 230, b: 228 }
+const WHITE = { r: 255, g: 255, b: 255, alpha: 1 }
 
-async function logoWithTransparentBg(innerSize) {
+/** Turn logo PNG black backdrop into transparency, then flatten onto white. */
+async function logoOnWhite(size) {
+  const pad = size <= 48 ? 2 : Math.round(size * 0.06)
+  const inner = size - pad * 2
   const logoPath = path.join(publicDir, LOGO_FILE.replace(/^\//, ''))
+
   const { data, info } = await sharp(logoPath)
-    .resize(innerSize, innerSize, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .resize(inner, inner, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
     .ensureAlpha()
     .raw()
     .toBuffer({ resolveWithObject: true })
@@ -28,50 +30,34 @@ async function logoWithTransparentBg(innerSize) {
     const r = data[i]
     const g = data[i + 1]
     const b = data[i + 2]
-    if (r < 48 && g < 48 && b < 48) data[i + 3] = 0
+    if (r < 64 && g < 64 && b < 64) data[i + 3] = 0
   }
 
-  return sharp(data, { raw: info }).png().toBuffer()
-}
+  const cutout = await sharp(data, { raw: info }).png().toBuffer()
 
-async function buildTile(size) {
-  const pad = Math.round(size * 0.12)
-  const inner = size - pad * 2
-  const radius = Math.round(size * 0.18)
-
-  const logo = await logoWithTransparentBg(inner)
-
-  const bg = await sharp({
-    create: { width: size, height: size, channels: 4, background: { ...TILE, alpha: 1 } },
+  return sharp({
+    create: { width: size, height: size, channels: 3, background: WHITE },
   })
-    .composite([
-      {
-        input: Buffer.from(
-          `<svg width="${size}" height="${size}"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="rgb(${TILE.r},${TILE.g},${TILE.b})"/><stop offset="100%" stop-color="rgb(${TILE_EDGE.r},${TILE_EDGE.g},${TILE_EDGE.b})"/></linearGradient></defs><rect width="${size}" height="${size}" rx="${radius}" fill="url(#g)"/></svg>`,
-        ),
-        top: 0,
-        left: 0,
-      },
-      { input: logo, gravity: 'centre' },
-    ])
-    .png()
+    .composite([{ input: cutout, gravity: 'centre' }])
+    .flatten({ background: '#ffffff' })
+    .png({ compressionLevel: 9, palette: false })
     .toBuffer()
-
-  return bg
 }
 
 async function main() {
-  const icon32 = await buildTile(32)
-  const apple180 = await buildTile(180)
+  const icon32 = await logoOnWhite(32)
+  const icon48 = await logoOnWhite(48)
+  const apple180 = await logoOnWhite(180)
 
   await writeFile(path.join(publicDir, 'favicon-32.png'), icon32)
+  await writeFile(path.join(publicDir, 'favicon-48.png'), icon48)
   await writeFile(path.join(publicDir, 'apple-touch-icon.png'), apple180)
 
-  const ico = await sharp(icon32).resize(32, 32).toFormat('png').toBuffer()
+  const ico = await sharp(icon48).resize(48, 48).png().toBuffer()
   await writeFile(path.join(publicDir, 'favicon.ico'), ico)
   await writeFile(path.join(appDir, 'favicon.ico'), ico)
 
-  console.log('Wrote public/favicon-32.png, public/apple-touch-icon.png, favicon.ico')
+  console.log('Wrote favicons: white bg, opaque PNG + favicon.ico')
 }
 
 main().catch((err) => {

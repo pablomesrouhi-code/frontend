@@ -52,7 +52,7 @@ const DEFAULT_DESCRIPTION =
   'نبتة لابو: متجر بتجربة تقترب من ثقة نقطة اعتماد (صيدلية من حيث الانضباط والوضوح) — علكات تحمل تركيبات مكمّل غذائي مرخّص SFDA؛ لسنا نقطة تشخّص أو وصف جرعات. جمال يومي، راحة بعد الأكل، وهدوء مسائي. السعودية.'
 
 export const viewport: Viewport = {
-  themeColor: '#146b70',
+  themeColor: '#ffffff',
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
@@ -70,11 +70,12 @@ export const metadata: Metadata = {
     'علكات, علكة غذائية, مكمّل غذائي, سلطة منتج, كولاجين, بروبيوتيك, مغنيسيوم, SFDA, نساء السعودية, نبتة لابو, Nabta Labo',
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.ico', sizes: '48x48', type: 'image/x-icon' },
       { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-48.png', sizes: '48x48', type: 'image/png' },
     ],
     apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
-    shortcut: ['/favicon.ico'],
+    shortcut: ['/favicon-48.png'],
   },
   openGraph: {
     title: DEFAULT_TITLE,

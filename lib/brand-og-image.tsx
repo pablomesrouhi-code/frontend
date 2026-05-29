@@ -30,7 +30,7 @@ export async function createBrandOgImageResponse(): Promise<ImageResponse> {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'linear-gradient(135deg, #f1e6e4 0%, #ffffff 52%, #faf9f8 100%)',
+          background: '#ffffff',
         }}
       >
         <img
