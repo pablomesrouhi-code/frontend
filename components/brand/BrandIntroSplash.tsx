@@ -4,16 +4,10 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { BRAND_LOGO_SRC } from '@/lib/brand'
 
-const PLAY_MS = 850
-const EXIT_MS = 280
-const INTRO_SEEN_KEY = 'nbta-intro-seen'
+const PLAY_MS = 2800
+const EXIT_MS = 550
 
-function clearIntroLock() {
-  document.documentElement.classList.remove('nbta-splash-active')
-  document.body.classList.remove('nbta-intro-lock')
-}
-
-/** Short intro once per browser tab session — skipped on repeat visits and reduced motion. */
+/** Shows on every visit before the storefront (no sessionStorage skip). */
 export default function BrandIntroSplash() {
   const [show, setShow] = useState(true)
   const [exiting, setExiting] = useState(false)
@@ -24,16 +18,8 @@ export default function BrandIntroSplash() {
     ran.current = true
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    let alreadySeen = false
-    try {
-      alreadySeen = window.sessionStorage.getItem(INTRO_SEEN_KEY) === '1'
-    } catch {
-      /* private mode */
-    }
-
-    if (reduced || alreadySeen) {
+    if (reduced) {
       setShow(false)
-      clearIntroLock()
       return
     }
 
@@ -42,19 +28,16 @@ export default function BrandIntroSplash() {
 
     const exitTimer = window.setTimeout(() => setExiting(true), PLAY_MS)
     const doneTimer = window.setTimeout(() => {
-      try {
-        window.sessionStorage.setItem(INTRO_SEEN_KEY, '1')
-      } catch {
-        /* ignore */
-      }
       setShow(false)
-      clearIntroLock()
+      document.documentElement.classList.remove('nbta-splash-active')
+      document.body.classList.remove('nbta-intro-lock')
     }, PLAY_MS + EXIT_MS)
 
     return () => {
       window.clearTimeout(exitTimer)
       window.clearTimeout(doneTimer)
-      clearIntroLock()
+      document.documentElement.classList.remove('nbta-splash-active')
+      document.body.classList.remove('nbta-intro-lock')
     }
   }, [])
 
@@ -78,7 +61,8 @@ export default function BrandIntroSplash() {
             alt=""
             width={120}
             height={120}
-            sizes="120px"
+            priority
+            unoptimized
             className="nbta-brand-splash__logo"
           />
           <span className="nbta-brand-splash__ring" />
