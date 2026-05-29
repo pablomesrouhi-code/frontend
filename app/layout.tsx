@@ -29,7 +29,7 @@ const ORG_JSON_LD = {
       url: SITE_URL,
       logo: {
         '@type': 'ImageObject',
-        url: `${SITE_URL}/apple-icon`,
+        url: `${SITE_URL}/apple-touch-icon.png`,
         width: 180,
         height: 180,
       },
@@ -69,8 +69,12 @@ export const metadata: Metadata = {
   keywords:
     'علكات, علكة غذائية, مكمّل غذائي, سلطة منتج, كولاجين, بروبيوتيك, مغنيسيوم, SFDA, نساء السعودية, نبتة لابو, Nabta Labo',
   icons: {
-    icon: [{ url: '/icon', sizes: '32x32', type: 'image/png' }],
-    apple: [{ url: '/apple-icon', sizes: '180x180', type: 'image/png' }],
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+    shortcut: ['/favicon.ico'],
   },
   openGraph: {
     title: DEFAULT_TITLE,
