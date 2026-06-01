@@ -1,4 +1,5 @@
 import Script from 'next/script'
+import { getMetaPixelId, pixelsEnabled } from '@/lib/tracking/pixels-enabled'
 
 const SAFE_PIXEL_ID = /^[A-Za-z0-9_-]{4,64}$/
 
@@ -8,19 +9,12 @@ function sanitizeId(raw: string | undefined): string | null {
   return v
 }
 
-/** Disable all DeferredPixels scripts only when explicitly turned off (EasyPanel often omits ENABLE while IDs are set). */
-function pixelsExplicitlyDisabled(): boolean {
-  const v = process.env.NEXT_PUBLIC_ENABLE_PIXELS?.trim().toLowerCase()
-  return v === 'false' || v === '0' || v === 'no'
-}
-
 export default function DeferredPixels() {
-  const metaId = sanitizeId(process.env.NEXT_PUBLIC_META_PIXEL_ID)
+  const metaId = getMetaPixelId()
   const tiktokId = sanitizeId(process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID)
   const snapId = sanitizeId(process.env.NEXT_PUBLIC_SNAP_PIXEL_ID)
 
-  if (pixelsExplicitlyDisabled()) return null
-  if (!metaId && !tiktokId && !snapId) return null
+  if (!pixelsEnabled()) return null
 
   const raw = process.env.NEXT_PUBLIC_PIXEL_SCRIPT_STRATEGY
   const strategy: 'lazyOnload' | 'afterInteractive' =
@@ -29,6 +23,16 @@ export default function DeferredPixels() {
   return (
     <>
       {metaId ? (
+        <>
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: 'none' }}
+            src={`https://www.facebook.com/tr?id=${metaId}&ev=PageView&noscript=1`}
+            alt=""
+          />
+        </noscript>
         <Script id="nabtalabo-meta-pixel" strategy={strategy}>
           {`
             !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -40,6 +44,7 @@ export default function DeferredPixels() {
             fbq('track', 'PageView');
           `}
         </Script>
+        </>
       ) : null}
 
       {tiktokId ? (

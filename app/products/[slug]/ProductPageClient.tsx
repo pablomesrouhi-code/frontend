@@ -5,6 +5,7 @@ import { useCartStore } from '@/stores/cart-store'
 import OfferSelector from '@/components/product/OfferSelector'
 import PdpMorningRoutineNote from '@/components/product/PdpMorningRoutineNote'
 import PdpStickyRoutineCta from '@/components/product/PdpStickyRoutineCta'
+import { trackMeta } from '@/lib/tracking/client'
 
 function shadeTowardBlack(hex: string, t: number) {
   const h = hex.replace('#', '')
@@ -47,6 +48,15 @@ export default function ProductPageClient({ product }: { product: Product }) {
   const accentDeep = shadeTowardBlack(accent, 0.28)
 
   useEffect(() => {
+    trackMeta('ViewContent', {
+      content_ids: [product.id],
+      content_type: 'product',
+      value: getPriceForQty(1),
+      currency: 'SAR',
+    })
+  }, [product.id])
+
+  useEffect(() => {
     const el = priceBlockRef.current
     if (!el) return
 
@@ -76,6 +86,12 @@ export default function ProductPageClient({ product }: { product: Product }) {
       bgColor: product.bgColor,
     })
     openCart()
+    trackMeta('AddToCart', {
+      content_ids: [product.id],
+      content_type: 'product',
+      value: getPriceForQty(selectedQty),
+      currency: 'SAR',
+    })
   }
 
   return (

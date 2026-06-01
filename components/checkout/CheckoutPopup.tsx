@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,6 +9,7 @@ import { getPublicApiBase } from '@/lib/api'
 import { getBestUpsell, formatSarAmount } from '@/lib/products'
 import { CHECKOUT_UI_REV } from '@/lib/checkout-rev'
 import UpsellModal from './UpsellModal'
+import { trackMeta } from '@/lib/tracking/client'
 
 const TEST_PHONES = ['055000000']
 
@@ -60,6 +61,15 @@ export default function CheckoutPopup({ onClose }: Props) {
   })
 
   const upsell = getBestUpsell(items.map((i) => i.productId))
+
+  useEffect(() => {
+    trackMeta('InitiateCheckout', {
+      value: total(),
+      currency: 'SAR',
+      content_ids: items.map((i) => i.productId),
+      num_items: items.length,
+    })
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- once per checkout open
 
   const finalizeOrder = useCallback(
     async (data: FormValues, upsellAccepted: boolean) => {

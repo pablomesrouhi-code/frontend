@@ -8,6 +8,8 @@ import Footer from '@/components/layout/Footer'
 import PreFooterBanners from '@/components/layout/PreFooterBanners'
 import ClientCartDrawer from '@/components/layout/ClientCartDrawer'
 import BrandIntroSplash from '@/components/brand/BrandIntroSplash'
+import DeferredPixels from '@/components/tracking/DeferredPixels'
+import RouteChangePageViews from '@/components/tracking/RouteChangePageViews'
 import { BRAND_CONTACT_EMAIL } from '@/lib/brand'
 const plexArabic = IBM_Plex_Sans_Arabic({
   subsets: ['arabic', 'latin'],
@@ -114,7 +116,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <PreFooterBanners />
         <Footer />
         <ClientCartDrawer />
+        <DeferredPixels />
         <Suspense fallback={null}>
+          <RouteChangePageViews />
           <AnalyticsBeacon />
         </Suspense>
       </body>
