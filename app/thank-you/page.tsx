@@ -259,7 +259,7 @@ export default function ThankYouPage() {
           </div>
 
           <div className="border-t border-border/80 bg-peach-tint/25 px-6 py-5 sm:px-8">
-            <div className="flex gap-3 text-right">
+            <div className="flex gap-3 text-start">
               <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-authority shadow-sm ring-1 ring-border/60">
                 <IconPhone className="h-5 w-5" />
               </span>
@@ -312,7 +312,7 @@ export default function ThankYouPage() {
                   key={item.productId}
                   className="flex flex-wrap items-start justify-between gap-3 rounded-xl border border-border/70 bg-[#faf9f8] px-4 py-3.5"
                 >
-                  <div className="min-w-0 flex-1 text-right">
+                  <div className="min-w-0 flex-1 text-start">
                     <p className="text-sm font-medium text-charcoal sm:text-[15px]">{item.nameAr}</p>
                     <span
                       className="mt-2 inline-block rounded-full px-2.5 py-0.5 text-[10px] font-semibold text-charcoal ring-1 ring-border/80"
@@ -332,7 +332,7 @@ export default function ThankYouPage() {
           {order.upsellAccepted && order.upsellProduct && (
             <div className="mt-3 rounded-xl border border-primary/25 bg-peach-tint/50 px-4 py-3">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <div className="min-w-0 text-right">
+                <div className="min-w-0 text-start">
                   <span className="text-[10px] font-semibold text-primary">عرض إضافي</span>
                   <p className="mt-0.5 text-sm font-medium text-charcoal">{order.upsellProduct.nameAr}</p>
                 </div>
@@ -360,7 +360,7 @@ export default function ThankYouPage() {
         {/* خطوات مختصرة */}
         <section className="mt-6 rounded-[1.75rem] border border-border bg-white p-5 sm:p-6">
           <h2 className="text-base font-semibold text-charcoal">ماذا بعد؟</h2>
-          <ol className="mt-4 space-y-3 text-right text-sm text-muted">
+          <ol className="mt-4 space-y-3 text-start text-sm text-muted">
             {[
               'مكالمة قصيرة: تأكيد العنوان والموعد.',
               'تجهيز الطلب وفق المتفق عليه.',
@@ -458,7 +458,7 @@ function SuggestedRow({ product, fromPrice }: { product: Product; fromPrice: str
       <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-border/60 bg-peach-soft/30">
         <Image src={productCardImage(product)} alt={product.nameAr} fill className="object-cover" sizes="56px" />
       </div>
-      <div className="min-w-0 flex-1 text-right">
+      <div className="min-w-0 flex-1 text-start">
         <p className="truncate text-sm font-medium text-charcoal">{product.nameAr}</p>
         <p className="truncate text-[11px] text-muted">{product.subtitleAr}</p>
         <p className="mt-0.5 text-[11px] text-authority">من {fromPrice}</p>
@@ -485,7 +485,7 @@ function ThankYouMiniCard({ product, fromPrice }: { product: Product; fromPrice:
           sizes="(max-width:640px) 100vw, 50vw"
         />
       </div>
-      <div className="flex flex-1 flex-col p-4 text-right">
+      <div className="flex flex-1 flex-col p-4 text-start">
         <p className="text-[10px] font-semibold uppercase tracking-wide text-authority">{product.badgeAr}</p>
         <h3 className="mt-1 line-clamp-2 text-sm font-semibold leading-snug text-charcoal">{product.nameAr}</h3>
         <p className="mt-1 line-clamp-2 flex-1 text-[11px] leading-relaxed text-muted">{product.subtitleAr}</p>

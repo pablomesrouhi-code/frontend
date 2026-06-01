@@ -40,7 +40,7 @@ export default function PreFooterBanners() {
                     aria-hidden
                   />
                 )}
-                <div className="flex items-start gap-2 text-right min-w-0 flex-[1_1_45%] sm:flex-[1_1_22%] md:flex-1 md:max-w-[24%]">
+                <div className="flex items-start gap-2 text-start min-w-0 flex-[1_1_45%] sm:flex-[1_1_22%] md:flex-1 md:max-w-[24%]">
                   <span className="text-sm sm:text-base leading-none shrink-0 pt-0.5" aria-hidden>
                     {b.icon}
                   </span>

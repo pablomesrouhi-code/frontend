@@ -16,7 +16,7 @@ function PriceBlock({ product }: { product: Product }) {
   const priceThree = getPriceForQty(3)
 
   return (
-    <div className="text-right">
+    <div className="text-start">
       <p className="text-[11px] font-bold uppercase tracking-wide text-muted">سعر القطعة</p>
       <p className="text-3xl font-black tabular-nums sm:text-4xl" style={{ color: product.accentColor }}>
         <span className="sar-price">{formatSarAmount(priceOne)}</span>

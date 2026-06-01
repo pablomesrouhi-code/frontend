@@ -12,7 +12,7 @@ export default function PdpMorningRoutineNote({ accentColor }: Props) {
   return (
     <div
       role="note"
-      className="rounded-2xl border border-black/[0.06] bg-white/65 px-4 py-3.5 text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.92)] backdrop-blur-[2px] sm:rounded-[1.35rem] sm:px-5 sm:py-4"
+      className="rounded-2xl border border-black/[0.06] bg-white/65 px-4 py-3.5 text-start shadow-[inset_0_1px_0_rgba(255,255,255,0.92)] backdrop-blur-[2px] sm:rounded-[1.35rem] sm:px-5 sm:py-4"
     >
       <p className="text-[13px] font-extrabold leading-snug tracking-tight text-charcoal sm:text-sm">
         مكمّل صباحك — خطوة واضحة قبل الطلب

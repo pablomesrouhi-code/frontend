@@ -57,8 +57,8 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
 
             {/* النص والشعار + العناوين الرئيسية */}
-            <div className="text-right order-2 md:order-1">
-              <div className="mb-6 text-right">
+            <div className="text-start order-2 md:order-1">
+              <div className="mb-6 text-start">
                 <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full text-xs font-semibold" style={{ background: '#f1e6e4', color: '#146b70', border: '1px solid #d8c9c6' }}>
                   <span className="w-1.5 h-1.5 rounded-full bg-[#146b70]" />
                   مكمّل غذائي على شكل علكة · سلطة ووضوح يقربان تجربة الصيدلية
@@ -137,7 +137,7 @@ export default function HomePage() {
             >
               <div className="rounded-2xl overflow-hidden bg-[#FDF8F9] relative">
                 <div
-                  className="absolute bottom-2 start-2 sm:bottom-3 sm:start-3 z-10 rounded-lg px-2 py-1.5 sm:px-2.5 sm:py-2 text-right max-w-[5.75rem] sm:max-w-[6.75rem]"
+                  className="absolute bottom-2 start-2 sm:bottom-3 sm:start-3 z-10 rounded-lg px-2 py-1.5 sm:px-2.5 sm:py-2 text-start max-w-[5.75rem] sm:max-w-[6.75rem]"
                   style={{
                     background: 'linear-gradient(145deg, #ffffffee 0%, #f8fffe 100%)',
                     border: '1px solid rgba(20,107,112,0.35)',
@@ -168,7 +168,7 @@ export default function HomePage() {
       {/* ─── Problems / Solutions ─── */}
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
+          <div className="text-start mb-12">
             <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: '#146b70' }}>ثلاثة روتينات</p>
             <h2 className="text-3xl font-bold" style={{ color: '#1C1C1C' }}>لكل احتياج روتين واضح</h2>
             <p className="mt-2 text-sm" style={{ color: '#5c5656' }}>ثلاث مكمّلات على شكل علكة — كلّها داخل سلطة تصنيف واضح وموسوم وفق المتعارف عليه</p>
@@ -198,7 +198,7 @@ export default function HomePage() {
       {/* ─── Products ─── */}
       <section className="py-20" style={{ background: '#FFFFFF' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-14">
+          <div className="text-start mb-14">
             <p className="text-sm font-bold tracking-widest uppercase mb-3" style={{ color: '#b8485c' }}>مجموعتنا</p>
             <h2 className="text-4xl sm:text-5xl font-bold leading-tight" style={{ color: '#1C1C1C' }}>
               اختاري روتينك اليومي
@@ -218,7 +218,7 @@ export default function HomePage() {
         {/* subtle dot grid */}
         <div className="absolute inset-0 opacity-[0.35]" style={{ backgroundImage: 'radial-gradient(#c9937e 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
+          <div className="text-start mb-12">
             <span className="inline-flex items-center gap-2 text-xs font-mono px-4 py-1.5 rounded-full mb-4" style={{ background: '#fff', color: '#146b70', border: '1px solid #d8c9c6' }}>
               <span className="w-1.5 h-1.5 rounded-full bg-[#146b70] animate-pulse" />
               Nabta Labo — مختبر تركيب بسلطة مهنية
@@ -266,7 +266,7 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="rounded-3xl bg-white overflow-hidden" style={{ border: '1px solid #dfd8d5', boxShadow: '0 12px 48px -20px rgba(184,72,92,0.12), 0 0 0 1px rgba(26,25,21,0.02)' }}>
             <div className="grid lg:grid-cols-12 gap-0">
-              <div className="lg:col-span-5 p-8 sm:p-10 lg:p-12 text-center lg:text-right border-b lg:border-b-0 lg:border-s border-[#e0dad7]" style={{ background: 'linear-gradient(180deg, #eae2df 0%, #FFFFFF 55%)' }}>
+              <div className="lg:col-span-5 p-8 sm:p-10 lg:p-12 text-center lg:text-start border-b lg:border-b-0 lg:border-s border-[#e0dad7]" style={{ background: 'linear-gradient(180deg, #eae2df 0%, #FFFFFF 55%)' }}>
                 <p className="text-sm font-bold tracking-widest uppercase mb-3" style={{ color: '#b8485c' }}>
                   مع نبتة لابو
                 </p>
@@ -318,7 +318,7 @@ export default function HomePage() {
                           />
                         )}
                       </div>
-                      <div className="flex-1 min-w-0 pt-1 text-right pb-2">
+                      <div className="flex-1 min-w-0 pt-1 text-start pb-2">
                         <div className="flex items-center gap-2 justify-end mb-2 flex-wrap">
                           <span className="text-2xl sm:text-3xl leading-none" aria-hidden>{step.icon}</span>
                         </div>
@@ -341,7 +341,7 @@ export default function HomePage() {
       {/* ─── Reviews ─── */}
       <section className="py-16" style={{ background: '#FFFFFF' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
+          <div className="text-start mb-12">
             <div className="flex justify-center mb-4">
               <div className="flex items-center gap-2 px-5 py-2 rounded-full bg-white" style={{ border: '1px solid #dfd6d4' }}>
                 <span style={{ color: '#c9937e', fontSize: '15px' }}>★★★★★</span>
@@ -397,7 +397,7 @@ export default function HomePage() {
       {/* ─── FAQ ─── */}
       <section className="py-16 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10">
+          <div className="text-start mb-10">
             <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: '#c9937e' }}>أسئلة شائعة</p>
             <h2 className="text-3xl font-bold" style={{ color: '#1C1C1C' }}>لديك سؤال؟</h2>
           </div>

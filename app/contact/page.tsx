@@ -6,7 +6,7 @@ export default function ContactPage() {
   return (
     <div className="bg-[#FFFFFF] py-16">
       <div className="max-w-2xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-10">
+        <div className="text-start mb-10">
           <h1 className="text-4xl font-bold text-[#1C1C1C] mb-3">اتصل بنا</h1>
           <p className="text-[#5c5656] text-lg">
             فريق الدعم متاح لأسئلتكِ عن الطلب، التسمية وفق تصنيف المكمّل، والاستخدام وفق التعليمات — من دون اعتبارنا نقطة دواء تشخّص أو تصف.

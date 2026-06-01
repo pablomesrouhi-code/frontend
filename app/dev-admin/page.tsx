@@ -51,7 +51,7 @@ export default async function DevAdminHubPage() {
     relayOrigin.replace(/\/+$/, '') !== directOriginTrim.replace(/\/+$/, '')
 
   return (
-    <div className="mx-auto max-w-xl px-4 py-10 text-right">
+    <div className="mx-auto max-w-xl px-4 py-10 text-start">
       <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--color-authority)]">
         وضع التطوير فقط
       </p>

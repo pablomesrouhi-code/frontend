@@ -11,7 +11,7 @@ export default function AboutPage() {
   return (
     <div className="bg-[#FFFFFF] py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-12">
+        <div className="text-start mb-12">
           <div className="relative z-10 inline-flex flex-col items-center justify-center mx-auto mb-5 rounded-3xl border border-[#e8f1f2]/90 bg-white px-8 py-6 shadow-[0_8px_36px_-14px_rgba(20,107,112,0.12)] ring-1 ring-black/[0.025]">
             <Image
               src="/nabta-lab-brand.png"
@@ -37,7 +37,7 @@ export default function AboutPage() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-10 items-start mb-14">
-          <div className="text-right md:sticky md:top-24 md:self-start md:order-2 order-2">
+          <div className="text-start md:sticky md:top-24 md:self-start md:order-2 order-2">
             <h2 className="text-2xl font-bold text-[#1C1C1C] mb-4">لماذا نقول «بحضور يقترب من صيدلية»؟</h2>
             <p className="text-[#5c5656] leading-relaxed text-lg mb-4">
               نحن لا نصف علاجًا ولا نستبدل صيدليًا؛ لكننا نعتمد نفس الانضباط في ما يمكن قوله عن المكمّل، وفق الغلاف والتعليمات — على عكس المتاجر التي تبيع العلكة كتحفّة تسويقية دون كلمة تصنيف واضحة.
@@ -66,11 +66,11 @@ export default function AboutPage() {
         </div>
 
         <div className="relative z-30 -mt-4 md:-mt-6 rounded-3xl border border-[#e0dcd9]/90 bg-[#faf9f8] p-8 shadow-[0_4px_28px_-10px_rgba(26,25,21,0.07)] ring-1 ring-black/[0.02] mb-10 sm:p-9">
-          <h2 className="text-2xl font-bold text-[#1C1C1C] mb-6 text-center">لماذا العلكة؟</h2>
-          <p className="text-[#5c5656] text-center leading-relaxed max-w-2xl mx-auto mb-8">
+          <h2 className="text-2xl font-bold text-[#1C1C1C] mb-6 text-start">لماذا العلكة؟</h2>
+          <p className="text-[#5c5656] text-start leading-relaxed max-w-2xl mb-8">
             لأن جزءًا كبيرًا من الفائدة في المكمّل هو الاستمرار، والعلكة اليومية تخفّف عنكِ عائق النسيان — بينما المحتوى يبقى ما هو: مكمّل غذائي بضوابط الغذاء والدواء، لا حلويات «صحّية» بلا اسم تصنيف.
           </p>
-          <h2 className="text-2xl font-bold text-[#1C1C1C] mb-6 text-center">قيمنا</h2>
+          <h2 className="text-2xl font-bold text-[#1C1C1C] mb-6 text-start">قيمنا</h2>
           <div className="grid sm:grid-cols-3 gap-5">
             {[
               {

@@ -58,7 +58,7 @@ export default function PdpDeliveryPaymentSection({ accentColor, bgColor }: Prop
         <div className="pointer-events-none absolute -top-16 end-0 h-56 w-56 rounded-full opacity-[0.12] blur-3xl sm:h-72 sm:w-72" style={{ background: accentColor }} aria-hidden />
         <div className="pointer-events-none absolute bottom-0 start-0 h-48 w-48 rounded-full opacity-[0.08] blur-3xl" style={{ background: '#146b70' }} aria-hidden />
 
-        <div className="relative mb-10 max-w-3xl text-right sm:mb-12 md:mb-14">
+        <div className="relative mb-10 max-w-3xl text-start sm:mb-12 md:mb-14">
           <p
             className="mb-2 inline-flex rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-sm sm:text-[11px]"
             style={{
@@ -90,7 +90,7 @@ export default function PdpDeliveryPaymentSection({ accentColor, bgColor }: Prop
           {STEPS.map((step) => (
             <article
               key={step.num}
-              className="relative flex min-w-0 flex-col rounded-3xl border border-border/90 bg-white/90 p-5 text-right shadow-[0_8px_32px_-18px_rgba(28,28,28,0.08)] ring-1 ring-black/[0.03] backdrop-blur-sm sm:p-6"
+              className="relative flex min-w-0 flex-col rounded-3xl border border-border/90 bg-white/90 p-5 text-start shadow-[0_8px_32px_-18px_rgba(28,28,28,0.08)] ring-1 ring-black/[0.03] backdrop-blur-sm sm:p-6"
             >
               <div className="mb-4 grid grid-cols-[auto_1fr] items-center gap-3 sm:mb-5">
                 <span
@@ -113,7 +113,7 @@ export default function PdpDeliveryPaymentSection({ accentColor, bgColor }: Prop
         </div>
 
         <div
-          className="relative overflow-hidden rounded-[1.75rem] border border-border/80 px-5 py-7 text-right shadow-lg ring-1 ring-black/[0.04] sm:px-8 sm:py-9"
+          className="relative overflow-hidden rounded-[1.75rem] border border-border/80 px-5 py-7 text-start shadow-lg ring-1 ring-black/[0.04] sm:px-8 sm:py-9"
           style={{
             background: `linear-gradient(135deg, #fff 0%, color-mix(in srgb, ${bgColor} 38%, #fff) 55%, color-mix(in srgb, ${accentColor} 7%, #fff) 100%)`,
           }}

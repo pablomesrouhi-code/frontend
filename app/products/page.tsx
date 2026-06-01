@@ -13,7 +13,7 @@ export default function CollectionPage() {
     <div className="bg-[#FFFFFF]">
       {/* Hero */}
       <section className="border-b border-border/70 bg-white py-12">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 text-start">
           <span className="mb-4 inline-block rounded-full border border-[#cce4e7]/90 bg-[#eaf3f4] px-4 py-1.5 text-sm font-semibold text-[#146b70] shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] ring-1 ring-[#146b70]/[0.06]">
             مكمّل غذائي · علكة بحضور نقطة اعتماد
           </span>
@@ -45,11 +45,11 @@ export default function CollectionPage() {
       {/* Comparison quick table */}
       <section className="py-10 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 overflow-x-auto">
-          <h2 className="text-xl font-bold text-[#1C1C1C] mb-5 text-center">قارني بين المنتجات</h2>
+          <h2 className="text-xl font-bold text-[#1C1C1C] mb-5 text-start">قارني بين المنتجات</h2>
           <table className="w-full overflow-hidden rounded-xl border-collapse border border-border/60 text-sm shadow-[0_4px_24px_-10px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02]">
             <thead>
               <tr className="bg-[#FFFFFF]">
-                <th className="p-3 text-right font-bold text-[#1C1C1C] border border-gray-200">المنتج</th>
+                <th className="p-3 text-start font-bold text-[#1C1C1C] border border-gray-200">المنتج</th>
                 <th className="p-3 text-center font-bold text-[#c9937e] border border-gray-200">رونق C</th>
                 <th className="p-3 text-center font-bold text-[#c9937e] border border-gray-200">خفّة بيوتك</th>
                 <th className="p-3 text-center font-bold text-[#b8485c] border border-gray-200">ليل ماج</th>
@@ -103,11 +103,11 @@ export default function CollectionPage() {
 
       {/* Reviews */}
       <section className="py-12 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 text-start">
           <h2 className="text-2xl font-bold text-[#1C1C1C] mb-8">ماذا قالت عملاؤنا؟</h2>
           <div className="grid md:grid-cols-3 gap-5">
             {PRODUCTS.map((p) => (
-              <div key={p.id} className="rounded-2xl border border-border/55 bg-[#FFFFFF] p-5 text-right shadow-[0_4px_22px_-8px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02]">
+              <div key={p.id} className="rounded-2xl border border-border/55 bg-[#FFFFFF] p-5 text-start shadow-[0_4px_22px_-8px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02]">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-semibold px-2 py-1 rounded-full text-white" style={{ background: p.accentColor }}>{p.nameAr}</span>
                   <StarRating rating={p.rating} size="sm" />

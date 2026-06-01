@@ -277,7 +277,7 @@ export default function CheckoutPopup({ onClose }: Props) {
                 key={item.productId}
                 className="flex justify-between items-start gap-3 py-1.5 border-b border-gray-200 last:border-0"
               >
-                <span className="text-sm text-[#1C1C1C] min-w-0 flex-1 text-right leading-snug break-words">
+                <span className="text-sm text-[#1C1C1C] min-w-0 flex-1 text-start leading-snug break-words">
                   {item.nameAr} — {item.offerQty === 1 ? 'قطعة' : item.offerQty === 2 ? 'قطعتين' : '3 قطع'}
                 </span>
                 <span className="shrink-0 text-sm font-bold text-[#b8485c]">
@@ -308,7 +308,7 @@ export default function CheckoutPopup({ onClose }: Props) {
           </div>
 
           {/* COD — single payment path (no cards) */}
-          <div className="rounded-2xl border-2 border-[#c5ddd0] bg-gradient-to-br from-[#f3faf5] to-white px-4 py-3.5 text-right shadow-[0_2px_12px_rgba(22,101,52,0.06)]">
+          <div className="rounded-2xl border-2 border-[#c5ddd0] bg-gradient-to-br from-[#f3faf5] to-white px-4 py-3.5 text-start shadow-[0_2px_12px_rgba(22,101,52,0.06)]">
             <p className="text-[11px] font-bold text-[#166534] tracking-wide">طريقة الدفع لهذا الطلب</p>
             <p className="text-base font-bold text-[#1C1C1C] mt-1">نقدًا عند الاستلام فقط</p>
             <p className="text-xs text-[#5c5656] mt-1.5 leading-relaxed">
@@ -329,7 +329,7 @@ export default function CheckoutPopup({ onClose }: Props) {
               <input
                 {...register('name')}
                 placeholder="اسمك الكريم"
-                className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-[0.875rem] text-right text-charcoal shadow-sm transition-colors focus:border-[#b8485c] focus:outline-none"
+                className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-[0.875rem] text-start text-charcoal shadow-sm transition-colors focus:border-[#b8485c] focus:outline-none"
               />
               {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
             </div>

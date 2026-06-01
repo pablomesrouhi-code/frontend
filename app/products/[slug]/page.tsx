@@ -102,12 +102,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 />
               </div>
               {product.captionUnderHeroImage && (
-                <p className="mx-auto mt-2 max-w-xl break-words text-center text-[11px] leading-snug text-muted sm:mt-3 sm:text-xs md:mx-0 md:text-right">
+                <p className="mx-auto mt-2 max-w-xl break-words text-center text-[11px] leading-snug text-muted sm:mt-3 sm:text-xs md:mx-0 md:text-start">
                   {product.captionUnderHeroImage}
                 </p>
               )}
             </div>
-            <div className="order-2 min-w-0 text-pretty break-words text-right md:order-1 md:max-w-xl lg:max-w-none">
+            <div className="order-2 min-w-0 text-pretty break-words text-start md:order-1 md:max-w-xl lg:max-w-none">
               <span
                 className="mb-2 inline-flex max-w-full items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-black text-white shadow sm:mb-3 sm:gap-2 sm:px-3.5 sm:py-1.5 sm:text-xs"
                 style={{
@@ -235,7 +235,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
 
           <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-10">
-            <div className="order-2 space-y-5 text-right lg:order-2 lg:col-span-5">
+            <div className="order-2 space-y-5 text-start lg:order-2 lg:col-span-5">
               <div className="rounded-3xl border border-primary/25 bg-peach-soft/50 p-5 shadow-sm ring-1 ring-black/[0.03] sm:p-6">
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">تعرفين هذا الإحساس؟</p>
                 <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">ليش يختارونه أصلاً؟</h3>
@@ -305,7 +305,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 >
                   ✓
                 </div>
-                <p className="min-w-0 flex-1 text-right leading-relaxed text-charcoal">{b}</p>
+                <p className="min-w-0 flex-1 text-start leading-relaxed text-charcoal">{b}</p>
               </div>
             ))}
           </div>
@@ -318,7 +318,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <section className="py-10 sm:py-12 md:py-14 border-t border-[#eae2df]" style={{ background: `${product.bgColor}66` }}>
           <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
             <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-center min-w-0">
-              <div className="text-right min-w-0 max-w-full break-words">
+              <div className="text-start min-w-0 max-w-full break-words">
                 <p className="text-xs font-bold tracking-[0.18em] text-[#c9937e] mb-2 uppercase">لمسة إضافية</p>
                 <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-3 sm:mb-4 break-words">{product.extraStory.titleAr}</h2>
                 <p className="text-[#5c5656] leading-relaxed text-base sm:text-lg break-words">{product.extraStory.bodyAr}</p>
@@ -345,14 +345,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           style={{ background: `${product.bgColor}99` }}
         >
           <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
-            <div className="max-w-3xl mr-0 ml-auto text-right min-w-0">
+            <div className="max-w-3xl mr-0 ml-auto text-start min-w-0">
               {product.persuasionBlock.eyebrowAr && (
                 <p className="text-xs font-bold tracking-[0.18em] text-[#c9937e] mb-2 uppercase">{product.persuasionBlock.eyebrowAr}</p>
               )}
               <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-4 break-words">{product.persuasionBlock.titleAr}</h2>
               <p className="text-[#5c5656] leading-relaxed text-[15px] sm:text-lg mb-5 break-words">{product.persuasionBlock.bodyAr}</p>
               {product.persuasionBlock.bullets && product.persuasionBlock.bullets.length > 0 && (
-                <ul className="flex flex-col gap-3 text-right">
+                <ul className="flex flex-col gap-3 text-start">
                   {product.persuasionBlock.bullets.map((line) => (
                     <li
                       key={line}
@@ -392,7 +392,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 />
               )}
             </div>
-            <div className="order-1 min-w-0 max-w-full break-words text-right lg:order-2 lg:col-span-5">
+            <div className="order-1 min-w-0 max-w-full break-words text-start lg:order-2 lg:col-span-5">
               <p className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-muted">شفافية</p>
               <h2 className="mb-2 text-xl font-black text-charcoal sm:text-2xl md:text-3xl">المكوّنات وبأسلوب واضح</h2>
               <p className="mb-6 text-sm leading-relaxed text-muted">
@@ -447,14 +447,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           className="py-10 sm:py-12 md:py-14 border-t border-[#eae2df] bg-white"
         >
           <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
-            <div className="max-w-3xl mr-0 ml-auto text-right min-w-0 rounded-2xl border border-[#dfd6d4] px-5 py-6 sm:p-8" style={{ background: `${product.bgColor}aa` }}>
+            <div className="max-w-3xl mr-0 ml-auto text-start min-w-0 rounded-2xl border border-[#dfd6d4] px-5 py-6 sm:p-8" style={{ background: `${product.bgColor}aa` }}>
               {product.closingPersuasion.eyebrowAr && (
                 <p className="text-xs font-bold tracking-[0.18em] text-[#c9937e] mb-2 uppercase">{product.closingPersuasion.eyebrowAr}</p>
               )}
               <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-4 break-words">{product.closingPersuasion.titleAr}</h2>
               <p className="text-[#5c5656] leading-relaxed text-[15px] sm:text-lg mb-5 break-words">{product.closingPersuasion.bodyAr}</p>
               {product.closingPersuasion.bullets && product.closingPersuasion.bullets.length > 0 && (
-                <ul className="flex flex-col gap-3 text-right">
+                <ul className="flex flex-col gap-3 text-start">
                   {product.closingPersuasion.bullets.map((line) => (
                     <li
                       key={line}
@@ -481,7 +481,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       >
         <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
           <div className="mb-8 flex flex-col gap-4 border-b border-border/80 pb-8 sm:flex-row sm:items-end sm:justify-between md:mb-10">
-            <div className="text-right">
+            <div className="text-start">
               <p
                 className="mb-2 inline-flex rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-sm sm:text-xs"
                 style={{ background: product.accentColor }}
@@ -512,7 +512,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   >
                     {reviewInitials(r.name)}
                   </div>
-                  <div className="min-w-0 flex-1 text-right sm:flex-none sm:w-full">
+                  <div className="min-w-0 flex-1 text-start sm:flex-none sm:w-full">
                     <StarRating rating={r.rating} size="sm" />
                     <p className="mt-2 font-black text-charcoal">{r.name}</p>
                   </div>
@@ -525,7 +525,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
           {product.afterReviewsBanner && (
             <div
-              className="mt-8 sm:mt-10 rounded-2xl border px-5 py-5 sm:p-6 text-right min-w-0"
+              className="mt-8 sm:mt-10 rounded-2xl border px-5 py-5 sm:p-6 text-start min-w-0"
               style={{ borderColor: `${product.accentColor}44`, background: `${product.bgColor}b3` }}
             >
               {product.afterReviewsBanner.titleAr && (
@@ -607,10 +607,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             {product.faqs.map((faq) => (
               <details key={faq.q} className="bg-[#FFFFFF] rounded-2xl overflow-hidden group min-w-0 border border-[#dfd6d4]">
                 <summary className="px-4 sm:px-6 py-4 min-h-[3.25rem] font-semibold text-[#1C1C1C] text-sm sm:text-base cursor-pointer list-none flex items-center justify-between gap-3 active:bg-[#f5f0ef] hover:bg-[#eae2df] transition min-w-0 touch-manipulation">
-                  <span className="text-right flex-1 min-w-0 break-words leading-snug">{faq.q}</span>
+                  <span className="text-start flex-1 min-w-0 break-words leading-snug">{faq.q}</span>
                   <span className="text-[#b8485c] shrink-0 group-open:rotate-180 transition-transform duration-200 text-xs sm:text-sm">▼</span>
                 </summary>
-                <div className="px-4 sm:px-6 pb-4 pt-1 text-sm text-[#5c5656] leading-relaxed break-words text-right border-t border-[#dfd6d4]">{faq.a}</div>
+                <div className="px-4 sm:px-6 pb-4 pt-1 text-sm text-[#5c5656] leading-relaxed break-words text-start border-t border-[#dfd6d4]">{faq.a}</div>
               </details>
             ))}
           </div>

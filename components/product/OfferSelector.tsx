@@ -22,7 +22,7 @@ type Props = {
 export default function OfferSelector({ selected, onChange, accentColor = '#b8485c' }: Props) {
   return (
     <div className="min-w-0 max-w-full">
-      <div className="mb-4 flex flex-col gap-1.5 text-right sm:mb-5 sm:gap-2">
+      <div className="mb-4 flex flex-col gap-1.5 text-start sm:mb-5 sm:gap-2">
         <p className="text-[10px] font-black uppercase tracking-[0.18em] sm:text-xs" style={{ color: accentColor }}>
           اختيار العرض
         </p>
@@ -45,7 +45,7 @@ export default function OfferSelector({ selected, onChange, accentColor = '#b848
               type="button"
               key={offer.qty}
               onClick={() => onChange(offer.qty)}
-              className={`relative flex min-h-[3.5rem] flex-wrap items-center justify-between gap-x-2.5 gap-y-2 rounded-2xl border-2 px-4 py-3 text-right sm:min-h-[3.75rem] sm:flex-nowrap sm:rounded-3xl sm:px-5 sm:py-4 ${
+              className={`relative flex min-h-[3.5rem] flex-wrap items-center justify-between gap-x-2.5 gap-y-2 rounded-2xl border-2 px-4 py-3 text-start sm:min-h-[3.75rem] sm:flex-nowrap sm:rounded-3xl sm:px-5 sm:py-4 ${
                 active
                   ? 'shadow-[0_8px_32px_-10px_rgba(28,28,28,0.1),inset_0_1px_0_rgba(255,255,255,0.88)]'
                   : 'border-gray-200/90 bg-white/95 hover:border-gray-300/95 hover:bg-white hover:shadow-[0_6px_22px_-10px_rgba(26,25,21,0.08)] active:scale-[0.99]'
@@ -88,7 +88,7 @@ export default function OfferSelector({ selected, onChange, accentColor = '#b848
                   )}
                 </div>
                 <div className="flex min-w-0 flex-wrap items-center justify-end gap-x-2 gap-y-1">
-                  <span className="break-words text-right text-sm font-bold text-[#1C1C1C] sm:text-base">{offer.label}</span>
+                  <span className="break-words text-start text-sm font-bold text-[#1C1C1C] sm:text-base">{offer.label}</span>
                   {offer.badge && (
                     <span
                       className="offer-badge-shine relative shrink-0 overflow-hidden rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wide text-white shadow-sm sm:px-3 sm:py-1 sm:text-[11px]"

@@ -55,10 +55,19 @@ html {
   }
 }
 
+html[dir="rtl"] {
+  text-align: start;
+}
+
+html[dir="rtl"] .text-center {
+  text-align: center;
+}
+
 body {
   font-family: var(--font-arabic);
   color: var(--color-charcoal);
   direction: rtl;
+  text-align: start;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: auto;
