@@ -11,8 +11,11 @@ export function pixelsExplicitlyDisabled(): boolean {
   return v === 'false' || v === '0' || v === 'no'
 }
 
+/** Browser pixel: build-time `NEXT_PUBLIC_*` or runtime `META_PIXEL_ID` on the frontend service. */
 export function getMetaPixelId(): string | null {
-  return sanitizeId(process.env.NEXT_PUBLIC_META_PIXEL_ID)
+  return (
+    sanitizeId(process.env.NEXT_PUBLIC_META_PIXEL_ID) ?? sanitizeId(process.env.META_PIXEL_ID)
+  )
 }
 
 export function hasAnyPixelId(): boolean {
