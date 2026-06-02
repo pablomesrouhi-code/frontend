@@ -65,6 +65,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   applicationName: 'نبتة لابو',
+  manifest: '/site.webmanifest',
   title: {
     default: DEFAULT_TITLE,
     template: '%s | نبتة لابو',
