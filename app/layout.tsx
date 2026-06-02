@@ -65,14 +65,13 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   applicationName: 'نبتة لابو',
-  manifest: '/site.webmanifest',
   title: {
     default: DEFAULT_TITLE,
     template: '%s | نبتة لابو',
   },
   description: DEFAULT_DESCRIPTION,
   keywords:
-    'علكات, علكة غذائية, مكمّل غذائي, سلطة منتج, كولاجين, بروبيوتيك, مغنيسيوم, SFDA, نساء السعودية, نبتة لابو, Nabta Labo',
+    'علكات, علكة غذائية, مكمّل غذائي, بيوتين, زنك, فيتامين D, بروبيوتيك, مغنيسيوم, SFDA, نساء السعودية, نبتة لابو, Nabta Labo',
   icons: {
     icon: [
       { url: '/nabta-lab-icon.ico?v=6', sizes: '48x48', type: 'image/x-icon' },

@@ -175,7 +175,7 @@ export default function HomePage() {
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             {[
-              { icon: '✨', color: '#b8485c', bg: '#f1e6e4', border: '#d8c9c6', title: 'الجمال من الداخل', desc: 'كولاجين وفيتامين C لدعم نضارة البشرة وقوة الشعر والأظافر.' },
+              { icon: '✨', color: '#b8485c', bg: '#f1e6e4', border: '#d8c9c6', title: 'الجمال من الداخل', desc: 'بيوتين وزنك وفيتامين D لدعم الشعر والأظافر والبشرة من الداخل (رونق C).' },
               { icon: '🍃', color: '#b8485c', bg: '#eae2df', border: '#d8c9c6', title: 'خفّة بعد الأكل', desc: 'بروبيوتيك وألياف لدعم راحة الهضم والإحساس بالخفة بعد الوجبات.' },
               { icon: '🌙', color: '#c9937e', bg: '#f3eeeb', border: '#d8c9c6', title: 'هدوء المساء', desc: 'مغنيسيوم وL-Theanine لروتين استرخاء هادئ قبل النوم.' },
             ].map((item) => (
@@ -228,10 +228,10 @@ export default function HomePage() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { code: 'NL-01', name: 'كولاجين', latin: 'Collagen Peptides', desc: 'بروتين هيكلي يدعم بنية البشرة والشعر والأظافر في روتين يومي ثابت.' },
-              { code: 'NL-02', name: 'فيتامين C', latin: 'Ascorbic Acid', desc: 'يدعم الوظائف الطبيعية للجسم ويعزز امتصاص الكولاجين.' },
-              { code: 'NL-03', name: 'بروبيوتيك', latin: 'Lactobacillus strains', desc: 'بكتيريا نافعة تدعم التوازن الطبيعي للجهاز الهضمي.' },
-              { code: 'NL-04', name: 'مغنيسيوم', latin: 'Magnesium Bisglycinate', desc: 'معدن يساعد في دعم وظائف الجهاز العصبي والاسترخاء المسائي.' },
+              { code: 'NL-01', name: 'بيوتين', latin: 'Biotin', desc: 'يدعم الشعر والأظافر والبشرة ضمن علكات رونق C (Hair · Skin · Nails).' },
+              { code: 'NL-02', name: 'زنك', latin: 'Zinc', desc: 'معدن ضمن فورمولا رونق C يدعم مسارات طبيعية للشعر والبشرة والأظافر.' },
+              { code: 'NL-03', name: 'فيتامين D', latin: 'Vitamin D', desc: 'ضمن رونق C مع البيوتين والزنك — حسب الغلاف المعتمد للجرعة والتخزين.' },
+              { code: 'NL-04', name: 'بروبيوتيك', latin: 'Lactobacillus strains', desc: 'بكتيريا نافعة في خفّة بيوتك تدعم التوازن الطبيعي للجهاز الهضمي.' },
             ].map((ing) => (
               <div
                 key={ing.code}
