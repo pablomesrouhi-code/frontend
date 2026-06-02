@@ -445,6 +445,29 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
+      {product.productInfoSheets && product.productInfoSheets.length > 0 ? (
+        <section className="border-t border-border/60 bg-white py-10 sm:py-12 md:py-14">
+          <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
+            <p className="mb-2 text-start text-xs font-black uppercase tracking-[0.22em] text-muted">معلومات المنتج</p>
+            <h2 className="mb-8 text-start text-xl font-black text-charcoal sm:text-2xl">المكونات، النتيجة، البشرة، وموانع الاستعمال</h2>
+            <div className="grid gap-4 sm:grid-cols-2 lg:gap-6">
+              {product.productInfoSheets.map((sheet) => (
+                <article
+                  key={sheet.titleAr}
+                  className="min-w-0 rounded-2xl border border-border bg-[#fdfcfc] p-5 shadow-[0_1px_8px_rgba(28,28,28,0.04)] sm:p-6"
+                >
+                  <h3 className="text-base font-black text-charcoal sm:text-lg">{sheet.titleAr}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted sm:text-[15px]">{sheet.bodyAr}</p>
+                </article>
+              ))}
+            </div>
+            <p className="mt-6 text-start text-xs leading-relaxed text-muted">
+              المرجع النهائي: غلاف عبوّتكم المعتمد (SFDA) — الجرعة، القائمة الكاملة، والصلاحية.
+            </p>
+          </div>
+        </section>
+      ) : null}
+
       {product.closingPersuasion && (
         <section
           className="py-10 sm:py-12 md:py-14 border-t border-[#eae2df] bg-white"
