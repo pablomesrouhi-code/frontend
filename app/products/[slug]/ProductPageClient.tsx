@@ -39,7 +39,13 @@ function CartIcon({ className }: { className?: string }) {
   )
 }
 
-export default function ProductPageClient({ product }: { product: Product }) {
+export default function ProductPageClient({
+  product,
+  addToCartLabel = 'اطلبي الآن',
+}: {
+  product: Product
+  addToCartLabel?: string
+}) {
   const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(1)
   const [stickyCtaVisible, setStickyCtaVisible] = useState(false)
   const priceBlockRef = useRef<HTMLDivElement>(null)
@@ -141,7 +147,7 @@ export default function ProductPageClient({ product }: { product: Product }) {
           <span className="relative z-[1] flex items-center justify-center gap-3 flex-row-reverse">
             <CartIcon className="h-5 w-5 shrink-0 opacity-95 transition-transform duration-300 group-hover:scale-110 sm:h-6 sm:w-6" />
             <span className="text-center text-[0.9375rem] font-extrabold leading-snug sm:text-base sm:leading-normal md:text-lg">
-              <span className="block sm:inline">ابدئي روتين الشباب الآن</span>
+              <span className="block sm:inline">{addToCartLabel}</span>
               <span className="mx-1 text-white/90 sm:inline" aria-hidden>
                 {' '}
                 —{' '}

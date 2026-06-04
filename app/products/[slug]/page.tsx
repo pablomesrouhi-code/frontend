@@ -6,12 +6,12 @@ import ProductCard from '@/components/product/ProductCard'
 import ProductPageImageSlot from '@/components/product/ProductPageImageSlot'
 import PdpSquareImage from '@/components/product/PdpSquareImage'
 import PdpDeliveryPaymentSection from '@/components/product/PdpDeliveryPaymentSection'
+import PdpReviewsSection from '@/components/product/PdpReviewsSection'
 
-function reviewInitials(name: string) {
-  const parts = name.trim().split(/\s+/).filter(Boolean)
-  const a = parts[0]?.[0] ?? '?'
-  const b = parts[1]?.[0] ?? ''
-  return (a + b).toUpperCase()
+const PDP_ADD_CTA: Record<string, string> = {
+  'rawnaq-c': 'ابدئي روتين الصباح الآن',
+  'khiffabiotic': 'ابدئي روتين أخف بعد الأكل',
+  laylmag: 'ابدئي روتين المساء الآن',
 }
 
 export async function generateStaticParams() {
@@ -145,11 +145,17 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 </p>
               )}
 
-              <div className="mb-4 sm:mb-5">
-                <StarRating rating={product.rating} count={product.reviewCount} />
+              <div className="mb-3 sm:mb-4">
+                <StarRating rating={product.rating} count={product.reviewCount} size="md" />
+                <a
+                  href="#pdp-reviews"
+                  className="mt-2 inline-block text-sm font-bold text-authority underline decoration-authority/35 underline-offset-2 transition hover:decoration-authority sm:text-[15px]"
+                >
+                  اقرأي تجارب {product.reviewCount}+ عميلة ↓
+                </a>
               </div>
 
-              <p className="mb-5 text-xs leading-relaxed text-muted sm:mb-6 sm:text-[13px] sm:leading-relaxed">
+              <p className="mb-5 text-sm leading-relaxed text-muted sm:mb-6 sm:text-base sm:leading-relaxed">
                 {product.heroSubAr}
               </p>
 
@@ -174,7 +180,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               </div>
 
               <div id="pdp-buy-anchor" className="scroll-mt-[calc(4.5rem+env(safe-area-inset-top))]">
-                <ProductPageClient product={product} />
+                <ProductPageClient product={product} addToCartLabel={PDP_ADD_CTA[product.id] ?? 'اطلبي الآن'} />
               </div>
             </div>
           </div>
@@ -239,7 +245,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <div className="rounded-3xl border border-primary/25 bg-peach-soft/50 p-5 shadow-sm ring-1 ring-black/[0.03] sm:p-6">
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">تعرفين هذا الإحساس؟</p>
                 <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">ليش يختارونه أصلاً؟</h3>
-                <p className="mt-3 text-base leading-relaxed text-muted">{product.painCopy}</p>
+                <p className="mt-3 text-base leading-relaxed text-muted sm:text-lg">{product.painCopy}</p>
               </div>
               <div className="rounded-3xl border border-authority/30 bg-authority/[0.05] p-5 shadow-sm sm:p-6">
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-authority">بأسلوب واقعي</p>
@@ -253,7 +259,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                       >
                         ✓
                       </span>
-                      <span className="min-w-0 flex-1 text-[15px] leading-relaxed text-charcoal">{b}</span>
+                      <span className="min-w-0 flex-1 text-base leading-relaxed text-charcoal sm:text-lg">{b}</span>
                     </li>
                   ))}
                 </ul>
@@ -497,71 +503,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </section>
       )}
 
-      {/* Reviews — فوق بطاقات «كمّلي السلة» */}
-      <section
-        id="pdp-reviews"
-        className="scroll-mt-28 overflow-x-hidden border-t border-border/60 py-10 sm:py-12 md:py-16"
-        style={{
-          background: `linear-gradient(180deg, color-mix(in srgb, ${product.bgColor} 55%, #fff) 0%, #fff 55%, color-mix(in srgb, ${product.accentColor} 5%, #fff) 100%)`,
-        }}
-      >
-        <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
-          <div className="mb-8 flex flex-col gap-4 border-b border-border/80 pb-8 sm:flex-row sm:items-end sm:justify-between md:mb-10">
-            <div className="text-start">
-              <p
-                className="mb-2 inline-flex rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-sm sm:text-xs"
-                style={{ background: product.accentColor }}
-              >
-                إثبات اجتماعي
-              </p>
-              <h2 className="mt-1 text-xl font-black text-charcoal sm:text-2xl md:text-3xl">وش قالت عميلات اختارت المنتج؟</h2>
-              <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">
-                آراء شخصية؛ النتيجة تختلف حسب الجسم والنوم والأكل والالتزام اليومي. للأسئلة التفصيلية راجعي قسم الأسئلة في آخر الصفحة.
-              </p>
-            </div>
-            <div className="shrink-0 self-end sm:self-center">
-              <StarRating rating={product.rating} count={product.reviewCount} />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
-            {product.reviews.map((r, idx) => (
-              <article
-                key={`${product.id}-r-${idx}`}
-                className="flex min-w-0 flex-col gap-4 rounded-3xl border border-border bg-white p-5 shadow-sm ring-1 ring-black/[0.02] sm:flex-row sm:p-6"
-              >
-                <div className="flex shrink-0 flex-row items-center gap-4 border-b border-border pb-4 sm:w-52 sm:flex-col sm:border-b-0 sm:border-s sm:pb-0 sm:ps-6 md:w-56">
-                  <div
-                    className="flex h-[4.25rem] w-[4.25rem] shrink-0 items-center justify-center rounded-2xl text-lg font-black text-white shadow-inner sm:h-24 sm:w-24 sm:text-2xl"
-                    style={{ background: product.accentColor }}
-                    aria-hidden
-                  >
-                    {reviewInitials(r.name)}
-                  </div>
-                  <div className="min-w-0 flex-1 text-start sm:flex-none sm:w-full">
-                    <StarRating rating={r.rating} size="sm" />
-                    <p className="mt-2 font-black text-charcoal">{r.name}</p>
-                  </div>
-                </div>
-                <blockquote className="min-w-0 flex-1 text-[15px] leading-relaxed text-charcoal md:text-base">
-                  «{r.text}»
-                </blockquote>
-              </article>
-            ))}
-          </div>
-          {product.afterReviewsBanner && (
-            <div
-              className="mt-8 sm:mt-10 rounded-2xl border px-5 py-5 sm:p-6 text-start min-w-0"
-              style={{ borderColor: `${product.accentColor}44`, background: `${product.bgColor}b3` }}
-            >
-              {product.afterReviewsBanner.titleAr && (
-                <h3 className="font-bold text-lg sm:text-xl text-[#1C1C1C] mb-2 break-words">{product.afterReviewsBanner.titleAr}</h3>
-              )}
-              <p className="text-sm sm:text-base text-[#5c5656] leading-relaxed break-words">{product.afterReviewsBanner.bodyAr}</p>
-            </div>
-          )}
-        </div>
-      </section>
+      <PdpReviewsSection product={product} />
 
       {/* Cross-sells */}
       {crossSellProducts.length > 0 && (
