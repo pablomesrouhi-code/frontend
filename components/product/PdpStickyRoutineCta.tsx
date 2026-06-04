@@ -6,6 +6,7 @@ type Props = {
   visible: boolean
   accentColor: string
   accentDeep: string
+  label: string
   /** Prix affiché (ex. via formatSarAmount) — suit l’offre sélectionnée. */
   formattedPrice: string
   onClick: () => void
@@ -30,6 +31,7 @@ export default function PdpStickyRoutineCta({
   visible,
   accentColor,
   accentDeep,
+  label,
   formattedPrice,
   onClick,
 }: Props) {
@@ -55,7 +57,7 @@ export default function PdpStickyRoutineCta({
             <span className="flex flex-col items-center gap-0.5 text-center">
               <span className="flex flex-row-reverse items-center justify-center gap-2">
                 <span className="text-[13px] font-extrabold leading-snug sm:text-sm">
-                  ابدئي روتين الشباب الآن
+                  {label}
                 </span>
                 <ArrowUp className="h-4 w-4 shrink-0 opacity-95 pdp-cta-arrow-nudge" />
               </span>

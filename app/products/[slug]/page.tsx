@@ -7,12 +7,7 @@ import ProductPageImageSlot from '@/components/product/ProductPageImageSlot'
 import PdpSquareImage from '@/components/product/PdpSquareImage'
 import PdpDeliveryPaymentSection from '@/components/product/PdpDeliveryPaymentSection'
 import PdpReviewsSection from '@/components/product/PdpReviewsSection'
-
-const PDP_ADD_CTA: Record<string, string> = {
-  'rawnaq-c': 'ابدئي روتين الصباح الآن',
-  'khiffabiotic': 'ابدئي روتين أخف بعد الأكل',
-  laylmag: 'ابدئي روتين المساء الآن',
-}
+import { getPdpAddCta } from '@/lib/pdp-copy'
 
 export async function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }))
@@ -180,7 +175,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               </div>
 
               <div id="pdp-buy-anchor" className="scroll-mt-[calc(4.5rem+env(safe-area-inset-top))]">
-                <ProductPageClient product={product} addToCartLabel={PDP_ADD_CTA[product.id] ?? 'اطلبي الآن'} />
+                <ProductPageClient product={product} addToCartLabel={getPdpAddCta(product.id)} />
               </div>
             </div>
           </div>
