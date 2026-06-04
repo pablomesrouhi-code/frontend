@@ -1,4 +1,5 @@
-import type { Product } from '@/lib/products'
+import Image from 'next/image'
+import type { Product, ProductReview } from '@/lib/products'
 import StarRating from '@/components/ui/StarRating'
 
 function reviewInitials(name: string) {
@@ -8,12 +9,53 @@ function reviewInitials(name: string) {
   return (a + b).toUpperCase()
 }
 
+function ReviewCard({
+  review,
+  accentColor,
+}: {
+  review: ProductReview
+  accentColor: string
+}) {
+  return (
+    <article className="flex min-w-0 flex-col gap-2.5 overflow-hidden rounded-2xl border border-border bg-white p-3 shadow-sm sm:flex-row sm:gap-3 sm:p-3.5">
+      {review.image ? (
+        <div className="relative mx-auto aspect-[4/5] w-full max-w-[7.5rem] shrink-0 overflow-hidden rounded-xl bg-[#f5f3f1] sm:mx-0 sm:w-[5.5rem]">
+          <Image
+            src={review.image.src}
+            alt={review.image.alt}
+            width={review.image.width}
+            height={review.image.height}
+            sizes="88px"
+            className="h-full w-full object-cover object-center"
+          />
+        </div>
+      ) : (
+        <div
+          className="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-sm font-black text-white sm:mx-0"
+          style={{ background: accentColor }}
+          aria-hidden
+        >
+          {reviewInitials(review.name)}
+        </div>
+      )}
+      <div className="min-w-0 flex-1 text-start">
+        <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+          <p className="text-sm font-bold text-charcoal">{review.name}</p>
+          <StarRating rating={review.rating} size="sm" />
+        </div>
+        <blockquote className="text-[13px] leading-relaxed text-charcoal sm:text-sm">«{review.text}»</blockquote>
+      </div>
+    </article>
+  )
+}
+
 type Props = {
   product: Product
 }
 
 export default function PdpReviewsSection({ product }: Props) {
   const accent = product.accentColor
+  const hasReviewPhotos = product.reviews.some((r) => r.image)
 
   return (
     <section
@@ -34,7 +76,8 @@ export default function PdpReviewsSection({ product }: Props) {
             </p>
             <h2 className="text-lg font-black text-charcoal sm:text-xl">وش قالت عميلات اختارت {product.nameAr}؟</h2>
             <p className="mt-1.5 text-xs leading-relaxed text-muted sm:text-sm">
-              آراء شخصية؛ النتيجة تختلف حسب الجسم والالتزام. للتفاصيل راجعي الأسئلة في آخر الصفحة.
+              آراء شخصية؛ النتيجة تختلف حسب الجسم والالتزام.
+              {hasReviewPhotos ? ' صور التقييمات توضيحية.' : ''} للتفاصيل راجعي الأسئلة في آخر الصفحة.
             </p>
           </div>
           <StarRating rating={product.rating} count={product.reviewCount} size="sm" />
@@ -42,25 +85,7 @@ export default function PdpReviewsSection({ product }: Props) {
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           {product.reviews.map((r, idx) => (
-            <article
-              key={`${product.id}-r-${idx}`}
-              className="flex min-w-0 gap-3 rounded-2xl border border-border bg-white p-3.5 shadow-sm sm:p-4"
-            >
-              <div
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-sm font-black text-white"
-                style={{ background: accent }}
-                aria-hidden
-              >
-                {reviewInitials(r.name)}
-              </div>
-              <div className="min-w-0 flex-1 text-start">
-                <div className="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
-                  <p className="text-sm font-bold text-charcoal">{r.name}</p>
-                  <StarRating rating={r.rating} size="sm" />
-                </div>
-                <blockquote className="text-[13px] leading-relaxed text-charcoal sm:text-sm">«{r.text}»</blockquote>
-              </div>
-            </article>
+            <ReviewCard key={`${product.id}-r-${idx}`} review={r} accentColor={accent} />
           ))}
         </div>
 

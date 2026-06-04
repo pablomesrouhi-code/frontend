@@ -1,3 +1,10 @@
+export type ProductReview = {
+  name: string
+  text: string
+  rating: number
+  image?: { src: string; width: number; height: number; alt: string }
+}
+
 export type Product = {
   id: string
   slug: string
@@ -61,7 +68,7 @@ export type Product = {
   crossSells: string[]
   rating: number
   reviewCount: number
-  reviews: { name: string; text: string; rating: number }[]
+  reviews: ProductReview[]
   faqs: { q: string; a: string }[]
   /** بطاقات معلومات (مكونات، مدة النتيجة، نوع البشرة، موانع…) — اختياري */
   productInfoSheets?: { titleAr: string; bodyAr: string }[]
@@ -182,11 +189,61 @@ export const PRODUCTS: Product[] = [
     rating: 4.8,
     reviewCount: 104,
     reviews: [
-      { name: 'سارة م.', text: 'دخلته في روتيني الصباحي مع قهوتي؛ سهل وطعمه لطيف وما خزّمني.', rating: 5 },
-      { name: 'ريم ع.', text: 'ما أحب المنتجات اللي سبعين خطوة — وحدة وحدة حسّيت براحة نفس من الروتين.', rating: 5 },
-      { name: 'منى ك.', text: 'علكة صغيرة وباقي اليوم مخلّيني أحس إني كملّيت شي لنفسي.', rating: 5 },
-      { name: 'ليلى ع.', text: 'جربتها مع عناية بشرتي الخارجية؛ ما عوّضت الكريمات لكن كملّت معاهم كثير.', rating: 5 },
-      { name: 'فاطمة ع.', text: 'طلبت قطعتين مع صاحبتي من نفس العمارة — التوفير واضح والطلب واضح.', rating: 4 },
+      {
+        name: 'سارة م.',
+        text: 'دخلته في روتيني الصباحي مع قهوتي؛ سهل وطعمه لطيف وما خزّمني.',
+        rating: 5,
+        image: {
+          src: '/products/reviews/rawnaq-c-01.png',
+          width: 800,
+          height: 1000,
+          alt: 'سارة — روتين صباحي مع قهوة (صورة توضيحية)',
+        },
+      },
+      {
+        name: 'ريم ع.',
+        text: 'ما أحب المنتجات اللي سبعين خطوة — علكتان في الجرعة وروتين بسيط حسّيت براحة نفس.',
+        rating: 5,
+        image: {
+          src: '/products/reviews/rawnaq-c-02.png',
+          width: 800,
+          height: 1000,
+          alt: 'ريم — روتين عناية بسيط (صورة توضيحية)',
+        },
+      },
+      {
+        name: 'منى ك.',
+        text: 'علكتان صغيرتان وباقي اليوم مخلّيني أحس إني كملّيت شي لنفسي.',
+        rating: 5,
+        image: {
+          src: '/products/reviews/rawnaq-c-03.png',
+          width: 800,
+          height: 1000,
+          alt: 'منى — لحظة يومية مع رونق C (صورة توضيحية)',
+        },
+      },
+      {
+        name: 'ليلى ع.',
+        text: 'جربتها مع عناية بشرتي الخارجية؛ ما عوّضت الكريمات لكن كملّت معاهم كثير.',
+        rating: 5,
+        image: {
+          src: '/products/reviews/rawnaq-c-04.png',
+          width: 800,
+          height: 1000,
+          alt: 'ليلى — روتين صباحي مع المكمّل (صورة توضيحية)',
+        },
+      },
+      {
+        name: 'فاطمة ع.',
+        text: 'طلبت قطعتين مع صاحبتي من نفس العمارة — التوفير واضح والطلب واضح.',
+        rating: 4,
+        image: {
+          src: '/products/reviews/rawnaq-c-05.png',
+          width: 800,
+          height: 1000,
+          alt: 'فاطمة — عبوتان رونق C (صورة توضيحية)',
+        },
+      },
     ],
     faqs: [
       {
