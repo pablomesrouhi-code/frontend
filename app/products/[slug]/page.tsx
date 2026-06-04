@@ -438,7 +438,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <h2 className="break-words text-xl font-black text-charcoal sm:text-2xl">وش تسوين بالضبط؟ (روتين بسيط)</h2>
             <p className="mt-4 break-words text-[15px] leading-relaxed text-muted sm:text-lg">{product.howToUse}</p>
             <p className="mt-4 rounded-2xl bg-white/60 px-4 py-3 text-sm leading-relaxed text-charcoal ring-1 ring-black/[0.04]">
-              <strong className="text-authority">أسابيع أولى بانتظام تفرق أكثر من «جرعة وحدة معجزة»؛</strong> كثير من عميلاتنا يقلّبوها عادة قبل ما يكمل الشهر والإحساس أو المظهر{' '}
+              <strong className="text-authority">أسابيع أولى بانتظام تفرق أكثر من «يوم واحد معجزة»؛</strong> التزمي بعلكتين في الجرعة حسب الغلاف. كثير من عميلاتنا يقلّبوها عادة قبل ما يكمل الشهر والإحساس أو المظهر{' '}
               <strong className="text-charcoal">يختلف</strong> حسب الشخص والنوم والأكل والالتزام.{' '}
               <span className="text-muted">تلزم تعليمات الغلاف المعتمد؛ كلام الصفحة تكميلي ومش بديل له.</span>
             </p>
