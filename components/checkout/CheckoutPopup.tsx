@@ -67,12 +67,15 @@ export default function CheckoutPopup({ onClose }: Props) {
   const upsell = getBestUpsell(items.map((i) => i.productId))
 
   useEffect(() => {
-    trackInitiateCheckout({
-      content_ids: items.map((i) => i.productId),
-      value: total(),
-      currency: 'SAR',
-      num_items: items.length,
-    })
+    trackInitiateCheckout(
+      {
+        content_ids: items.map((i) => i.productId),
+        value: total(),
+        currency: 'SAR',
+        num_items: items.length,
+      },
+      { eventId: newTrackingEventId() },
+    )
   }, []) // eslint-disable-line react-hooks/exhaustive-deps -- once per checkout open
 
   const finalizeOrder = useCallback(

@@ -10,8 +10,8 @@ function sanitizeId(raw: string | undefined): string | null {
 }
 
 /**
- * Stubs queue events immediately (afterInteractive). External SDK scripts load on lazyOnload
- * so AddToCart / InitiateCheckout are not dropped when users act before window "load".
+ * beforeInteractive scripts are injected into <head> by Next.js (required for Pixel Helper).
+ * TikTok uses one official block (stub + load + page) so ttq.track queues immediately.
  */
 export default function DeferredPixels() {
   const metaId = getMetaPixelId()
@@ -21,7 +21,6 @@ export default function DeferredPixels() {
   if (!pixelsEnabled()) return null
 
   const raw = process.env.NEXT_PUBLIC_PIXEL_SCRIPT_STRATEGY
-  // Default afterInteractive so commerce events reach TikTok before users checkout quickly.
   const loadStrategy: 'lazyOnload' | 'afterInteractive' =
     raw === 'lazyOnload' ? 'lazyOnload' : 'afterInteractive'
 
@@ -38,7 +37,7 @@ export default function DeferredPixels() {
               alt=""
             />
           </noscript>
-          <Script id="nabtalabo-meta-pixel-stub" strategy="afterInteractive">
+          <Script id="nabtalabo-meta-pixel-stub" strategy="beforeInteractive">
             {`
               !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
               n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -60,33 +59,28 @@ export default function DeferredPixels() {
       ) : null}
 
       {tiktokId ? (
-        <>
-          <Script id="nabtalabo-tiktok-pixel-stub" strategy="afterInteractive">
-            {`
-              !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
-              ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"];
-              ttq.setAndDefer=function(i,e){i[e]=function(){i.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
-              for(var n=0;n<ttq.methods.length;n++)ttq.setAndDefer(ttq,ttq.methods[n]);
-              ttq.instance=function(i){for(var e=ttq._i[i]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
-              ttq.load=function(e,n){var o="https://analytics.tiktok.com/i18n/pixel/events.js";
-              ttq._i=ttq._i||{};ttq._i[e]=[];ttq._i[e]._u=o;ttq._t=ttq._t||{};ttq._t[e]=+new Date;ttq._o=ttq._o||{};ttq._o[e]=n||{};
-              var a=d.createElement("script");a.type="text/javascript";a.async=!0;a.src=o+"?sdkid="+e+"&lib="+t;
-              var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(a,s)};
-              }(window,document,'ttq');
-            `}
-          </Script>
-          <Script id="nabtalabo-tiktok-pixel-load" strategy="afterInteractive">
-            {`
+        <Script id="nabtalabo-tiktok-pixel" strategy="beforeInteractive">
+          {`
+            !function (w, d, t) {
+              w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
+              ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];
+              ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+              for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+              ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
+              ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;
+              ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};
+              n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;
+              e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
               ttq.load('${tiktokId}');
               ttq.page();
-            `}
-          </Script>
-        </>
+            }(window, document, 'ttq');
+          `}
+        </Script>
       ) : null}
 
       {snapId ? (
         <>
-          <Script id="nabtalabo-snap-pixel-stub" strategy="afterInteractive">
+          <Script id="nabtalabo-snap-pixel-stub" strategy="beforeInteractive">
             {`
               (function(e,t,n){if(e.snaptr)return;var a=e.snaptr=function(){
               a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments)};
