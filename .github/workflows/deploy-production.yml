@@ -19,10 +19,9 @@ jobs:
           EASY_PANEL_DEPLOY_URL: ${{ secrets.EASY_PANEL_DEPLOY_URL }}
         run: |
           if [ -z "$EASY_PANEL_DEPLOY_URL" ]; then
-            echo "::warning::EASY_PANEL_DEPLOY_URL is not set."
-            echo "Add the secret in GitHub (repo Settings → Secrets → Actions)"
-            echo "OR enable Deploy on push in EasyPanel for pablomesrouhi-code/frontend main."
-            exit 1
+            echo "::notice::EASY_PANEL_DEPLOY_URL is not set — skipping webhook."
+            echo "Enable Deploy on push in EasyPanel OR add the secret in GitHub Actions."
+            exit 0
           fi
           echo "Calling EasyPanel deploy webhook..."
           curl -fsS -X POST "$EASY_PANEL_DEPLOY_URL" || curl -fsS "$EASY_PANEL_DEPLOY_URL"

@@ -1,11 +1,63 @@
 'use client'
 
+import { getMetaPixelId } from '@/lib/tracking/pixels-enabled'
+import { normalizeSaPhoneForPixel } from '@/lib/tracking/phone'
+
 /** Stable UUID for dedup with server CAPI (`event_id` / Meta `eventID`). */
 export function newTrackingEventId(): string {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
     return crypto.randomUUID()
   }
   return `${Date.now()}-${Math.random().toString(36).slice(2, 12)}`
+}
+
+export type CommerceParams = {
+  content_ids: string[]
+  value: number
+  currency?: string
+  num_items?: number
+}
+
+type TrackOptions = {
+  eventId?: string
+  orderNumber?: string
+}
+
+function snapPixelId(): string | null {
+  const raw = process.env.NEXT_PUBLIC_SNAP_PIXEL_ID?.trim()
+  if (!raw || !/^[A-Za-z0-9_-]{4,64}$/.test(raw)) return null
+  return raw
+}
+
+/** Plain phone for browser advanced matching — hashing happens server-side on CAPI. */
+export function setTrackingUser({ phone }: { phone: string }): void {
+  if (typeof window === 'undefined') return
+  const ph = normalizeSaPhoneForPixel(phone)
+  if (!ph) return
+
+  try {
+    const metaId = getMetaPixelId()
+    if (metaId && typeof window.fbq === 'function') {
+      window.fbq('init', metaId, { ph })
+    }
+  } catch {
+    /* non-blocking */
+  }
+
+  try {
+    window.ttq?.identify?.({ phone_number: ph })
+  } catch {
+    /* non-blocking */
+  }
+
+  try {
+    const snapId = snapPixelId()
+    if (snapId && typeof window.snaptr === 'function') {
+      window.snaptr('init', snapId, { user_phone_number: ph })
+    }
+  } catch {
+    /* non-blocking */
+  }
 }
 
 /** Fire page-view equivalents after SPA navigations (layout persists in App Router). */
@@ -90,20 +142,176 @@ export function trackMeta(
   }
 }
 
-export function trackTikTok(event: string, params?: Record<string, unknown>): void {
+export function trackTikTok(
+  event: string,
+  params?: Record<string, unknown>,
+  options?: { eventId?: string },
+): void {
   if (typeof window === 'undefined' || typeof window.ttq?.track !== 'function') return
   try {
-    window.ttq.track(event, params ?? {})
+    const eventId = options?.eventId
+    if (eventId) {
+      window.ttq.track(event, params ?? {}, { event_id: eventId })
+    } else {
+      window.ttq.track(event, params ?? {})
+    }
   } catch {
     /* non-blocking */
   }
 }
 
-export function trackSnap(event: string, params?: Record<string, unknown>): void {
+export function trackSnap(
+  event: string,
+  params?: Record<string, unknown>,
+  options?: { clientDedupId?: string },
+): void {
   if (typeof window === 'undefined' || typeof window.snaptr !== 'function') return
   try {
-    window.snaptr('track', event, params ?? {})
+    const payload = { ...(params ?? {}) }
+    if (options?.clientDedupId) {
+      payload.client_dedup_id = options.clientDedupId
+    }
+    window.snaptr('track', event, payload)
   } catch {
     /* non-blocking */
   }
+}
+
+function tiktokContents(contentIds: string[]) {
+  return contentIds.map((content_id) => ({ content_id, content_type: 'product' }))
+}
+
+function snapItemPayload(params: CommerceParams) {
+  return {
+    item_ids: params.content_ids,
+    price: params.value,
+    currency: params.currency ?? 'SAR',
+    number_items: params.num_items ?? params.content_ids.length,
+  }
+}
+
+export function trackViewContent(params: CommerceParams, options?: TrackOptions): void {
+  const currency = params.currency ?? 'SAR'
+  trackMeta('ViewContent', {
+    content_ids: params.content_ids,
+    content_type: 'product',
+    value: params.value,
+    currency,
+  })
+  trackTikTok(
+    'ViewContent',
+    {
+      contents: tiktokContents(params.content_ids),
+      value: params.value,
+      currency,
+    },
+    { eventId: options?.eventId },
+  )
+  trackSnap('VIEW_CONTENT', snapItemPayload(params), { clientDedupId: options?.eventId })
+}
+
+export function trackAddToCart(params: CommerceParams, options?: TrackOptions): void {
+  const currency = params.currency ?? 'SAR'
+  trackMeta('AddToCart', {
+    content_ids: params.content_ids,
+    content_type: 'product',
+    value: params.value,
+    currency,
+    num_items: params.num_items ?? 1,
+  })
+  trackTikTok(
+    'AddToCart',
+    {
+      contents: tiktokContents(params.content_ids),
+      value: params.value,
+      currency,
+    },
+    { eventId: options?.eventId },
+  )
+  trackSnap('ADD_CART', snapItemPayload(params), { clientDedupId: options?.eventId })
+}
+
+export function trackInitiateCheckout(params: CommerceParams, options?: TrackOptions): void {
+  const currency = params.currency ?? 'SAR'
+  trackMeta('InitiateCheckout', {
+    content_ids: params.content_ids,
+    content_type: 'product',
+    value: params.value,
+    currency,
+    num_items: params.num_items ?? params.content_ids.length,
+  })
+  trackTikTok(
+    'InitiateCheckout',
+    {
+      contents: tiktokContents(params.content_ids),
+      value: params.value,
+      currency,
+    },
+    { eventId: options?.eventId },
+  )
+  trackSnap('START_CHECKOUT', snapItemPayload(params), { clientDedupId: options?.eventId })
+}
+
+export function trackLead(params: CommerceParams, options: TrackOptions): void {
+  const currency = params.currency ?? 'SAR'
+  const eventId = options.eventId
+  if (!eventId) return
+
+  const metaParams = {
+    content_ids: params.content_ids,
+    content_type: 'product',
+    value: params.value,
+    currency,
+  }
+
+  trackTikTok(
+    'SubmitForm',
+    {
+      contents: tiktokContents(params.content_ids),
+      value: params.value,
+      currency,
+    },
+    { eventId },
+  )
+  trackSnap('SIGN_UP', { ...snapItemPayload(params), sign_up_method: 'checkout' }, { clientDedupId: eventId })
+
+  whenFbqReady(() => {
+    trackMeta('Lead', metaParams, { eventID: eventId })
+  })
+}
+
+export function trackPurchase(params: CommerceParams, options: TrackOptions): void {
+  const currency = params.currency ?? 'SAR'
+  const eventId = options.eventId
+  if (!eventId) return
+
+  const metaParams = {
+    content_ids: params.content_ids,
+    content_type: 'product',
+    value: params.value,
+    currency,
+    num_items: params.num_items ?? params.content_ids.length,
+  }
+
+  trackTikTok(
+    'CompletePayment',
+    {
+      contents: tiktokContents(params.content_ids),
+      value: params.value,
+      currency,
+    },
+    { eventId },
+  )
+  trackSnap(
+    'PURCHASE',
+    {
+      ...snapItemPayload(params),
+      transaction_id: options.orderNumber ?? eventId,
+    },
+    { clientDedupId: eventId },
+  )
+
+  whenFbqReady(() => {
+    trackMeta('Purchase', metaParams, { eventID: eventId })
+  })
 }

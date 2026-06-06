@@ -4,11 +4,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { PRODUCTS, type Product, formatSarAmount, getPriceForQty } from '@/lib/products'
 import {
-  newTrackingEventId,
-  trackMeta,
-  trackSnap,
-  trackTikTok,
-  whenFbqReady,
+  setTrackingUser,
+  trackLead,
+  trackPurchase,
 } from '@/lib/tracking/client'
 import { isRiyadhCallWindow } from '@/lib/riyadh-hours'
 
@@ -32,6 +30,8 @@ type OrderData = {
   createdAt: string
   orderNumber?: string
   orderId?: string
+  purchaseEventId?: string
+  leadEventId?: string
 }
 
 function qtyLabel(q: number) {
@@ -160,35 +160,28 @@ export default function ThankYouPage() {
 
   useEffect(() => {
     if (!order) return
+    if (!order.purchaseEventId || !order.leadEventId) return
 
     const contentIds = order.items.map((i) => i.productId)
     if (order.upsellAccepted && order.upsellProduct) {
       contentIds.push(order.upsellProduct.id)
     }
-    const base = {
-      value: order.finalTotal,
-      currency: 'SAR',
+    const commerce = {
       content_ids: contentIds,
-      content_type: 'product',
+      value: order.finalTotal,
+      currency: 'SAR' as const,
+      num_items: contentIds.length,
     }
 
-    const cancel = whenFbqReady(() => {
-      if (pixelsFired.current) return
-      pixelsFired.current = true
-      const purchaseEid = newTrackingEventId()
-      const leadEid = newTrackingEventId()
-      trackMeta('Purchase', base, { eventID: purchaseEid })
-      trackMeta('Lead', base, { eventID: leadEid })
+    setTrackingUser({ phone: order.phone })
 
-      trackTikTok('CompletePayment', {
-        value: order.finalTotal,
-        currency: 'SAR',
-        content_id: contentIds.join(','),
-      })
-      trackSnap('PURCHASE', { price: order.finalTotal, currency: 'SAR' })
+    if (pixelsFired.current) return
+    pixelsFired.current = true
+    trackPurchase(commerce, {
+      eventId: order.purchaseEventId,
+      orderNumber: order.orderNumber,
     })
-
-    return cancel
+    trackLead(commerce, { eventId: order.leadEventId })
   }, [order])
 
   if (!hydrated) {

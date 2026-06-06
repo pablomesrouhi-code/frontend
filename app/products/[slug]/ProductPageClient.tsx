@@ -5,7 +5,10 @@ import { useCartStore } from '@/stores/cart-store'
 import OfferSelector from '@/components/product/OfferSelector'
 import PdpRoutineNote from '@/components/product/PdpRoutineNote'
 import PdpStickyRoutineCta from '@/components/product/PdpStickyRoutineCta'
-import { trackMeta } from '@/lib/tracking/client'
+import {
+  trackAddToCart,
+  trackViewContent,
+} from '@/lib/tracking/client'
 
 function shadeTowardBlack(hex: string, t: number) {
   const h = hex.replace('#', '')
@@ -54,9 +57,8 @@ export default function ProductPageClient({
   const accentDeep = shadeTowardBlack(accent, 0.28)
 
   useEffect(() => {
-    trackMeta('ViewContent', {
+    trackViewContent({
       content_ids: [product.id],
-      content_type: 'product',
       value: getPriceForQty(1),
       currency: 'SAR',
     })
@@ -92,11 +94,11 @@ export default function ProductPageClient({
       bgColor: product.bgColor,
     })
     openCart()
-    trackMeta('AddToCart', {
+    trackAddToCart({
       content_ids: [product.id],
-      content_type: 'product',
       value: getPriceForQty(selectedQty),
       currency: 'SAR',
+      num_items: selectedQty,
     })
   }
 

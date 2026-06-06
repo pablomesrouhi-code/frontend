@@ -9,7 +9,11 @@ import { getPublicApiBase } from '@/lib/api'
 import { getBestUpsell, formatSarAmount } from '@/lib/products'
 import { CHECKOUT_UI_REV } from '@/lib/checkout-rev'
 import UpsellModal from './UpsellModal'
-import { trackMeta } from '@/lib/tracking/client'
+import {
+  newTrackingEventId,
+  setTrackingUser,
+  trackInitiateCheckout,
+} from '@/lib/tracking/client'
 
 const TEST_PHONES = ['055000000']
 
@@ -63,10 +67,10 @@ export default function CheckoutPopup({ onClose }: Props) {
   const upsell = getBestUpsell(items.map((i) => i.productId))
 
   useEffect(() => {
-    trackMeta('InitiateCheckout', {
+    trackInitiateCheckout({
+      content_ids: items.map((i) => i.productId),
       value: total(),
       currency: 'SAR',
-      content_ids: items.map((i) => i.productId),
       num_items: items.length,
     })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps -- once per checkout open
@@ -76,6 +80,9 @@ export default function CheckoutPopup({ onClose }: Props) {
       setCheckoutError(null)
       const base = getPublicApiBase()
       setPlacingOrder(true)
+      const purchaseEventId = newTrackingEventId()
+      const leadEventId = newTrackingEventId()
+      setTrackingUser({ phone: data.phone })
       try {
         const upsellAcceptedOk = upsellAccepted && !!upsell
         const payload = {
@@ -91,6 +98,8 @@ export default function CheckoutPopup({ onClose }: Props) {
           payment_method: 'cash_on_delivery' as const,
           source_page:
             typeof window !== 'undefined' ? window.location.href : undefined,
+          purchase_event_id: purchaseEventId,
+          client_event_id: leadEventId,
         }
         const fetchOpts: RequestInit = {
           method: 'POST',
@@ -185,6 +194,8 @@ export default function CheckoutPopup({ onClose }: Props) {
         createdAt: new Date().toISOString(),
         orderNumber,
         orderId,
+        purchaseEventId,
+        leadEventId,
       }
       sessionStorage.setItem('nabtalabo_order', JSON.stringify(orderSummary))
       sessionStorage.setItem('nbta-skip-intro', '1')

@@ -11,6 +11,7 @@ import { pixelsEnabled } from '@/lib/tracking/pixels-enabled'
 export default function RouteChangePageViews() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const query = searchParams.toString()
   const skipFirst = useRef(true)
 
   useEffect(() => {
@@ -20,7 +21,7 @@ export default function RouteChangePageViews() {
       return
     }
     fireDeferredPageView()
-  }, [pathname, searchParams])
+  }, [pathname, query])
 
   return null
 }
