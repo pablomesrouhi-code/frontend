@@ -10,6 +10,7 @@ declare global {
       page: () => void
       track: (...args: unknown[]) => void
       identify: (...args: unknown[]) => void
+      ready: (callback: () => void) => void
       instance: (pixelId: string) => unknown
       [key: string]: unknown
     }

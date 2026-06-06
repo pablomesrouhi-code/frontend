@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Product, getPriceForQty, formatSarAmount } from '@/lib/products'
+import { trackAddToWishlist } from '@/lib/tracking/client'
 
 type Props = {
   product: Product
@@ -34,6 +35,13 @@ function CtaRow({ product }: { product: Product }) {
       href={`/products/${product.slug}`}
       className="group/btn mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold transition-[color,background-color,border-color,transform] duration-200 ease-out active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100"
       style={{ background: '#FFFFFF', color: product.accentColor, border: `2px solid ${product.accentColor}44` }}
+      onClick={() => {
+        trackAddToWishlist({
+          content_ids: [product.id],
+          value: getPriceForQty(1),
+          currency: 'SAR',
+        })
+      }}
       onMouseEnter={(e) => {
         ;(e.currentTarget as HTMLElement).style.background = product.accentColor
         ;(e.currentTarget as HTMLElement).style.color = '#fff'

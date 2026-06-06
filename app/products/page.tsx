@@ -1,6 +1,7 @@
 import { PRODUCTS } from '@/lib/products'
 import ProductCard from '@/components/product/ProductCard'
 import StarRating from '@/components/ui/StarRating'
+import ProductsCatalogTracking from '@/components/tracking/ProductsCatalogTracking'
 
 export const metadata = {
   title: 'المنتجات | نبتة لابو',
@@ -11,6 +12,7 @@ export const metadata = {
 export default function CollectionPage() {
   return (
     <div className="bg-[#FFFFFF]">
+      <ProductsCatalogTracking />
       {/* Hero */}
       <section className="border-b border-border/70 bg-white py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 text-start">

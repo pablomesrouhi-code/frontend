@@ -121,6 +121,50 @@ export function whenFbqReady(callback: () => void, options?: { intervalMs?: numb
   }
 }
 
+/** Same pattern as Meta — TikTok stub queues until `ttq.load` finishes on lazyOnload. */
+export function whenTtqReady(callback: () => void, options?: { intervalMs?: number; timeoutMs?: number }): () => void {
+  if (typeof window === 'undefined') return () => {}
+  const intervalMs = options?.intervalMs ?? 100
+  const timeoutMs = options?.timeoutMs ?? 10000
+
+  const runSafe = (): void => {
+    try {
+      callback()
+    } catch {
+      /* non-blocking */
+    }
+  }
+
+  if (typeof window.ttq?.track === 'function') {
+    queueMicrotask(runSafe)
+    return () => {}
+  }
+
+  let cleared = false
+  const deadline = Date.now() + timeoutMs
+  const id = window.setInterval(() => {
+    if (cleared) return
+    if (typeof window.ttq?.track === 'function' || Date.now() > deadline) {
+      cleared = true
+      window.clearInterval(id)
+      runSafe()
+    }
+  }, intervalMs)
+
+  return () => {
+    cleared = true
+    window.clearInterval(id)
+  }
+}
+
+function runMetaWhenReady(callback: () => void): void {
+  whenFbqReady(callback)
+}
+
+function runTikTokWhenReady(callback: () => void): void {
+  whenTtqReady(callback)
+}
+
 export function trackMeta(
   eventName: string,
   params?: Record<string, unknown>,
@@ -147,17 +191,38 @@ export function trackTikTok(
   params?: Record<string, unknown>,
   options?: { eventId?: string },
 ): void {
-  if (typeof window === 'undefined' || typeof window.ttq?.track !== 'function') return
+  if (typeof window === 'undefined') return
+
+  const payload: Record<string, unknown> = { ...(params ?? {}) }
+  if (options?.eventId) {
+    payload.event_id = options.eventId
+  }
+
+  const fire = (): void => {
+    if (typeof window.ttq?.track !== 'function') return
+    try {
+      // TikTok browser pixel expects event_id inside properties (not a 3rd argument).
+      window.ttq.track(event, payload)
+    } catch {
+      /* non-blocking */
+    }
+  }
+
   try {
-    const eventId = options?.eventId
-    if (eventId) {
-      window.ttq.track(event, params ?? {}, { event_id: eventId })
-    } else {
-      window.ttq.track(event, params ?? {})
+    if (typeof window.ttq?.ready === 'function') {
+      window.ttq.ready(fire)
+      return
     }
   } catch {
-    /* non-blocking */
+    /* fall through */
   }
+
+  if (typeof window.ttq?.track === 'function') {
+    fire()
+    return
+  }
+
+  whenTtqReady(fire)
 }
 
 export function trackSnap(
@@ -181,6 +246,21 @@ function tiktokContents(contentIds: string[]) {
   return contentIds.map((content_id) => ({ content_id, content_type: 'product' }))
 }
 
+function tiktokCommercePayload(params: CommerceParams) {
+  const currency = params.currency ?? 'SAR'
+  const quantity = params.num_items ?? params.content_ids.length
+  const primaryId = params.content_ids[0]
+  return {
+    contents: tiktokContents(params.content_ids),
+    content_ids: params.content_ids,
+    ...(primaryId ? { content_id: primaryId } : {}),
+    content_type: 'product',
+    value: params.value,
+    currency,
+    quantity,
+  }
+}
+
 function snapItemPayload(params: CommerceParams) {
   return {
     item_ids: params.content_ids,
@@ -192,68 +272,93 @@ function snapItemPayload(params: CommerceParams) {
 
 export function trackViewContent(params: CommerceParams, options?: TrackOptions): void {
   const currency = params.currency ?? 'SAR'
-  trackMeta('ViewContent', {
+  const metaParams = {
     content_ids: params.content_ids,
     content_type: 'product',
     value: params.value,
     currency,
+  }
+  const tiktokParams = tiktokCommercePayload(params)
+
+  runMetaWhenReady(() => {
+    trackMeta('ViewContent', metaParams)
   })
-  trackTikTok(
-    'ViewContent',
-    {
-      contents: tiktokContents(params.content_ids),
-      value: params.value,
-      currency,
-    },
-    { eventId: options?.eventId },
-  )
+  runTikTokWhenReady(() => {
+    trackTikTok('ViewContent', tiktokParams, { eventId: options?.eventId })
+  })
   trackSnap('VIEW_CONTENT', snapItemPayload(params), { clientDedupId: options?.eventId })
 }
 
 export function trackAddToCart(params: CommerceParams, options?: TrackOptions): void {
   const currency = params.currency ?? 'SAR'
-  trackMeta('AddToCart', {
+  const metaParams = {
     content_ids: params.content_ids,
     content_type: 'product',
     value: params.value,
     currency,
     num_items: params.num_items ?? 1,
+  }
+  const tiktokParams = tiktokCommercePayload(params)
+
+  runMetaWhenReady(() => {
+    trackMeta('AddToCart', metaParams)
   })
-  trackTikTok(
-    'AddToCart',
-    {
-      contents: tiktokContents(params.content_ids),
-      value: params.value,
-      currency,
-    },
-    { eventId: options?.eventId },
-  )
+  runTikTokWhenReady(() => {
+    trackTikTok('AddToCart', tiktokParams, { eventId: options?.eventId })
+  })
   trackSnap('ADD_CART', snapItemPayload(params), { clientDedupId: options?.eventId })
 }
 
 export function trackInitiateCheckout(params: CommerceParams, options?: TrackOptions): void {
   const currency = params.currency ?? 'SAR'
-  trackMeta('InitiateCheckout', {
+  const metaParams = {
     content_ids: params.content_ids,
     content_type: 'product',
     value: params.value,
     currency,
     num_items: params.num_items ?? params.content_ids.length,
+  }
+  const tiktokParams = tiktokCommercePayload(params)
+
+  runMetaWhenReady(() => {
+    trackMeta('InitiateCheckout', metaParams)
   })
-  trackTikTok(
-    'InitiateCheckout',
-    {
-      contents: tiktokContents(params.content_ids),
-      value: params.value,
-      currency,
-    },
-    { eventId: options?.eventId },
-  )
+  runTikTokWhenReady(() => {
+    trackTikTok('InitiateCheckout', tiktokParams, { eventId: options?.eventId })
+  })
   trackSnap('START_CHECKOUT', snapItemPayload(params), { clientDedupId: options?.eventId })
 }
 
-export function trackLead(params: CommerceParams, options: TrackOptions): void {
+export function trackAddToWishlist(params: CommerceParams, options?: TrackOptions): void {
   const currency = params.currency ?? 'SAR'
+  const metaParams = {
+    content_ids: params.content_ids,
+    content_type: 'product',
+    value: params.value,
+    currency,
+  }
+  const tiktokParams = tiktokCommercePayload(params)
+
+  runMetaWhenReady(() => {
+    trackMeta('AddToWishlist', metaParams)
+  })
+  runTikTokWhenReady(() => {
+    trackTikTok('AddToWishlist', tiktokParams, { eventId: options?.eventId })
+  })
+  trackSnap('ADD_TO_WISHLIST', snapItemPayload(params), { clientDedupId: options?.eventId })
+}
+
+export function trackSearch(params: { search_string: string }, options?: TrackOptions): void {
+  runMetaWhenReady(() => {
+    trackMeta('Search', { search_string: params.search_string })
+  })
+  runTikTokWhenReady(() => {
+    trackTikTok('Search', { query: params.search_string }, { eventId: options?.eventId })
+  })
+  trackSnap('SEARCH', { search_string: params.search_string }, { clientDedupId: options?.eventId })
+}
+
+export function trackLead(params: CommerceParams, options: TrackOptions): void {
   const eventId = options.eventId
   if (!eventId) return
 
@@ -261,18 +366,12 @@ export function trackLead(params: CommerceParams, options: TrackOptions): void {
     content_ids: params.content_ids,
     content_type: 'product',
     value: params.value,
-    currency,
+    currency: params.currency ?? 'SAR',
   }
 
-  trackTikTok(
-    'SubmitForm',
-    {
-      contents: tiktokContents(params.content_ids),
-      value: params.value,
-      currency,
-    },
-    { eventId },
-  )
+  runTikTokWhenReady(() => {
+    trackTikTok('SubmitForm', tiktokCommercePayload(params), { eventId })
+  })
   trackSnap('SIGN_UP', { ...snapItemPayload(params), sign_up_method: 'checkout' }, { clientDedupId: eventId })
 
   whenFbqReady(() => {
@@ -293,15 +392,17 @@ export function trackPurchase(params: CommerceParams, options: TrackOptions): vo
     num_items: params.num_items ?? params.content_ids.length,
   }
 
-  trackTikTok(
-    'CompletePayment',
-    {
-      contents: tiktokContents(params.content_ids),
-      value: params.value,
-      currency,
-    },
-    { eventId },
-  )
+  const purchasePayload = {
+    ...tiktokCommercePayload(params),
+    ...(options.orderNumber ? { order_id: options.orderNumber } : {}),
+  }
+
+  whenTtqReady(() => {
+    // Events Manager "Achat / Purchase" expects code Purchase (updated TikTok standard events).
+    trackTikTok('Purchase', purchasePayload, { eventId })
+    trackTikTok('PlaceAnOrder', purchasePayload, { eventId: `${eventId}-order` })
+    trackTikTok('CompleteRegistration', tiktokCommercePayload(params), { eventId: `${eventId}-reg` })
+  })
   trackSnap(
     'PURCHASE',
     {
