@@ -192,7 +192,7 @@ export const PRODUCTS: Product[] = [
     crossSells: ['khiffabiotic', 'laylmag'],
     rating: 4.8,
     reviewCount: 104,
-    soldCount: 3200,
+    soldCount: 6800,
     isBestSeller: true,
     reviews: [
       {
@@ -338,7 +338,7 @@ export const PRODUCTS: Product[] = [
     crossSells: ['rawnaq-c', 'laylmag'],
     rating: 4.7,
     reviewCount: 91,
-    soldCount: 2100,
+    soldCount: 4200,
     reviews: [
       { name: 'نور س.', text: 'بعد الأكل أحب آخذ شيء خفيف؛ هاد وحسّيت إني ما اندفعت لتجارب غريبة.', rating: 5 },
       { name: 'هدى ف.', text: 'مو كبسولة ولا بودرة — يعني حتى فالشغل نقدر ناخدها بلا ماء دافئ ولا لفّ.', rating: 5 },
@@ -447,7 +447,7 @@ export const PRODUCTS: Product[] = [
     crossSells: ['rawnaq-c', 'khiffabiotic'],
     rating: 4.9,
     reviewCount: 128,
-    soldCount: 2850,
+    soldCount: 5400,
     reviews: [
       { name: 'عبير م.', text: 'صار عندي روتين مساء أهدأ بعد ما ثبّت الخطوة قبل النوم بساعة.', rating: 5 },
       { name: 'ديما ح.', text: 'أخذه مع وقتي لنفسي مو مع التلفزيون — الفرق في راسي واضح.', rating: 5 },
@@ -527,4 +527,7 @@ export function getBestSellerProduct(): Product | undefined {
 }
 
 /** إجمالي تقريبي للبانر فوق شبكة المنتجات */
-export const STORE_SOLD_HEADLINE = 3200
+export const STORE_SOLD_HEADLINE = 8500
+
+/** تقييمات معروضة في الصفحة الرئيسية (تقريبي للتسويق) */
+export const STORE_REVIEW_HEADLINE = 612
