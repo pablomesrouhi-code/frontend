@@ -68,6 +68,10 @@ export type Product = {
   crossSells: string[]
   rating: number
   reviewCount: number
+  /** رقم اجتماعي للعرض — «+3,200 مباع» (تقريبي للتسويق، ليس عدّاد حي) */
+  soldCount?: number
+  /** شارة «الأكثر مبيعاً» على البطاقة */
+  isBestSeller?: boolean
   reviews: ProductReview[]
   faqs: { q: string; a: string }[]
   /** بطاقات معلومات (مكونات، مدة النتيجة، نوع البشرة، موانع…) — اختياري */
@@ -188,6 +192,8 @@ export const PRODUCTS: Product[] = [
     crossSells: ['khiffabiotic', 'laylmag'],
     rating: 4.8,
     reviewCount: 104,
+    soldCount: 3200,
+    isBestSeller: true,
     reviews: [
       {
         name: 'سارة م.',
@@ -362,6 +368,7 @@ export const PRODUCTS: Product[] = [
     crossSells: ['rawnaq-c', 'laylmag'],
     rating: 4.7,
     reviewCount: 91,
+    soldCount: 2100,
     reviews: [
       { name: 'نور س.', text: 'بعد الأكل أحب آخذ شيء خفيف؛ هاد وحسّيت إني ما اندفعت لتجارب غريبة.', rating: 5 },
       { name: 'هدى ف.', text: 'مو كبسولة ولا بودرة — يعني حتى فالشغل نقدر ناخدها بلا ماء دافئ ولا لفّ.', rating: 5 },
@@ -470,6 +477,7 @@ export const PRODUCTS: Product[] = [
     crossSells: ['rawnaq-c', 'khiffabiotic'],
     rating: 4.9,
     reviewCount: 128,
+    soldCount: 2850,
     reviews: [
       { name: 'عبير م.', text: 'صار عندي روتين مساء أهدأ بعد ما ثبّت الخطوة قبل النوم بساعة.', rating: 5 },
       { name: 'ديما ح.', text: 'أخذه مع وقتي لنفسي مو مع التلفزيون — الفرق في راسي واضح.', rating: 5 },
@@ -538,3 +546,15 @@ export function getPriceForQty(qty: 1 | 2 | 3): number {
 export function formatSarAmount(amount: number): string {
   return `${amount}ريال سعودي`
 }
+
+/** «+3,200» — أرقام LTR داخل واجهة RTL */
+export function formatSoldCount(count: number): string {
+  return `+${count.toLocaleString('en-US')}`
+}
+
+export function getBestSellerProduct(): Product | undefined {
+  return PRODUCTS.find((p) => p.isBestSeller)
+}
+
+/** إجمالي تقريبي للبانر فوق شبكة المنتجات */
+export const STORE_SOLD_HEADLINE = 3200

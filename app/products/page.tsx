@@ -1,5 +1,6 @@
 import { PRODUCTS } from '@/lib/products'
 import ProductCard from '@/components/product/ProductCard'
+import ProductsSoldProofBar from '@/components/product/ProductsSoldProofBar'
 import StarRating from '@/components/ui/StarRating'
 import ProductsCatalogTracking from '@/components/tracking/ProductsCatalogTracking'
 
@@ -95,9 +96,10 @@ export default function CollectionPage() {
       {/* Products Grid */}
       <section className="py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid min-w-0 w-full grid-cols-1 items-stretch gap-6 md:grid-cols-2 md:gap-8 xl:grid-cols-3">
+          <ProductsSoldProofBar />
+          <div className="grid min-w-0 w-full grid-cols-1 items-stretch gap-6 md:grid-cols-3 md:gap-8">
             {PRODUCTS.map((p) => (
-              <ProductCard key={p.id} product={p} layout="list" />
+              <ProductCard key={p.id} product={p} useHomeCardImage />
             ))}
           </div>
         </div>

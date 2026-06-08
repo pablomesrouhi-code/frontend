@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Product, getPriceForQty, formatSarAmount } from '@/lib/products'
 import { trackAddToWishlist } from '@/lib/tracking/client'
+import ProductSoldBadge from '@/components/product/ProductSoldBadge'
 
 type Props = {
   product: Product
@@ -65,6 +66,7 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
       <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-authority/25 hover:shadow-[0_20px_48px_-14px_rgba(20,107,112,0.13)]">
         <Link href={`/products/${product.slug}`} className="relative block shrink-0 overflow-hidden bg-[#FAFAFA]">
           <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">
+            <ProductSoldBadge product={product} />
             <Image
               src={cardImage}
               alt={product.nameAr}
@@ -110,6 +112,7 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
         className="relative block w-full shrink-0 overflow-hidden bg-[#FAFAFA] md:w-[min(42%,280px)] md:max-w-[300px] md:self-stretch lg:w-[40%] lg:max-w-none"
       >
         <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.02] md:absolute md:inset-0 md:aspect-auto md:h-full md:min-h-[260px]">
+          <ProductSoldBadge product={product} />
           <Image
             src={cardImage}
             alt={product.nameAr}

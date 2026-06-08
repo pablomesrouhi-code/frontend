@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { PRODUCTS } from '@/lib/products'
 import ProductCard from '@/components/product/ProductCard'
+import ProductsSoldProofBar from '@/components/product/ProductsSoldProofBar'
 import StarRating from '@/components/ui/StarRating'
 
 const ORDER_FLOW_TAGS = ['سلطة كما تقرّ الصيدلية', 'خصوصية', 'مرونة في الطلب', 'دفع عند الاستلام'] as const
@@ -207,6 +208,7 @@ export default function HomePage() {
               صياغة مهنية وبنفس وضوح «رفّ الصيدلية»؛ واللذعة تكمّلكِ على الالتزام اليومي
             </p>
           </div>
+          <ProductsSoldProofBar />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch min-w-0 w-full">
             {PRODUCTS.map((p) => <ProductCard key={p.id} product={p} useHomeCardImage />)}
           </div>
