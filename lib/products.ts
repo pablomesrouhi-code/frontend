@@ -199,56 +199,26 @@ export const PRODUCTS: Product[] = [
         name: 'سارة م.',
         text: 'دخلته في روتيني الصباحي مع قهوتي؛ سهل وطعمه لطيف وما خزّمني.',
         rating: 5,
-        image: {
-          src: '/products/reviews/rawnaq-c-01.png',
-          width: 800,
-          height: 1000,
-          alt: 'سارة — روتين صباحي مع قهوة (صورة توضيحية)',
-        },
       },
       {
         name: 'ريم ع.',
         text: 'ما أحب المنتجات اللي سبعين خطوة — علكتان في الجرعة وروتين بسيط حسّيت براحة نفس.',
         rating: 5,
-        image: {
-          src: '/products/reviews/rawnaq-c-02.png',
-          width: 800,
-          height: 1000,
-          alt: 'ريم — روتين عناية بسيط (صورة توضيحية)',
-        },
       },
       {
         name: 'منى ك.',
         text: 'علكتان صغيرتان وباقي اليوم مخلّيني أحس إني كملّيت شي لنفسي.',
         rating: 5,
-        image: {
-          src: '/products/reviews/rawnaq-c-03.png',
-          width: 800,
-          height: 1000,
-          alt: 'منى — لحظة يومية مع رونق C (صورة توضيحية)',
-        },
       },
       {
         name: 'ليلى ع.',
         text: 'جربتها مع عناية بشرتي الخارجية؛ ما عوّضت الكريمات لكن كملّت معاهم كثير.',
         rating: 5,
-        image: {
-          src: '/products/reviews/rawnaq-c-04.png',
-          width: 800,
-          height: 1000,
-          alt: 'ليلى — روتين صباحي مع المكمّل (صورة توضيحية)',
-        },
       },
       {
         name: 'فاطمة ع.',
         text: 'طلبت قطعتين مع صاحبتي من نفس العمارة — التوفير واضح والطلب واضح.',
         rating: 4,
-        image: {
-          src: '/products/reviews/rawnaq-c-05.png',
-          width: 800,
-          height: 1000,
-          alt: 'فاطمة — عبوتان رونق C (صورة توضيحية)',
-        },
       },
     ],
     faqs: [

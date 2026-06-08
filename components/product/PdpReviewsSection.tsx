@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import type { Product, ProductReview } from '@/lib/products'
 import StarRating from '@/components/ui/StarRating'
 
@@ -18,26 +17,13 @@ function ReviewCard({
 }) {
   return (
     <article className="flex min-w-0 flex-col gap-2.5 overflow-hidden rounded-2xl border border-border bg-white p-3 shadow-sm sm:flex-row sm:gap-3 sm:p-3.5">
-      {review.image ? (
-        <div className="relative mx-auto aspect-[4/5] w-full max-w-[7.5rem] shrink-0 overflow-hidden rounded-xl bg-[#f5f3f1] sm:mx-0 sm:w-[5.5rem]">
-          <Image
-            src={review.image.src}
-            alt={review.image.alt}
-            width={review.image.width}
-            height={review.image.height}
-            sizes="88px"
-            className="h-full w-full object-cover object-center"
-          />
-        </div>
-      ) : (
-        <div
-          className="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-sm font-black text-white sm:mx-0"
-          style={{ background: accentColor }}
-          aria-hidden
-        >
-          {reviewInitials(review.name)}
-        </div>
-      )}
+      <div
+        className="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-sm font-black text-white sm:mx-0"
+        style={{ background: accentColor }}
+        aria-hidden
+      >
+        {reviewInitials(review.name)}
+      </div>
       <div className="min-w-0 flex-1 text-start">
         <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-0.5">
           <p className="text-sm font-bold text-charcoal">{review.name}</p>
@@ -55,7 +41,6 @@ type Props = {
 
 export default function PdpReviewsSection({ product }: Props) {
   const accent = product.accentColor
-  const hasReviewPhotos = product.reviews.some((r) => r.image)
 
   return (
     <section
@@ -76,8 +61,7 @@ export default function PdpReviewsSection({ product }: Props) {
             </p>
             <h2 className="text-lg font-black text-charcoal sm:text-xl">وش قالت عميلات اختارت {product.nameAr}؟</h2>
             <p className="mt-1.5 text-xs leading-relaxed text-muted sm:text-sm">
-              آراء شخصية؛ النتيجة تختلف حسب الجسم والالتزام.
-              {hasReviewPhotos ? ' صور التقييمات توضيحية.' : ''} للتفاصيل راجعي الأسئلة في آخر الصفحة.
+              آراء شخصية؛ النتيجة تختلف حسب الجسم والالتزام. للتفاصيل راجعي الأسئلة في آخر الصفحة.
             </p>
           </div>
           <StarRating rating={product.rating} count={product.reviewCount} size="sm" />
