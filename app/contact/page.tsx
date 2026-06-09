@@ -18,7 +18,7 @@ export default function ContactPage() {
               { icon: '📧', label: 'البريد الإلكتروني', val: BRAND_CONTACT_EMAIL, href: `mailto:${BRAND_CONTACT_EMAIL}` },
               { icon: '🌐', label: 'الموقع الإلكتروني', val: 'nabtalabo.store', href: 'https://nabtalabo.store' },
               { icon: '🚚', label: 'التوصيل', val: 'جميع مناطق المملكة العربية السعودية' },
-              { icon: '⏰', label: 'أوقات العمل', val: 'الأحد - الخميس، 9 صباحاً - 6 مساءً' },
+              { icon: '⏰', label: 'أوقات العمل', val: 'كل أيام الأسبوع، 9 صباحاً - 6 مساءً' },
             ].map((c) => (
               <div key={c.label} className="flex items-center gap-4 py-3 border-b border-gray-100 last:border-0">
                 <span className="text-2xl shrink-0">{c.icon}</span>
