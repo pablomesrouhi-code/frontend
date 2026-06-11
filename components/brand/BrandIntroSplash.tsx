@@ -5,13 +5,14 @@ import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import { BRAND_LOGO_SRC } from '@/lib/brand'
 
-const PLAY_MS = 2800
-const EXIT_MS = 550
+const SESSION_KEY = 'nbta-brand-intro-seen'
+const PLAY_MS = 1750
+const EXIT_MS = 450
 
-/** Shows on every visit before the storefront (no sessionStorage skip). */
+/** Once per browser session on first storefront visit — short brand intro. */
 export default function BrandIntroSplash() {
   const pathname = usePathname()
-  const [show, setShow] = useState(true)
+  const [show, setShow] = useState(false)
   const [exiting, setExiting] = useState(false)
   const ran = useRef(false)
 
@@ -20,14 +21,17 @@ export default function BrandIntroSplash() {
     ran.current = true
 
     if (pathname === '/thank-you' || pathname.startsWith('/thank-you/')) {
-      setShow(false)
       return
     }
 
     try {
       if (window.sessionStorage.getItem('nbta-skip-intro') === '1') {
         window.sessionStorage.removeItem('nbta-skip-intro')
-        setShow(false)
+        return
+      }
+      if (window.sessionStorage.getItem(SESSION_KEY) === '1') {
+        document.documentElement.classList.remove('nbta-splash-active')
+        document.body.classList.remove('nbta-intro-lock')
         return
       }
     } catch {
@@ -36,15 +40,22 @@ export default function BrandIntroSplash() {
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduced) {
-      setShow(false)
+      document.documentElement.classList.remove('nbta-splash-active')
+      document.body.classList.remove('nbta-intro-lock')
       return
     }
 
+    setShow(true)
     document.documentElement.classList.add('nbta-splash-active')
     document.body.classList.add('nbta-intro-lock')
 
     const exitTimer = window.setTimeout(() => setExiting(true), PLAY_MS)
     const doneTimer = window.setTimeout(() => {
+      try {
+        window.sessionStorage.setItem(SESSION_KEY, '1')
+      } catch {
+        /* ignore */
+      }
       setShow(false)
       document.documentElement.classList.remove('nbta-splash-active')
       document.body.classList.remove('nbta-intro-lock')
