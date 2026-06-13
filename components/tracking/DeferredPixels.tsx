@@ -1,5 +1,5 @@
 import Script from 'next/script'
-import { getMetaPixelId, pixelsEnabled } from '@/lib/tracking/pixels-enabled'
+import { getMetaPixelId, getSnapPixelId, pixelsEnabled } from '@/lib/tracking/pixels-enabled'
 
 const SAFE_PIXEL_ID = /^[A-Za-z0-9_-]{4,64}$/
 
@@ -16,7 +16,7 @@ function sanitizeId(raw: string | undefined): string | null {
 export default function DeferredPixels() {
   const metaId = getMetaPixelId()
   const tiktokId = sanitizeId(process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID)
-  const snapId = sanitizeId(process.env.NEXT_PUBLIC_SNAP_PIXEL_ID)
+  const snapId = getSnapPixelId()
 
   if (!pixelsEnabled()) return null
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { getMetaPixelId } from '@/lib/tracking/pixels-enabled'
+import { getMetaPixelId, getSnapPixelId } from '@/lib/tracking/pixels-enabled'
 import { normalizeSaPhoneForPixel } from '@/lib/tracking/phone'
 
 /** Stable UUID for dedup with server CAPI (`event_id` / Meta `eventID`). */
@@ -24,9 +24,7 @@ type TrackOptions = {
 }
 
 function snapPixelId(): string | null {
-  const raw = process.env.NEXT_PUBLIC_SNAP_PIXEL_ID?.trim()
-  if (!raw || !/^[A-Za-z0-9_-]{4,64}$/.test(raw)) return null
-  return raw
+  return getSnapPixelId()
 }
 
 /** Plain phone for browser advanced matching — hashing happens server-side on CAPI. */

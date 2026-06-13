@@ -18,11 +18,18 @@ export function getMetaPixelId(): string | null {
   )
 }
 
+/** Same pattern as Meta — EasyPanel runtime `SNAP_PIXEL_ID` without rebuild. */
+export function getSnapPixelId(): string | null {
+  return (
+    sanitizeId(process.env.NEXT_PUBLIC_SNAP_PIXEL_ID) ?? sanitizeId(process.env.SNAP_PIXEL_ID)
+  )
+}
+
 export function hasAnyPixelId(): boolean {
   return Boolean(
     getMetaPixelId() ||
       sanitizeId(process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID) ||
-      sanitizeId(process.env.NEXT_PUBLIC_SNAP_PIXEL_ID),
+      getSnapPixelId(),
   )
 }
 
