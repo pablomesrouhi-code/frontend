@@ -84,7 +84,16 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
         />
 
         <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:gap-4 sm:p-7">
-          <div className="flex flex-wrap items-center justify-end gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            {product.format === 'powder_sachet' ? (
+              <span className="rounded-full border border-current px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ color: product.accentColor }}>
+                ساشيه مسحوق
+              </span>
+            ) : (
+              <span className="rounded-full border border-current px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ color: product.accentColor }}>
+                علكة
+              </span>
+            )}
             <span
               className="rounded-full px-3 py-1.5 text-sm font-bold tracking-wide text-white"
               style={{ background: product.accentColor }}
@@ -136,6 +145,15 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
 
       <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:gap-4 sm:p-6 md:py-7 md:ps-6 md:pe-7">
         <div className="flex flex-wrap items-center justify-between gap-2">
+          {product.format === 'powder_sachet' ? (
+            <span className="rounded-full border border-current px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ color: product.accentColor }}>
+              ساشيه مسحوق
+            </span>
+          ) : (
+            <span className="rounded-full border border-current px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ color: product.accentColor }}>
+              علكة
+            </span>
+          )}
           <span
             className="rounded-full px-3 py-1.5 text-sm font-bold tracking-wide text-white"
             style={{ background: product.accentColor }}

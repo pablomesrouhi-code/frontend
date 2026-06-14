@@ -6,18 +6,16 @@ import ProductsSoldProofBar from '@/components/product/ProductsSoldProofBar'
 import HomeTrustStrip from '@/components/home/HomeTrustStrip'
 import HomeBundleNudge from '@/components/home/HomeBundleNudge'
 
-const ORDER_FLOW_TAGS = ['سلطة كما تقرّ الصيدلية', 'خصوصية', 'مرونة في الطلب', 'دفع عند الاستلام'] as const
-
 const STEPS = [
   {
     icon: '✨',
-    title: 'اختاري اللي يحسّ بيومك',
-    desc: 'تختارين التركيبة وفق احتياجكِ اليومي — كما تفعلين مع المكمّل في الصيدلية.',
+    title: 'اختاري ما يحسّ بيومك',
+    desc: 'علكة أو ساشيه مسحوق — اختاري حسب مشكلتك: شعر، بشرة، هضم، نوم، أو دورة شهرية.',
   },
   {
     icon: '💎',
     title: 'على قد ما تستخدمين',
-    desc: 'قطعة، اثنتين، أو ثلاث حسب وتيرتك؛ السعر يتفصّل معك، بدون ضغط.',
+    desc: 'قطعة، اثنتين، أو ثلاث حسب وتيرتك؛ السعر يتفصّل معك بدون ضغط.',
   },
   {
     icon: '☎️',
@@ -31,65 +29,37 @@ const STEPS = [
   },
 ] as const
 
-const GOALS = [
-  {
-    slug: 'rawnaq-c-collagen-gummies',
-    icon: '✨',
-    color: '#b8485c',
-    bg: '#f1e6e4',
-    border: '#d8c9c6',
-    title: 'الجمال من الداخل',
-    product: 'رونق C',
-    desc: 'بيوتين وزنك وفيتامين D — شعر، أظافر، وبشرة.',
-  },
-  {
-    slug: 'khiffabiotic-probiotic-gummies',
-    icon: '🍃',
-    color: '#b8485c',
-    bg: '#eae2df',
-    border: '#d8c9c6',
-    title: 'خفّة بعد الأكل',
-    product: 'خفّة بيوتك',
-    desc: 'بروبيوتيك وألياف — راحة ما بعد الوجبات.',
-  },
-  {
-    slug: 'laylmag-magnesium-gummies',
-    icon: '🌙',
-    color: '#c9937e',
-    bg: '#f3eeeb',
-    border: '#d8c9c6',
-    title: 'هدوء المساء',
-    product: 'ليل ماج',
-    desc: 'مغنيسيوم و L-Theanine — روتين قبل النوم.',
-  },
-] as const
+const GUMMIES = PRODUCTS.filter((p) => !p.format || p.format === 'gummy')
+const POWDERS = PRODUCTS.filter((p) => p.format === 'powder_sachet')
 
-const ORDER_FLOW_GRADIENT = 'linear-gradient(135deg, #b8485c 0%, #943c50 100%)'
+const REVIEWS = [
+  { name: 'سارة م.', text: 'رونق C صار جزء من صباحي — طعمه خفيف وروتينه أبسط من أي كريم جربتُه.', rating: 5, badge: 'رونق C', accent: '#b8485c' },
+  { name: 'نور ع.', text: 'خفّة بيوتك فرّق معي بعد الغداء — ما عدت أحس بالثقل بعد الأكل.', rating: 5, badge: 'خفّة بيوتك', accent: '#a86b5e' },
+  { name: 'ديمة خ.', text: 'ليل ماج خلّى المساء أهدأ. أول مرة أنام بلا تفكير زايد.', rating: 5, badge: 'ليل ماج', accent: '#b8485c' },
+  { name: 'هدى ر.', text: 'جربت الثلاثة مع بعض — روتيني صار أكتمل وأحس إني أهتم بنفسي فعلاً.', rating: 5, badge: 'الثلاثة معاً', accent: '#b8485c' },
+] as const
 
 const FAQS = [
   { q: 'هل الدفع عند الاستلام متاح؟', a: 'نعم، جميع طلبات نبتة لابو بنظام الدفع عند الاستلام فقط.' },
   { q: 'كيف يتم تأكيد الطلب؟', a: 'سيتواصل فريقنا معك على رقم جوالك لتأكيد الطلب وترتيب التوصيل.' },
   { q: 'كم يستغرق التوصيل؟', a: 'يتم التوصيل إلى جميع مناطق المملكة خلال 2-4 أيام عمل.' },
+  { q: 'ما الفرق بين العلكة والساشيه المسحوق؟', a: 'العلكة (رونق C، خفّة بيوتك، ليل ماج) تُمضغ مباشرة — مثالية للروتين السريع. الساشيه (قوة شعر، وضوح، شهر هادئ) مسحوق يُذاب في كوب ماء أو عصير — تركيزات أعلى لمشاكل أعمق.' },
   { q: 'هل يمكنني طلب أكثر من منتج؟', a: 'بالتأكيد، يمكنك إضافة أكثر من منتج والاستفادة من الأسعار المميزة.' },
   {
     q: 'هل نبتة لابو صيدلية؟',
-    a: 'نبتة لابو متجر مكمّلات غذائية على شكل علكة — SFDA، لا تشخّص ولا وصف طبي؛ استشيري الطبيب عند أي حالة.',
+    a: 'نبتة لابو متجر مكمّلات غذائية — SFDA · حلال. لا تشخّص ولا تصف؛ استشيري الطبيب عند أي حالة مزمنة.',
   },
-  { q: 'متى أرى النتائج؟', a: 'تختلف من شخص لآخر؛ المداومة على الروتين وفق الغلاف هي الأقرب لفائدة حقيقية.' },
-] as const
-
-const REVIEWS = [
-  { name: 'سارة م.', text: 'رونق C طعمه خفيف وصار جزء من صباحي.', rating: 5, badge: 'رونق C', accent: '#b8485c', verified: true },
-  { name: 'نور ع.', text: 'خفّة بيوتك فرّق معي بعد الغداء.', rating: 5, badge: 'خفّة بيوتك', accent: '#c9937e', verified: true },
-  { name: 'ديمة خ.', text: 'ليل ماج خلّى المساء أهدأ.', rating: 5, badge: 'ليل ماج', accent: '#b8485c', verified: true },
-  { name: 'هدى ر.', text: 'جربت الثلاثة مع بعض — روتيني صار أكتمل.', rating: 5, badge: 'الثلاثة معاً', accent: '#b8485c', verified: true },
+  { q: 'متى أرى النتائج؟', a: 'تختلف من شخص لآخر؛ المداومة على الروتين 4–8 أسابيع هي الأقرب لفائدة واضحة.' },
 ] as const
 
 const HERO_JUMP = [
-  { href: '#products', label: 'المنتجات' },
+  { href: '#gummies', label: 'خط العلكات' },
+  { href: '#powders', label: 'خط المسحوق' },
   { href: '#how', label: 'كيف الطلب' },
   { href: '#reviews', label: 'التقييمات' },
 ] as const
+
+const ORDER_FLOW_TAGS = ['سلطة كما تقرّ الصيدلية', 'خصوصية', 'مرونة في الطلب', 'دفع عند الاستلام'] as const
 
 export default function HomePage() {
   return (
@@ -122,11 +92,11 @@ export default function HomePage() {
               </div>
 
               <h1 className="mb-3 text-4xl font-bold leading-tight md:text-5xl" style={{ color: '#1C1C1C' }}>
-                علكة مكمّل غذائي{' '}
-                <span style={{ color: '#b8485c' }}>تثق فيها السعوديات</span>
+                6 منتجات، مشكلة واحدة لكل
+                <span style={{ color: '#b8485c' }}> — من الداخل.</span>
               </h1>
               <p className="mb-5 max-w-md text-lg leading-relaxed" style={{ color: '#5c5656' }}>
-                روتين يومي واضح — جمال، خفّة بعد الأكل، وهدوء مسائي. تأكيد على 05، توصيل 2–4 أيام، ودفع كاش عند الباب.
+                علكات وسواشيه مسحوق لجمال الشعر والبشرة، راحة الهضم، هدوء النوم، وأيام الدورة. تأكيد على 05، توصيل 2–4 أيام، دفع كاش عند الباب.
               </p>
 
               <div className="mb-6 flex flex-wrap gap-2">
@@ -144,7 +114,7 @@ export default function HomePage() {
 
               <div className="flex flex-col items-start gap-3 sm:flex-row">
                 <Link
-                  href="#products"
+                  href="#gummies"
                   className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-bold transition-all hover:-translate-y-0.5 hover:shadow-xl"
                   style={{ background: '#b8485c', color: '#fff', boxShadow: '0 10px 32px -8px rgba(184,72,92,0.38)' }}
                 >
@@ -183,11 +153,11 @@ export default function HomePage() {
                   style={{ background: '#ffffffee', border: '1px solid rgba(20,107,112,0.35)' }}
                 >
                   <p className="text-[9px] font-bold uppercase text-[#146b70]">مرخّص SFDA</p>
-                  <p className="text-[10px] font-black text-[#1C1C1C]">مكمّل غذائي</p>
+                  <p className="text-[10px] font-black text-[#1C1C1C]">6 منتجات</p>
                 </div>
                 <Image
                   src="/hero-store-trio.jpg"
-                  alt="ثلاث علكات نبتة لابو — رونق C، خفّة بيوتك، ليل ماج"
+                  alt="منتجات نبتة لابو — علكات وسواشيه مسحوق"
                   width={1024}
                   height={1024}
                   priority
@@ -202,23 +172,67 @@ export default function HomePage() {
 
       <HomeTrustStrip />
 
-      {/* ─── 2. Products (conversion first) ─── */}
-      <section id="products" className="scroll-mt-24 bg-white py-16 sm:py-20">
+      {/* ─── 2. Two Lines Intro ─── */}
+      <section className="bg-white py-10 sm:py-12">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div
+              className="flex flex-col gap-3 rounded-2xl p-6 sm:p-8"
+              style={{ background: 'linear-gradient(135deg, #f1e6e4 0%, #fdf8f6 100%)', border: '1px solid #e2d5d0' }}
+            >
+              <div className="flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-xl shadow-sm">🍬</span>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#b8485c]">خط العلكات</p>
+                  <p className="font-bold text-[#1C1C1C]">Gummy Line</p>
+                </div>
+              </div>
+              <p className="text-sm leading-relaxed text-[#5c5656]">
+                رونق C · خفّة بيوتك · ليل ماج — 3 علكات لروتين صباح–بعد الأكل–مساء. سهلة الالتزام، طعم خفيف، تُمضغ في أي مكان.
+              </p>
+              <a href="#gummies" className="mt-auto text-sm font-bold text-[#b8485c] hover:underline">
+                شوفي العلكات ←
+              </a>
+            </div>
+            <div
+              className="flex flex-col gap-3 rounded-2xl p-6 sm:p-8"
+              style={{ background: 'linear-gradient(135deg, #e8f5f0 0%, #f5fbf9 100%)', border: '1px solid #c8e5dd' }}
+            >
+              <div className="flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-xl shadow-sm">🌿</span>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#2D7D6F]">خط المسحوق</p>
+                  <p className="font-bold text-[#1C1C1C]">Powder Sachet Line</p>
+                </div>
+              </div>
+              <p className="text-sm leading-relaxed text-[#5c5656]">
+                قوة شعر · وضوح · شهر هادئ — 3 سواشيه مسحوق مركّزة لمشاكل أعمق: تساقط الشعر، حبوب البشرة، وأيام الدورة الصعبة.
+              </p>
+              <a href="#powders" className="mt-auto text-sm font-bold text-[#2D7D6F] hover:underline">
+                شوفي المسحوق ←
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── 3. Gummies Line ─── */}
+      <section id="gummies" className="scroll-mt-24 bg-white py-14 sm:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-10 text-start sm:mb-12">
-            <p className="mb-2 text-sm font-bold uppercase tracking-widest" style={{ color: '#b8485c' }}>
-              🇸🇦 الأكثر طلباً في المملكة
-            </p>
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#b8485c]/20 bg-[#f1e6e4] px-4 py-1.5 text-xs font-bold text-[#b8485c]">
+              🍬 خط العلكات — Gummy Line
+            </div>
             <h2 className="text-3xl font-bold leading-tight sm:text-4xl" style={{ color: '#1C1C1C' }}>
-              اختاري روتينك — من 199 ر.س
+              روتين الصباح والمساء — من 199 ر.س
             </h2>
             <p className="mt-3 max-w-2xl text-base leading-relaxed" style={{ color: '#5c5656' }}>
-              ثلاث علكات، كل واحدة لهدف واحد. COD وتأكيد قبل الشحن — كما تفضّل عميلاتنا في السعودية.
+              علكتان فقط في اليوم. جمال، خفّة بعد الأكل، وهدوء مسائي.
             </p>
           </div>
           <ProductsSoldProofBar />
           <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 md:grid-cols-3 md:gap-8">
-            {PRODUCTS.map((p) => (
+            {GUMMIES.map((p) => (
               <ProductCard key={p.id} product={p} useHomeCardImage />
             ))}
           </div>
@@ -227,50 +241,33 @@ export default function HomePage() {
 
       <HomeBundleNudge />
 
-      {/* ─── 3. Goals — pick by need ─── */}
-      <section id="goals" className="scroll-mt-24 bg-white py-14 sm:py-16">
+      {/* ─── 4. Powder Line ─── */}
+      <section id="powders" className="scroll-mt-24 py-14 sm:py-16" style={{ background: '#F7F3F8' }}>
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="mb-10 text-start">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-widest" style={{ color: '#146b70' }}>
-              ثلاثة أهداف
-            </p>
-            <h2 className="text-2xl font-bold sm:text-3xl" style={{ color: '#1C1C1C' }}>
-              أي روتين يناسب يومك؟
+          <div className="mb-10 text-start sm:mb-12">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#2D7D6F]/25 bg-[#E5F3F0] px-4 py-1.5 text-xs font-bold text-[#2D7D6F]">
+              🌿 خط المسحوق — Powder Sachet Line · جديد
+            </div>
+            <h2 className="text-3xl font-bold leading-tight sm:text-4xl" style={{ color: '#1C1C1C' }}>
+              للمشاكل الأعمق — تركيبة مركّزة في ساشيه
             </h2>
+            <p className="mt-3 max-w-2xl text-base leading-relaxed" style={{ color: '#5c5656' }}>
+              تساقط الشعر، حبوب البشرة، وأيام الدورة الصعبة — مشاكل تحتاج أكثر من علكة. ساشيه واحد في كوب ماء كل يوم.
+            </p>
           </div>
-          <div className="grid gap-5 md:grid-cols-3">
-            {GOALS.map((item) => (
-              <Link
-                key={item.slug}
-                href={`/products/${item.slug}`}
-                className="group flex flex-col gap-3 rounded-2xl p-6 text-center transition hover:-translate-y-0.5 hover:shadow-md"
-                style={{ background: item.bg, border: `1px solid ${item.border}` }}
-              >
-                <div
-                  className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl text-2xl"
-                  style={{ background: '#fff', border: `1px solid ${item.border}` }}
-                >
-                  {item.icon}
-                </div>
-                <p className="text-xs font-bold" style={{ color: item.color }}>
-                  {item.product}
-                </p>
-                <h3 className="text-base font-bold" style={{ color: '#1C1C1C' }}>
-                  {item.title}
-                </h3>
-                <p className="text-sm leading-relaxed" style={{ color: '#5c5656' }}>
-                  {item.desc}
-                </p>
-                <span className="mt-auto text-sm font-bold group-hover:underline" style={{ color: item.color }}>
-                  اكتشفي المنتج ←
-                </span>
-              </Link>
+          <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 md:grid-cols-3 md:gap-8">
+            {POWDERS.map((p) => (
+              <ProductCard key={p.id} product={p} useHomeCardImage />
             ))}
+          </div>
+          <div className="mt-6 rounded-2xl border border-[#c8e5dd] bg-[#E5F3F0] p-4 text-sm text-[#1C1C1C] sm:p-6">
+            <p className="font-bold text-[#2D7D6F]">📦 الصور الرسمية قادمة قريباً</p>
+            <p className="mt-1 text-[#5c5656]">المنتجات متاحة الآن للطلب — نعمل على تصوير احترافي للمنتجات الجديدة. الطلبات تُؤكَّد بمكالمة وتُسلَّم COD كالمعتاد.</p>
           </div>
         </div>
       </section>
 
-      {/* ─── 4. How it works ─── */}
+      {/* ─── 5. How it works ─── */}
       <section id="how" className="scroll-mt-24 py-16 sm:py-20" style={{ background: '#f1e6e4' }}>
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div
@@ -311,7 +308,7 @@ export default function HomePage() {
                       <div className="relative flex w-14 shrink-0 flex-col items-center">
                         <div
                           className="z-10 flex h-12 w-12 items-center justify-center rounded-2xl text-lg font-black text-white shadow-md"
-                          style={{ background: ORDER_FLOW_GRADIENT }}
+                          style={{ background: 'linear-gradient(135deg, #b8485c 0%, #943c50 100%)' }}
                         >
                           {i + 1}
                         </div>
@@ -342,7 +339,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── 5. Ingredients trust ─── */}
+      {/* ─── 6. Ingredients trust ─── */}
       <section className="bg-white py-14 sm:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-8 text-start">
@@ -350,27 +347,29 @@ export default function HomePage() {
               الشفافية
             </p>
             <h2 className="text-2xl font-bold sm:text-3xl" style={{ color: '#1C1C1C' }}>
-              مكوّنات واضحة — هدف واحد لكل علكة
+              مكوّنات واضحة — هدف واحد لكل منتج
             </h2>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { code: 'NL-01', name: 'بيوتين', latin: 'Biotin', desc: 'رونق C — Hair · Skin · Nails.' },
-              { code: 'NL-02', name: 'زنك', latin: 'Zinc', desc: 'ضمن فورمولا رونق C.' },
-              { code: 'NL-03', name: 'فيتامين D', latin: 'Vitamin D', desc: 'جرعة حسب الغلاف المعتمد.' },
-              { code: 'NL-04', name: 'بروبيوتيك', latin: 'Probiotics', desc: 'خفّة بيوتك — توازن هضمي.' },
+              { code: 'NL-01', name: 'بيوتين', latin: 'Biotin', desc: 'رونق C — Hair · Skin · Nails.', accent: '#b8485c' },
+              { code: 'NL-02', name: 'بروبيوتيك', latin: 'Probiotics', desc: 'خفّة بيوتك — توازن هضمي بعد الأكل.', accent: '#a86b5e' },
+              { code: 'NL-03', name: 'مغنيسيوم', latin: 'Magnesium', desc: 'ليل ماج — هدوء واسترخاء مسائي.', accent: '#b8485c' },
+              { code: 'NL-04', name: 'كولاجين بحري', latin: 'Marine Collagen', desc: 'قوة شعر — بروتين الشعر من الجذر.', accent: '#8B6248' },
+              { code: 'NL-05', name: 'غلوتاثيون', latin: 'Glutathione', desc: 'وضوح — مضاد أكسدة لإضاءة البشرة.', accent: '#2D7D6F' },
+              { code: 'NL-06', name: 'مايو-إينوسيتول', latin: 'Myo-Inositol', desc: 'شهر هادئ — توازن هرموني طبيعي.', accent: '#7B5EA7' },
             ].map((ing) => (
               <div
                 key={ing.code}
                 className="flex flex-col gap-2 rounded-2xl border border-[#d8c9c6] bg-[#faf9f8] p-4"
               >
-                <span className="w-fit rounded-md px-2 py-0.5 text-xs font-mono font-semibold" style={{ background: '#f1e6e4', color: '#b8485c' }}>
+                <span className="w-fit rounded-md px-2 py-0.5 text-xs font-mono font-semibold" style={{ background: `${ing.accent}15`, color: ing.accent }}>
                   {ing.code}
                 </span>
                 <p className="font-bold" style={{ color: '#1C1C1C' }}>
                   {ing.name}
                 </p>
-                <p className="text-xs font-mono" style={{ color: '#c9937e' }}>
+                <p className="text-xs font-mono" style={{ color: ing.accent }}>
                   {ing.latin}
                 </p>
                 <p className="text-xs leading-relaxed" style={{ color: '#5c5656' }}>
@@ -382,7 +381,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── 6. Reviews ─── */}
+      {/* ─── 7. Reviews ─── */}
       <section id="reviews" className="scroll-mt-24 py-14 sm:py-16" style={{ background: '#f1e6e4' }}>
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-10 text-start">
@@ -419,9 +418,7 @@ export default function HomePage() {
                   </div>
                   <div>
                     <p className="text-sm font-semibold">{r.name}</p>
-                    {r.verified ? (
-                      <p className="text-xs text-[#146b70]">عميلة موثّقة</p>
-                    ) : null}
+                    <p className="text-xs text-[#146b70]">عميلة موثّقة</p>
                   </div>
                 </div>
               </div>
@@ -430,7 +427,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── 7. FAQ ─── */}
+      {/* ─── 8. FAQ ─── */}
       <section id="faq" className="scroll-mt-24 bg-white py-14 sm:py-16">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
           <div className="mb-8 text-start">
@@ -458,7 +455,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── 8. Final CTA ─── */}
+      {/* ─── 9. Final CTA ─── */}
       <section className="relative overflow-hidden py-16 sm:py-20">
         <div
           className="absolute inset-0"
@@ -470,17 +467,25 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6">
           <h2 className="mb-4 text-3xl font-black text-white sm:text-4xl">جاهزة لروتين نبتة لابو؟</h2>
           <p className="mx-auto mb-8 max-w-xl text-base leading-relaxed text-white/85">
-            انضمّي لآلاف عميلات في المملكة — اختاري منتجك، أكّدي على 05، وادفعي عند الاستلام.
+            6 منتجات، مشكلة واحدة لكل — اختاري خطوتك الأولى واختبري الفرق بنفسك. COD · تأكيد هاتفي · توصيل المملكة.
           </p>
-          <Link
-            href="#products"
-            className="inline-flex items-center gap-2 rounded-full px-10 py-4 text-base font-black text-[#1C1C1C] shadow-lg transition hover:-translate-y-0.5"
-            style={{ background: 'linear-gradient(145deg, #fdf6f3 0%, #c9937e 100%)' }}
-          >
-            اختاري منتجك
-            <span aria-hidden>↓</span>
-          </Link>
-          <p className="mt-5 text-sm font-semibold text-white/75">COD · تأكيد هاتفي · SFDA</p>
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link
+              href="#gummies"
+              className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-black text-[#1C1C1C] shadow-lg transition hover:-translate-y-0.5"
+              style={{ background: 'linear-gradient(145deg, #fdf6f3 0%, #c9937e 100%)' }}
+            >
+              خط العلكات ↓
+            </Link>
+            <Link
+              href="#powders"
+              className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-black shadow-lg transition hover:-translate-y-0.5"
+              style={{ background: 'linear-gradient(145deg, #e5f3f0 0%, #2D7D6F 100%)', color: '#fff' }}
+            >
+              خط المسحوق ↓
+            </Link>
+          </div>
+          <p className="mt-5 text-sm font-semibold text-white/75">COD · تأكيد هاتفي · SFDA · حلال</p>
         </div>
       </section>
     </div>
