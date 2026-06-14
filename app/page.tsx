@@ -22,14 +22,14 @@ const BRAND = {
 } as const
 
 const STAT_NUMBERS = [
-  { value: formatSoldCount(STORE_SOLD_HEADLINE), label: 'طلب مؤكّد', sub: 'من بداية المتجر' },
-  { value: '4.8/5', label: `${STORE_REVIEW_HEADLINE}+ تقييم`, sub: 'موثّقة 🇸🇦' },
-  { value: '6', label: 'منتجات', sub: 'مكمّلات غذائية مرخّصة' },
-  { value: '2-4', label: 'أيام توصيل', sub: 'كل مناطق المملكة' },
+  { value: formatSoldCount(STORE_SOLD_HEADLINE), label: 'طلب مؤكّد', sub: 'في المملكة' },
+  { value: '4.8/5', label: `${STORE_REVIEW_HEADLINE}+ تقييم`, sub: '🇸🇦' },
+  { value: '6', label: 'منتجات', sub: 'علكة + مسحوق' },
+  { value: '2-4', label: 'أيام توصيل', sub: 'كل المناطق' },
 ] as const
 
 const STEPS = [
-  { n: '01', icon: '✨', title: 'اختاري اللي يحسّ بيومك', desc: 'ستة منتجات — كل واحد له هدف واضح حسب احتياجك اليومي.' },
+  { n: '01', icon: '✨', title: 'اختاري اللي يناسبك', desc: 'علكة يومية أو ساشيه مسحوق — ستة منتجات، كل واحد له هدف واضح.' },
   { n: '02', icon: '💎', title: 'على قد ما تستخدمين', desc: 'قطعة، اثنتين، أو ثلاث حسب وتيرتك؛ السعر يتفصّل معك بدون ضغط.' },
   { n: '03', icon: '☎️', title: 'تأكيد بسيط وبراحتك', desc: 'اسمك ورقم جوال سعودي يكفيان؛ ما نطلب بطاقة، ونتواصل للتأكيد.' },
   { n: '04', icon: '📦', title: 'لمّا يوصلك الطلب', desc: 'نوصل لمناطق المملكة، نخبرك قبل التوصيل، وتدفعين كاش عند الاستلام.' },
@@ -56,7 +56,7 @@ const FAQS = [
 const REVIEWS = [
   { name: 'سارة م.', city: 'الرياض', text: 'رونق C طعمه خفيف وصار جزء من صباحي. شعرت بفرق على ظفر اليد بعد شهر.', rating: 5, product: 'رونق C', accent: BRAND.rose },
   { name: 'نور ع.', city: 'جدة', text: 'كنت أحس بثقل بعد الغداء. خفّة بيوتك مع روتين أحسن للأكل غيّر إحساسي.', rating: 5, product: 'خفّة بيوتك', accent: BRAND.peach },
-  { name: 'ديمة خ.', city: 'الدمام', text: 'ليل ماج خلّى وقت النوم أهدأ. ساشيه مع كتاب وعتمة خفيفة.', rating: 5, product: 'ليل ماج', accent: BRAND.rose },
+  { name: 'ديمة خ.', city: 'الدمام', text: 'ليل ماج خلّى وقت النوم أهدأ. علكتين قبل النوم وصار روتيني أسهل.', rating: 5, product: 'ليل ماج', accent: BRAND.rose },
   { name: 'هدى ر.', city: 'مكة', text: 'جربت الثلاثة معاً — روتيني صار أكتمل من الصباح للمساء.', rating: 5, product: 'الباقة', accent: BRAND.roseDeep },
 ] as const
 
@@ -72,11 +72,11 @@ export default function HomePage() {
         className="relative overflow-hidden"
         style={{ background: 'linear-gradient(135deg, #f1e6e4 0%, #FFFFFF 60%, #FFFFFF 100%)' }}
       >
-        <div className="mx-auto max-w-7xl px-4 pb-14 pt-4 sm:px-6 md:pb-24 md:pt-10">
-          <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-12 md:gap-10 lg:gap-12">
+        <div className="mx-auto max-w-6xl px-4 pb-10 pt-4 sm:px-6 md:pb-14 md:pt-8">
+          <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-2 md:gap-10">
 
-            {/* TEXT — 4 cols (narrower so image dominates) */}
-            <div className="order-2 md:order-1 md:col-span-5 lg:col-span-4 md:pt-8 lg:pt-12">
+            {/* TEXT */}
+            <div className="order-2 text-start md:order-1">
               <div
                 className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/85 px-3.5 py-1.5 text-[11px] font-bold backdrop-blur"
                 style={{ color: BRAND.rose, border: `1px solid ${BRAND.rose}30` }}
@@ -87,15 +87,15 @@ export default function HomePage() {
               </div>
 
               <h1
-                className="mb-5 text-4xl font-bold leading-tight md:text-5xl"
+                className="mb-4 text-3xl font-bold leading-tight sm:text-4xl md:text-[2.75rem]"
                 style={{ color: BRAND.charcoal }}
               >
-                علكة مكمّل غذائي{' '}
-                <span style={{ color: BRAND.rose }}>تثق فيه السعوديات</span>
+                مكمّلات غذائية{' '}
+                <span style={{ color: BRAND.rose }}>علكة ومسحوق — تثق فيه السعوديات</span>
               </h1>
 
-              <p className="mb-6 max-w-md text-lg leading-relaxed" style={{ color: BRAND.muted }}>
-                ستة منتجات — جمال، هضم، نوم، شعر، بشرة، وأيام الدورة. تأكيد على 05، توصيل 2–4 أيام، دفع كاش عند الباب.
+              <p className="mb-6 max-w-md text-base leading-relaxed sm:text-lg" style={{ color: BRAND.muted }}>
+                ستة منتجات مرخّصة — علكات يومية وسواشيه مسحوق. جمال، هضم، نوم، شعر، بشرة، وأيام الدورة. تأكيد على 05 · COD · 2–4 أيام.
               </p>
 
               <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
@@ -131,32 +131,25 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* IMAGE — 8 cols, BIGGER + higher, full-bleed on mobile */}
-            <div className="order-1 -mx-3 sm:mx-0 md:order-2 md:col-span-7 lg:col-span-8">
-              <div className="relative">
-                {/* Big rose backdrop tag */}
+            {/* IMAGE — balanced size, visible at first glance on desktop */}
+            <div className="order-1 md:order-2">
+              <div className="relative mx-auto w-full max-w-[min(100%,380px)] sm:max-w-[420px] md:max-w-[460px]">
                 <div
-                  className="absolute -end-2 -top-2 h-32 w-32 rounded-full opacity-30 blur-2xl sm:-end-4 sm:-top-4 sm:h-56 sm:w-56"
+                  className="absolute -end-2 -top-2 h-24 w-24 rounded-full opacity-25 blur-2xl md:h-40 md:w-40"
                   style={{ background: BRAND.rose }}
                   aria-hidden
                 />
-                <div
-                  className="absolute -bottom-3 -start-3 h-28 w-28 rounded-full opacity-25 blur-2xl sm:-bottom-6 sm:-start-6 sm:h-48 sm:w-48"
-                  style={{ background: BRAND.peach }}
-                  aria-hidden
-                />
 
-                {/* Image card */}
                 <div
-                  className="relative overflow-hidden rounded-[20px] bg-white p-1.5 sm:rounded-[28px] sm:p-4 md:p-5"
+                  className="relative overflow-hidden rounded-2xl bg-white p-2 sm:p-3 md:p-4"
                   style={{
                     border: `1px solid ${BRAND.border}`,
-                    boxShadow: '0 40px 80px -32px rgba(184,72,92,0.18), 0 12px 24px -10px rgba(26,24,21,0.08)',
+                    boxShadow: '0 22px 60px -24px rgba(28, 28, 28, 0.1)',
                   }}
                 >
-                  <div className="relative overflow-hidden rounded-2xl bg-[#FDF8F9]">
+                  <div className="relative overflow-hidden rounded-xl bg-[#FDF8F9]">
                     <div
-                      className="absolute top-3 end-3 z-10 rounded-lg px-2.5 py-2 sm:top-4 sm:end-4"
+                      className="absolute top-2 end-2 z-10 rounded-lg px-2 py-1.5 sm:top-3 sm:end-3 sm:px-2.5 sm:py-2"
                       style={{ background: '#b8485cee', border: '1px solid rgba(255,255,255,0.35)' }}
                     >
                       <p dir="ltr" className="text-[10px] font-black tabular-nums text-white sm:text-[11px]">
@@ -167,20 +160,20 @@ export default function HomePage() {
 
                     <Image
                       src="/hero-store-trio.jpg"
-                      alt="منتجات نبتة لابو"
+                      alt="منتجات نبتة لابو — علكة ومسحوق"
                       width={1024}
                       height={1024}
                       priority
-                      sizes="(max-width: 768px) 100vw, 60vw"
-                      className="block h-full min-h-[min(92vw,440px)] w-full object-contain sm:h-auto sm:min-h-0"
+                      sizes="(max-width: 768px) 85vw, 460px"
+                      className="block h-auto max-h-[min(68vw,320px)] w-full object-contain sm:max-h-[360px] md:max-h-[400px]"
                     />
 
                     <div
-                      className="absolute bottom-3 start-3 z-10 max-w-[6.5rem] rounded-lg px-2.5 py-2 sm:bottom-4 sm:start-4"
+                      className="absolute bottom-2 start-2 z-10 max-w-[6rem] rounded-lg px-2 py-1.5 sm:bottom-3 sm:start-3 sm:px-2.5 sm:py-2"
                       style={{ background: '#ffffffee', border: '1px solid rgba(20,107,112,0.35)' }}
                     >
                       <p className="text-[9px] font-bold uppercase text-[#146b70]">مرخّص SFDA</p>
-                      <p className="text-[10px] font-black text-[#1C1C1C]">6 منتجات</p>
+                      <p className="text-[10px] font-black text-[#1C1C1C]">علكة + مسحوق</p>
                     </div>
                   </div>
                 </div>
@@ -190,21 +183,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 2. STATS NUMBERS — Proof at scale, magazine row ═══ */}
+      {/* ═══ 2. STATS — one row on mobile (scroll), compact ═══ */}
       <section className="border-y border-[#E7DDD3] bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="grid grid-cols-2 divide-x divide-[#E7DDD3] md:grid-cols-4">
-            {STAT_NUMBERS.map((s, i) => (
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="-mx-4 flex divide-x divide-[#E7DDD3] overflow-x-auto px-4 scrollbar-none sm:mx-0 sm:px-0 md:grid md:grid-cols-4 md:overflow-visible">
+            {STAT_NUMBERS.map((s) => (
               <div
                 key={s.label}
-                className="flex flex-col items-start gap-1 px-4 py-6 sm:px-6 sm:py-8"
-                style={{ borderRight: i === STAT_NUMBERS.length - 1 ? 'none' : undefined }}
+                className="flex min-w-[38vw] shrink-0 snap-start flex-col gap-0.5 px-3 py-3 sm:min-w-[22vw] md:min-w-0 md:px-5 md:py-5"
               >
-                <p className="text-2xl font-black leading-none tabular-nums sm:text-3xl md:text-4xl" style={{ color: BRAND.rose }}>
+                <p className="text-base font-black leading-none tabular-nums sm:text-xl md:text-2xl" style={{ color: BRAND.rose }}>
                   {s.value}
                 </p>
-                <p className="mt-2 text-xs font-bold sm:text-sm" style={{ color: BRAND.charcoal }}>{s.label}</p>
-                <p className="text-[10px] font-medium uppercase tracking-wider sm:text-[11px]" style={{ color: BRAND.muted }}>{s.sub}</p>
+                <p className="text-[10px] font-bold sm:text-xs" style={{ color: BRAND.charcoal }}>{s.label}</p>
+                <p className="text-[9px] font-medium sm:text-[10px]" style={{ color: BRAND.muted }}>{s.sub}</p>
               </div>
             ))}
           </div>
@@ -215,11 +207,11 @@ export default function HomePage() {
       <section id="products" className="scroll-mt-24 bg-white py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-8 text-start sm:mb-10">
-            <h2 className="text-2xl font-bold leading-tight sm:text-3xl md:text-4xl" style={{ color: BRAND.charcoal }}>
-              منتجاتنا
+            <h2 className="text-2xl font-bold leading-tight sm:text-3xl" style={{ color: BRAND.charcoal }}>
+              منتجاتنا — علكة ومسحوق
             </h2>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-              ستة منتجات — جمال، هضم، نوم، شعر، بشرة، وأيام الدورة. SFDA · COD · توصيل 2–4 أيام.
+              ثلاث علكات يومية وثلاثة سواشيه مسحوق — جمال، هضم، نوم، شعر، بشرة، وأيام الدورة. SFDA · COD · 2–4 أيام.
             </p>
           </div>
 
@@ -292,7 +284,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-8 text-start">
             <h2 className="text-2xl font-bold sm:text-3xl" style={{ color: BRAND.charcoal }}>
-              مكوّنات واضحة — هدف واحد لكل منتج
+              مكوّنات واضحة — علكة ومسحوق، هدف لكل منتج
             </h2>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -408,7 +400,7 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6">
           <h2 className="mb-4 text-3xl font-black text-white sm:text-4xl">جاهزة لروتين نبتة لابو؟</h2>
           <p className="mx-auto mb-8 max-w-xl text-base leading-relaxed text-white/85">
-            ستة منتجات لكل احتياج — اختاري الأقرب ليومك، أكّدي على 05، وادفعي عند الاستلام.
+            علكة ومسحوق — ستة منتجات لكل احتياج. اختاري الأقرب ليومك، أكّدي على 05، وادفعي عند الاستلام.
           </p>
           <Link
             href="#products"
