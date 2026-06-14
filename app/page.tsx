@@ -131,50 +131,41 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* IMAGE — balanced size, visible at first glance on desktop */}
-            <div className="order-1 md:order-2">
-              <div className="relative mx-auto w-full max-w-[min(100%,380px)] sm:max-w-[420px] md:max-w-[460px]">
-                <div
-                  className="absolute -end-2 -top-2 h-24 w-24 rounded-full opacity-25 blur-2xl md:h-40 md:w-40"
-                  style={{ background: BRAND.rose }}
-                  aria-hidden
-                />
+            {/* IMAGE — square card, image centered filling the frame (original style) */}
+            <div className="order-1 w-full md:order-2">
+              <div
+                className="w-full rounded-3xl bg-white p-3 sm:p-4 md:p-5"
+                style={{
+                  border: '1px solid #EADFD6',
+                  boxShadow: '0 22px 60px -24px rgba(28, 28, 28, 0.1), inset 0 1px 0 rgba(255,255,255,0.85)',
+                }}
+              >
+                <div className="relative aspect-square overflow-hidden rounded-2xl bg-[#FDF8F9]">
+                  <div
+                    className="absolute top-2 end-2 z-10 rounded-lg px-2 py-1.5 sm:top-3 sm:end-3 sm:px-2.5 sm:py-2"
+                    style={{ background: '#b8485cee', border: '1px solid rgba(255,255,255,0.35)' }}
+                  >
+                    <p dir="ltr" className="text-[10px] font-black tabular-nums text-white sm:text-[11px]">
+                      {formatSoldCount(STORE_SOLD_HEADLINE)}
+                    </p>
+                    <p className="text-[9px] font-bold text-white/90">مباع في السعودية</p>
+                  </div>
 
-                <div
-                  className="relative overflow-hidden rounded-2xl bg-white p-2 sm:p-3 md:p-4"
-                  style={{
-                    border: `1px solid ${BRAND.border}`,
-                    boxShadow: '0 22px 60px -24px rgba(28, 28, 28, 0.1)',
-                  }}
-                >
-                  <div className="relative overflow-hidden rounded-xl bg-[#FDF8F9]">
-                    <div
-                      className="absolute top-2 end-2 z-10 rounded-lg px-2 py-1.5 sm:top-3 sm:end-3 sm:px-2.5 sm:py-2"
-                      style={{ background: '#b8485cee', border: '1px solid rgba(255,255,255,0.35)' }}
-                    >
-                      <p dir="ltr" className="text-[10px] font-black tabular-nums text-white sm:text-[11px]">
-                        {formatSoldCount(STORE_SOLD_HEADLINE)}
-                      </p>
-                      <p className="text-[9px] font-bold text-white/90">مباع في السعودية</p>
-                    </div>
+                  <Image
+                    src="/hero-store-trio.jpg"
+                    alt="منتجات نبتة لابو — علكة ومسحوق"
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 560px"
+                    className="object-contain object-center p-3 sm:p-4"
+                  />
 
-                    <Image
-                      src="/hero-store-trio.jpg"
-                      alt="منتجات نبتة لابو — علكة ومسحوق"
-                      width={1024}
-                      height={1024}
-                      priority
-                      sizes="(max-width: 768px) 85vw, 460px"
-                      className="block h-auto max-h-[min(68vw,320px)] w-full object-contain sm:max-h-[360px] md:max-h-[400px]"
-                    />
-
-                    <div
-                      className="absolute bottom-2 start-2 z-10 max-w-[6rem] rounded-lg px-2 py-1.5 sm:bottom-3 sm:start-3 sm:px-2.5 sm:py-2"
-                      style={{ background: '#ffffffee', border: '1px solid rgba(20,107,112,0.35)' }}
-                    >
-                      <p className="text-[9px] font-bold uppercase text-[#146b70]">مرخّص SFDA</p>
-                      <p className="text-[10px] font-black text-[#1C1C1C]">علكة + مسحوق</p>
-                    </div>
+                  <div
+                    className="absolute bottom-2 start-2 z-10 max-w-[6.5rem] rounded-lg px-2 py-1.5 sm:bottom-3 sm:start-3 sm:px-2.5 sm:py-2"
+                    style={{ background: '#ffffffee', border: '1px solid rgba(20,107,112,0.35)' }}
+                  >
+                    <p className="text-[9px] font-bold uppercase text-[#146b70]">مرخّص SFDA</p>
+                    <p className="text-[10px] font-black text-[#1C1C1C]">علكة + مسحوق</p>
                   </div>
                 </div>
               </div>
