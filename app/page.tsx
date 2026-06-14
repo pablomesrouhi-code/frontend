@@ -3,9 +3,6 @@ import Link from 'next/link'
 import { PRODUCTS, STORE_REVIEW_HEADLINE, STORE_SOLD_HEADLINE, formatSoldCount } from '@/lib/products'
 import ProductCard from '@/components/product/ProductCard'
 
-const GUMMIES = PRODUCTS.filter((p) => !p.format || p.format === 'gummy')
-const POWDERS = PRODUCTS.filter((p) => p.format === 'powder_sachet')
-
 // ───────── Brand palette (refined warm) ─────────
 const BRAND = {
   rose: '#b8485c',
@@ -27,12 +24,12 @@ const BRAND = {
 const STAT_NUMBERS = [
   { value: formatSoldCount(STORE_SOLD_HEADLINE), label: 'طلب مؤكّد', sub: 'من بداية المتجر' },
   { value: '4.8/5', label: `${STORE_REVIEW_HEADLINE}+ تقييم`, sub: 'موثّقة 🇸🇦' },
-  { value: '6', label: 'منتجات', sub: 'علكات + سواشيه مسحوق' },
+  { value: '6', label: 'منتجات', sub: 'مكمّلات غذائية مرخّصة' },
   { value: '2-4', label: 'أيام توصيل', sub: 'كل مناطق المملكة' },
 ] as const
 
 const STEPS = [
-  { n: '01', icon: '✨', title: 'اختاري اللي يحسّ بيومك', desc: 'علكة يومية أو ساشيه مسحوق مركّز — حسب مشكلتك واحتياج جسمك.' },
+  { n: '01', icon: '✨', title: 'اختاري اللي يحسّ بيومك', desc: 'ستة منتجات — كل واحد له هدف واضح حسب احتياجك اليومي.' },
   { n: '02', icon: '💎', title: 'على قد ما تستخدمين', desc: 'قطعة، اثنتين، أو ثلاث حسب وتيرتك؛ السعر يتفصّل معك بدون ضغط.' },
   { n: '03', icon: '☎️', title: 'تأكيد بسيط وبراحتك', desc: 'اسمك ورقم جوال سعودي يكفيان؛ ما نطلب بطاقة، ونتواصل للتأكيد.' },
   { n: '04', icon: '📦', title: 'لمّا يوصلك الطلب', desc: 'نوصل لمناطق المملكة، نخبرك قبل التوصيل، وتدفعين كاش عند الاستلام.' },
@@ -49,7 +46,7 @@ const GOALS = [
 
 const FAQS = [
   { q: 'هل الدفع عند الاستلام متاح؟', a: 'نعم، جميع طلبات نبتة لابو بنظام الدفع عند الاستلام فقط.' },
-  { q: 'ما الفرق بين العلكة والساشيه المسحوق؟', a: 'العلكة سهلة الالتزام للروتين اليومي (رونق C، خفّة بيوتك، ليل ماج). الساشيه المسحوق تركيبة مركّزة لمشاكل أعمق (قوة شعر، وضوح، شهر هادئ).' },
+  { q: 'ما الفرق بين العلكة والساشيه المسحوق؟', a: 'كل منتج له هدف مختلف — جمال، هضم، نوم، شعر، بشرة، أو دورة شهرية. اختاري الأقرب لاحتياجك؛ التفاصيل على صفحة كل منتج.' },
   { q: 'كيف يتم تأكيد الطلب؟', a: 'يتواصل فريقنا معكِ على رقم جوّالك لتأكيد الطلب وترتيب التوصيل.' },
   { q: 'كم يستغرق التوصيل؟', a: 'يتم التوصيل إلى جميع مناطق المملكة خلال 2-4 أيام عمل.' },
   { q: 'متى أرى النتائج؟', a: 'تختلف من شخص لآخر؛ المداومة على الروتين 4–8 أسابيع هي الأقرب لفائدة حقيقية.' },
@@ -75,28 +72,11 @@ export default function HomePage() {
         className="relative overflow-hidden"
         style={{ background: `radial-gradient(ellipse at 100% 0%, ${BRAND.blush} 0%, ${BRAND.cream} 55%, ${BRAND.cream} 100%)` }}
       >
-        <div className="mx-auto max-w-7xl px-4 pb-14 pt-10 sm:px-6 md:pb-24 md:pt-14">
-          {/* Top eyebrow */}
-          <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b border-[#E7DDD3] pb-4">
-            <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: BRAND.muted }}>
-              <span className="h-1.5 w-1.5 rounded-full" style={{ background: BRAND.rose }} aria-hidden />
-              <span>NABTA · LABO</span>
-              <span className="text-[#D8C9C6]">·</span>
-              <span>EST. 2024 · KSA</span>
-            </div>
-            <div className="hidden items-center gap-3 text-[11px] font-bold uppercase tracking-wider sm:flex" style={{ color: BRAND.muted }}>
-              <span>SFDA</span>
-              <span className="text-[#D8C9C6]">·</span>
-              <span>حلال</span>
-              <span className="text-[#D8C9C6]">·</span>
-              <span>COD</span>
-            </div>
-          </div>
+        <div className="mx-auto max-w-7xl px-4 pb-14 pt-4 sm:px-6 md:pb-24 md:pt-10">
+          <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-12 md:gap-10 lg:gap-12">
 
-          <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-12 md:gap-10 lg:gap-14">
-
-            {/* TEXT — 5 cols */}
-            <div className="order-2 md:order-1 md:col-span-5">
+            {/* TEXT — 4 cols (narrower so image dominates) */}
+            <div className="order-2 md:order-1 md:col-span-5 lg:col-span-4 md:pt-8 lg:pt-12">
               <div
                 className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/85 px-3.5 py-1.5 text-[11px] font-bold backdrop-blur"
                 style={{ color: BRAND.rose, border: `1px solid ${BRAND.rose}30` }}
@@ -118,7 +98,7 @@ export default function HomePage() {
               </h1>
 
               <p className="mb-7 max-w-md text-base leading-relaxed sm:text-lg" style={{ color: BRAND.muted }}>
-                ستة منتجات — ثلاث علكات يومية وثلاثة سواشيه مسحوق مركّزة. لجمال الشعر والبشرة، راحة الهضم، هدوء المساء، وأيام الدورة.
+                ستة منتجات مرخّصة — جمال، هضم، نوم، شعر، بشرة، وأيام الدورة. اختاري اللي يناسب يومك.
               </p>
 
               <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
@@ -154,8 +134,8 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* IMAGE — 7 cols, BIG */}
-            <div className="order-1 md:order-2 md:col-span-7">
+            {/* IMAGE — 8 cols, BIGGER + higher, full-bleed on mobile */}
+            <div className="order-1 -mx-3 sm:mx-0 md:order-2 md:col-span-7 lg:col-span-8">
               <div className="relative">
                 {/* Big rose backdrop tag */}
                 <div
@@ -171,13 +151,13 @@ export default function HomePage() {
 
                 {/* Image card */}
                 <div
-                  className="relative overflow-hidden rounded-[28px] bg-white p-3 sm:p-4 md:p-5"
+                  className="relative overflow-hidden rounded-[20px] bg-white p-1.5 sm:rounded-[28px] sm:p-4 md:p-5"
                   style={{
                     border: `1px solid ${BRAND.border}`,
                     boxShadow: '0 40px 80px -32px rgba(184,72,92,0.18), 0 12px 24px -10px rgba(26,24,21,0.08)',
                   }}
                 >
-                  <div className="relative overflow-hidden rounded-[20px]" style={{ background: '#FDF8F9' }}>
+                  <div className="relative min-h-[min(92vw,440px)] overflow-hidden rounded-[14px] sm:min-h-0 sm:rounded-[20px]" style={{ background: '#FDF8F9' }}>
                     {/* Floating premium badge */}
                     <div
                       className="absolute top-3 end-3 z-10 rounded-2xl bg-white/95 px-3 py-2 backdrop-blur sm:top-5 sm:end-5"
@@ -194,12 +174,12 @@ export default function HomePage() {
 
                     <Image
                       src="/hero-store-trio.jpg"
-                      alt="منتجات نبتة لابو — علكات وسواشيه مسحوق"
+                      alt="منتجات نبتة لابو"
                       width={1024}
                       height={1024}
                       priority
                       sizes="(max-width: 768px) 100vw, 60vw"
-                      className="block h-auto w-full object-contain"
+                      className="block h-full min-h-[min(92vw,440px)] w-full object-contain sm:h-auto sm:min-h-0"
                     />
 
                     {/* Floating SFDA badge */}
@@ -220,11 +200,11 @@ export default function HomePage() {
 
                 {/* Caption strip below image */}
                 <div className="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[10px] font-bold uppercase tracking-wider sm:text-[11px]" style={{ color: BRAND.muted }}>
-                  <span>3 علكات</span>
+                  <span>6 منتجات</span>
                   <span style={{ color: BRAND.border }}>·</span>
-                  <span>3 سواشيه</span>
+                  <span>هدف لكل واحد</span>
                   <span style={{ color: BRAND.border }}>·</span>
-                  <span style={{ color: BRAND.rose }}>OEM SAUDI MARKET</span>
+                  <span style={{ color: BRAND.rose }}>COD · SFDA</span>
                 </div>
               </div>
             </div>
@@ -253,170 +233,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 3. INTRO — Two product lines (magazine cards) ═══ */}
-      <section id="products" className="scroll-mt-24 py-16 sm:py-24" style={{ background: BRAND.cream }}>
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="mb-10 flex flex-col items-start gap-3 sm:mb-14">
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: BRAND.rose }}>
-              — خطّان · هدفان مختلفان
-            </p>
-            <h2 className="max-w-2xl text-3xl font-black leading-[1.1] sm:text-4xl md:text-5xl" style={{ color: BRAND.charcoal }}>
-              علكة يومية. أو مسحوق مركّز.
-              <br />
-              <span style={{ color: BRAND.rose }}>اللي يناسب يومك.</span>
-            </h2>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2 md:gap-7">
-            {/* Gummies intro card */}
-            <Link
-              href="#gummies"
-              className="group relative flex flex-col gap-5 overflow-hidden rounded-3xl bg-white p-7 transition hover:-translate-y-1 sm:p-8 md:p-10"
-              style={{ border: `1px solid ${BRAND.border}`, boxShadow: '0 18px 40px -22px rgba(184,72,92,0.16)' }}
-            >
-              <div
-                className="pointer-events-none absolute -end-16 -top-16 h-48 w-48 rounded-full opacity-30 transition group-hover:scale-110"
-                style={{ background: `radial-gradient(circle, ${BRAND.rose}40 0%, transparent 70%)` }}
-                aria-hidden
-              />
-              <div className="relative flex items-center justify-between">
-                <span className="rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest text-white" style={{ background: BRAND.rose }}>
-                  🍬 خط العلكات
-                </span>
-                <span className="text-xs font-bold" style={{ color: BRAND.muted }}>199 ر.س</span>
-              </div>
-              <div className="relative">
-                <h3 className="mb-2 text-2xl font-black sm:text-3xl" style={{ color: BRAND.charcoal }}>
-                  للروتين اليومي
-                </h3>
-                <p className="text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-                  ثلاث علكات لذيذة لذيذة — رونق C للشعر والبشرة، خفّة بيوتك للهضم، ليل ماج للنوم. علكتان في اليوم.
-                </p>
-              </div>
-              <div className="relative mt-auto flex items-center justify-between pt-3" style={{ borderTop: `1px solid ${BRAND.border}` }}>
-                <div className="flex -space-x-2 flex-row-reverse">
-                  {GUMMIES.slice(0, 3).map((p) => (
-                    <div
-                      key={p.id}
-                      className="h-9 w-9 rounded-full ring-2 ring-white"
-                      style={{ background: p.accentColor }}
-                      title={p.nameAr}
-                    />
-                  ))}
-                </div>
-                <span className="text-sm font-bold transition group-hover:-translate-x-1" style={{ color: BRAND.rose }}>
-                  استعرضي العلكات ←
-                </span>
-              </div>
-            </Link>
-
-            {/* Powder intro card */}
-            <Link
-              href="#powders"
-              className="group relative flex flex-col gap-5 overflow-hidden rounded-3xl bg-white p-7 transition hover:-translate-y-1 sm:p-8 md:p-10"
-              style={{ border: `1px solid ${BRAND.border}`, boxShadow: '0 18px 40px -22px rgba(122,148,132,0.18)' }}
-            >
-              <div
-                className="pointer-events-none absolute -end-16 -top-16 h-48 w-48 rounded-full opacity-30 transition group-hover:scale-110"
-                style={{ background: `radial-gradient(circle, ${BRAND.sage}50 0%, transparent 70%)` }}
-                aria-hidden
-              />
-              <div className="relative flex items-center justify-between">
-                <span className="rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest text-white" style={{ background: BRAND.sage }}>
-                  🌿 خط المسحوق · جديد
-                </span>
-                <span className="text-xs font-bold" style={{ color: BRAND.muted }}>249 ر.س</span>
-              </div>
-              <div className="relative">
-                <h3 className="mb-2 text-2xl font-black sm:text-3xl" style={{ color: BRAND.charcoal }}>
-                  تركيبة مركّزة
-                </h3>
-                <p className="text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-                  ساشيه واحد في كوب ماء — قوة شعر للتساقط، وضوح للحبوب، شهر هادئ للدورة. لمشاكل تحتاج أكثر من علكة.
-                </p>
-              </div>
-              <div className="relative mt-auto flex items-center justify-between pt-3" style={{ borderTop: `1px solid ${BRAND.border}` }}>
-                <div className="flex -space-x-2 flex-row-reverse">
-                  {POWDERS.slice(0, 3).map((p) => (
-                    <div
-                      key={p.id}
-                      className="h-9 w-9 rounded-full ring-2 ring-white"
-                      style={{ background: p.accentColor }}
-                      title={p.nameAr}
-                    />
-                  ))}
-                </div>
-                <span className="text-sm font-bold transition group-hover:-translate-x-1" style={{ color: BRAND.sage }}>
-                  استعرضي السواشيه ←
-                </span>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ 4. GUMMIES — Product showcase ═══ */}
-      <section id="gummies" className="scroll-mt-24 bg-white py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="mb-10 flex flex-wrap items-end justify-between gap-4 sm:mb-12">
-            <div>
-              <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: BRAND.rose }}>
-                01 — خط العلكات
-              </p>
-              <h2 className="text-3xl font-black leading-tight sm:text-4xl" style={{ color: BRAND.charcoal }}>
-                علكات لذيذة. <span style={{ color: BRAND.rose }}>روتين سهل.</span>
-              </h2>
-            </div>
-            <Link
-              href="/products"
-              className="text-sm font-bold underline-offset-4 hover:underline"
-              style={{ color: BRAND.rose }}
-            >
-              كل العلكات ←
-            </Link>
-          </div>
-          <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 md:grid-cols-3 md:gap-8">
-            {GUMMIES.map((p) => (
-              <ProductCard key={p.id} product={p} useHomeCardImage />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ 5. POWDERS — Product showcase ═══ */}
-      <section id="powders" className="scroll-mt-24 py-16 sm:py-20" style={{ background: '#F6F2EC' }}>
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="mb-10 flex flex-wrap items-end justify-between gap-4 sm:mb-12">
-            <div>
-              <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: BRAND.sage }}>
-                02 — خط المسحوق · جديد
-              </p>
-              <h2 className="text-3xl font-black leading-tight sm:text-4xl" style={{ color: BRAND.charcoal }}>
-                ساشيه مركّز. <span style={{ color: BRAND.sage }}>للمشاكل العميقة.</span>
-              </h2>
-            </div>
-            <span className="rounded-full bg-white px-3.5 py-1.5 text-[11px] font-bold" style={{ color: BRAND.sage, border: `1px solid ${BRAND.sage}40` }}>
-              صور المنتجات الرسمية قريباً
-            </span>
-          </div>
-          <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 md:grid-cols-3 md:gap-8">
-            {POWDERS.map((p) => (
-              <ProductCard key={p.id} product={p} useHomeCardImage />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ 6. GOALS — Pick by need ═══ */}
-      <section id="goals" className="scroll-mt-24 bg-white py-16 sm:py-20">
+      {/* ═══ 3. GOALS — Pick by need (before catalog) ═══ */}
+      <section id="goals" className="scroll-mt-24 bg-white py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-10 max-w-2xl">
             <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: BRAND.teal }}>
-              ستّة أهداف
+              اختاري حسب احتياجك
             </p>
             <h2 className="text-3xl font-black leading-tight sm:text-4xl" style={{ color: BRAND.charcoal }}>
               أيّ حاجة تشدّك أكثر؟
             </h2>
+            <p className="mt-3 text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
+              ستة منتجات — كل واحد له هدف واضح. اختاري الأقرب ليومك.
+            </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {GOALS.map((item) => (
@@ -445,6 +274,37 @@ export default function HomePage() {
                   اكتشفي ←
                 </span>
               </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ 4. PRODUCTS — unified catalog ═══ */}
+      <section id="products" className="scroll-mt-24 py-16 sm:py-20" style={{ background: BRAND.cream }}>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="mb-10 flex flex-wrap items-end justify-between gap-4 sm:mb-12">
+            <div>
+              <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: BRAND.rose }}>
+                منتجاتنا
+              </p>
+              <h2 className="text-3xl font-black leading-tight sm:text-4xl" style={{ color: BRAND.charcoal }}>
+                ستة منتجات. <span style={{ color: BRAND.rose }}>هدف واضح لكل واحد.</span>
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
+                من الصباح للمساء — جمال، هضم، نوم، شعر، بشرة، وأيام الدورة. كلها من نبتة لابو · SFDA · COD.
+              </p>
+            </div>
+            <Link
+              href="/products"
+              className="text-sm font-bold underline-offset-4 hover:underline"
+              style={{ color: BRAND.rose }}
+            >
+              الكتالوج الكامل ←
+            </Link>
+          </div>
+          <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+            {PRODUCTS.map((p) => (
+              <ProductCard key={p.id} product={p} useHomeCardImage />
             ))}
           </div>
         </div>
