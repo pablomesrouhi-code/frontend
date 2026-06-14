@@ -4,31 +4,12 @@ import Link from 'next/link'
 import { Product, getPriceForQty, formatSarAmount } from '@/lib/products'
 import { trackAddToWishlist } from '@/lib/tracking/client'
 import ProductSoldBadge from '@/components/product/ProductSoldBadge'
+import PowderPlaceholder from '@/components/product/PowderPlaceholder'
 
 type Props = {
   product: Product
   layout?: 'list' | 'grid'
   useHomeCardImage?: boolean
-}
-
-function PowderPlaceholder({ product }: { product: Product }) {
-  return (
-    <div
-      className="flex h-full w-full flex-col items-center justify-center gap-4 px-6 py-14"
-      style={{ background: `linear-gradient(160deg, ${product.accentColor}12 0%, ${product.accentColor}06 100%)`, minHeight: '240px' }}
-    >
-      <div
-        className="flex h-24 w-24 items-center justify-center rounded-3xl text-5xl shadow-sm"
-        style={{ background: `${product.accentColor}18`, border: `2px solid ${product.accentColor}25` }}
-      >
-        🌿
-      </div>
-      <div className="text-center">
-        <p className="text-sm font-black" style={{ color: product.accentColor }}>{product.nameAr}</p>
-        <p className="mt-1 text-[11px] text-[#5c5656]">صورة المنتج قادمة قريباً</p>
-      </div>
-    </div>
-  )
 }
 
 export default function ProductCard({ product, layout = 'grid', useHomeCardImage = false }: Props) {
