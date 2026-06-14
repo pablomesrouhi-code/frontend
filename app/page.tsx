@@ -233,48 +233,45 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 3. GOALS — Pick by need (before catalog) ═══ */}
-      <section id="goals" className="scroll-mt-24 bg-white py-14 sm:py-20">
+      {/* ═══ 3. NEEDS NAV — compact pills (intro to products) ═══ */}
+      <section id="goals" className="scroll-mt-24 bg-white py-10 sm:py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="mb-10 max-w-2xl">
-            <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: BRAND.teal }}>
+          <div className="mb-5 flex flex-wrap items-baseline justify-between gap-3 sm:mb-6">
+            <h2 className="text-base font-black sm:text-lg" style={{ color: BRAND.charcoal }}>
+              <span className="me-2">←</span>
               اختاري حسب احتياجك
-            </p>
-            <h2 className="text-3xl font-black leading-tight sm:text-4xl" style={{ color: BRAND.charcoal }}>
-              أيّ حاجة تشدّك أكثر؟
             </h2>
-            <p className="mt-3 text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-              ستة منتجات — كل واحد له هدف واضح. اختاري الأقرب ليومك.
-            </p>
+            <a href="#products" className="text-xs font-bold underline-offset-4 hover:underline" style={{ color: BRAND.rose }}>
+              كل المنتجات ↓
+            </a>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {GOALS.map((item) => (
-              <Link
-                key={item.slug}
-                href={`/products/${item.slug}`}
-                className="group flex flex-col gap-3 rounded-3xl p-7 text-start transition hover:-translate-y-1 hover:shadow-lg"
-                style={{ background: item.bg, border: `1px solid ${item.color}25` }}
-              >
-                <div
-                  className="flex h-14 w-14 items-center justify-center rounded-2xl text-2xl"
-                  style={{ background: 'white', border: `1px solid ${item.color}30` }}
+          <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+            <div className="flex min-w-max items-stretch gap-2.5 sm:grid sm:min-w-0 sm:grid-cols-3 sm:gap-3 lg:grid-cols-6">
+              {GOALS.map((item) => (
+                <Link
+                  key={item.slug}
+                  href={`/products/${item.slug}`}
+                  className="group flex shrink-0 items-center gap-2.5 rounded-full px-3.5 py-2.5 transition hover:-translate-y-0.5 sm:rounded-2xl sm:px-3 sm:py-3 lg:flex-col lg:items-start lg:gap-2 lg:px-4 lg:py-4"
+                  style={{ background: item.bg, border: `1px solid ${item.color}30` }}
                 >
-                  {item.icon}
-                </div>
-                <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: item.color }}>
-                  {item.product}
-                </p>
-                <h3 className="text-lg font-black" style={{ color: BRAND.charcoal }}>
-                  {item.title}
-                </h3>
-                <p className="text-sm leading-relaxed" style={{ color: BRAND.muted }}>
-                  {item.desc}
-                </p>
-                <span className="mt-auto pt-3 text-sm font-bold transition group-hover:-translate-x-1" style={{ color: item.color }}>
-                  اكتشفي ←
-                </span>
-              </Link>
-            ))}
+                  <span
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-base sm:h-9 sm:w-9 lg:h-10 lg:w-10 lg:text-lg"
+                    style={{ background: 'white', border: `1px solid ${item.color}30` }}
+                    aria-hidden
+                  >
+                    {item.icon}
+                  </span>
+                  <div className="text-start">
+                    <p className="text-xs font-black leading-tight sm:text-[13px]" style={{ color: BRAND.charcoal }}>
+                      {item.title}
+                    </p>
+                    <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: item.color }}>
+                      {item.product}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
