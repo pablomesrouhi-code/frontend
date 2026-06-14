@@ -140,7 +140,7 @@ export default function HomePage() {
                   boxShadow: '0 22px 60px -24px rgba(28, 28, 28, 0.1), inset 0 1px 0 rgba(255,255,255,0.85)',
                 }}
               >
-                <div className="relative aspect-square overflow-hidden rounded-2xl bg-[#FDF8F9]">
+                <div className="relative overflow-hidden rounded-2xl bg-[#FDF8F9]">
                   <div
                     className="absolute top-2 end-2 z-10 rounded-lg px-2 py-1.5 sm:top-3 sm:end-3 sm:px-2.5 sm:py-2"
                     style={{ background: '#b8485cee', border: '1px solid rgba(255,255,255,0.35)' }}
@@ -154,10 +154,11 @@ export default function HomePage() {
                   <Image
                     src="/hero-store-trio.jpg"
                     alt="منتجات نبتة لابو — علكة ومسحوق"
-                    fill
+                    width={1024}
+                    height={1024}
                     priority
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 560px"
-                    className="object-contain object-center p-3 sm:p-4"
+                    className="block h-auto w-full object-contain"
                   />
 
                   <div
