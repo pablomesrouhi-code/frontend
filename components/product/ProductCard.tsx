@@ -8,33 +8,68 @@ import PowderPlaceholder from '@/components/product/PowderPlaceholder'
 
 type Props = {
   product: Product
+  /** `list` = صفحة المنتجات: صورة بجانب النص على الديسكتوب + سعر بارز. `grid` = بطاقة عمودية للصفحة الرئيسية وشبكات ضيقة */
   layout?: 'list' | 'grid'
+  /** بطاقات cross-sell بصفحة المنتج — تعرض `homeCardImage` (OEM) إن وُجدت */
   useHomeCardImage?: boolean
+}
+
+function PriceBlock({ product }: { product: Product }) {
+  const priceOne = getPriceForQty(1)
+  const priceThree = getPriceForQty(3)
+
+  return (
+    <div className="text-start">
+      <p className="text-[11px] font-bold uppercase tracking-wide text-muted">سعر القطعة</p>
+      <p className="text-3xl font-black tabular-nums sm:text-4xl" style={{ color: product.accentColor }}>
+        <span className="sar-price">{formatSarAmount(priceOne)}</span>
+      </p>
+      <p className="mt-1 text-xs leading-snug text-muted">
+        3 قطع بـ <span className="font-bold text-charcoal"><span className="sar-price">{formatSarAmount(priceThree)}</span></span> من صفحة المنتج
+      </p>
+    </div>
+  )
+}
+
+function CtaRow({ product }: { product: Product }) {
+  return (
+    <Link
+      href={`/products/${product.slug}`}
+      className="group/btn mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold transition-[color,background-color,border-color,transform] duration-200 ease-out active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100"
+      style={{ background: '#FFFFFF', color: product.accentColor, border: `2px solid ${product.accentColor}44` }}
+      onClick={() => {
+        trackAddToWishlist({
+          content_ids: [product.id],
+          value: getPriceForQty(1),
+          currency: 'SAR',
+        })
+      }}
+      onMouseEnter={(e) => {
+        ;(e.currentTarget as HTMLElement).style.background = product.accentColor
+        ;(e.currentTarget as HTMLElement).style.color = '#fff'
+      }}
+      onMouseLeave={(e) => {
+        ;(e.currentTarget as HTMLElement).style.background = '#FFFFFF'
+        ;(e.currentTarget as HTMLElement).style.color = product.accentColor
+      }}
+    >
+      <span>اكتشفي المنتج</span>
+      <span className="transition-transform group-hover/btn:-translate-x-1">←</span>
+    </Link>
+  )
 }
 
 export default function ProductCard({ product, layout = 'grid', useHomeCardImage = false }: Props) {
   const isPowder = product.format === 'powder_sachet'
   const cardImage = useHomeCardImage && product.homeCardImage ? product.homeCardImage : product.coverImage
 
-  const handleClick = () => {
-    trackAddToWishlist({
-      content_ids: [product.id],
-      value: getPriceForQty(1),
-      currency: 'SAR',
-    })
-  }
-
   if (layout === 'grid') {
     return (
-      <article
-        className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-        style={{ border: `1.5px solid ${product.accentColor}20`, boxShadow: '0 2px 16px -4px rgba(28,28,28,0.06)' }}
-      >
-        {/* image */}
-        <Link href={`/products/${product.slug}`} className="relative block shrink-0 overflow-hidden" style={{ background: `${product.accentColor}08` }}>
-          <div className="relative aspect-[4/5] w-full overflow-hidden transition-transform duration-500 ease-out group-hover:scale-[1.02]">
+      <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-authority/25 hover:shadow-[0_20px_48px_-14px_rgba(20,107,112,0.13)]">
+        <Link href={`/products/${product.slug}`} className="relative block shrink-0 overflow-hidden bg-[#FAFAFA]">
+          <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">
             {isPowder ? (
-              <PowderPlaceholder product={product} />
+              <PowderPlaceholder product={product} size="card" />
             ) : (
               <>
                 <ProductSoldBadge product={product} />
@@ -50,67 +85,43 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
           </div>
         </Link>
 
-        {/* accent line */}
-        <div className="h-[3px] w-full shrink-0" style={{ background: `linear-gradient(90deg, transparent, ${product.accentColor}, transparent)` }} aria-hidden />
+        <div
+          className="h-[3px] w-full shrink-0"
+          style={{ background: `linear-gradient(90deg, transparent, ${product.accentColor}66, transparent)` }}
+          aria-hidden
+        />
 
-        {/* body */}
-        <div className="flex min-h-0 flex-1 flex-col gap-3 p-5 sm:p-6">
-          {/* format + badge */}
-          <div className="flex items-center justify-between gap-2">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:gap-4 sm:p-7">
+          <div className="flex flex-wrap items-center justify-end gap-2">
             <span
-              className="rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider"
-              style={{ background: `${product.accentColor}12`, color: product.accentColor, border: `1px solid ${product.accentColor}25` }}
+              className="rounded-full px-3 py-1.5 text-sm font-bold tracking-wide text-white"
+              style={{ background: product.accentColor }}
             >
-              {isPowder ? 'ساشيه مسحوق' : 'علكة'}
-            </span>
-            <span className="rounded-full px-3 py-1 text-[11px] font-bold text-white" style={{ background: product.accentColor }}>
               {product.badgeAr}
             </span>
           </div>
 
-          {/* name */}
-          <h3 className="text-xl font-black leading-snug text-[#1C1C1C] sm:text-2xl">{product.nameAr}</h3>
+          <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight text-charcoal sm:text-3xl md:text-[1.875rem]">
+            {product.nameAr}
+          </h3>
 
-          {/* subtitle */}
-          <p className="line-clamp-2 text-sm leading-relaxed text-[#5c5656]">{product.subtitleAr}</p>
+          <p className="line-clamp-3 break-words text-sm leading-relaxed text-muted sm:text-base">{product.subtitleAr}</p>
 
-          {/* price */}
-          <div className="mt-auto flex items-baseline gap-1.5 border-t border-[#f0ece8] pt-4">
-            <span className="text-2xl font-black tabular-nums" style={{ color: product.accentColor }}>
-              {formatSarAmount(getPriceForQty(1))}
-            </span>
-          </div>
-
-          {/* CTA */}
-          <Link
-            href={`/products/${product.slug}`}
-            onClick={handleClick}
-            className="flex min-h-[3rem] w-full items-center justify-between rounded-2xl px-5 py-3 text-sm font-black text-white transition hover:brightness-105"
-            style={{ background: product.accentColor }}
-          >
-            <span>اكتشفي المنتج</span>
-            <span>←</span>
-          </Link>
+          <CtaRow product={product} />
         </div>
       </article>
     )
   }
 
-  /* list layout */
   return (
-    <article
-      className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl bg-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg md:flex-row md:items-stretch"
-      style={{ border: `1.5px solid ${product.accentColor}20`, boxShadow: '0 2px 16px -4px rgba(28,28,28,0.06)' }}
-    >
-      {/* image */}
+    <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-authority/25 hover:shadow-[0_20px_48px_-14px_rgba(20,107,112,0.13)] md:flex-row md:items-stretch">
       <Link
         href={`/products/${product.slug}`}
-        className="relative block w-full shrink-0 overflow-hidden md:w-[min(42%,260px)] md:self-stretch"
-        style={{ background: `${product.accentColor}08` }}
+        className="relative block w-full shrink-0 overflow-hidden bg-[#FAFAFA] md:w-[min(42%,280px)] md:max-w-[300px] md:self-stretch lg:w-[40%] lg:max-w-none"
       >
-        <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.02] md:absolute md:inset-0 md:aspect-auto md:h-full md:min-h-[220px]">
+        <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.02] md:absolute md:inset-0 md:aspect-auto md:h-full md:min-h-[260px]">
           {isPowder ? (
-            <PowderPlaceholder product={product} />
+            <PowderPlaceholder product={product} size="card" />
           ) : (
             <>
               <ProductSoldBadge product={product} />
@@ -118,7 +129,7 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
                 src={cardImage}
                 alt={product.nameAr}
                 fill
-                sizes="(max-width: 767px) 100vw, (max-width: 1200px) 45vw, 280px"
+                sizes="(max-width: 767px) 100vw, (max-width: 1200px) 45vw, 320px"
                 className="object-cover object-center"
               />
             </>
@@ -126,40 +137,38 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
         </div>
       </Link>
 
-      {/* divider */}
-      <div className="hidden w-[2px] shrink-0 self-stretch md:block" style={{ background: `linear-gradient(180deg, transparent, ${product.accentColor}40, transparent)` }} aria-hidden />
+      <div
+        className="h-[3px] w-full shrink-0 md:hidden"
+        style={{ background: `linear-gradient(90deg, transparent, ${product.accentColor}66, transparent)` }}
+        aria-hidden
+      />
+      <div
+        className="hidden w-[3px] shrink-0 self-stretch md:block"
+        style={{ background: `linear-gradient(180deg, transparent, ${product.accentColor}55, transparent)` }}
+        aria-hidden
+      />
 
-      {/* body */}
-      <div className="flex min-w-0 flex-1 flex-col gap-3 p-5 sm:p-6 md:py-7">
-        <div className="flex items-center justify-between gap-2">
-          <span className="rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider" style={{ background: `${product.accentColor}12`, color: product.accentColor, border: `1px solid ${product.accentColor}25` }}>
-            {isPowder ? 'ساشيه مسحوق' : 'علكة'}
-          </span>
-          <span className="rounded-full px-3 py-1 text-[11px] font-bold text-white" style={{ background: product.accentColor }}>
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:gap-4 sm:p-6 md:py-7 md:ps-6 md:pe-7">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <span
+            className="rounded-full px-3 py-1.5 text-sm font-bold tracking-wide text-white"
+            style={{ background: product.accentColor }}
+          >
             {product.badgeAr}
           </span>
         </div>
 
-        <h3 className="text-xl font-black leading-snug text-[#1C1C1C] sm:text-2xl">{product.nameAr}</h3>
+        <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight text-charcoal sm:text-2xl lg:text-[1.65rem]">
+          {product.nameAr}
+        </h3>
 
-        <div className="flex items-baseline gap-2 border-b border-[#f0ece8] pb-4">
-          <span className="text-2xl font-black tabular-nums" style={{ color: product.accentColor }}>
-            {formatSarAmount(getPriceForQty(1))}
-          </span>
-          <span className="text-xs text-[#5c5656]">/ قطعة · 3 قطع بـ {formatSarAmount(getPriceForQty(3))}</span>
+        <div className="flex flex-wrap items-end justify-between gap-3 border-b border-border/80 pb-4">
+          <PriceBlock product={product} />
         </div>
 
-        <p className="line-clamp-3 text-sm leading-relaxed text-[#5c5656]">{product.subtitleAr}</p>
+        <p className="line-clamp-3 break-words text-sm leading-relaxed text-muted sm:text-[15px]">{product.subtitleAr}</p>
 
-        <Link
-          href={`/products/${product.slug}`}
-          onClick={handleClick}
-          className="mt-auto flex min-h-[3rem] items-center justify-between rounded-2xl px-5 py-3 text-sm font-black text-white transition hover:brightness-105"
-          style={{ background: product.accentColor }}
-        >
-          <span>اكتشفي المنتج</span>
-          <span>←</span>
-        </Link>
+        <CtaRow product={product} />
       </div>
     </article>
   )

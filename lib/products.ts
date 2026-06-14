@@ -492,8 +492,8 @@ export const PRODUCTS: Product[] = [
     heroSubAr:
       'ساشيه يومي في كوب ماء أو عصير — مو شامبو ولا علاج طبي. مكمّل غذائي يكمّل تغذية متوازنة وعناية خارجية مناسبة. النتيجة تختلف حسب الجسم والالتزام.',
     badgeAr: 'مسحوق الشعر القوي',
-    accentColor: '#8B6248',
-    bgColor: '#FEF3E4',
+    accentColor: '#B5896A',
+    bgColor: '#FAF1E8',
     coverImage: '/products/rawnaq-c-cover.jpg',
     coverWidth: 1024,
     coverHeight: 1024,
@@ -585,8 +585,8 @@ export const PRODUCTS: Product[] = [
     heroSubAr:
       'ساشيه يومي في ماء أو عصير — يكمّل روتين العناية الخارجية، مو يستبدله. مكمّل غذائي لا يدّعي علاج حبوب طبي. الجرعة على الغلاف المعتمد.',
     badgeAr: 'مسحوق البشرة النقية',
-    accentColor: '#2D7D6F',
-    bgColor: '#E5F3F0',
+    accentColor: '#7A9484',
+    bgColor: '#EDF2EE',
     coverImage: '/products/khiffabiotic.png',
     coverWidth: 1024,
     coverHeight: 769,
@@ -675,8 +675,8 @@ export const PRODUCTS: Product[] = [
     heroSubAr:
       'ساشيه يومي لدعم التوازن الهرموني — مو دواء طبي ولا بديل طبيب أمراض نسائية. مكمّل يكمّل نمطاً صحياً متوازناً. الجرعة على الغلاف المعتمد.',
     badgeAr: 'مسحوق الدورة الهادئة',
-    accentColor: '#7B5EA7',
-    bgColor: '#F0EBF8',
+    accentColor: '#8E6C8E',
+    bgColor: '#F0E9F0',
     coverImage: '/products/laylmag.png',
     coverWidth: 1024,
     coverHeight: 769,

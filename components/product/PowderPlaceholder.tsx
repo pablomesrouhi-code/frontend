@@ -19,17 +19,17 @@ export default function PowderPlaceholder({ product, size = 'card', className = 
 
   return (
     <div
-      className={`flex h-full w-full flex-col items-center justify-center gap-5 rounded-2xl p-6 ${className}`}
+      className={`relative flex h-full w-full flex-col items-center justify-center gap-5 overflow-hidden rounded-2xl p-6 ${className}`}
       style={{
         background: `linear-gradient(160deg, ${product.accentColor}10 0%, ${product.accentColor}05 50%, ${product.accentColor}10 100%)`,
-        border: `1.5px solid ${product.accentColor}20`,
+        border: `1.5px solid ${product.accentColor}25`,
         minHeight: sizing.minH,
       }}
     >
-      {/* Decorative dots — subtle */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl opacity-30">
-        <div className="absolute -end-10 -top-10 h-40 w-40 rounded-full blur-3xl" style={{ background: product.accentColor + '30' }} aria-hidden />
-        <div className="absolute -bottom-10 -start-10 h-32 w-32 rounded-full blur-3xl" style={{ background: product.accentColor + '20' }} aria-hidden />
+      {/* Decorative blur — subtle, brand-tone */}
+      <div className="pointer-events-none absolute inset-0 opacity-40" aria-hidden>
+        <div className="absolute -end-10 -top-10 h-40 w-40 rounded-full blur-3xl" style={{ background: product.accentColor + '30' }} />
+        <div className="absolute -bottom-10 -start-10 h-32 w-32 rounded-full blur-3xl" style={{ background: product.accentColor + '20' }} />
       </div>
 
       {/* Icon */}
