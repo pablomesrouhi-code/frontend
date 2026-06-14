@@ -7,26 +7,49 @@ import ProductSoldBadge from '@/components/product/ProductSoldBadge'
 
 type Props = {
   product: Product
-  /** `list` = صفحة المنتجات: صورة بجانب النص على الديسكتوب + سعر بارز. `grid` = بطاقة عمودية للصفحة الرئيسية وشبكات ضيقة */
   layout?: 'list' | 'grid'
-  /** بطاقات cross-sell بصفحة المنتج — تعرض `homeCardImage` (OEM) إن وُجدت */
   useHomeCardImage?: boolean
 }
 
-function PriceBlock({ product }: { product: Product }) {
-  const priceOne = getPriceForQty(1)
-  const priceThree = getPriceForQty(3)
-
+/** Gradient placeholder shown for products without a real image yet */
+function PowderPlaceholder({ product }: { product: Product }) {
   return (
-    <div className="text-start">
-      <p className="text-[11px] font-bold uppercase tracking-wide text-muted">سعر القطعة</p>
-      <p className="text-3xl font-black tabular-nums sm:text-4xl" style={{ color: product.accentColor }}>
-        <span className="sar-price">{formatSarAmount(priceOne)}</span>
+    <div
+      className="flex h-full w-full flex-col items-center justify-center gap-3 px-6 py-10"
+      style={{
+        background: `linear-gradient(145deg, ${product.accentColor}18 0%, ${product.accentColor}08 100%)`,
+        minHeight: '220px',
+      }}
+    >
+      <div
+        className="flex h-20 w-20 items-center justify-center rounded-3xl text-4xl shadow-lg"
+        style={{ background: `${product.accentColor}22`, border: `1.5px solid ${product.accentColor}30` }}
+      >
+        🌿
+      </div>
+      <p className="text-center text-sm font-bold" style={{ color: product.accentColor }}>
+        {product.nameAr}
       </p>
-      <p className="mt-1 text-xs leading-snug text-muted">
-        3 قطع بـ <span className="font-bold text-charcoal"><span className="sar-price">{formatSarAmount(priceThree)}</span></span> من صفحة المنتج
+      <p className="text-center text-[11px] leading-snug text-[#5c5656]">
+        الصورة الرسمية قادمة قريباً
       </p>
     </div>
+  )
+}
+
+function FormatBadge({ product }: { product: Product }) {
+  const isPowder = product.format === 'powder_sachet'
+  return (
+    <span
+      className="rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-wider"
+      style={{
+        background: isPowder ? `${product.accentColor}15` : '#f1e6e4',
+        color: product.accentColor,
+        border: `1px solid ${product.accentColor}30`,
+      }}
+    >
+      {isPowder ? 'ساشيه مسحوق' : 'علكة'}
+    </span>
   )
 }
 
@@ -34,22 +57,14 @@ function CtaRow({ product }: { product: Product }) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group/btn mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold transition-[color,background-color,border-color,transform] duration-200 ease-out active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100"
-      style={{ background: '#FFFFFF', color: product.accentColor, border: `2px solid ${product.accentColor}44` }}
+      className="group/btn mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold transition-all duration-200 ease-out active:scale-[0.99]"
+      style={{ background: product.accentColor, color: '#fff' }}
       onClick={() => {
         trackAddToWishlist({
           content_ids: [product.id],
           value: getPriceForQty(1),
           currency: 'SAR',
         })
-      }}
-      onMouseEnter={(e) => {
-        ;(e.currentTarget as HTMLElement).style.background = product.accentColor
-        ;(e.currentTarget as HTMLElement).style.color = '#fff'
-      }}
-      onMouseLeave={(e) => {
-        ;(e.currentTarget as HTMLElement).style.background = '#FFFFFF'
-        ;(e.currentTarget as HTMLElement).style.color = product.accentColor
       }}
     >
       <span>اكتشفي المنتج</span>
@@ -59,54 +74,62 @@ function CtaRow({ product }: { product: Product }) {
 }
 
 export default function ProductCard({ product, layout = 'grid', useHomeCardImage = false }: Props) {
+  const isPowder = product.format === 'powder_sachet'
   const cardImage = useHomeCardImage && product.homeCardImage ? product.homeCardImage : product.coverImage
 
   if (layout === 'grid') {
     return (
-      <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-authority/25 hover:shadow-[0_20px_48px_-14px_rgba(20,107,112,0.13)]">
+      <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl" style={{ borderColor: `${product.accentColor}22` }}>
         <Link href={`/products/${product.slug}`} className="relative block shrink-0 overflow-hidden bg-[#FAFAFA]">
           <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">
-            <ProductSoldBadge product={product} />
-            <Image
-              src={cardImage}
-              alt={product.nameAr}
-              fill
-              sizes="(max-width: 767px) 100vw, 33vw"
-              className="object-cover object-center"
-            />
+            {isPowder ? (
+              <PowderPlaceholder product={product} />
+            ) : (
+              <>
+                <ProductSoldBadge product={product} />
+                <Image
+                  src={cardImage}
+                  alt={product.nameAr}
+                  fill
+                  sizes="(max-width: 767px) 100vw, 33vw"
+                  className="object-cover object-center"
+                />
+              </>
+            )}
           </div>
         </Link>
 
+        {/* accent line */}
         <div
           className="h-[3px] w-full shrink-0"
-          style={{ background: `linear-gradient(90deg, transparent, ${product.accentColor}66, transparent)` }}
+          style={{ background: `linear-gradient(90deg, transparent, ${product.accentColor}, transparent)` }}
           aria-hidden
         />
 
-        <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:gap-4 sm:p-7">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:gap-4 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            {product.format === 'powder_sachet' ? (
-              <span className="rounded-full border border-current px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ color: product.accentColor }}>
-                ساشيه مسحوق
-              </span>
-            ) : (
-              <span className="rounded-full border border-current px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ color: product.accentColor }}>
-                علكة
-              </span>
-            )}
+            <FormatBadge product={product} />
             <span
-              className="rounded-full px-3 py-1.5 text-sm font-bold tracking-wide text-white"
+              className="rounded-full px-3 py-1 text-[11px] font-bold tracking-wide text-white"
               style={{ background: product.accentColor }}
             >
               {product.badgeAr}
             </span>
           </div>
 
-          <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight text-charcoal sm:text-3xl md:text-[1.875rem]">
+          <h3 className="text-[1.35rem] font-black leading-snug text-[#1C1C1C] sm:text-2xl">
             {product.nameAr}
           </h3>
 
-          <p className="line-clamp-3 break-words text-sm leading-relaxed text-muted sm:text-base">{product.subtitleAr}</p>
+          <p className="line-clamp-3 text-sm leading-relaxed text-[#5c5656] sm:text-base">{product.subtitleAr}</p>
+
+          {/* price row */}
+          <div className="flex items-baseline gap-2 border-t border-[#f0ece8] pt-3">
+            <p className="text-2xl font-black tabular-nums" style={{ color: product.accentColor }}>
+              {formatSarAmount(getPriceForQty(1))}
+            </p>
+            <p className="text-xs text-[#5c5656]">/ قطعة</p>
+          </div>
 
           <CtaRow product={product} />
         </div>
@@ -114,29 +137,31 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
     )
   }
 
+  /* list layout */
   return (
-    <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-authority/25 hover:shadow-[0_20px_48px_-14px_rgba(20,107,112,0.13)] md:flex-row md:items-stretch">
+    <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-xl md:flex-row md:items-stretch" style={{ borderColor: `${product.accentColor}22` }}>
       <Link
         href={`/products/${product.slug}`}
-        className="relative block w-full shrink-0 overflow-hidden bg-[#FAFAFA] md:w-[min(42%,280px)] md:max-w-[300px] md:self-stretch lg:w-[40%] lg:max-w-none"
+        className="relative block w-full shrink-0 overflow-hidden bg-[#FAFAFA] md:w-[min(42%,280px)] md:self-stretch"
       >
         <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.02] md:absolute md:inset-0 md:aspect-auto md:h-full md:min-h-[260px]">
-          <ProductSoldBadge product={product} />
-          <Image
-            src={cardImage}
-            alt={product.nameAr}
-            fill
-            sizes="(max-width: 767px) 100vw, (max-width: 1200px) 45vw, 320px"
-            className="object-cover object-center"
-          />
+          {isPowder ? (
+            <PowderPlaceholder product={product} />
+          ) : (
+            <>
+              <ProductSoldBadge product={product} />
+              <Image
+                src={cardImage}
+                alt={product.nameAr}
+                fill
+                sizes="(max-width: 767px) 100vw, (max-width: 1200px) 45vw, 320px"
+                className="object-cover object-center"
+              />
+            </>
+          )}
         </div>
       </Link>
 
-      <div
-        className="h-[3px] w-full shrink-0 md:hidden"
-        style={{ background: `linear-gradient(90deg, transparent, ${product.accentColor}66, transparent)` }}
-        aria-hidden
-      />
       <div
         className="hidden w-[3px] shrink-0 self-stretch md:block"
         style={{ background: `linear-gradient(180deg, transparent, ${product.accentColor}55, transparent)` }}
@@ -145,32 +170,24 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
 
       <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:gap-4 sm:p-6 md:py-7 md:ps-6 md:pe-7">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          {product.format === 'powder_sachet' ? (
-            <span className="rounded-full border border-current px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ color: product.accentColor }}>
-              ساشيه مسحوق
-            </span>
-          ) : (
-            <span className="rounded-full border border-current px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ color: product.accentColor }}>
-              علكة
-            </span>
-          )}
-          <span
-            className="rounded-full px-3 py-1.5 text-sm font-bold tracking-wide text-white"
-            style={{ background: product.accentColor }}
-          >
+          <FormatBadge product={product} />
+          <span className="rounded-full px-3 py-1 text-[11px] font-bold tracking-wide text-white" style={{ background: product.accentColor }}>
             {product.badgeAr}
           </span>
         </div>
 
-        <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight text-charcoal sm:text-2xl lg:text-[1.65rem]">
+        <h3 className="text-[1.35rem] font-black leading-snug text-[#1C1C1C] sm:text-2xl">
           {product.nameAr}
         </h3>
 
-        <div className="flex flex-wrap items-end justify-between gap-3 border-b border-border/80 pb-4">
-          <PriceBlock product={product} />
+        <div className="flex items-baseline gap-2 border-b border-[#f0ece8] pb-4">
+          <p className="text-3xl font-black tabular-nums" style={{ color: product.accentColor }}>
+            {formatSarAmount(getPriceForQty(1))}
+          </p>
+          <p className="text-xs text-[#5c5656]">/ قطعة · 3 قطع بـ {formatSarAmount(getPriceForQty(3))}</p>
         </div>
 
-        <p className="line-clamp-3 break-words text-sm leading-relaxed text-muted sm:text-[15px]">{product.subtitleAr}</p>
+        <p className="line-clamp-3 text-sm leading-relaxed text-[#5c5656] sm:text-[15px]">{product.subtitleAr}</p>
 
         <CtaRow product={product} />
       </div>
