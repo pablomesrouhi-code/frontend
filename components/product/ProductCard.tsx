@@ -63,10 +63,18 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
   const isPowder = product.format === 'powder_sachet'
   const cardImage = useHomeCardImage && product.homeCardImage ? product.homeCardImage : product.coverImage
   const showCardPhoto = !isPowder || Boolean(useHomeCardImage && product.homeCardImage)
-  const imageFitClass =
-    useHomeCardImage && product.homeCardImage
-      ? 'object-contain object-center p-3 sm:p-4'
-      : 'object-cover object-center'
+  const cardImageNode = (
+    <>
+      <ProductSoldBadge product={product} />
+      <Image
+        src={cardImage}
+        alt={product.nameAr}
+        fill
+        sizes={layout === 'grid' ? '(max-width: 767px) 100vw, 33vw' : '(max-width: 767px) 100vw, (max-width: 1200px) 45vw, 320px'}
+        className="object-cover object-center"
+      />
+    </>
+  )
 
   if (layout === 'grid') {
     return (
@@ -76,16 +84,7 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
             {!showCardPhoto ? (
               <PowderPlaceholder product={product} size="card" />
             ) : (
-              <>
-                <ProductSoldBadge product={product} />
-                <Image
-                  src={cardImage}
-                  alt={product.nameAr}
-                  fill
-                  sizes="(max-width: 767px) 100vw, 33vw"
-                  className={imageFitClass}
-                />
-              </>
+              cardImageNode
             )}
           </div>
         </Link>
@@ -128,16 +127,7 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
           {!showCardPhoto ? (
             <PowderPlaceholder product={product} size="card" />
           ) : (
-            <>
-              <ProductSoldBadge product={product} />
-              <Image
-                src={cardImage}
-                alt={product.nameAr}
-                fill
-                sizes="(max-width: 767px) 100vw, (max-width: 1200px) 45vw, 320px"
-                className={imageFitClass}
-              />
-            </>
+            cardImageNode
           )}
         </div>
       </Link>
