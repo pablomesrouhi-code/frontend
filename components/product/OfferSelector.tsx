@@ -1,5 +1,6 @@
 'use client'
 import { OFFERS, formatSarAmount } from '@/lib/products'
+import { getProductOfferActiveStyle, getProductOfferInactiveStyle } from '@/lib/product-accent'
 
 const UNIT_COMPARE = 199
 
@@ -26,7 +27,7 @@ export default function OfferSelector({ selected, onChange, accentColor = '#b848
         <p className="text-[10px] font-black uppercase tracking-[0.18em] sm:text-xs" style={{ color: accentColor }}>
           اختيار العرض
         </p>
-        <p className="text-base font-black leading-snug text-charcoal sm:text-lg md:text-xl md:leading-tight">
+        <p className="text-base font-black leading-snug sm:text-lg md:text-xl md:leading-tight" style={{ color: accentColor }}>
           أسعار واضحة — تختارين العرض قبل الطلب
         </p>
         <span
@@ -47,18 +48,10 @@ export default function OfferSelector({ selected, onChange, accentColor = '#b848
               onClick={() => onChange(offer.qty)}
               className={`relative flex min-h-[3.5rem] flex-wrap items-center justify-between gap-x-2.5 gap-y-2 rounded-2xl border-2 px-4 py-3 text-start sm:min-h-[3.75rem] sm:flex-nowrap sm:rounded-3xl sm:px-5 sm:py-4 ${
                 active
-                  ? 'shadow-[0_8px_32px_-10px_rgba(28,28,28,0.1),inset_0_1px_0_rgba(255,255,255,0.88)]'
-                  : 'border-gray-200/90 bg-white/95 hover:border-gray-300/95 hover:bg-white hover:shadow-[0_6px_22px_-10px_rgba(26,25,21,0.08)] active:scale-[0.99]'
+                  ? ''
+                  : 'hover:brightness-[0.99] active:scale-[0.99]'
               } cursor-pointer touch-manipulation overflow-hidden transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out`}
-              style={
-                active
-                  ? {
-                      borderColor: accentColor,
-                      background: `linear-gradient(135deg, color-mix(in srgb, ${accentColor} 14%, white) 0%, color-mix(in srgb, ${accentColor} 6%, white) 100%)`,
-                      boxShadow: `0 0 0 1px ${accentColor}44, 0 12px 40px -12px ${accentColor}55`,
-                    }
-                  : undefined
-              }
+              style={active ? getProductOfferActiveStyle(accentColor) : getProductOfferInactiveStyle(accentColor)}
             >
               {multi && (
                 <span
@@ -88,7 +81,7 @@ export default function OfferSelector({ selected, onChange, accentColor = '#b848
                   )}
                 </div>
                 <div className="flex min-w-0 flex-wrap items-center justify-end gap-x-2 gap-y-1">
-                  <span className="break-words text-start text-sm font-bold text-[#1C1C1C] sm:text-base">{offer.label}</span>
+                  <span className="break-words text-start text-sm font-bold sm:text-base" style={{ color: active ? accentColor : '#1C1C1C' }}>{offer.label}</span>
                   {offer.badge && (
                     <span
                       className="offer-badge-shine relative shrink-0 overflow-hidden rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wide text-white shadow-sm sm:px-3 sm:py-1 sm:text-[11px]"
@@ -107,7 +100,10 @@ export default function OfferSelector({ selected, onChange, accentColor = '#b848
                   {formatSarAmount(offer.price)}
                 </span>
                 {save != null && (
-                  <span className="max-w-full rounded-full bg-emerald-600/12 px-2 py-0.5 text-end text-[10px] font-black leading-snug text-emerald-900 [overflow-wrap:anywhere] ring-1 ring-emerald-600/30 sm:px-2.5 sm:text-[11px] sm:leading-snug">
+                  <span
+                    className="max-w-full rounded-full px-2 py-0.5 text-end text-[10px] font-black leading-snug [overflow-wrap:anywhere] sm:px-2.5 sm:text-[11px] sm:leading-snug"
+                    style={{ background: `${accentColor}14`, color: accentColor, border: `1px solid ${accentColor}33` }}
+                  >
                     وفّر <bdi className="tabular-nums font-black">{formatSarAmount(save)}</bdi> مقارنة بالوحدة
                   </span>
                 )}

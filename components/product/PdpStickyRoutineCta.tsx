@@ -1,6 +1,7 @@
 'use client'
 
 import type { CSSProperties } from 'react'
+import { getProductSolidButtonStyle } from '@/lib/product-accent'
 
 type Props = {
   visible: boolean
@@ -49,10 +50,7 @@ export default function PdpStickyRoutineCta({
             onClick={onClick}
             tabIndex={visible ? 0 : -1}
             className="flex w-full touch-manipulation flex-row items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-white shadow-sm transition-[transform,filter] active:scale-[0.99]"
-            style={{
-              background: `linear-gradient(145deg, ${accentColor} 0%, ${accentDeep} 100%)`,
-              boxShadow: `0 4px 16px -4px ${accentColor}55`,
-            }}
+            style={getProductSolidButtonStyle(accentColor)}
           >
             <span className="flex flex-col items-center gap-0.5 text-center">
               <span className="flex flex-row-reverse items-center justify-center gap-2">

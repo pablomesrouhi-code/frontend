@@ -10,19 +10,7 @@ import {
   trackViewContent,
 } from '@/lib/tracking/client'
 
-function shadeTowardBlack(hex: string, t: number) {
-  const h = hex.replace('#', '')
-  const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h
-  const n = parseInt(full, 16)
-  const r = (n >> 16) & 255
-  const g = (n >> 8) & 255
-  const b = n & 255
-  const mix = (c: number) => Math.round(c * (1 - t))
-  const R = mix(r)
-  const G = mix(g)
-  const B = mix(b)
-  return `#${[R, G, B].map((x) => x.toString(16).padStart(2, '0')).join('')}`
-}
+import { getProductSolidButtonStyle, shadeTowardBlack } from '@/lib/product-accent'
 
 function CartIcon({ className }: { className?: string }) {
   return (
@@ -106,9 +94,10 @@ export default function ProductPageClient({
     <>
     <div
       ref={priceBlockRef}
-      className="relative min-w-0 max-w-full overflow-hidden rounded-[1.35rem] border border-white/75 p-5 shadow-[0_2px_8px_-2px_rgba(26,24,21,0.04),0_24px_56px_-28px_rgba(26,24,21,0.11),inset_0_1px_0_0_rgba(255,255,255,0.94)] ring-1 ring-black/[0.02] sm:rounded-3xl sm:p-6"
+      className="relative min-w-0 max-w-full overflow-hidden rounded-[1.35rem] border p-5 shadow-[0_2px_8px_-2px_rgba(26,24,21,0.04),0_24px_56px_-28px_rgba(26,24,21,0.11),inset_0_1px_0_0_rgba(255,255,255,0.94)] ring-1 ring-black/[0.02] sm:rounded-3xl sm:p-6"
       style={{
-        background: `linear-gradient(165deg, #ffffff 0%, color-mix(in srgb, ${product.bgColor} 35%, white) 55%, color-mix(in srgb, ${product.bgColor} 18%, white) 100%)`,
+        borderColor: `${accent}33`,
+        background: `linear-gradient(165deg, #ffffff 0%, color-mix(in srgb, ${product.bgColor} 35%, white) 55%, color-mix(in srgb, ${accent} 8%, white) 100%)`,
       }}
     >
       <div
@@ -127,16 +116,13 @@ export default function ProductPageClient({
 
         <PdpRoutineNote productId={product.id} format={product.format} accentColor={accent} />
 
-        <div className="h-px w-full bg-gradient-to-l from-transparent via-[#dfd6d4] to-transparent" aria-hidden />
+        <div className="h-px w-full" style={{ background: `linear-gradient(to left, transparent, ${accent}44, transparent)` }} aria-hidden />
 
         <button
           onClick={handleAdd}
           type="button"
           className="group relative w-full max-w-full overflow-hidden rounded-2xl px-4 py-4 text-sm font-extrabold tracking-tight text-white transition-[transform,filter,box-shadow] duration-300 ease-out break-words touch-manipulation hover:brightness-105 hover:shadow-lg active:translate-y-[1px] sm:rounded-3xl sm:px-5 sm:py-[1.1rem] sm:text-base md:text-lg"
-          style={{
-            background: `linear-gradient(145deg, ${accent} 0%, ${accentDeep} 55%, ${shadeTowardBlack(accent, 0.12)} 100%)`,
-            boxShadow: `0 6px 24px -4px ${accent}66`,
-          }}
+          style={getProductSolidButtonStyle(accent)}
         >
           <span
             className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/55 to-transparent opacity-70"

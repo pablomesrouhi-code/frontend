@@ -212,22 +212,13 @@ export default function HomePage() {
               اختيارات عميلات نبتة لابو
             </h2>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-              ثلاثة الأكثر طلباً — جنب بعض، كل منتج بإطار بلونه.
+              ثلاثة الأكثر طلباً — جنب بعض.
             </p>
           </div>
 
           <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             {BEST_SELLERS.map((p) => (
-              <div
-                key={p.id}
-                className="h-full rounded-[1.4rem] p-[3px] sm:rounded-[1.5rem] sm:p-[3.5px]"
-                style={{
-                  background: `linear-gradient(155deg, ${p.accentColor} 0%, ${p.accentColor}88 55%, ${p.accentColor}44 100%)`,
-                  boxShadow: `0 16px 48px -20px ${p.accentColor}55`,
-                }}
-              >
-                <ProductCard product={p} useHomeCardImage />
-              </div>
+              <ProductCard key={p.id} product={p} useHomeCardImage />
             ))}
           </div>
 
@@ -264,16 +255,7 @@ export default function HomePage() {
           </div>
           <div className="mb-10 grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             {GUMMY_PRODUCTS.map((p) => (
-              <div
-                key={p.id}
-                className="h-full rounded-[1.4rem] p-[3px]"
-                style={{
-                  background: `linear-gradient(155deg, ${p.accentColor} 0%, ${p.accentColor}66 100%)`,
-                  boxShadow: `0 12px 36px -18px ${p.accentColor}44`,
-                }}
-              >
-                <ProductCard product={p} useHomeCardImage />
-              </div>
+              <ProductCard key={p.id} product={p} useHomeCardImage />
             ))}
           </div>
 
@@ -286,16 +268,7 @@ export default function HomePage() {
           </div>
           <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             {POWDER_PRODUCTS.map((p) => (
-              <div
-                key={p.id}
-                className="h-full rounded-[1.4rem] p-[3px]"
-                style={{
-                  background: `linear-gradient(155deg, ${p.accentColor} 0%, ${p.accentColor}66 100%)`,
-                  boxShadow: `0 12px 36px -18px ${p.accentColor}44`,
-                }}
-              >
-                <ProductCard product={p} useHomeCardImage />
-              </div>
+              <ProductCard key={p.id} product={p} useHomeCardImage />
             ))}
           </div>
 

@@ -112,16 +112,7 @@ export default function CollectionPage() {
           </div>
           <div className="grid min-w-0 w-full grid-cols-1 items-stretch gap-6 md:gap-8">
             {GUMMY_PRODUCTS.map((p) => (
-              <div
-                key={p.id}
-                className="rounded-[1.35rem] p-[3px]"
-                style={{
-                  background: `linear-gradient(155deg, ${p.accentColor} 0%, ${p.accentColor}66 100%)`,
-                  boxShadow: `0 12px 36px -18px ${p.accentColor}44`,
-                }}
-              >
-                <ProductCard product={p} layout="list" useHomeCardImage />
-              </div>
+              <ProductCard key={p.id} product={p} layout="list" useHomeCardImage />
             ))}
           </div>
         </div>
@@ -141,16 +132,7 @@ export default function CollectionPage() {
           </div>
           <div className="grid min-w-0 w-full grid-cols-1 items-stretch gap-6 md:gap-8">
             {POWDER_PRODUCTS.map((p) => (
-              <div
-                key={p.id}
-                className="rounded-[1.35rem] p-[3px]"
-                style={{
-                  background: `linear-gradient(155deg, ${p.accentColor} 0%, ${p.accentColor}66 100%)`,
-                  boxShadow: `0 12px 36px -18px ${p.accentColor}44`,
-                }}
-              >
-                <ProductCard product={p} layout="list" useHomeCardImage />
-              </div>
+              <ProductCard key={p.id} product={p} layout="list" useHomeCardImage />
             ))}
           </div>
         </div>

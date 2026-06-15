@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Product, getPriceForQty, formatSarAmount, getFormatLabelAr } from '@/lib/products'
+import { getProductSolidButtonStyle } from '@/lib/product-accent'
 import { trackAddToWishlist } from '@/lib/tracking/client'
 import ProductSoldBadge from '@/components/product/ProductSoldBadge'
 import PowderPlaceholder from '@/components/product/PowderPlaceholder'
@@ -24,8 +25,8 @@ function PriceBlock({ product }: { product: Product }) {
       <p className="text-3xl font-black tabular-nums sm:text-4xl" style={{ color: product.accentColor }}>
         <span className="sar-price">{formatSarAmount(priceOne)}</span>
       </p>
-      <p className="mt-1 text-xs leading-snug text-muted">
-        3 قطع بـ <span className="font-bold text-charcoal"><span className="sar-price">{formatSarAmount(priceThree)}</span></span> من صفحة المنتج
+      <p className="mt-1 text-xs leading-snug" style={{ color: `${product.accentColor}bb` }}>
+        3 قطع بـ <span className="font-bold" style={{ color: product.accentColor }}><span className="sar-price">{formatSarAmount(priceThree)}</span></span> من صفحة المنتج
       </p>
     </div>
   )
@@ -52,58 +53,14 @@ function BadgeRow({ product }: { product: Product }) {
   )
 }
 
-function shadeTowardBlack(hex: string, t: number) {
-  const h = hex.replace('#', '')
-  const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h
-  const n = parseInt(full, 16)
-  const r = (n >> 16) & 255
-  const g = (n >> 8) & 255
-  const b = n & 255
-  const mix = (c: number) => Math.round(c * (1 - t))
-  return `#${[mix(r), mix(g), mix(b)].map((x) => x.toString(16).padStart(2, '0')).join('')}`
-}
-
-function CtaRow({ product, variant = 'solid' }: { product: Product; variant?: 'solid' | 'outline' }) {
+function CtaRow({ product }: { product: Product }) {
   const accent = product.accentColor
-  const accentDeep = shadeTowardBlack(accent, 0.18)
-
-  if (variant === 'outline') {
-    return (
-      <Link
-        href={`/products/${product.slug}`}
-        className="group/btn mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold transition-[color,background-color,border-color,transform] duration-200 ease-out active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100"
-        style={{ background: '#FFFFFF', color: accent, border: `2px solid ${accent}44` }}
-        onClick={() => {
-          trackAddToWishlist({
-            content_ids: [product.id],
-            value: getPriceForQty(1),
-            currency: 'SAR',
-          })
-        }}
-        onMouseEnter={(e) => {
-          ;(e.currentTarget as HTMLElement).style.background = accent
-          ;(e.currentTarget as HTMLElement).style.color = '#fff'
-        }}
-        onMouseLeave={(e) => {
-          ;(e.currentTarget as HTMLElement).style.background = '#FFFFFF'
-          ;(e.currentTarget as HTMLElement).style.color = accent
-        }}
-      >
-        <span>اكتشفي المنتج</span>
-        <span className="transition-transform group-hover/btn:-translate-x-1">←</span>
-      </Link>
-    )
-  }
 
   return (
     <Link
       href={`/products/${product.slug}`}
       className="group/btn mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold text-white transition-[transform,filter,box-shadow] duration-200 ease-out hover:brightness-105 active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100"
-      style={{
-        background: `linear-gradient(145deg, ${accent} 0%, ${accentDeep} 100%)`,
-        border: `2px solid ${accent}`,
-        boxShadow: `0 6px 20px -4px ${accent}66`,
-      }}
+      style={getProductSolidButtonStyle(accent)}
       onClick={() => {
         trackAddToWishlist({
           content_ids: [product.id],
@@ -137,12 +94,7 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
 
   if (layout === 'grid') {
     return (
-      <article
-        className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border-2 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1"
-        style={{ borderColor: `${product.accentColor}44`, boxShadow: `0 12px 40px -18px ${product.accentColor}33` }}
-        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = product.accentColor; (e.currentTarget as HTMLElement).style.boxShadow = `0 20px 48px -14px ${product.accentColor}44`; }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = `${product.accentColor}44`; (e.currentTarget as HTMLElement).style.boxShadow = `0 12px 40px -18px ${product.accentColor}33`; }}
-      >
+      <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_20px_48px_-14px_rgba(26,25,21,0.1)]">
         <Link href={`/products/${product.slug}`} className="relative block shrink-0 overflow-hidden bg-[#FAFAFA]">
           <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">
             {!showCardPhoto ? (
@@ -175,12 +127,7 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
   }
 
   return (
-    <article
-      className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border-2 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 md:flex-row md:items-stretch"
-      style={{ borderColor: `${product.accentColor}44`, boxShadow: `0 12px 40px -18px ${product.accentColor}33` }}
-      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = product.accentColor; (e.currentTarget as HTMLElement).style.boxShadow = `0 20px 48px -14px ${product.accentColor}44`; }}
-      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = `${product.accentColor}44`; (e.currentTarget as HTMLElement).style.boxShadow = `0 12px 40px -18px ${product.accentColor}33`; }}
-    >
+    <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_20px_48px_-14px_rgba(26,25,21,0.1)] md:flex-row md:items-stretch">
       <Link
         href={`/products/${product.slug}`}
         className="relative block w-full shrink-0 overflow-hidden bg-[#FAFAFA] md:w-[min(42%,280px)] md:max-w-[300px] md:self-stretch lg:w-[40%] lg:max-w-none"
