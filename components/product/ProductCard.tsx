@@ -116,7 +116,12 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
 
   if (layout === 'grid') {
     return (
-      <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-authority/25 hover:shadow-[0_20px_48px_-14px_rgba(20,107,112,0.13)]">
+      <article
+        className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1"
+        style={{ ['--accent' as string]: product.accentColor }}
+        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = `${product.accentColor}44`; (e.currentTarget as HTMLElement).style.boxShadow = `0 20px 48px -14px ${product.accentColor}33`; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = ''; (e.currentTarget as HTMLElement).style.boxShadow = ''; }}
+      >
         <Link href={`/products/${product.slug}`} className="relative block shrink-0 overflow-hidden bg-[#FAFAFA]">
           <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">
             {!showCardPhoto ? (
@@ -143,7 +148,7 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
             </span>
           </div>
 
-          <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight text-charcoal sm:text-3xl md:text-[1.875rem]">
+          <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight sm:text-3xl md:text-[1.875rem]" style={{ color: product.accentColor }}>
             {product.nameAr}
           </h3>
 
@@ -156,7 +161,11 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
   }
 
   return (
-    <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-authority/25 hover:shadow-[0_20px_48px_-14px_rgba(20,107,112,0.13)] md:flex-row md:items-stretch">
+    <article
+      className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 md:flex-row md:items-stretch"
+      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = `${product.accentColor}44`; (e.currentTarget as HTMLElement).style.boxShadow = `0 20px 48px -14px ${product.accentColor}33`; }}
+      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = ''; (e.currentTarget as HTMLElement).style.boxShadow = ''; }}
+    >
       <Link
         href={`/products/${product.slug}`}
         className="relative block w-full shrink-0 overflow-hidden bg-[#FAFAFA] md:w-[min(42%,280px)] md:max-w-[300px] md:self-stretch lg:w-[40%] lg:max-w-none"
