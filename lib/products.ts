@@ -53,6 +53,7 @@ export type Product = {
     titleAr: string
     bodyAr: string
     bullets?: string[]
+    sectionImage?: { src: string; width: number; height: number; alt: string }
   }
   /** بلوك إقناع قبل التقييمات — قرار اليوم، ثقة التوصيل */
   closingPersuasion?: {
@@ -621,17 +622,50 @@ export const PRODUCTS: Product[] = [
     badgeAr: 'مسحوق البشرة النقية',
     accentColor: '#7A9484',
     bgColor: '#EDF2EE',
-    coverImage: '/products/khiffabiotic.png',
+    coverImage: '/products/wudouh-product.png',
     coverWidth: 1024,
-    coverHeight: 769,
+    coverHeight: 1024,
     homeCardImage: '/products/home-wudouh.png',
-    captionUnderHeroImage: 'صورة مؤقتة — الصورة الرسمية لمنتج وضوح قادمة قريباً.',
+    pdpHeroImage: {
+      src: '/products/wudouh-hero.png',
+      width: 1024,
+      height: 1024,
+      alt: 'مثال توضيحي قبل وبعد — وضوح مسحوق غلوتاثيون وكولاجين',
+    },
+    painSectionImage: {
+      src: '/products/wudouh-pain.png',
+      width: 1024,
+      height: 1024,
+      alt: 'التركيز والإرهاق اليومي — بشرة تحتاج دعماً من الداخل',
+    },
+    ingredientsSectionImage: {
+      src: '/products/wudouh-product.png',
+      width: 1024,
+      height: 1024,
+      alt: 'وضوح — ساشيه مسحوق غلوتاثيون وكولاجين يومي',
+    },
+    extraStory: {
+      src: '/products/wudouh-after.png',
+      width: 1024,
+      height: 1024,
+      alt: 'بشرة أهدأ وأنقى — مثال توضيحي؛ النتيجة تختلف بين الأشخاص والالتزام.',
+      titleAr: 'من الحيرة في المرآة إلى ثقة تبان في وجهك',
+      bodyAr:
+        'الفرق ما يجي من سيروم ليلة واحدة — يجي من روتين داخلي يثبت مع الأسابيع. وضوح ساشيه يومي (غلوتاثيون + كولاجين + زنك + فيتامين C) يكمّل عنايتك الخارجية. النتيجة تختلف حسب الجسم والالتزام — مو وعد طبي.',
+    },
+    captionUnderHeroImage: 'مثال توضيحي قبل وبعد؛ النتيجة تختلف حسب الجسم والالتزام والروتين.',
     copyAfterHeroPrice: 'قطعة للتجربة أو عرض شهرين للتثبيت — الخيار تحت.',
     persuasionBlock: {
       eyebrowAr: 'ليش وضوح؟',
       titleAr: 'لمّا السيرومات والكريمات رفعتِ يدها — الجواب من الداخل',
       bodyAr:
         'جرّبتِ كل شيء على الوجه — تونر، سيروم، كريم، حتى معجون أسنان… والحبوب ترجع؟ الالتهاب والحبوب غالبًا تبدأ من التوازن الداخلي: الزنك، الأكسدة، الكولاجين. وضوح: غلوتاثيون + كولاجين + زنك + فيتامين C في ساشيه واحد يومياً — يكمّل روتينك الخارجي من الداخل، بتأكيد جوّال ودفع عند الباب.',
+      sectionImage: {
+        src: '/products/wudouh-focus.png',
+        width: 1024,
+        height: 1024,
+        alt: 'حبوب وإحساس ثقيل في المرآة — الإحساس اليومي عند كثير من النساء',
+      },
       bullets: [
         'غلوتاثيون — مضاد أكسدة مرتبط بإضاءة البشرة وتقليل التصبّغ.',
         'زنك — مكوّن معروف في دعم البشرة وتقليل الدهون الزائدة.',

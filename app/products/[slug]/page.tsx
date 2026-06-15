@@ -387,25 +387,45 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           style={{ background: `${product.bgColor}99` }}
         >
           <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
-            <div className="max-w-3xl mr-0 ml-auto text-start min-w-0">
-              {product.persuasionBlock.eyebrowAr && (
-                <p className="text-xs font-bold tracking-[0.18em] text-[#c9937e] mb-2 uppercase">{product.persuasionBlock.eyebrowAr}</p>
+            <div
+              className={
+                product.persuasionBlock.sectionImage
+                  ? 'grid md:grid-cols-2 gap-6 md:gap-10 items-center min-w-0'
+                  : 'max-w-3xl mr-0 ml-auto text-start min-w-0'
+              }
+            >
+              {product.persuasionBlock.sectionImage && (
+                <div className="order-2 md:order-2 w-full max-w-[min(100%,440px)] md:max-w-full mx-auto md:mx-0 min-w-0">
+                  <PdpSquareImage
+                    src={product.persuasionBlock.sectionImage.src}
+                    alt={product.persuasionBlock.sectionImage.alt}
+                    width={product.persuasionBlock.sectionImage.width}
+                    height={product.persuasionBlock.sectionImage.height}
+                    sizes="(max-width: 768px) min(440px, 100vw), 480px"
+                    maxWidthClass="max-w-full"
+                  />
+                </div>
               )}
-              <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-4 break-words">{product.persuasionBlock.titleAr}</h2>
-              <p className="text-[#5c5656] leading-relaxed text-[15px] sm:text-lg mb-5 break-words">{product.persuasionBlock.bodyAr}</p>
-              {product.persuasionBlock.bullets && product.persuasionBlock.bullets.length > 0 && (
-                <ul className="flex flex-col gap-3 text-start">
-                  {product.persuasionBlock.bullets.map((line) => (
-                    <li
-                      key={line}
-                      className="flex items-start gap-3 text-[#1a1818] text-sm sm:text-base leading-relaxed min-w-0"
-                    >
-                      <span className="shrink-0 w-6 h-6 rounded-full text-white flex items-center justify-center text-xs font-bold mt-0.5" style={{ background: product.accentColor }}>✓</span>
-                      <span className="min-w-0 flex-1 break-words">{line}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <div className="order-1 md:order-1 text-start min-w-0 max-w-full break-words">
+                {product.persuasionBlock.eyebrowAr && (
+                  <p className="text-xs font-bold tracking-[0.18em] text-[#c9937e] mb-2 uppercase">{product.persuasionBlock.eyebrowAr}</p>
+                )}
+                <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-4 break-words">{product.persuasionBlock.titleAr}</h2>
+                <p className="text-[#5c5656] leading-relaxed text-[15px] sm:text-lg mb-5 break-words">{product.persuasionBlock.bodyAr}</p>
+                {product.persuasionBlock.bullets && product.persuasionBlock.bullets.length > 0 && (
+                  <ul className="flex flex-col gap-3 text-start">
+                    {product.persuasionBlock.bullets.map((line) => (
+                      <li
+                        key={line}
+                        className="flex items-start gap-3 text-[#1a1818] text-sm sm:text-base leading-relaxed min-w-0"
+                      >
+                        <span className="shrink-0 w-6 h-6 rounded-full text-white flex items-center justify-center text-xs font-bold mt-0.5" style={{ background: product.accentColor }}>✓</span>
+                        <span className="min-w-0 flex-1 break-words">{line}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
           </div>
         </section>
