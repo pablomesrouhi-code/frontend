@@ -64,21 +64,7 @@ const GUMMY_PRODUCTS = PRODUCTS.filter((p) => !p.format || p.format === 'gummy')
 const POWDER_PRODUCTS = PRODUCTS.filter((p) => p.format === 'powder_sachet')
 const TOP_GUMMIES = [...GUMMY_PRODUCTS].sort((a, b) => (b.soldCount ?? 0) - (a.soldCount ?? 0)).slice(0, 2)
 const TOP_POWDER = [...POWDER_PRODUCTS].sort((a, b) => (b.soldCount ?? 0) - (a.soldCount ?? 0))[0]
-
-function FormatDivider({ label, accent }: { label: string; accent: string }) {
-  return (
-    <div className="my-8 flex items-center gap-3 sm:my-10" aria-hidden>
-      <div className="h-px flex-1" style={{ background: `linear-gradient(90deg, transparent, ${accent}55, transparent)` }} />
-      <span
-        className="shrink-0 rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] sm:text-[11px]"
-        style={{ color: accent, borderColor: `${accent}44`, background: `${accent}0c` }}
-      >
-        {label}
-      </span>
-      <div className="h-px flex-1" style={{ background: `linear-gradient(90deg, transparent, ${accent}55, transparent)` }} />
-    </div>
-  )
-}
+const BEST_SELLERS = [...TOP_GUMMIES, ...(TOP_POWDER ? [TOP_POWDER] : [])]
 
 // ───────────────────────────────────────────────
 
@@ -215,7 +201,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 3. BEST SELLERS — 3 products, line by format ═══ */}
+      {/* ═══ 3. BEST SELLERS — 3 products side by side, accent frame each ═══ */}
       <section id="best-sellers" className="scroll-mt-24 bg-white py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-8 text-start sm:mb-10">
@@ -226,27 +212,25 @@ export default function HomePage() {
               اختيارات عميلات نبتة لابو
             </h2>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-              علكتان الأكثر طلباً — وساشيه مسحوق مركّز. نفس العروض والتأكيد على 05.
+              ثلاثة الأكثر طلباً — جنب بعض، كل منتج بإطار بلونه.
             </p>
           </div>
 
-          <p className="mb-4 text-[10px] font-black uppercase tracking-[0.16em] sm:text-[11px]" style={{ color: BRAND.peach }}>
-            🍬 علكة يومية
-          </p>
-          <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:gap-8">
-            {TOP_GUMMIES.map((p) => (
-              <ProductCard key={p.id} product={p} useHomeCardImage />
+          <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+            {BEST_SELLERS.map((p) => (
+              <div
+                key={p.id}
+                className="h-full rounded-[1.4rem] p-[3px] sm:rounded-[1.5rem] sm:p-[3.5px]"
+                style={{
+                  background: `linear-gradient(155deg, ${p.accentColor} 0%, ${p.accentColor}88 55%, ${p.accentColor}44 100%)`,
+                  boxShadow: `0 16px 48px -20px ${p.accentColor}55`,
+                }}
+              >
+                <ProductCard product={p} useHomeCardImage />
+              </div>
             ))}
           </div>
 
-          {TOP_POWDER ? (
-            <>
-              <FormatDivider label="ساشيه مسحوق" accent={TOP_POWDER.accentColor} />
-              <div className="mx-auto w-full max-w-md sm:max-w-lg">
-                <ProductCard product={TOP_POWDER} useHomeCardImage />
-              </div>
-            </>
-          ) : null}
         </div>
       </section>
 
