@@ -106,7 +106,7 @@ export default function HomePage() {
 
               <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
                 <Link
-                  href="#best-sellers"
+                  href="#products"
                   className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-bold transition-all hover:-translate-y-0.5 hover:shadow-xl"
                   style={{ background: BRAND.rose, color: '#fff', boxShadow: '0 10px 32px -8px rgba(184,72,92,0.38)' }}
                 >
@@ -225,15 +225,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 4. ALL PRODUCTS — full catalog ═══ */}
+      {/* ═══ 4. منتجاتنا — كل المنتجات ═══ */}
       <section id="products" className="scroll-mt-24 border-t border-[#E7DDD3] bg-[#faf9f8] py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-8 text-start sm:mb-10">
             <h2 className="text-2xl font-bold leading-tight sm:text-3xl" style={{ color: BRAND.charcoal }}>
-              منتجاتنا — علكة ومسحوق
+              منتجاتنا
             </h2>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-              ستة منتجات مرخّصة — جمال، هضم، نوم، شعر، بشرة، وأيام الدورة. SFDA · COD · 2–4 أيام.
+              ستة منتجات مرخّصة — علكة ومسحوق. جمال، هضم، نوم، شعر، بشرة، وأيام الدورة.
             </p>
           </div>
 
@@ -249,26 +249,9 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="mb-6 text-start">
-            <p className="text-xs font-bold uppercase tracking-[0.18em]" style={{ color: BRAND.teal }}>الخط الكلاسيكي</p>
-            <h3 className="mt-1 text-lg font-bold" style={{ color: BRAND.charcoal }}>ثلاث علكات يومية</h3>
-          </div>
-          <div className="mb-10 grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-            {GUMMY_PRODUCTS.map((p) => (
-              <ProductCard key={p.id} product={p} useHomeCardImage />
-            ))}
-          </div>
-
-          <div className="mb-6 text-start">
-            <span className="mb-2 inline-flex rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white sm:text-xs" style={{ background: BRAND.mauve }}>
-              جديد
-            </span>
-            <h3 className="mt-2 text-lg font-bold" style={{ color: BRAND.charcoal }}>خط ساشيه المسحوق</h3>
-            <p className="mt-1 text-sm" style={{ color: BRAND.muted }}>يُذاب في ماء أو عصير فاتر — مو علكة.</p>
-          </div>
           <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-            {POWDER_PRODUCTS.map((p) => (
-              <ProductCard key={p.id} product={p} useHomeCardImage />
+            {PRODUCTS.map((p) => (
+              <ProductCard key={p.id} product={p} useHomeCardImage showNewImageBanner />
             ))}
           </div>
 

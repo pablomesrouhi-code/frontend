@@ -132,7 +132,7 @@ export default function CollectionPage() {
           </div>
           <div className="grid min-w-0 w-full grid-cols-1 items-stretch gap-6 md:gap-8">
             {POWDER_PRODUCTS.map((p) => (
-              <ProductCard key={p.id} product={p} layout="list" useHomeCardImage />
+              <ProductCard key={p.id} product={p} layout="list" useHomeCardImage showNewImageBanner />
             ))}
           </div>
         </div>

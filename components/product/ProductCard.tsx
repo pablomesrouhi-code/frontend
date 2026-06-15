@@ -13,6 +13,20 @@ type Props = {
   layout?: 'list' | 'grid'
   /** بطاقات cross-sell بصفحة المنتج — تعرض `homeCardImage` (OEM) إن وُجدت */
   useHomeCardImage?: boolean
+  /** بانر «جديد» فوق الصورة */
+  showNewImageBanner?: boolean
+}
+
+function NewImageBanner({ product }: { product: Product }) {
+  if (!product.isNew) return null
+  return (
+    <div
+      className="absolute inset-x-0 top-0 z-20 flex items-center justify-center py-1.5 shadow-sm sm:py-2"
+      style={{ background: `linear-gradient(90deg, ${product.accentColor}ee, ${product.accentColor})` }}
+    >
+      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white sm:text-[11px]">جديد</span>
+    </div>
+  )
 }
 
 function PriceBlock({ product }: { product: Product }) {
@@ -32,10 +46,10 @@ function PriceBlock({ product }: { product: Product }) {
   )
 }
 
-function BadgeRow({ product }: { product: Product }) {
+function BadgeRow({ product, hideNewBadge }: { product: Product; hideNewBadge?: boolean }) {
   return (
     <div className="flex flex-wrap items-center justify-end gap-2">
-      {product.isNew && (
+      {product.isNew && !hideNewBadge && (
         <span
           className="rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white sm:px-3 sm:py-1.5 sm:text-xs"
           style={{ background: product.accentColor }}
@@ -75,12 +89,14 @@ function CtaRow({ product }: { product: Product }) {
   )
 }
 
-export default function ProductCard({ product, layout = 'grid', useHomeCardImage = false }: Props) {
+export default function ProductCard({ product, layout = 'grid', useHomeCardImage = false, showNewImageBanner = false }: Props) {
   const isPowder = product.format === 'powder_sachet'
   const cardImage = useHomeCardImage && product.homeCardImage ? product.homeCardImage : product.coverImage
   const showCardPhoto = !isPowder || Boolean(useHomeCardImage && product.homeCardImage)
+  const imageBanner = showNewImageBanner && product.isNew
   const cardImageNode = (
     <>
+      {imageBanner ? <NewImageBanner product={product} /> : null}
       <ProductSoldBadge product={product} />
       <Image
         src={cardImage}
@@ -112,7 +128,7 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
         />
 
         <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:gap-4 sm:p-7">
-          <BadgeRow product={product} />
+          <BadgeRow product={product} hideNewBadge={imageBanner} />
 
           <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight sm:text-3xl md:text-[1.875rem]" style={{ color: product.accentColor }}>
             {product.nameAr}
@@ -153,7 +169,7 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
       />
 
       <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:gap-4 sm:p-6 md:py-7 md:ps-6 md:pe-7">
-        <BadgeRow product={product} />
+        <BadgeRow product={product} hideNewBadge={imageBanner} />
 
         <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight sm:text-2xl lg:text-[1.65rem]" style={{ color: product.accentColor }}>
           {product.nameAr}
