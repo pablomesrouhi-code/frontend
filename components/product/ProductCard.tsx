@@ -42,9 +42,37 @@ function shadeTowardBlack(hex: string, t: number) {
   return `#${[mix(r), mix(g), mix(b)].map((x) => x.toString(16).padStart(2, '0')).join('')}`
 }
 
-function CtaRow({ product }: { product: Product }) {
+function CtaRow({ product, variant = 'solid' }: { product: Product; variant?: 'solid' | 'outline' }) {
   const accent = product.accentColor
   const accentDeep = shadeTowardBlack(accent, 0.18)
+
+  if (variant === 'outline') {
+    return (
+      <Link
+        href={`/products/${product.slug}`}
+        className="group/btn mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold transition-[color,background-color,border-color,transform] duration-200 ease-out active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100"
+        style={{ background: '#FFFFFF', color: accent, border: `2px solid ${accent}44` }}
+        onClick={() => {
+          trackAddToWishlist({
+            content_ids: [product.id],
+            value: getPriceForQty(1),
+            currency: 'SAR',
+          })
+        }}
+        onMouseEnter={(e) => {
+          ;(e.currentTarget as HTMLElement).style.background = accent
+          ;(e.currentTarget as HTMLElement).style.color = '#fff'
+        }}
+        onMouseLeave={(e) => {
+          ;(e.currentTarget as HTMLElement).style.background = '#FFFFFF'
+          ;(e.currentTarget as HTMLElement).style.color = accent
+        }}
+      >
+        <span>اكتشفي المنتج</span>
+        <span className="transition-transform group-hover/btn:-translate-x-1">←</span>
+      </Link>
+    )
+  }
 
   return (
     <Link
@@ -173,7 +201,7 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
 
         <p className="line-clamp-3 break-words text-sm leading-relaxed text-muted sm:text-[15px]">{product.subtitleAr}</p>
 
-        <CtaRow product={product} />
+        <CtaRow product={product} variant="outline" />
       </div>
     </article>
   )
