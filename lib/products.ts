@@ -99,7 +99,7 @@ export const PRODUCTS: Product[] = [
     coverImage: '/products/rawnaq-c-cover.jpg',
     coverWidth: 1024,
     coverHeight: 1024,
-    homeCardImage: '/products/rawnaq-c-home.jpg',
+    homeCardImage: '/products/home-rawnaq-c.png',
     pdpHeroImage: {
       src: '/products/rawnaq-c-hero.jpg',
       width: 1024,
@@ -280,7 +280,7 @@ export const PRODUCTS: Product[] = [
     coverImage: '/products/khiffabiotic.png',
     coverWidth: 1024,
     coverHeight: 769,
-    homeCardImage: '/products/khiffabiotic.jpg',
+    homeCardImage: '/products/home-khiffabiotic.png',
     painSectionImage: {
       src: '/products/khiffabiotic-pain.png',
       width: 1024,
@@ -390,7 +390,7 @@ export const PRODUCTS: Product[] = [
     coverImage: '/products/laylmag.png',
     coverWidth: 1024,
     coverHeight: 769,
-    homeCardImage: '/products/laylmag.jpg',
+    homeCardImage: '/products/home-laylmag.png',
     painSectionImage: {
       src: '/products/laylmag-pain.png',
       width: 1024,
@@ -497,7 +497,7 @@ export const PRODUCTS: Product[] = [
     coverImage: '/products/rawnaq-c-cover.jpg',
     coverWidth: 1024,
     coverHeight: 1024,
-    homeCardImage: '/products/rawnaq-c-home.jpg',
+    homeCardImage: '/products/home-quwwat-sha3r.png',
     captionUnderHeroImage: 'صورة مؤقتة — الصورة الرسمية لمنتج قوة شعر قادمة قريباً.',
     copyAfterHeroPrice: 'الأسعار في المربعات أدناه — قطعة للتجربة أو عرض أشهر للتوفير.',
     persuasionBlock: {
@@ -590,7 +590,7 @@ export const PRODUCTS: Product[] = [
     coverImage: '/products/khiffabiotic.png',
     coverWidth: 1024,
     coverHeight: 769,
-    homeCardImage: '/products/khiffabiotic.jpg',
+    homeCardImage: '/products/home-wudouh.png',
     captionUnderHeroImage: 'صورة مؤقتة — الصورة الرسمية لمنتج وضوح قادمة قريباً.',
     copyAfterHeroPrice: 'قطعة للتجربة أو عرض شهرين للتثبيت — الخيار تحت.',
     persuasionBlock: {
@@ -680,7 +680,7 @@ export const PRODUCTS: Product[] = [
     coverImage: '/products/laylmag.png',
     coverWidth: 1024,
     coverHeight: 769,
-    homeCardImage: '/products/laylmag.jpg',
+    homeCardImage: '/products/home-shahr-hadi.png',
     captionUnderHeroImage: 'صورة مؤقتة — الصورة الرسمية لمنتج شهر هادئ قادمة قريباً.',
     copyAfterHeroPrice: 'قطعة للشهر الأول، أو عرض ثلاث قطع للالتزام الكامل — الخيار تحت.',
     persuasionBlock: {
