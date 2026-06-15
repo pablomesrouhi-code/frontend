@@ -191,7 +191,7 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
           </span>
         </div>
 
-        <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight text-charcoal sm:text-2xl lg:text-[1.65rem]">
+        <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight sm:text-2xl lg:text-[1.65rem]" style={{ color: product.accentColor }}>
           {product.nameAr}
         </h3>
 
@@ -201,7 +201,7 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
 
         <p className="line-clamp-3 break-words text-sm leading-relaxed text-muted sm:text-[15px]">{product.subtitleAr}</p>
 
-        <CtaRow product={product} variant="outline" />
+        <CtaRow product={product} />
       </div>
     </article>
   )
