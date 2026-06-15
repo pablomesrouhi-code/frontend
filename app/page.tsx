@@ -60,6 +60,26 @@ const REVIEWS = [
   { name: 'هدى ر.', city: 'مكة', text: 'جربت الثلاثة معاً — روتيني صار أكتمل من الصباح للمساء.', rating: 5, product: 'الباقة', accent: BRAND.roseDeep },
 ] as const
 
+const GUMMY_PRODUCTS = PRODUCTS.filter((p) => !p.format || p.format === 'gummy')
+const POWDER_PRODUCTS = PRODUCTS.filter((p) => p.format === 'powder_sachet')
+const TOP_GUMMIES = [...GUMMY_PRODUCTS].sort((a, b) => (b.soldCount ?? 0) - (a.soldCount ?? 0)).slice(0, 2)
+const TOP_POWDER = [...POWDER_PRODUCTS].sort((a, b) => (b.soldCount ?? 0) - (a.soldCount ?? 0))[0]
+
+function FormatDivider({ label, accent }: { label: string; accent: string }) {
+  return (
+    <div className="my-8 flex items-center gap-3 sm:my-10" aria-hidden>
+      <div className="h-px flex-1" style={{ background: `linear-gradient(90deg, transparent, ${accent}55, transparent)` }} />
+      <span
+        className="shrink-0 rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] sm:text-[11px]"
+        style={{ color: accent, borderColor: `${accent}44`, background: `${accent}0c` }}
+      >
+        {label}
+      </span>
+      <div className="h-px flex-1" style={{ background: `linear-gradient(90deg, transparent, ${accent}55, transparent)` }} />
+    </div>
+  )
+}
+
 // ───────────────────────────────────────────────
 
 export default function HomePage() {
@@ -100,7 +120,7 @@ export default function HomePage() {
 
               <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
                 <Link
-                  href="#products"
+                  href="#best-sellers"
                   className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-bold transition-all hover:-translate-y-0.5 hover:shadow-xl"
                   style={{ background: BRAND.rose, color: '#fff', boxShadow: '0 10px 32px -8px rgba(184,72,92,0.38)' }}
                 >
@@ -195,19 +215,53 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 3. PRODUCTS — unified catalog ═══ */}
-      <section id="products" className="scroll-mt-24 bg-white py-14 sm:py-20">
+      {/* ═══ 3. BEST SELLERS — 3 products, line by format ═══ */}
+      <section id="best-sellers" className="scroll-mt-24 bg-white py-14 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="mb-8 text-start sm:mb-10">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em]" style={{ color: BRAND.rose }}>
+              الأكثر مبيعاً
+            </p>
+            <h2 className="text-2xl font-bold leading-tight sm:text-3xl" style={{ color: BRAND.charcoal }}>
+              اختيارات عميلات نبتة لابو
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
+              علكتان الأكثر طلباً — وساشيه مسحوق مركّز. نفس العروض والتأكيد على 05.
+            </p>
+          </div>
+
+          <p className="mb-4 text-[10px] font-black uppercase tracking-[0.16em] sm:text-[11px]" style={{ color: BRAND.peach }}>
+            🍬 علكة يومية
+          </p>
+          <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:gap-8">
+            {TOP_GUMMIES.map((p) => (
+              <ProductCard key={p.id} product={p} useHomeCardImage />
+            ))}
+          </div>
+
+          {TOP_POWDER ? (
+            <>
+              <FormatDivider label="ساشيه مسحوق" accent={TOP_POWDER.accentColor} />
+              <div className="mx-auto w-full max-w-md sm:max-w-lg">
+                <ProductCard product={TOP_POWDER} useHomeCardImage />
+              </div>
+            </>
+          ) : null}
+        </div>
+      </section>
+
+      {/* ═══ 4. ALL PRODUCTS — full catalog ═══ */}
+      <section id="products" className="scroll-mt-24 border-t border-[#E7DDD3] bg-[#faf9f8] py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-8 text-start sm:mb-10">
             <h2 className="text-2xl font-bold leading-tight sm:text-3xl" style={{ color: BRAND.charcoal }}>
               منتجاتنا — علكة ومسحوق
             </h2>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-              ثلاث علكات يومية وثلاثة سواشيه مسحوق — جمال، هضم، نوم، شعر، بشرة، وأيام الدورة. SFDA · COD · 2–4 أيام.
+              ستة منتجات مرخّصة — جمال، هضم، نوم، شعر، بشرة، وأيام الدورة. SFDA · COD · 2–4 أيام.
             </p>
           </div>
 
-          {/* Quick jump — minimal chips, same style as original store */}
           <div className="mb-8 flex flex-wrap gap-2 sm:mb-10">
             {GOALS.map((item) => (
               <Link
@@ -238,7 +292,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 4. HOW IT WORKS ═══ */}
+      {/* ═══ 5. HOW IT WORKS ═══ */}
       <section id="how" className="scroll-mt-24 py-14 sm:py-16" style={{ background: '#f1e6e4' }}>
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-8 text-start">
@@ -271,7 +325,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 5. INGREDIENTS ═══ */}
+      {/* ═══ 6. INGREDIENTS ═══ */}
       <section className="bg-white py-14 sm:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-8 text-start">
@@ -308,7 +362,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 6. REVIEWS ═══ */}
+      {/* ═══ 7. REVIEWS ═══ */}
       <section id="reviews" className="scroll-mt-24 py-14 sm:py-16" style={{ background: '#f1e6e4' }}>
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-8 text-start">
@@ -354,7 +408,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 7. FAQ ═══ */}
+      {/* ═══ 8. FAQ ═══ */}
       <section id="faq" className="scroll-mt-24 bg-white py-14 sm:py-16">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
           <div className="mb-8 text-start">
@@ -382,7 +436,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 8. FINAL CTA ═══ */}
+      {/* ═══ 9. FINAL CTA ═══ */}
       <section className="relative overflow-hidden py-16 sm:py-20">
         <div
           className="absolute inset-0"
