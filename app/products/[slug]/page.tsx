@@ -153,7 +153,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <StarRating rating={product.rating} count={product.reviewCount} size="md" />
                 <a
                   href="#pdp-reviews"
-                  className="mt-2 inline-block text-sm font-bold text-authority underline decoration-authority/35 underline-offset-2 transition hover:decoration-authority sm:text-[15px]"
+                  className="mt-2 inline-block text-sm font-bold underline underline-offset-2 transition sm:text-[15px]"
+                  style={{ color: product.accentColor, textDecorationColor: `${product.accentColor}55` }}
                 >
                   اقرأي تجارب {product.reviewCount}+ عميلة ↓
                 </a>
@@ -163,7 +164,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 {product.heroSubAr}
               </p>
 
-              <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-authority sm:text-[11px]">خلاصة تركيبية</p>
+              <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.16em] sm:text-[11px]" style={{ color: product.accentColor }}>خلاصة تركيبية</p>
               <div className="mb-3 flex flex-wrap items-center justify-end gap-1.5 sm:mb-4 sm:gap-2">
                 {product.ingredients.slice(0, 3).map((ing) => (
                   <span
@@ -176,7 +177,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 {product.ingredients.length > 3 && (
                   <a
                     href="#pdp-ingredients"
-                    className="rounded-full border border-dashed border-authority/45 bg-authority/[0.06] px-3 py-1 text-xs font-bold text-authority hover:bg-authority/10"
+                    className="rounded-full border border-dashed px-3 py-1 text-xs font-bold"
+                    style={{ borderColor: `${product.accentColor}55`, background: `${product.accentColor}0d`, color: product.accentColor }}
                   >
                     + المكوّنات كاملة
                   </a>
@@ -251,8 +253,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">ليش يختارونه أصلاً؟</h3>
                 <p className="mt-3 text-base leading-relaxed text-muted sm:text-lg">{product.painCopy}</p>
               </div>
-              <div className="rounded-3xl border border-authority/30 bg-authority/[0.05] p-5 shadow-sm sm:p-6">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-authority">بأسلوب واقعي</p>
+              <div className="rounded-3xl border p-5 shadow-sm sm:p-6" style={{ borderColor: `${product.accentColor}44`, background: `${product.accentColor}08` }}>
+                <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: product.accentColor }}>بأسلوب واقعي</p>
                 <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">وش يقدر يكمّل روتينك؟</h3>
                 <ul className="mt-4 flex flex-col gap-3">
                   {product.benefits.slice(0, 4).map((b) => (
@@ -591,7 +593,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {/* FAQ */}
       <section className="py-10 sm:py-12 md:py-14 bg-white">
         <div className="max-w-3xl mx-auto px-3 sm:px-6 min-w-0">
-          <p className="mb-2 text-center text-xs font-black uppercase tracking-[0.22em] text-authority">نحطّكم في الصورة قبل الدفع عند الباب</p>
+          <p className="mb-2 text-center text-xs font-black uppercase tracking-[0.22em]" style={{ color: product.accentColor }}>نحطّكم في الصورة قبل الدفع عند الباب</p>
           <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-charcoal mb-2 text-center break-words">كل اللي بعد يخوف من الإعلانات — نقوله بوضوح</h2>
           <p className="mx-auto mb-8 max-w-lg text-center text-sm leading-relaxed text-muted sm:mb-10 sm:text-[15px]">
             الأسئلة هذي أكثر الشي تجي ورا TikTok/Snapchat. شوفيهم براحة؛ ومستعدين نجاوب أثناء التأكيد الهاتفي أيضًا.
@@ -601,7 +603,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <details key={faq.q} className="bg-[#FFFFFF] rounded-2xl overflow-hidden group min-w-0 border border-[#dfd6d4]">
                 <summary className="px-4 sm:px-6 py-4 min-h-[3.25rem] font-semibold text-[#1C1C1C] text-sm sm:text-base cursor-pointer list-none flex items-center justify-between gap-3 active:bg-[#f5f0ef] hover:bg-[#eae2df] transition min-w-0 touch-manipulation">
                   <span className="text-start flex-1 min-w-0 break-words leading-snug">{faq.q}</span>
-                  <span className="text-[#b8485c] shrink-0 group-open:rotate-180 transition-transform duration-200 text-xs sm:text-sm">▼</span>
+                  <span className="shrink-0 group-open:rotate-180 transition-transform duration-200 text-xs sm:text-sm" style={{ color: product.accentColor }}>▼</span>
                 </summary>
                 <div className="px-4 sm:px-6 pb-4 pt-1 text-sm text-[#5c5656] leading-relaxed break-words text-start border-t border-[#dfd6d4]">{faq.a}</div>
               </details>
