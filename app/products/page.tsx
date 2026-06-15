@@ -11,6 +11,8 @@ export const metadata = {
 }
 
 const STORE_REVIEW_COUNT_FALLBACK = 850
+const GUMMY_PRODUCTS = PRODUCTS.filter((p) => !p.format || p.format === 'gummy')
+const POWDER_PRODUCTS = PRODUCTS.filter((p) => p.format === 'powder_sachet')
 
 export default function CollectionPage() {
   return (
@@ -99,12 +101,37 @@ export default function CollectionPage() {
         </div>
       </section>
 
-      {/* Products catalog */}
+      {/* Products catalog — علكات */}
       <section id="products" className="scroll-mt-24 py-10 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <ProductsSoldProofBar />
+          <div className="mb-6 text-start">
+            <p className="mb-1 text-xs font-bold uppercase tracking-[0.18em] text-[#146b70]">الخط الكلاسيكي</p>
+            <h2 className="text-xl font-bold text-[#1C1C1C] sm:text-2xl">ثلاث علكات يومية</h2>
+            <p className="mt-1 text-sm text-[#5c5656]">جمال، هضم، نوم — علكتان في الجرعة حسب الغلاف.</p>
+          </div>
           <div className="grid min-w-0 w-full grid-cols-1 items-stretch gap-6 md:gap-8">
-            {PRODUCTS.map((p) => (
+            {GUMMY_PRODUCTS.map((p) => (
+              <ProductCard key={p.id} product={p} layout="list" useHomeCardImage />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Products catalog — مساحيق جديدة */}
+      <section id="powder-line" className="scroll-mt-24 border-t border-border/70 bg-[#faf9f8] py-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="mb-6 text-start">
+            <span className="mb-2 inline-flex rounded-full bg-charcoal px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white sm:text-xs">
+              جديد
+            </span>
+            <h2 className="mt-2 text-xl font-bold text-[#1C1C1C] sm:text-2xl">خط ساشيه المسحوق</h2>
+            <p className="mt-1 max-w-2xl text-sm text-[#5c5656]">
+              ثلاثة منتجات جديدة — ساشيه يُذاب في ماء أو عصير فاتر. شعر، بشرة، وأيام الدورة — مو علكة.
+            </p>
+          </div>
+          <div className="grid min-w-0 w-full grid-cols-1 items-stretch gap-6 md:gap-8">
+            {POWDER_PRODUCTS.map((p) => (
               <ProductCard key={p.id} product={p} layout="list" useHomeCardImage />
             ))}
           </div>
@@ -116,7 +143,7 @@ export default function CollectionPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 text-start">
           <h2 className="text-2xl font-bold text-[#1C1C1C] mb-8">ماذا قالت عميلاتنا؟</h2>
           <div className="grid md:grid-cols-3 gap-5">
-            {PRODUCTS.map((p) => (
+            {PRODUCTS.filter((p) => p.reviews.length > 0).map((p) => (
               <div key={p.id} className="rounded-2xl border border-border/55 bg-[#FFFFFF] p-5 text-start shadow-[0_4px_22px_-8px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02]">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-semibold px-2 py-1 rounded-full text-white" style={{ background: p.accentColor }}>{p.nameAr}</span>

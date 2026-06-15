@@ -259,8 +259,25 @@ export default function HomePage() {
             ))}
           </div>
 
+          <div className="mb-6 text-start">
+            <p className="text-xs font-bold uppercase tracking-[0.18em]" style={{ color: BRAND.teal }}>الخط الكلاسيكي</p>
+            <h3 className="mt-1 text-lg font-bold" style={{ color: BRAND.charcoal }}>ثلاث علكات يومية</h3>
+          </div>
+          <div className="mb-10 grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+            {GUMMY_PRODUCTS.map((p) => (
+              <ProductCard key={p.id} product={p} useHomeCardImage />
+            ))}
+          </div>
+
+          <div className="mb-6 text-start">
+            <span className="mb-2 inline-flex rounded-full bg-charcoal px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white sm:text-xs">
+              جديد
+            </span>
+            <h3 className="mt-2 text-lg font-bold" style={{ color: BRAND.charcoal }}>خط ساشيه المسحوق</h3>
+            <p className="mt-1 text-sm" style={{ color: BRAND.muted }}>يُذاب في ماء أو عصير فاتر — مو علكة.</p>
+          </div>
           <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-            {PRODUCTS.map((p) => (
+            {POWDER_PRODUCTS.map((p) => (
               <ProductCard key={p.id} product={p} useHomeCardImage />
             ))}
           </div>

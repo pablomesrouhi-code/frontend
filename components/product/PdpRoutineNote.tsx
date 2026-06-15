@@ -1,14 +1,16 @@
 'use client'
 
 import { getPdpRoutineNote } from '@/lib/pdp-copy'
+import type { Product } from '@/lib/products'
 
 type Props = {
   productId: string
+  format?: Product['format']
   accentColor: string
 }
 
-export default function PdpRoutineNote({ productId, accentColor }: Props) {
-  const { titleAr, bodyAr } = getPdpRoutineNote(productId)
+export default function PdpRoutineNote({ productId, format, accentColor }: Props) {
+  const { titleAr, bodyAr } = getPdpRoutineNote(productId, format)
 
   return (
     <div

@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Product, getPriceForQty, formatSarAmount } from '@/lib/products'
+import { Product, getPriceForQty, formatSarAmount, getFormatLabelAr } from '@/lib/products'
 import { trackAddToWishlist } from '@/lib/tracking/client'
 import ProductSoldBadge from '@/components/product/ProductSoldBadge'
 import PowderPlaceholder from '@/components/product/PowderPlaceholder'
@@ -27,6 +27,30 @@ function PriceBlock({ product }: { product: Product }) {
       <p className="mt-1 text-xs leading-snug text-muted">
         3 قطع بـ <span className="font-bold text-charcoal"><span className="sar-price">{formatSarAmount(priceThree)}</span></span> من صفحة المنتج
       </p>
+    </div>
+  )
+}
+
+function BadgeRow({ product }: { product: Product }) {
+  return (
+    <div className="flex flex-wrap items-center justify-end gap-2">
+      {product.isNew && (
+        <span className="rounded-full bg-charcoal px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white sm:px-3 sm:py-1.5 sm:text-xs">
+          جديد
+        </span>
+      )}
+      <span
+        className="rounded-full border px-2.5 py-1 text-[10px] font-bold sm:px-3 sm:py-1.5 sm:text-xs"
+        style={{ borderColor: `${product.accentColor}44`, color: product.accentColor, background: `${product.accentColor}0d` }}
+      >
+        {getFormatLabelAr(product)}
+      </span>
+      <span
+        className="rounded-full px-3 py-1.5 text-sm font-bold tracking-wide text-white"
+        style={{ background: product.accentColor }}
+      >
+        {product.badgeAr}
+      </span>
     </div>
   )
 }
@@ -139,14 +163,7 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
         />
 
         <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:gap-4 sm:p-7">
-          <div className="flex flex-wrap items-center justify-end gap-2">
-            <span
-              className="rounded-full px-3 py-1.5 text-sm font-bold tracking-wide text-white"
-              style={{ background: product.accentColor }}
-            >
-              {product.badgeAr}
-            </span>
-          </div>
+          <BadgeRow product={product} />
 
           <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight sm:text-3xl md:text-[1.875rem]" style={{ color: product.accentColor }}>
             {product.nameAr}
@@ -191,14 +208,7 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
       />
 
       <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:gap-4 sm:p-6 md:py-7 md:ps-6 md:pe-7">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <span
-            className="rounded-full px-3 py-1.5 text-sm font-bold tracking-wide text-white"
-            style={{ background: product.accentColor }}
-          >
-            {product.badgeAr}
-          </span>
-        </div>
+        <BadgeRow product={product} />
 
         <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight sm:text-2xl lg:text-[1.65rem]" style={{ color: product.accentColor }}>
           {product.nameAr}

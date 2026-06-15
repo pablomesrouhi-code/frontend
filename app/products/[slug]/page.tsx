@@ -8,7 +8,8 @@ import PdpSquareImage from '@/components/product/PdpSquareImage'
 import PdpDeliveryPaymentSection from '@/components/product/PdpDeliveryPaymentSection'
 import PdpReviewsSection from '@/components/product/PdpReviewsSection'
 import PowderPlaceholder from '@/components/product/PowderPlaceholder'
-import { getPdpAddCta } from '@/lib/pdp-copy'
+import { getPdpAddCta, getPdpComplianceNote } from '@/lib/pdp-copy'
+import { getFormatLabelAr } from '@/lib/products'
 
 export async function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }))
@@ -34,6 +35,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const crossSellProducts = product.crossSells
     .map((id) => getProductById(id))
     .filter(Boolean) as typeof PRODUCTS
+
+  const complianceNote = getPdpComplianceNote(product.format)
 
   const pdpHeroSrc = product.pdpHeroImage?.src ?? product.coverImage
   const pdpHeroAlt = product.pdpHeroImage?.alt ?? product.nameAr
@@ -112,6 +115,19 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               )}
             </div>
             <div className="order-2 min-w-0 text-pretty break-words text-start md:order-1 md:max-w-xl lg:max-w-none">
+              <div className="mb-2 flex flex-wrap items-center justify-end gap-2 sm:mb-3">
+                {product.isNew && (
+                  <span className="inline-flex rounded-full bg-charcoal px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white shadow sm:text-xs">
+                    جديد
+                  </span>
+                )}
+                <span
+                  className="inline-flex rounded-full border px-3 py-1 text-[10px] font-bold sm:text-xs"
+                  style={{ borderColor: `${product.accentColor}44`, color: product.accentColor, background: `${product.accentColor}0d` }}
+                >
+                  {getFormatLabelAr(product)}
+                </span>
+              </div>
               <span
                 className="mb-2 inline-flex max-w-full items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-black text-white shadow sm:mb-3 sm:gap-2 sm:px-3.5 sm:py-1.5 sm:text-xs"
                 style={{
@@ -466,11 +482,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             className="rounded-2xl p-5 sm:p-8 min-w-0 max-w-full break-words"
             style={{ background: product.bgColor }}
           >
-            <div className="mb-2 text-3xl sm:mb-3 sm:text-4xl">🌿</div>
+            <div className="mb-2 text-3xl sm:mb-3 sm:text-4xl">{isPowder ? '💧' : '🌿'}</div>
             <h2 className="break-words text-xl font-black text-charcoal sm:text-2xl">وش تسوين بالضبط؟ (روتين بسيط)</h2>
             <p className="mt-4 break-words text-[15px] leading-relaxed text-muted sm:text-lg">{product.howToUse}</p>
             <p className="mt-4 rounded-2xl bg-white/60 px-4 py-3 text-sm leading-relaxed text-charcoal ring-1 ring-black/[0.04]">
-              <strong className="text-authority">أسابيع أولى بانتظام تفرق أكثر من «يوم واحد معجزة»؛</strong> التزمي بعلكتين في الجرعة حسب الغلاف. كثير من عميلاتنا يقلّبوها عادة قبل ما يكمل الشهر والإحساس أو المظهر{' '}
+              <strong style={{ color: product.accentColor }}>{complianceNote.lead}</strong> {complianceNote.rest}{' '}
               <strong className="text-charcoal">يختلف</strong> حسب الشخص والنوم والأكل والالتزام.{' '}
               <span className="text-muted">تلزم تعليمات الغلاف المعتمد؛ كلام الصفحة تكميلي ومش بديل له.</span>
             </p>
@@ -482,7 +498,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <section className="border-t border-border/60 bg-white py-10 sm:py-12 md:py-14">
           <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
             <p className="mb-2 text-start text-xs font-black uppercase tracking-[0.22em] text-muted">معلومات المنتج</p>
-            <h2 className="mb-8 text-start text-xl font-black text-charcoal sm:text-2xl">المكونات، النتيجة، البشرة، وموانع الاستعمال</h2>
+            <h2 className="mb-8 text-start text-xl font-black text-charcoal sm:text-2xl">المكونات، مدة النتيجة، وموانع الاستعمال</h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:gap-6">
               {product.productInfoSheets.map((sheet) => (
                 <article

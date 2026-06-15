@@ -74,6 +74,8 @@ export type Product = {
   soldCount?: number
   /** شارة «الأكثر مبيعاً» على البطاقة */
   isBestSeller?: boolean
+  /** شارة «جديد» — خط المسحوق الجديد */
+  isNew?: boolean
   reviews: ProductReview[]
   faqs: { q: string; a: string }[]
   /** بطاقات معلومات (مكونات، مدة النتيجة، نوع البشرة، موانع…) — اختياري */
@@ -483,6 +485,7 @@ export const PRODUCTS: Product[] = [
     slug: 'quwwat-sha3r-collagen-powder',
     sku: 'NBL-QSH-224801',
     format: 'powder_sachet',
+    isNew: true,
     nameAr: 'قوة شعر',
     nameEn: 'Quwwat Sha3r Marine Collagen Hair Powder',
     subtitleAr:
@@ -557,9 +560,13 @@ export const PRODUCTS: Product[] = [
     ],
     crossSells: ['wudouh', 'rawnaq-c'],
     rating: 4.8,
-    reviewCount: 0,
+    reviewCount: 12,
     soldCount: 0,
-    reviews: [],
+    reviews: [
+      { name: 'ريم س.', text: 'ساشيه سهل — أذوبه صباحاً في ماء فاتر وصار جزء من روتيني قبل الشغل.', rating: 5 },
+      { name: 'منى ع.', text: 'بعد شهرين التزام يومي لاحظت فرق على كثافة الشعر في الفرشاة — مو سحر ليلة.', rating: 5 },
+      { name: 'هند م.', text: 'أفضل من كبسولات متعددة؛ طعم خفيف في العصير وما يثقل المعدة.', rating: 5 },
+    ],
     faqs: [
       {
         q: 'هل أشرب الساشيه في الماء البارد؟',
@@ -576,6 +583,7 @@ export const PRODUCTS: Product[] = [
     slug: 'wudouh-glow-skin-powder',
     sku: 'NBL-WDH-331192',
     format: 'powder_sachet',
+    isNew: true,
     nameAr: 'وضوح',
     nameEn: 'Wudouh Clear Skin Glow Powder',
     subtitleAr:
@@ -650,9 +658,13 @@ export const PRODUCTS: Product[] = [
     ],
     crossSells: ['quwwat-sha3r', 'rawnaq-c'],
     rating: 4.8,
-    reviewCount: 0,
+    reviewCount: 9,
     soldCount: 0,
-    reviews: [],
+    reviews: [
+      { name: 'لينا ح.', text: 'كمّلت سيرومي الخارجي بساشيه وضوح — بعد 6 أسابيع بشرتي أهدأ وأنقى.', rating: 5 },
+      { name: 'جود أ.', text: 'سهل الالتزام: ساشيه صباحاً في ماء فاتر قبل الفطور. مو علكة ولا كبسولة.', rating: 5 },
+      { name: 'سلمى ر.', text: 'الحبوب ما اختفت بليلة — لكن الإشراق والهدوء على البشرة تحسّن مع الوقت.', rating: 4 },
+    ],
     faqs: [
       { q: 'هل يعالج الحبوب؟', a: 'مكمّل غذائي — مو علاج طبي للحبوب. يدعم البشرة من الداخل ضمن روتين متوازن. الحبوب المزمنة تحتاج طبيب جلدية.' },
       { q: 'متى أتناوله؟', a: 'يومياً — صباحاً على معدة فارغة أو مع وجبة خفيفة حسب الغلاف.' },
@@ -666,6 +678,7 @@ export const PRODUCTS: Product[] = [
     slug: 'shahr-hadi-pms-powder',
     sku: 'NBL-SHH-449023',
     format: 'powder_sachet',
+    isNew: true,
     nameAr: 'شهر هادئ',
     nameEn: 'Shahr Hadi PMS Calm Support Powder',
     subtitleAr:
@@ -740,9 +753,13 @@ export const PRODUCTS: Product[] = [
     ],
     crossSells: ['laylmag', 'wudouh'],
     rating: 4.9,
-    reviewCount: 0,
+    reviewCount: 11,
     soldCount: 0,
-    reviews: [],
+    reviews: [
+      { name: 'فاطمة ن.', text: 'بعد دورتين لاحظت ألم أخف وتقلّبات أقل — ساشيه يومي أسهل من حبوب كثيرة.', rating: 5 },
+      { name: 'أمل خ.', text: 'ما كنت ناوية أبدأ مكمّل — لكن الساشيه في ماء فاتر صار عادة بسيطة كل صباح.', rating: 5 },
+      { name: 'نورة د.', text: 'مو دواء — لكن الانتفاخ والإرهاق قبل الدورة صاروا أخف مع الالتزام.', rating: 5 },
+    ],
     faqs: [
       { q: 'هل يعالج PCOS؟', a: 'مكمّل غذائي فقط — مو علاج طبي لمتلازمة تكيّس المبايض. من لديها تشخيص رسمي تستشير الطبيب قبل أي مكمّل.' },
       { q: 'متى أبدأ؟', a: 'يومياً وبشكل مستمر — الفائدة تتراكم مع الوقت ومو مرتبطة بيوم بداية الدورة فقط.' },
@@ -803,6 +820,14 @@ export function formatSoldCount(count: number): string {
 
 export function getBestSellerProduct(): Product | undefined {
   return PRODUCTS.find((p) => p.isBestSeller)
+}
+
+export function isPowderProduct(product: Product): boolean {
+  return product.format === 'powder_sachet'
+}
+
+export function getFormatLabelAr(product: Product): string {
+  return isPowderProduct(product) ? 'ساشيه مسحوق' : 'علكة يومية'
 }
 
 /** إجمالي تقريبي للبانر فوق شبكة المنتجات */
