@@ -153,7 +153,7 @@ export default function HomePage() {
 
                   <Image
                     src="/hero-store-trio.jpg"
-                    alt="منتجات نبتة لابو — علكة ومسحوق"
+                    alt="منتجات نبتة لابو — ستة منتجات علكة ومسحوق"
                     width={1024}
                     height={1024}
                     priority
