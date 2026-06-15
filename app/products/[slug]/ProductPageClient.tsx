@@ -164,7 +164,8 @@ export default function ProductPageClient({
         <p className="text-center text-xs leading-relaxed text-muted sm:text-[13px]">
           <a
             href="/returns-refunds"
-            className="font-semibold text-authority underline decoration-authority/30 underline-offset-2 transition hover:decoration-authority"
+            className="font-semibold underline underline-offset-2 transition"
+            style={{ color: accent, textDecorationColor: `${accent}44` }}
           >
             تفاصيل الضمان والاسترجاع
           </a>

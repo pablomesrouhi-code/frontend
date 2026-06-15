@@ -35,21 +35,18 @@ function BadgeRow({ product }: { product: Product }) {
   return (
     <div className="flex flex-wrap items-center justify-end gap-2">
       {product.isNew && (
-        <span className="rounded-full bg-charcoal px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white sm:px-3 sm:py-1.5 sm:text-xs">
+        <span
+          className="rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white sm:px-3 sm:py-1.5 sm:text-xs"
+          style={{ background: product.accentColor }}
+        >
           جديد
         </span>
       )}
       <span
-        className="rounded-full border px-2.5 py-1 text-[10px] font-bold sm:px-3 sm:py-1.5 sm:text-xs"
-        style={{ borderColor: `${product.accentColor}44`, color: product.accentColor, background: `${product.accentColor}0d` }}
-      >
-        {getFormatLabelAr(product)}
-      </span>
-      <span
         className="rounded-full px-3 py-1.5 text-sm font-bold tracking-wide text-white"
         style={{ background: product.accentColor }}
       >
-        {product.badgeAr}
+        {getFormatLabelAr(product)} · {product.badgeAr}
       </span>
     </div>
   )
@@ -141,10 +138,10 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
   if (layout === 'grid') {
     return (
       <article
-        className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1"
-        style={{ ['--accent' as string]: product.accentColor }}
-        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = `${product.accentColor}44`; (e.currentTarget as HTMLElement).style.boxShadow = `0 20px 48px -14px ${product.accentColor}33`; }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = ''; (e.currentTarget as HTMLElement).style.boxShadow = ''; }}
+        className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border-2 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1"
+        style={{ borderColor: `${product.accentColor}44`, boxShadow: `0 12px 40px -18px ${product.accentColor}33` }}
+        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = product.accentColor; (e.currentTarget as HTMLElement).style.boxShadow = `0 20px 48px -14px ${product.accentColor}44`; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = `${product.accentColor}44`; (e.currentTarget as HTMLElement).style.boxShadow = `0 12px 40px -18px ${product.accentColor}33`; }}
       >
         <Link href={`/products/${product.slug}`} className="relative block shrink-0 overflow-hidden bg-[#FAFAFA]">
           <div className="relative aspect-[4/5] w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">
@@ -179,9 +176,10 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
 
   return (
     <article
-      className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border/90 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 md:flex-row md:items-stretch"
-      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = `${product.accentColor}44`; (e.currentTarget as HTMLElement).style.boxShadow = `0 20px 48px -14px ${product.accentColor}33`; }}
-      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = ''; (e.currentTarget as HTMLElement).style.boxShadow = ''; }}
+      className="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border-2 bg-white shadow-[0_2px_14px_-4px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 md:flex-row md:items-stretch"
+      style={{ borderColor: `${product.accentColor}44`, boxShadow: `0 12px 40px -18px ${product.accentColor}33` }}
+      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = product.accentColor; (e.currentTarget as HTMLElement).style.boxShadow = `0 20px 48px -14px ${product.accentColor}44`; }}
+      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = `${product.accentColor}44`; (e.currentTarget as HTMLElement).style.boxShadow = `0 12px 40px -18px ${product.accentColor}33`; }}
     >
       <Link
         href={`/products/${product.slug}`}

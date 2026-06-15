@@ -1,20 +1,3 @@
-const CITIES = [
-  'الرياض',
-  'جدة',
-  'مكة المكرمة',
-  'المدينة المنورة',
-  'الدمام',
-  'الخبر',
-  'الطائف',
-  'بريدة',
-  'تبوك',
-  'أبها',
-  'حائل',
-  'نجران',
-  'ينبع',
-  'القصيم',
-] as const
-
 const STEPS = [
   {
     num: '١',
@@ -56,7 +39,7 @@ export default function PdpDeliveryPaymentSection({ accentColor, bgColor }: Prop
       />
       <div className="relative mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
         <div className="pointer-events-none absolute -top-16 end-0 h-56 w-56 rounded-full opacity-[0.12] blur-3xl sm:h-72 sm:w-72" style={{ background: accentColor }} aria-hidden />
-        <div className="pointer-events-none absolute bottom-0 start-0 h-48 w-48 rounded-full opacity-[0.08] blur-3xl" style={{ background: '#146b70' }} aria-hidden />
+        <div className="pointer-events-none absolute bottom-0 start-0 h-48 w-48 rounded-full opacity-[0.08] blur-3xl" style={{ background: accentColor }} aria-hidden />
 
         <div className="relative mb-10 max-w-3xl text-start sm:mb-12 md:mb-14">
           <p
@@ -84,7 +67,7 @@ export default function PdpDeliveryPaymentSection({ accentColor, bgColor }: Prop
         <div className="relative mb-12 grid gap-4 sm:mb-14 sm:grid-cols-3 sm:gap-5">
           <div
             className="pointer-events-none absolute top-14 hidden h-0.5 opacity-25 sm:end-[12%] sm:start-[12%] sm:block"
-            style={{ background: `linear-gradient(90deg, ${accentColor}, #146b70, ${accentColor})` }}
+            style={{ background: `linear-gradient(90deg, ${accentColor}44, ${accentColor}, ${accentColor}44)` }}
             aria-hidden
           />
           {STEPS.map((step) => (
@@ -123,28 +106,11 @@ export default function PdpDeliveryPaymentSection({ accentColor, bgColor }: Prop
             style={{ background: accentColor }}
             aria-hidden
           />
-          <h3 className="relative mb-6 text-lg font-black text-charcoal sm:text-xl">نوصّل لكل مدن المملكة</h3>
-          <ul className="relative flex flex-wrap justify-end gap-2 sm:gap-2.5">
-            {CITIES.map((city) => (
-              <li key={city}>
-                <span className="inline-flex min-h-[2.25rem] items-center rounded-full border border-border/90 bg-white/95 px-3.5 py-1.5 text-xs font-bold text-charcoal shadow-sm ring-1 ring-black/[0.02] sm:px-4 sm:text-sm">
-                  {city}
-                </span>
-              </li>
-            ))}
-            <li>
-              <span
-                className="inline-flex min-h-[2.25rem] items-center rounded-full px-3.5 py-1.5 text-xs font-black text-white shadow-md sm:px-4 sm:text-sm"
-                style={{
-                  background: `linear-gradient(120deg, #146b70, color-mix(in srgb, #146b70 75%, #0d3f42))`,
-                  boxShadow: '0 10px 28px -12px rgb(20 107 112 / 0.45)',
-                }}
-              >
-                + كل المناطق
-              </span>
-            </li>
-          </ul>
-          <p className="relative mt-8 border-t border-border/70 pt-6 text-center text-xs font-semibold leading-relaxed text-muted sm:text-sm">
+          <h3 className="relative mb-4 text-lg font-black text-charcoal sm:text-xl">نوصّل لجميع مناطق المملكة</h3>
+          <p className="relative mb-8 max-w-2xl text-sm leading-relaxed text-muted sm:text-[15px]">
+            توصيل 2–4 أيام عمل داخل المملكة العربية السعودية — نغطّي جميع المناطق عبر شركاء التوصيل المعتمدين.
+          </p>
+          <p className="relative border-t border-border/70 pt-6 text-center text-xs font-semibold leading-relaxed text-muted sm:text-sm">
             شركاء التوصيل:{' '}
             <span className="font-black text-charcoal">أرامكس</span>
             <span className="mx-1.5 text-border" aria-hidden>

@@ -65,7 +65,6 @@ const POWDER_PRODUCTS = PRODUCTS.filter((p) => p.format === 'powder_sachet')
 const TOP_GUMMIES = [...GUMMY_PRODUCTS].sort((a, b) => (b.soldCount ?? 0) - (a.soldCount ?? 0)).slice(0, 2)
 const TOP_POWDER = [...POWDER_PRODUCTS].sort((a, b) => (b.soldCount ?? 0) - (a.soldCount ?? 0))[0]
 const BEST_SELLERS = [...TOP_GUMMIES, ...(TOP_POWDER ? [TOP_POWDER] : [])]
-const BEST_SELLER_FRAME = BRAND.rose
 
 // ───────────────────────────────────────────────
 
@@ -213,7 +212,7 @@ export default function HomePage() {
               اختيارات عميلات نبتة لابو
             </h2>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-              ثلاثة الأكثر طلباً — جنب بعض، بإطار موحّد أنيق.
+              ثلاثة الأكثر طلباً — جنب بعض، كل منتج بإطار بلونه.
             </p>
           </div>
 
@@ -223,8 +222,8 @@ export default function HomePage() {
                 key={p.id}
                 className="h-full rounded-[1.4rem] p-[3px] sm:rounded-[1.5rem] sm:p-[3.5px]"
                 style={{
-                  background: `linear-gradient(155deg, ${BEST_SELLER_FRAME} 0%, ${BEST_SELLER_FRAME}88 55%, ${BEST_SELLER_FRAME}44 100%)`,
-                  boxShadow: `0 16px 48px -20px ${BEST_SELLER_FRAME}55`,
+                  background: `linear-gradient(155deg, ${p.accentColor} 0%, ${p.accentColor}88 55%, ${p.accentColor}44 100%)`,
+                  boxShadow: `0 16px 48px -20px ${p.accentColor}55`,
                 }}
               >
                 <ProductCard product={p} useHomeCardImage />
@@ -265,12 +264,21 @@ export default function HomePage() {
           </div>
           <div className="mb-10 grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             {GUMMY_PRODUCTS.map((p) => (
-              <ProductCard key={p.id} product={p} useHomeCardImage />
+              <div
+                key={p.id}
+                className="h-full rounded-[1.4rem] p-[3px]"
+                style={{
+                  background: `linear-gradient(155deg, ${p.accentColor} 0%, ${p.accentColor}66 100%)`,
+                  boxShadow: `0 12px 36px -18px ${p.accentColor}44`,
+                }}
+              >
+                <ProductCard product={p} useHomeCardImage />
+              </div>
             ))}
           </div>
 
           <div className="mb-6 text-start">
-            <span className="mb-2 inline-flex rounded-full bg-charcoal px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white sm:text-xs">
+            <span className="mb-2 inline-flex rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white sm:text-xs" style={{ background: BRAND.mauve }}>
               جديد
             </span>
             <h3 className="mt-2 text-lg font-bold" style={{ color: BRAND.charcoal }}>خط ساشيه المسحوق</h3>
@@ -278,7 +286,16 @@ export default function HomePage() {
           </div>
           <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             {POWDER_PRODUCTS.map((p) => (
-              <ProductCard key={p.id} product={p} useHomeCardImage />
+              <div
+                key={p.id}
+                className="h-full rounded-[1.4rem] p-[3px]"
+                style={{
+                  background: `linear-gradient(155deg, ${p.accentColor} 0%, ${p.accentColor}66 100%)`,
+                  boxShadow: `0 12px 36px -18px ${p.accentColor}44`,
+                }}
+              >
+                <ProductCard product={p} useHomeCardImage />
+              </div>
             ))}
           </div>
 

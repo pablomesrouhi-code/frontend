@@ -6,7 +6,7 @@ export default function ProductSoldBadge({ product }: { product: Product }) {
   return (
     <>
       {product.isBestSeller ? (
-        <span className="absolute top-3 end-3 z-10 rounded-full bg-[#b8485c] px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_4px_14px_-4px_rgba(184,72,92,0.65)] ring-1 ring-white/30 sm:text-[11px]">
+        <span className="absolute top-3 end-3 z-10 rounded-full px-2.5 py-1 text-[10px] font-bold text-white shadow ring-1 ring-white/30 sm:text-[11px]" style={{ background: product.accentColor, boxShadow: `0 4px 14px -4px ${product.accentColor}99` }}>
           🇸🇦 الأكثر مبيعاً
         </span>
       ) : null}

@@ -37,6 +37,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     .filter(Boolean) as typeof PRODUCTS
 
   const complianceNote = getPdpComplianceNote(product.format)
+  const accent = product.accentColor
 
   const pdpHeroSrc = product.pdpHeroImage?.src ?? product.coverImage
   const pdpHeroAlt = product.pdpHeroImage?.alt ?? product.nameAr
@@ -117,13 +118,16 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <div className="order-2 min-w-0 text-pretty break-words text-start md:order-1 md:max-w-xl lg:max-w-none">
               <div className="mb-2 flex flex-wrap items-center justify-end gap-2 sm:mb-3">
                 {product.isNew && (
-                  <span className="inline-flex rounded-full bg-charcoal px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white shadow sm:text-xs">
+                  <span
+                    className="inline-flex rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white shadow sm:text-xs"
+                    style={{ background: accent }}
+                  >
                     جديد
                   </span>
                 )}
                 <span
-                  className="inline-flex rounded-full border px-3 py-1 text-[10px] font-bold sm:text-xs"
-                  style={{ borderColor: `${product.accentColor}44`, color: product.accentColor, background: `${product.accentColor}0d` }}
+                  className="inline-flex rounded-full px-3 py-1 text-[10px] font-bold text-white sm:text-xs"
+                  style={{ background: accent }}
                 >
                   {getFormatLabelAr(product)}
                 </span>
@@ -142,19 +146,20 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               </span>
 
               <p
-                className="mb-3 border-r-2 pe-2.5 text-sm font-semibold leading-snug text-charcoal sm:mb-4 sm:pe-3 sm:text-[0.9375rem]"
-                style={{ borderColor: product.accentColor }}
+                className="mb-3 border-r-2 pe-2.5 text-sm font-semibold leading-snug sm:mb-4 sm:pe-3 sm:text-[0.9375rem]"
+                style={{ borderColor: accent, color: accent }}
               >
                 {magnetLine}
               </p>
 
-              <h1 className="mb-2 break-words text-2xl font-black leading-tight tracking-tight text-charcoal sm:text-3xl sm:leading-[1.15]">
+              <h1 className="mb-2 break-words text-2xl font-black leading-tight tracking-tight sm:text-3xl sm:leading-[1.15]" style={{ color: accent }}>
                 {product.nameAr}
               </h1>
 
               <p
                 id="pdp-hook"
-                className="scroll-mt-[calc(5.5rem+env(safe-area-inset-top))] mb-3 text-pretty text-[0.9375rem] font-bold leading-snug text-charcoal sm:mb-4 sm:text-base"
+                className="scroll-mt-[calc(5.5rem+env(safe-area-inset-top))] mb-3 text-pretty text-[0.9375rem] font-bold leading-snug sm:mb-4 sm:text-base"
+                style={{ color: accent }}
               >
                 {product.heroHeadlineAr}
               </p>
@@ -213,7 +218,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <div
         className="relative overflow-hidden border-b border-white/10 py-3.5 sm:py-4"
         style={{
-          background: `linear-gradient(95deg, ${product.accentColor} 0%, color-mix(in srgb, ${product.accentColor} 55%, #1a1012) 48%, #146b70 100%)`,
+          background: `linear-gradient(95deg, ${accent} 0%, color-mix(in srgb, ${accent} 55%, #1a1012) 100%)`,
         }}
       >
         <div
@@ -236,10 +241,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </div>
       </div>
 
-      <p className="border-b border-border bg-gradient-to-l from-peach-soft/40 via-white to-authority/[0.06] py-3 text-center text-[11px] font-semibold leading-relaxed text-charcoal sm:py-3.5 sm:text-sm">
-        <span className="text-muted">نفس رحلة عميلات قبلك:</span> إعلان → صفحة → طلب → تأكيد → توصيل.{' '}
-        <strong className="font-bold text-charcoal">التفاصيل الدقيّة على الغلاف</strong>
-        <span className="text-muted"> — وقرّري براحتك.</span>
+      <p
+        className="border-b border-border py-3 text-center text-[11px] font-semibold leading-relaxed sm:py-3.5 sm:text-sm"
+        style={{ background: `linear-gradient(to left, ${product.bgColor}88, #fff, ${accent}0d)`, color: accent }}
+      >
+        <span style={{ opacity: 0.75 }}>نفس رحلة عميلات قبلك:</span> إعلان → صفحة → طلب → تأكيد → توصيل.{' '}
+        <strong className="font-bold">التفاصيل الدقيّة على الغلاف</strong>
+        <span style={{ opacity: 0.75 }}> — وقرّري براحتك.</span>
       </p>
 
       {/* Pain / Desire - alternating */}
@@ -251,10 +259,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       >
         <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
           <div className="mx-auto mb-8 max-w-3xl text-center md:mx-0 md:max-w-none md:text-start">
-            <p className="mb-2 inline-block rounded-full bg-charcoal/90 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white sm:text-xs">
+            <p className="mb-2 inline-block rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white sm:text-xs" style={{ background: accent }}>
               هل هذا يشبه يومكِ؟
             </p>
-            <h2 className="mt-2 text-xl font-black leading-snug text-charcoal sm:text-2xl md:text-3xl">
+            <h2 className="mt-2 text-xl font-black leading-snug sm:text-2xl md:text-3xl" style={{ color: accent }}>
               المشكلة مو نقص منتجات — نقص روتين واحد يثبت
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
@@ -264,14 +272,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
           <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-10">
             <div className="order-2 space-y-5 text-start lg:order-2 lg:col-span-5">
-              <div className="rounded-3xl border border-primary/25 bg-peach-soft/50 p-5 shadow-sm ring-1 ring-black/[0.03] sm:p-6">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">تعرفين هذا الإحساس؟</p>
-                <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">ليش يختارونه أصلاً؟</h3>
+              <div className="rounded-3xl border p-5 shadow-sm ring-1 ring-black/[0.03] sm:p-6" style={{ borderColor: `${accent}44`, background: `${accent}0a` }}>
+                <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: accent }}>تعرفين هذا الإحساس؟</p>
+                <h3 className="mt-2 text-lg font-black sm:text-xl" style={{ color: accent }}>ليش يختارونه أصلاً؟</h3>
                 <p className="mt-3 text-base leading-relaxed text-muted sm:text-lg">{product.painCopy}</p>
               </div>
-              <div className="rounded-3xl border p-5 shadow-sm sm:p-6" style={{ borderColor: `${product.accentColor}44`, background: `${product.accentColor}08` }}>
-                <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: product.accentColor }}>بأسلوب واقعي</p>
-                <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">وش يقدر يكمّل روتينك؟</h3>
+              <div className="rounded-3xl border p-5 shadow-sm sm:p-6" style={{ borderColor: `${accent}44`, background: `${accent}08` }}>
+                <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: accent }}>بأسلوب واقعي</p>
+                <h3 className="mt-2 text-lg font-black sm:text-xl" style={{ color: accent }}>وش يقدر يكمّل روتينك؟</h3>
                 <ul className="mt-4 flex flex-col gap-3">
                   {product.benefits.slice(0, 4).map((b) => (
                     <li key={b} className="flex items-start gap-3 rounded-2xl bg-white px-4 py-3 ring-1 ring-border/70">
@@ -319,9 +327,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
       {/* Benefits */}
       {product.benefits.length > 4 ? (
-      <section className="border-t border-border bg-peach-soft/20 py-10 sm:py-12 md:py-14">
+      <section className="border-t border-border py-10 sm:py-12 md:py-14" style={{ background: `${product.bgColor}55` }}>
         <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
-          <h2 className="mb-2 text-center text-xl font-black text-charcoal sm:text-2xl">مزايا إضافية بلا تضليل</h2>
+          <h2 className="mb-2 text-center text-xl font-black sm:text-2xl" style={{ color: accent }}>مزايا إضافية بلا تضليل</h2>
           <p className="mx-auto mb-8 max-w-2xl text-center text-sm text-muted">
             نقاط تكمّل اللي قبل؛ مو وعود علاج وبلا ادّعاء واحد للجميع.
           </p>
@@ -552,8 +560,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {crossSellProducts.length > 0 && (
         <section className="border-t border-border bg-white py-10 sm:py-12 md:py-14">
           <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
-            <p className="mb-2 text-center text-xs font-black uppercase tracking-[0.2em] text-primary">كمّلي السلة بحكمة</p>
-            <h2 className="text-2xl font-black text-charcoal mb-3 text-center break-words px-1 sm:text-3xl">
+            <p className="mb-2 text-center text-xs font-black uppercase tracking-[0.2em]" style={{ color: accent }}>كمّلي السلة بحكمة</p>
+            <h2 className="text-2xl font-black mb-3 text-center break-words px-1 sm:text-3xl" style={{ color: accent }}>
               غالبًا عميلاتنا يكمّلوا روتين كامل قبل ما تصير العروض أغلى
             </h2>
             <p className="mx-auto mb-10 max-w-2xl text-center text-[15px] leading-relaxed text-muted break-words px-1 sm:text-lg">
@@ -571,13 +579,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
       <section
         id="pdp-return-to-offer"
-        className="scroll-mt-[calc(4.75rem+env(safe-area-inset-top))] border-y border-border bg-gradient-to-bl from-peach-soft/50 via-white to-authority/[0.06] py-12 sm:py-14 md:py-16"
+        className="scroll-mt-[calc(4.75rem+env(safe-area-inset-top))] border-y border-border py-12 sm:py-14 md:py-16"
+        style={{ background: `linear-gradient(to bottom left, ${product.bgColor}88, #fff, ${accent}0a)` }}
       >
         <div className="mx-auto flex max-w-3xl flex-col items-center px-4 text-center sm:px-6">
           <p className="mb-3 text-xs font-black uppercase tracking-[0.26em]" style={{ color: product.accentColor }}>
             جاهزة من القرار؟
           </p>
-          <h2 className="text-2xl font-black leading-snug text-charcoal sm:text-3xl">طلعي لفوق؛ نفس العربات والخصم موجودين في خانة الأسعار فوق الصفحة</h2>
+          <h2 className="text-2xl font-black leading-snug sm:text-3xl" style={{ color: accent }}>طلعي لفوق؛ نفس العربات والخصم موجودين في خانة الأسعار فوق الصفحة</h2>
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-muted sm:text-lg">
             اختاري الخانة المناسبة (قطعة واحدة أو عرض القطعتين أو الثلاث)، «أضيفي للسلة» يفتح لك تأكيد الطلب.{' '}
             <strong className="font-semibold text-charcoal">ودفع كاش وقت التسليم</strong>
@@ -596,7 +605,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </a>
             <a
               href="#pdp-reviews"
-              className="inline-flex min-h-[48px] items-center justify-center rounded-2xl border-2 border-border bg-white px-7 py-3.5 text-base font-bold text-charcoal shadow-sm ring-1 ring-black/[0.04] transition hover:bg-peach-soft/30"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-2xl border-2 bg-white px-7 py-3.5 text-base font-bold shadow-sm ring-1 ring-black/[0.04] transition"
+              style={{ borderColor: `${accent}44`, color: accent }}
             >
               ارجعي لآراء العميلات
             </a>
