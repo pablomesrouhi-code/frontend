@@ -31,26 +31,36 @@ function PriceBlock({ product }: { product: Product }) {
   )
 }
 
+function shadeTowardBlack(hex: string, t: number) {
+  const h = hex.replace('#', '')
+  const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h
+  const n = parseInt(full, 16)
+  const r = (n >> 16) & 255
+  const g = (n >> 8) & 255
+  const b = n & 255
+  const mix = (c: number) => Math.round(c * (1 - t))
+  return `#${[mix(r), mix(g), mix(b)].map((x) => x.toString(16).padStart(2, '0')).join('')}`
+}
+
 function CtaRow({ product }: { product: Product }) {
+  const accent = product.accentColor
+  const accentDeep = shadeTowardBlack(accent, 0.18)
+
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group/btn mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold transition-[color,background-color,border-color,transform] duration-200 ease-out active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100"
-      style={{ background: '#FFFFFF', color: product.accentColor, border: `2px solid ${product.accentColor}44` }}
+      className="group/btn mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold text-white transition-[transform,filter,box-shadow] duration-200 ease-out hover:brightness-105 active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100"
+      style={{
+        background: `linear-gradient(145deg, ${accent} 0%, ${accentDeep} 100%)`,
+        border: `2px solid ${accent}`,
+        boxShadow: `0 6px 20px -4px ${accent}66`,
+      }}
       onClick={() => {
         trackAddToWishlist({
           content_ids: [product.id],
           value: getPriceForQty(1),
           currency: 'SAR',
         })
-      }}
-      onMouseEnter={(e) => {
-        ;(e.currentTarget as HTMLElement).style.background = product.accentColor
-        ;(e.currentTarget as HTMLElement).style.color = '#fff'
-      }}
-      onMouseLeave={(e) => {
-        ;(e.currentTarget as HTMLElement).style.background = '#FFFFFF'
-        ;(e.currentTarget as HTMLElement).style.color = product.accentColor
       }}
     >
       <span>اكتشفي المنتج</span>

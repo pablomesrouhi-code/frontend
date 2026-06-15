@@ -49,31 +49,10 @@ export default function CollectionPage() {
         </div>
       </section>
 
-      {/* Products catalog */}
-      <section id="products" className="scroll-mt-24 py-12 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="mb-8 text-start">
-            <p className="mb-2 text-sm font-bold uppercase tracking-widest" style={{ color: '#b8485c' }}>
-              منتجاتنا
-            </p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#1C1C1C]">كل المنتجات في مكان واحد</h2>
-            <p className="mt-2 max-w-2xl text-sm text-[#5c5656]">
-              من الصباح للمساء — ستة منتجات مرخّصة، كل واحد له هدف واضح.
-            </p>
-          </div>
-          <ProductsSoldProofBar />
-          <div className="grid min-w-0 w-full grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 md:gap-8">
-            {PRODUCTS.map((p) => (
-              <ProductCard key={p.id} product={p} useHomeCardImage />
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Comparison table — all products */}
-      <section className="py-8 bg-white">
+      <section className="py-10 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 overflow-x-auto">
-          <h2 className="text-xl font-bold text-[#1C1C1C] mb-5 text-start">مقارنة سريعة</h2>
+          <h2 className="text-xl font-bold text-[#1C1C1C] mb-5 text-start">قارني بين المنتجات</h2>
           <table className="w-full overflow-hidden rounded-xl border-collapse border border-border/60 text-sm shadow-[0_4px_24px_-10px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02]">
             <thead>
               <tr className="bg-[#FFFFFF]">
@@ -116,6 +95,18 @@ export default function CollectionPage() {
               <p className="text-white text-2xl font-bold">349 ر.س</p>
               <p className="text-white/70 text-xs">3 قطع — أفضل توفير</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Products catalog */}
+      <section id="products" className="scroll-mt-24 py-10 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <ProductsSoldProofBar />
+          <div className="grid min-w-0 w-full grid-cols-1 items-stretch gap-6 md:gap-8">
+            {PRODUCTS.map((p) => (
+              <ProductCard key={p.id} product={p} layout="list" useHomeCardImage />
+            ))}
           </div>
         </div>
       </section>
