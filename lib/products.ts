@@ -87,7 +87,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'rawnaq-c',
     slug: 'rawnaq-c-collagen-gummies',
-    sku: 'NBL-RWQ-849102',
+    sku: 'RWCFH',
     nameAr: 'رونق C',
     nameEn: 'Rawnaq-C Hair Skin & Nails Gummies',
     subtitleAr:
@@ -262,7 +262,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'khiffabiotic',
     slug: 'khiffabiotic-probiotic-gummies',
-    sku: 'NBL-KHF-572903',
+    sku: 'PRBTCS',
     nameAr: 'خفّة بيوتك',
     nameEn: 'KhiffaBiotic Probiotic Gummies',
     subtitleAr:
