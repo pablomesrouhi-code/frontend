@@ -44,7 +44,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const pdpHeroWidth = product.pdpHeroImage?.width ?? product.coverWidth
   const pdpHeroHeight = product.pdpHeroImage?.height ?? product.coverHeight
 
-  const painPdpPhoto = !isPowder && product.painSectionImage
+  const painPdpPhoto = product.painSectionImage
     ? {
         src: product.painSectionImage.src,
         alt: product.painSectionImage.alt,
@@ -53,7 +53,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       }
     : null
 
-  const ingredientsPdpPhoto = !isPowder && product.ingredientsSectionImage
+  const ingredientsPdpPhoto = product.ingredientsSectionImage
     ? {
         src: product.ingredientsSectionImage.src,
         alt: product.ingredientsSectionImage.alt,
@@ -61,6 +61,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         height: product.ingredientsSectionImage.height,
       }
     : null
+
+  const powderHeroPhoto = isPowder && product.pdpHeroImage
 
   const magnetLine =
     product.pdpMagnetLineAr ??
@@ -93,7 +95,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 className="mx-auto w-full max-w-md rounded-2xl border-2 bg-white/95 p-1.5 shadow-lg backdrop-blur-sm sm:max-w-lg sm:rounded-3xl sm:p-2 md:mx-0 md:max-w-none"
                 style={{ borderColor: `color-mix(in srgb, ${product.accentColor} 30%, #e8e0de)` }}
               >
-                {isPowder ? (
+                {isPowder && !powderHeroPhoto ? (
                   <div className="relative aspect-square min-h-[300px]">
                     <PowderPlaceholder product={product} size="hero" />
                   </div>
@@ -109,7 +111,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   />
                 )}
               </div>
-              {product.captionUnderHeroImage && !isPowder && (
+              {product.captionUnderHeroImage && (
                 <p className="mx-auto mt-2 max-w-xl break-words text-center text-[11px] leading-snug text-muted sm:mt-3 sm:text-xs md:mx-0 md:text-start">
                   {product.captionUnderHeroImage}
                 </p>

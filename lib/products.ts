@@ -477,8 +477,7 @@ export const PRODUCTS: Product[] = [
   },
 
   // ─────────────────────────────────────────────────────────────────────────
-  // خط المسحوق — Powder Sachet Line (3 منتجات جديدة)
-  // الصور مؤقتة — ضع ملفات الصور الحقيقية تحت /public/products/ واستبدل المسارات
+  // خط المسحوق — Powder Sachet Line
   // ─────────────────────────────────────────────────────────────────────────
   {
     id: 'quwwat-sha3r',
@@ -497,11 +496,38 @@ export const PRODUCTS: Product[] = [
     badgeAr: 'مسحوق الشعر القوي',
     accentColor: '#B5896A',
     bgColor: '#FAF1E8',
-    coverImage: '/products/rawnaq-c-cover.jpg',
+    coverImage: '/products/quwwat-sha3r-product.png',
     coverWidth: 1024,
     coverHeight: 1024,
     homeCardImage: '/products/home-quwwat-sha3r.png',
-    captionUnderHeroImage: 'صورة مؤقتة — الصورة الرسمية لمنتج قوة شعر قادمة قريباً.',
+    pdpHeroImage: {
+      src: '/products/quwwat-sha3r-hero.png',
+      width: 1024,
+      height: 1024,
+      alt: 'مثال توضيحي قبل وبعد — قوة شعر مسحوق كولاجين بحري',
+    },
+    painSectionImage: {
+      src: '/products/quwwat-sha3r-pain.png',
+      width: 1024,
+      height: 1024,
+      alt: 'تساقط الشعر — الإحساس اليومي عند كثير من النساء',
+    },
+    ingredientsSectionImage: {
+      src: '/products/quwwat-sha3r-product.png',
+      width: 1024,
+      height: 1024,
+      alt: 'قوة شعر — ساشيه مسحوق كولاجين بحري يومي',
+    },
+    extraStory: {
+      src: '/products/quwwat-sha3r-after.png',
+      width: 1024,
+      height: 1024,
+      alt: 'شعر أكثف وألمع — مثال توضيحي؛ النتيجة تختلف بين الأشخاص والالتزام.',
+      titleAr: 'من الإحساس الثقيل إلى شعر تفتخرين به',
+      bodyAr:
+        'الفرق ما يجي من شامبو ليلة واحدة — يجي من تغذية داخلية تثبت مع الوقت. قوة شعر ساشيه يومي (كولاجين بحري + بيوتين + زنك + حديد) يكمّل أكلًا متوازنًا وعناية خارجية. النتيجة تختلف حسب الجسم والنوم والالتزام — مو وعد طبي.',
+    },
+    captionUnderHeroImage: 'مثال توضيحي قبل وبعد؛ النتيجة تختلف حسب الجسم والالتزام والروتين.',
     copyAfterHeroPrice: 'الأسعار في المربعات أدناه — قطعة للتجربة أو عرض أشهر للتوفير.',
     persuasionBlock: {
       eyebrowAr: 'لماذا قوة شعر؟',
