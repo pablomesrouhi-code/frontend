@@ -60,7 +60,7 @@ export default function PdpReviewsSection({ product }: Props) {
               إثبات اجتماعي
             </p>
             <h2 className="text-lg font-black text-charcoal sm:text-xl">وش قالت عميلات اختارت {product.nameAr}؟</h2>
-            <p className="mt-1.5 text-xs leading-relaxed text-muted sm:text-sm">
+            <p className="mt-1.5 text-xs leading-relaxed text-charcoal sm:text-sm">
               آراء شخصية؛ النتيجة تختلف حسب الجسم والالتزام. للتفاصيل راجعي الأسئلة في آخر الصفحة.
             </p>
           </div>
@@ -81,7 +81,7 @@ export default function PdpReviewsSection({ product }: Props) {
             {product.afterReviewsBanner.titleAr && (
               <h3 className="mb-1.5 text-base font-bold text-[#1C1C1C]">{product.afterReviewsBanner.titleAr}</h3>
             )}
-            <p className="text-xs leading-relaxed text-[#5c5656] sm:text-sm">{product.afterReviewsBanner.bodyAr}</p>
+            <p className="text-xs leading-relaxed text-charcoal sm:text-sm">{product.afterReviewsBanner.bodyAr}</p>
             <a
               href="#pdp-buy-anchor"
               className="mt-3 inline-flex rounded-xl px-4 py-2 text-xs font-extrabold text-white sm:text-sm"

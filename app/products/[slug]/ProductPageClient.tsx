@@ -147,7 +147,7 @@ export default function ProductPageClient({
           </span>
         </button>
 
-        <p className="text-center text-xs leading-relaxed text-muted sm:text-[13px]">
+        <p className="text-center text-xs leading-relaxed text-charcoal sm:text-[13px]">
           <a
             href="/returns-refunds"
             className="font-semibold underline underline-offset-2 transition"

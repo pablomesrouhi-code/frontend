@@ -54,7 +54,7 @@ export default function PdpDeliveryPaymentSection({ accentColor, bgColor }: Prop
           <h2 className="mt-3 text-2xl font-black leading-snug text-charcoal sm:text-3xl md:text-[2rem] md:leading-tight">
             كيف يوصلك طلبك — بكل بساطة
           </h2>
-          <p className="mt-4 max-w-2xl text-pretty text-[15px] leading-relaxed text-muted sm:text-lg">
+          <p className="mt-4 max-w-2xl text-pretty text-[15px] leading-relaxed text-charcoal sm:text-lg">
             بدون دفع أونلاين، بدون التزام، بدون مفاجآت. أنتي تختارين، نحن نوصّل.
           </p>
           <span
@@ -90,7 +90,7 @@ export default function PdpDeliveryPaymentSection({ accentColor, bgColor }: Prop
                   {step.title}
                 </h3>
               </div>
-              <p className="text-sm leading-relaxed text-muted sm:text-[15px]">{step.body}</p>
+              <p className="text-sm leading-relaxed text-charcoal sm:text-[15px]">{step.body}</p>
             </article>
           ))}
         </div>
@@ -107,10 +107,10 @@ export default function PdpDeliveryPaymentSection({ accentColor, bgColor }: Prop
             aria-hidden
           />
           <h3 className="relative mb-4 text-lg font-black text-charcoal sm:text-xl">نوصّل لجميع مناطق المملكة</h3>
-          <p className="relative mb-8 max-w-2xl text-sm leading-relaxed text-muted sm:text-[15px]">
+          <p className="relative mb-8 max-w-2xl text-sm leading-relaxed text-charcoal sm:text-[15px]">
             توصيل 2–4 أيام عمل داخل المملكة العربية السعودية — نغطّي جميع المناطق عبر شركاء التوصيل المعتمدين.
           </p>
-          <p className="relative border-t border-border/70 pt-6 text-center text-xs font-semibold leading-relaxed text-muted sm:text-sm">
+          <p className="relative border-t border-border/70 pt-6 text-center text-xs font-semibold leading-relaxed text-charcoal sm:text-sm">
             شركاء التوصيل:{' '}
             <span className="font-black text-charcoal">أرامكس</span>
             <span className="mx-1.5 text-border" aria-hidden>
