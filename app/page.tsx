@@ -54,10 +54,54 @@ const FAQS = [
 ] as const
 
 const REVIEWS = [
-  { name: 'سارة م.', city: 'الرياض', text: 'رونق C طعمه خفيف وصار جزء من صباحي. شعرت بفرق على ظفر اليد بعد شهر.', rating: 5, product: 'رونق C', accent: BRAND.rose },
-  { name: 'نور ع.', city: 'جدة', text: 'كنت أحس بثقل بعد الغداء. خفّة بيوتك مع روتين أحسن للأكل غيّر إحساسي.', rating: 5, product: 'خفّة بيوتك', accent: BRAND.peach },
-  { name: 'ديمة خ.', city: 'الدمام', text: 'ليل ماج خلّى وقت النوم أهدأ. علكتين قبل النوم وصار روتيني أسهل.', rating: 5, product: 'ليل ماج', accent: BRAND.rose },
-  { name: 'هدى ر.', city: 'مكة', text: 'جربت الثلاثة معاً — روتيني صار أكتمل من الصباح للمساء.', rating: 5, product: 'الباقة', accent: BRAND.roseDeep },
+  {
+    name: 'سارة م.',
+    city: 'الرياض',
+    text: 'رونق C دخل روتين صباحي مع قهوتي؛ علكتان وطعم خفيف — ما حسّيت بفرق مبالغ، بس الالتزام صار أسهل.',
+    rating: 5,
+    product: 'رونق C',
+    accent: BRAND.rose,
+  },
+  {
+    name: 'نور ع.',
+    city: 'جدة',
+    text: 'انتفاخ بعد الغداء كان يزعجني؛ خفّة بيوتك بعد الأكل خطوة خفيفة مع أكل أهدأ — مو علاج فوري.',
+    rating: 5,
+    product: 'خفّة بيوتك',
+    accent: BRAND.peach,
+  },
+  {
+    name: 'ديمة خ.',
+    city: 'الدمام',
+    text: 'ليل ماج قبل النوم بساعة صار عادتي؛ مساعد للاسترخاء مو منوم ولا وعد بنوم عميق.',
+    rating: 5,
+    product: 'ليل ماج',
+    accent: BRAND.rose,
+  },
+  {
+    name: 'ريم س.',
+    city: 'الرياض',
+    text: 'تساقط في الفرشاة كان يقلقني؛ قوة شعر ساشيه صباحي — بعد أسابيع شعر أقل في الفرشاة، تدريجياً.',
+    rating: 5,
+    product: 'قوة شعر',
+    accent: BRAND.cognac,
+  },
+  {
+    name: 'لينا ح.',
+    city: 'جدة',
+    text: 'حبوب متكررة وكنت أجرّب سيرومات؛ وضوح كمل روتيني — بشرتي أهدأ بعد أسابيع، مو بليلة.',
+    rating: 5,
+    product: 'وضوح',
+    accent: BRAND.sage,
+  },
+  {
+    name: 'فاطمة ن.',
+    city: 'مكة',
+    text: 'ألم وانتفاخ قبل الدورة كانوا يوقفون يومي؛ شهر هادئ ساشيه يومي — أخف بعد دورتين، مو دواء.',
+    rating: 5,
+    product: 'شهر هادئ',
+    accent: BRAND.mauve,
+  },
 ] as const
 
 const GUMMY_PRODUCTS = PRODUCTS.filter((p) => !p.format || p.format === 'gummy')
