@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { PRODUCTS, getProductBySlug, getProductById } from '@/lib/products'
+import { PRODUCTS, getProductBySlug, getProductById, formatSoldCount } from '@/lib/products'
 import StarRating from '@/components/ui/StarRating'
 import ProductPageClient from './ProductPageClient'
 import ProductCard from '@/components/product/ProductCard'
@@ -148,13 +148,51 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               </span>
 
               <p
-                className="mb-3 border-r-2 pe-2.5 text-sm font-semibold leading-snug text-charcoal sm:mb-4 sm:pe-3 sm:text-[0.9375rem]"
+                className="mb-4 border-r-2 pe-2.5 text-sm font-semibold leading-snug text-charcoal sm:mb-5 sm:pe-3 sm:text-[0.9375rem]"
                 style={{ borderColor: accent }}
               >
                 {magnetLine}
               </p>
 
-              <h1 className="mb-2 break-words text-2xl font-black leading-tight tracking-tight text-charcoal sm:text-3xl sm:leading-[1.15]">
+              <div className="mb-4 flex flex-col gap-3 sm:mb-5">
+                <div className="flex flex-wrap items-center justify-end gap-x-3 gap-y-2">
+                  <StarRating rating={product.rating} count={product.reviewCount} size="md" accentColor={accent} />
+                  <a
+                    href="#pdp-reviews"
+                    className="text-xs font-bold underline underline-offset-2 transition sm:text-sm"
+                    style={{ color: accent, textDecorationColor: `${accent}44` }}
+                  >
+                    اقرأي التقييمات ↓
+                  </a>
+                </div>
+                <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-2.5">
+                  <span
+                    className="inline-flex items-center gap-1.5 rounded-full border bg-white/90 px-3 py-1.5 text-[11px] font-bold text-charcoal shadow-sm sm:text-xs"
+                    style={{ borderColor: `${accent}33` }}
+                  >
+                    <span aria-hidden>⚡</span>
+                    توصيل 2–4 أيام
+                  </span>
+                  <span
+                    className="inline-flex items-center gap-1.5 rounded-full border bg-white/90 px-3 py-1.5 text-[11px] font-bold text-charcoal shadow-sm sm:text-xs"
+                    style={{ borderColor: `${accent}33` }}
+                  >
+                    <span aria-hidden>💵</span>
+                    دفع عند الاستلام
+                  </span>
+                  {(product.soldCount ?? 0) > 0 && (
+                    <span
+                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-bold text-white shadow-sm sm:text-xs"
+                      style={{ background: accent }}
+                    >
+                      <span aria-hidden>✓</span>
+                      {formatSoldCount(product.soldCount!)}+ طلب
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <h1 className="mb-2 break-words text-2xl font-black leading-tight tracking-tight text-charcoal sm:mb-3 sm:text-3xl sm:leading-[1.15]">
                 {product.nameAr}
               </h1>
 
@@ -170,17 +208,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   {product.copyAfterHeroPrice}
                 </p>
               )}
-
-              <div className="mb-3 sm:mb-4">
-                <StarRating rating={product.rating} count={product.reviewCount} size="md" />
-                <a
-                  href="#pdp-reviews"
-                  className="mt-2 inline-block text-sm font-bold underline underline-offset-2 transition sm:text-[15px]"
-                  style={{ color: product.accentColor, textDecorationColor: `${product.accentColor}55` }}
-                >
-                  اقرأي تجارب {product.reviewCount}+ عميلة ↓
-                </a>
-              </div>
 
               <p className="mb-5 text-sm leading-relaxed text-charcoal sm:mb-6 sm:text-base sm:leading-relaxed">
                 {product.heroSubAr}
