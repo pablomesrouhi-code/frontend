@@ -372,7 +372,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'laylmag',
     slug: 'laylmag-magnesium-gummies',
-    sku: 'NBL-LYM-318467',
+    sku: 'MGAGFD',
     nameAr: 'ليل ماج',
     nameEn: 'LaylMag Magnesium Gummies',
     subtitleAr:
