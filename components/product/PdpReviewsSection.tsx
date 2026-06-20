@@ -1,4 +1,5 @@
 import type { Product, ProductReview } from '@/lib/products'
+import { getPdpSectionHeadlines } from '@/lib/pdp-section-headlines'
 import StarRating from '@/components/ui/StarRating'
 
 function reviewInitials(name: string) {
@@ -41,6 +42,7 @@ type Props = {
 
 export default function PdpReviewsSection({ product }: Props) {
   const accent = product.accentColor
+  const reviewsH = getPdpSectionHeadlines(product.id).reviews ?? {}
 
   return (
     <section
@@ -57,11 +59,14 @@ export default function PdpReviewsSection({ product }: Props) {
               className="mb-1.5 inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase tracking-[0.18em] text-white"
               style={{ background: accent }}
             >
-              إثبات اجتماعي
+              {reviewsH.eyebrowAr ?? 'إثبات اجتماعي'}
             </p>
-            <h2 className="text-lg font-black text-charcoal sm:text-xl">وش قالت عميلات اختارت {product.nameAr}؟</h2>
+            <h2 className="text-lg font-black text-charcoal sm:text-xl md:text-2xl">
+              {reviewsH.titleAr ?? `وش قالت عميلات اختارت ${product.nameAr}؟`}
+            </h2>
             <p className="mt-1.5 text-xs leading-relaxed text-charcoal sm:text-sm">
-              آراء شخصية؛ النتيجة تختلف حسب الجسم والالتزام. للتفاصيل راجعي الأسئلة في آخر الصفحة.
+              {reviewsH.subtitleAr ??
+                'آراء شخصية؛ النتيجة تختلف حسب الجسم والالتزام. للتفاصيل راجعي الأسئلة في آخر الصفحة.'}
             </p>
           </div>
           <StarRating rating={product.rating} count={product.reviewCount} size="sm" />

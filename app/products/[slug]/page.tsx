@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { PRODUCTS, getProductBySlug, getProductById, formatSoldCount } from '@/lib/products'
+import { getPdpSectionHeadlines } from '@/lib/pdp-section-headlines'
 import StarRating from '@/components/ui/StarRating'
 import ProductPageClient from './ProductPageClient'
 import ProductCard from '@/components/product/ProductCard'
@@ -67,6 +68,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const magnetLine =
     product.pdpMagnetLineAr ??
     'مكمّل غذائي وفق الغلاف — اختاري العرض المناسب من خانة الطلب أسفل الصفحة.'
+
+  const sh = getPdpSectionHeadlines(product.id)
+  const painH = sh.pain ?? {}
+  const ingH = sh.ingredients ?? {}
+  const routineH = sh.routine ?? {}
+  const infoH = sh.infoSheets ?? {}
+  const faqH = sh.faq ?? {}
+  const closeH = sh.closingOffer ?? {}
 
   return (
     <div className="bg-[#FFFFFF] min-w-0 overflow-x-hidden pb-[calc(3.75rem+env(safe-area-inset-bottom,0px))]">
@@ -198,7 +207,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
               <p
                 id="pdp-hook"
-                className="scroll-mt-[calc(5.5rem+env(safe-area-inset-top))] mb-3 text-pretty text-[0.9375rem] font-bold leading-snug text-charcoal sm:mb-4 sm:text-base"
+                className="scroll-mt-[calc(5.5rem+env(safe-area-inset-top))] mb-3 border-r-[3px] pe-3 text-pretty text-base font-black leading-snug text-charcoal sm:mb-4 sm:pe-4 sm:text-lg md:text-xl"
+                style={{ borderColor: accent }}
               >
                 {product.heroHeadlineAr}
               </p>
@@ -288,26 +298,27 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
           <div className="mx-auto mb-8 max-w-3xl text-center md:mx-0 md:max-w-none md:text-start">
             <p className="mb-2 inline-block rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white sm:text-xs" style={{ background: accent }}>
-              هل هذا يشبه يومكِ؟
+              {painH.eyebrowAr ?? 'هل هذا يشبه يومكِ؟'}
             </p>
             <h2 className="mt-2 text-xl font-black leading-snug text-charcoal sm:text-2xl md:text-3xl">
-              المشكلة مو نقص منتجات — نقص روتين واحد يثبت
+              {painH.titleAr ?? 'المشكلة مو نقص منتجات — نقص روتين واحد يثبت'}
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-charcoal sm:text-base">
-              وصلتِ من الإعلان وتبغين تفاصيل واضحة قبل الطلب: وش يفيدك المكمّل، كيف تستخدمينه، وكيف نوصّل ونؤكّد معاكِ — بلا مبالغة ولا وعود طبية.
+              {painH.subtitleAr ??
+                'وصلتِ من الإعلان وتبغين تفاصيل واضحة قبل الطلب: وش يفيدك المكمّل، كيف تستخدمينه، وكيف نوصّل ونؤكّد معاكِ — بلا مبالغة ولا وعود طبية.'}
             </p>
           </div>
 
           <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-10">
             <div className="order-2 space-y-5 text-start lg:order-2 lg:col-span-5">
               <div className="rounded-3xl border p-5 shadow-sm ring-1 ring-black/[0.03] sm:p-6" style={{ borderColor: `${accent}44`, background: `${accent}0a` }}>
-                <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: accent }}>تعرفين هذا الإحساس؟</p>
-                <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">ليش يختارونه أصلاً؟</h3>
+                <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: accent }}>{painH.feelTitleAr ?? 'تعرفين هذا الإحساس؟'}</p>
+                <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">{painH.whyTitleAr ?? 'ليش يختارونه أصلاً؟'}</h3>
                 <p className="mt-3 text-base leading-relaxed text-charcoal sm:text-lg">{product.painCopy}</p>
               </div>
               <div className="rounded-3xl border p-5 shadow-sm sm:p-6" style={{ borderColor: `${accent}44`, background: `${accent}08` }}>
                 <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: accent }}>بأسلوب واقعي</p>
-                <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">وش يقدر يكمّل روتينك؟</h3>
+                <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">{painH.desireTitleAr ?? 'وش يقدر يكمّل روتينك؟'}</h3>
                 <ul className="mt-4 flex flex-col gap-3">
                   {product.benefits.slice(0, 4).map((b) => (
                     <li key={b} className="flex items-start gap-3 rounded-2xl bg-white px-4 py-3 ring-1 ring-border/70">
@@ -485,10 +496,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               )}
             </div>
             <div className="order-1 min-w-0 max-w-full break-words text-start lg:order-2 lg:col-span-5">
-              <p className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-muted">شفافية</p>
-              <h2 className="mb-2 text-xl font-black text-charcoal sm:text-2xl md:text-3xl">المكوّنات وبأسلوب واضح</h2>
+              <p className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-muted">{ingH.eyebrowAr ?? 'شفافية'}</p>
+              <h2 className="mb-2 text-xl font-black text-charcoal sm:text-2xl md:text-3xl">
+                {ingH.titleAr ?? 'المكوّنات وبأسلوب واضح'}
+              </h2>
               <p className="mb-6 text-sm leading-relaxed text-charcoal">
-                كل شي أساسي موجود على الغلاف المعتمد لمنتجكم؛ هنا خلّينا تعريف مختصر يساعدك تفهمين الفورمولا بدون لفّ. هذا المنتج بتصنيف مكمّل غذائي — مش دواء ومش توصيف طبي.
+                {ingH.subtitleAr ??
+                  'كل شي أساسي موجود على الغلاف المعتمد لمنتجكم؛ هنا خلّينا تعريف مختصر يساعدك تفهمين الفورمولا بدون لفّ. هذا المنتج بتصنيف مكمّل غذائي — مش دواء ومش توصيف طبي.'}
               </p>
               <div className="flex flex-col gap-3 sm:gap-4">
                 {product.ingredients.map((ing) => (
@@ -539,7 +553,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             style={{ background: product.bgColor }}
           >
             <div className="mb-2 text-3xl sm:mb-3 sm:text-4xl">{isPowder ? '💧' : '🌿'}</div>
-            <h2 className="break-words text-xl font-black text-charcoal sm:text-2xl">وش تسوين بالضبط؟ (روتين بسيط)</h2>
+            <h2 className="break-words text-xl font-black text-charcoal sm:text-2xl">
+              {routineH.titleAr ?? 'وش تسوين بالضبط؟ (روتين بسيط)'}
+            </h2>
             <p className="mt-4 break-words text-[15px] leading-relaxed text-charcoal sm:text-lg">{product.howToUse}</p>
             <p className="mt-4 rounded-2xl bg-white/60 px-4 py-3 text-sm leading-relaxed text-charcoal ring-1 ring-black/[0.04]">
               <strong className="text-charcoal">{complianceNote.lead}</strong> {complianceNote.rest}{' '}
@@ -553,8 +569,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {product.productInfoSheets && product.productInfoSheets.length > 0 ? (
         <section className="border-t border-border/60 bg-white py-10 sm:py-12 md:py-14">
           <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
-            <p className="mb-2 text-start text-xs font-black uppercase tracking-[0.22em] text-muted">معلومات المنتج</p>
-            <h2 className="mb-8 text-start text-xl font-black text-charcoal sm:text-2xl">المكونات، مدة النتيجة، وموانع الاستعمال</h2>
+            <p className="mb-2 text-start text-xs font-black uppercase tracking-[0.22em] text-muted">{infoH.eyebrowAr ?? 'معلومات المنتج'}</p>
+            <h2 className="mb-8 text-start text-xl font-black text-charcoal sm:text-2xl">
+              {infoH.titleAr ?? 'المكونات، مدة النتيجة، وموانع الاستعمال'}
+            </h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:gap-6">
               {product.productInfoSheets.map((sheet) => (
                 <article
@@ -632,9 +650,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       >
         <div className="mx-auto flex max-w-3xl flex-col items-center px-4 text-center sm:px-6">
           <p className="mb-3 text-xs font-black uppercase tracking-[0.26em]" style={{ color: product.accentColor }}>
-            جاهزة من القرار؟
+            {closeH.eyebrowAr ?? 'جاهزة من القرار؟'}
           </p>
-          <h2 className="text-2xl font-black leading-snug text-charcoal sm:text-3xl">طلعي لفوق؛ نفس العربات والخصم موجودين في خانة الأسعار فوق الصفحة</h2>
+          <h2 className="text-2xl font-black leading-snug text-charcoal sm:text-3xl">
+            {closeH.titleAr ?? 'طلعي لفوق؛ نفس العربات والخصم موجودين في خانة الأسعار فوق الصفحة'}
+          </h2>
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-charcoal sm:text-lg">
             اختاري الخانة المناسبة (قطعة واحدة أو عرض القطعتين أو الثلاث)، «أضيفي للسلة» يفتح لك تأكيد الطلب.{' '}
             <strong className="font-semibold text-charcoal">ودفع كاش وقت التسليم</strong>
@@ -666,10 +686,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {/* FAQ */}
       <section className="py-10 sm:py-12 md:py-14 bg-white">
         <div className="max-w-3xl mx-auto px-3 sm:px-6 min-w-0">
-          <p className="mb-2 text-center text-xs font-black uppercase tracking-[0.22em]" style={{ color: product.accentColor }}>نحطّكم في الصورة قبل الدفع عند الباب</p>
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-charcoal mb-2 text-center break-words">كل اللي بعد يخوف من الإعلانات — نقوله بوضوح</h2>
+          <p className="mb-2 text-center text-xs font-black uppercase tracking-[0.22em]" style={{ color: product.accentColor }}>
+            {faqH.eyebrowAr ?? 'نحطّكم في الصورة قبل الدفع عند الباب'}
+          </p>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-charcoal mb-2 text-center break-words">
+            {faqH.titleAr ?? 'كل اللي بعد يخوف من الإعلانات — نقوله بوضوح'}
+          </h2>
           <p className="mx-auto mb-8 max-w-lg text-center text-sm leading-relaxed text-charcoal sm:mb-10 sm:text-[15px]">
-            الأسئلة هذي أكثر الشي تجي ورا TikTok/Snapchat. شوفيهم براحة؛ ومستعدين نجاوب أثناء التأكيد الهاتفي أيضًا.
+            {faqH.subtitleAr ??
+              'الأسئلة هذي أكثر الشي تجي ورا TikTok/Snapchat. شوفيهم براحة؛ ومستعدين نجاوب أثناء التأكيد الهاتفي أيضًا.'}
           </p>
           <div className="flex flex-col gap-2.5 sm:gap-3 min-w-0">
             {product.faqs.map((faq) => (
