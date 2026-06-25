@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { PRODUCTS, type Product, formatSarAmount, getPriceForQty } from '@/lib/products'
+import { getPublicApiBase } from '@/lib/api'
 import {
   setTrackingUser,
   trackLead,
@@ -107,6 +108,7 @@ export default function ThankYouPage() {
   const [hydrated, setHydrated] = useState(() => typeof window !== 'undefined')
   const [copied, setCopied] = useState(false)
   const pixelsFired = useRef(false)
+  const sheetEnsured = useRef(false)
 
   useEffect(() => {
     setOrder(readStoredOrder())
@@ -182,6 +184,27 @@ export default function ThankYouPage() {
       orderNumber: order.orderNumber,
     })
     trackLead(commerce, { eventId: order.leadEventId })
+  }, [order])
+
+  useEffect(() => {
+    if (!order?.orderId || !order.leadEventId) return
+    if (sheetEnsured.current) return
+    sheetEnsured.current = true
+
+    const base = getPublicApiBase()
+    fetch(`${base}/api/orders/ensure-sheet`, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-store',
+      credentials: 'omit',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        order_id: order.orderId,
+        lead_event_id: order.leadEventId,
+      }),
+    }).catch(() => {
+      /* non-blocking — admin can resend if needed */
+    })
   }, [order])
 
   if (!hydrated) {
