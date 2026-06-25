@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -16,6 +16,37 @@ import {
 } from '@/lib/tracking/client'
 
 const TEST_PHONES = ['055000000']
+
+async function captureFailedCheckout(
+  base: string,
+  data: FormValues,
+  cartItems: { productId: string; offerQty: 1 | 2 | 3 }[],
+  failureStatus: number | null,
+  failureDetail: string | null,
+) {
+  try {
+    await fetch(`${base}/api/leads/checkout-capture`, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-store',
+      credentials: 'omit',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        customer_name: data.name,
+        phone: data.phone,
+        items: cartItems.map((i) => ({
+          product_id: i.productId,
+          offer_qty: i.offerQty,
+        })),
+        failure_status: failureStatus ?? undefined,
+        failure_detail: failureDetail?.slice(0, 400) ?? undefined,
+        source_page: typeof window !== 'undefined' ? window.location.href : undefined,
+      }),
+    })
+  } catch {
+    /* non-blocking */
+  }
+}
 
 /** Canonical `05xxxxxxxx` for API payload (matches backend `normalize_sa_phone` intent). */
 function canonicalSaCheckoutPhone(raw: string): string {
@@ -66,7 +97,7 @@ export default function CheckoutPopup({ onClose }: Props) {
 
   const upsell = getBestUpsell(items.map((i) => i.productId))
 
-  useEffect(() => {
+  const fireInitiateCheckout = useCallback(() => {
     trackInitiateCheckout(
       {
         content_ids: items.map((i) => i.productId),
@@ -76,7 +107,7 @@ export default function CheckoutPopup({ onClose }: Props) {
       },
       { eventId: newTrackingEventId() },
     )
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- once per checkout open
+  }, [items, total])
 
   const finalizeOrder = useCallback(
     async (data: FormValues, upsellAccepted: boolean) => {
@@ -166,6 +197,7 @@ export default function CheckoutPopup({ onClose }: Props) {
           res.status === 503
             ? ' تحققي من https://api.nabtalabo.store/ready (يجب أن يعيد ok)، وأن خدمة الـ API تعمل بدون SKIP_AUTO_MIGRATE=true بحيث تُطبَّق مهاجرات قاعدة البيانات. راجع أيضاً DATABASE_URL وسجلات الـ API.'
             : ''
+        void captureFailedCheckout(base, data, items, res.status, msg)
         setCheckoutError(msg + hint403 + hint502 + hint503)
         setPlacingOrder(false)
         return
@@ -178,6 +210,13 @@ export default function CheckoutPopup({ onClose }: Props) {
       const totalSarOk = typeof parsed.total_sar === 'number'
 
       if (!orderNumber || !orderId || !totalSarOk) {
+        void captureFailedCheckout(
+          base,
+          data,
+          items,
+          res.status,
+          'invalid_order_response',
+        )
         setCheckoutError(
           'تعذّر تأكيد الطلب: المتصفّح لم يستلم تأكيدًا صالحًا من الخادم (قد يكون بروكسي أو كاش يعيد صفحة بدل الطلب الفعلي). حدّثي الصفحة، جرّبي نافذة خاصة، أو تأكدي من أنّ الطلب على https://api.nabtalabo.store يعمل.'
         )
@@ -210,6 +249,7 @@ export default function CheckoutPopup({ onClose }: Props) {
         // eslint-disable-next-line no-console
         console.error('[nabtalabo checkout] POST /api/orders failed', base, err)
       }
+      void captureFailedCheckout(base, data, items, null, err instanceof Error ? err.message : 'network')
       const hn =
         typeof window !== 'undefined' ? window.location.hostname.toLowerCase() : ''
       const liveStoreHost = hn === 'nabtalabo.store' || hn === 'www.nabtalabo.store'
@@ -228,7 +268,7 @@ export default function CheckoutPopup({ onClose }: Props) {
       setPlacingOrder(false)
     }
   },
-    [items, total, upsell, clearCart, onClose]
+    [items, total, upsell, clearCart, onClose, fireInitiateCheckout]
   )
 
   const onUpsellAccept = useCallback(() => {
@@ -242,6 +282,7 @@ export default function CheckoutPopup({ onClose }: Props) {
   }, [formData, finalizeOrder])
 
   function onSubmit(data: FormValues) {
+    fireInitiateCheckout()
     setFormData(data)
     if (upsell) {
       setShowUpsell(true)
