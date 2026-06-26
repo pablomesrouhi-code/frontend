@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { PRODUCTS, type Product, formatSarAmount, getPriceForQty } from '@/lib/products'
 import { getPublicApiBase } from '@/lib/api'
 import { ensureSheetDelivery } from '@/lib/sheet-ensure'
+import { ensureLeadCapi } from '@/lib/lead-capi-ensure'
 import {
   setTrackingUser,
   trackLead,
@@ -110,6 +111,7 @@ export default function ThankYouPage() {
   const [copied, setCopied] = useState(false)
   const pixelsFired = useRef(false)
   const sheetEnsured = useRef(false)
+  const leadCapiEnsured = useRef(false)
 
   useEffect(() => {
     setOrder(readStoredOrder())
@@ -180,11 +182,22 @@ export default function ThankYouPage() {
 
     if (pixelsFired.current) return
     pixelsFired.current = true
+
+    // Lead + Purchase fire only here — never on checkout form open.
     trackPurchase(commerce, {
       eventId: order.purchaseEventId,
       orderNumber: order.orderNumber,
     })
     trackLead(commerce, { eventId: order.leadEventId })
+  }, [order])
+
+  useEffect(() => {
+    if (!order?.orderId || !order.leadEventId) return
+    if (leadCapiEnsured.current) return
+    leadCapiEnsured.current = true
+
+    const base = getPublicApiBase()
+    void ensureLeadCapi(base, order.orderId, order.leadEventId)
   }, [order])
 
   useEffect(() => {
