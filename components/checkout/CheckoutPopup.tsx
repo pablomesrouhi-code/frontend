@@ -9,11 +9,7 @@ import { getPublicApiBase } from '@/lib/api'
 import { getBestUpsell, formatSarAmount } from '@/lib/products'
 import { CHECKOUT_UI_REV } from '@/lib/checkout-rev'
 import UpsellModal from './UpsellModal'
-import {
-  newTrackingEventId,
-  setTrackingUser,
-  trackInitiateCheckout,
-} from '@/lib/tracking/client'
+import { newTrackingEventId, setTrackingUser } from '@/lib/tracking/client'
 
 const TEST_PHONES = ['055000000']
 
@@ -24,27 +20,33 @@ async function captureFailedCheckout(
   failureStatus: number | null,
   failureDetail: string | null,
 ) {
-  try {
-    await fetch(`${base}/api/leads/checkout-capture`, {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-store',
-      credentials: 'omit',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        customer_name: data.name,
-        phone: data.phone,
-        items: cartItems.map((i) => ({
-          product_id: i.productId,
-          offer_qty: i.offerQty,
-        })),
-        failure_status: failureStatus ?? undefined,
-        failure_detail: failureDetail?.slice(0, 400) ?? undefined,
-        source_page: typeof window !== 'undefined' ? window.location.href : undefined,
-      }),
-    })
-  } catch {
-    /* non-blocking */
+  const payload = JSON.stringify({
+    customer_name: data.name,
+    phone: data.phone,
+    items: cartItems.map((i) => ({
+      product_id: i.productId,
+      offer_qty: i.offerQty,
+    })),
+    failure_status: failureStatus ?? undefined,
+    failure_detail: failureDetail?.slice(0, 400) ?? undefined,
+    source_page: typeof window !== 'undefined' ? window.location.href : undefined,
+  })
+  const url = `${base.replace(/\/$/, '')}/api/leads/checkout-capture`
+  for (let i = 0; i < 2; i++) {
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-store',
+        credentials: 'omit',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+      })
+      if (res.ok) return
+    } catch {
+      /* retry once */
+    }
+    await new Promise((r) => setTimeout(r, 600))
   }
 }
 
@@ -96,18 +98,6 @@ export default function CheckoutPopup({ onClose }: Props) {
   })
 
   const upsell = getBestUpsell(items.map((i) => i.productId))
-
-  const fireInitiateCheckout = useCallback(() => {
-    trackInitiateCheckout(
-      {
-        content_ids: items.map((i) => i.productId),
-        value: total(),
-        currency: 'SAR',
-        num_items: items.length,
-      },
-      { eventId: newTrackingEventId() },
-    )
-  }, [items, total])
 
   const finalizeOrder = useCallback(
     async (data: FormValues, upsellAccepted: boolean) => {
@@ -268,7 +258,7 @@ export default function CheckoutPopup({ onClose }: Props) {
       setPlacingOrder(false)
     }
   },
-    [items, total, upsell, clearCart, onClose, fireInitiateCheckout]
+    [items, total, upsell, clearCart, onClose]
   )
 
   const onUpsellAccept = useCallback(() => {
@@ -282,7 +272,6 @@ export default function CheckoutPopup({ onClose }: Props) {
   }, [formData, finalizeOrder])
 
   function onSubmit(data: FormValues) {
-    fireInitiateCheckout()
     setFormData(data)
     if (upsell) {
       setShowUpsell(true)
@@ -358,19 +347,18 @@ export default function CheckoutPopup({ onClose }: Props) {
             </div>
           </div>
 
-          {/* Social Proof */}
-          <div className="flex items-center gap-2 bg-[#f1e6e4] rounded-xl px-4 py-3">
-            <span className="text-xl">⭐</span>
-            <p className="text-sm text-[#1C1C1C] font-medium">
-              آلاف العميلات يثقن في وضوح تركيباتنا وسهولة الالتزام بالروتين اليومي
-            </p>
-          </div>
-
-          {/* Scarcity */}
-          <div className="flex items-center gap-2 text-sm text-amber-700 bg-amber-50 px-4 py-2 rounded-xl border border-amber-200">
-            <span>⏰</span>
-            <span>الكميات المتاحة محدودة حسب توفر المخزون</span>
-          </div>
+          {/* Trust — compact */}
+          <ul className="grid gap-2 text-xs text-[#1C1C1C]">
+            {[
+              '☎️ اتصال تأكيد خلال ساعات العمل (9ص–9م)',
+              '📦 توصيل 2–4 أيام · دفع كاش عند الباب',
+              '✅ SFDA · حلال · بدون بطاقة',
+            ].map((line) => (
+              <li key={line} className="rounded-xl bg-[#f8f4f2] px-3 py-2 leading-relaxed">
+                {line}
+              </li>
+            ))}
+          </ul>
 
           {/* COD — single payment path (no cards) */}
           <div className="rounded-2xl border-2 border-[#c5ddd0] bg-gradient-to-br from-[#f3faf5] to-white px-4 py-3.5 text-start shadow-[0_2px_12px_rgba(22,101,52,0.06)]">
@@ -425,7 +413,7 @@ export default function CheckoutPopup({ onClose }: Props) {
           <p className="text-center text-xs text-[#5c5656] leading-relaxed">
             بعد التأكيد: اتصال من الفريق + جدولة التوصيل — الدفع نقدًا عند الاستلام
           </p>
-          <p className="text-center text-[10px] text-gray-400 tabular-nums" aria-hidden title="نسخة واجهة الدفع المحمّلة">
+          <p className="sr-only" aria-hidden>
             {CHECKOUT_UI_REV}
           </p>
         </div>

@@ -18,6 +18,35 @@ export type CommerceParams = {
   num_items?: number
 }
 
+/** ISO 4217 — Meta rejects empty/invalid currency (Events Manager ROAS warning). */
+const META_STORE_CURRENCY = 'SAR'
+
+function normalizeMetaCurrency(raw?: string): string {
+  const code = (raw ?? '').trim().toUpperCase()
+  return /^[A-Z]{3}$/.test(code) ? code : META_STORE_CURRENCY
+}
+
+function normalizeMetaValue(raw: number): number {
+  if (!Number.isFinite(raw) || raw < 0) return 0
+  return Math.round(raw * 100) / 100
+}
+
+/** Meta pixel + CAPI expect `value`, `currency`, and preferably `contents`. */
+function metaCommerceParams(params: CommerceParams, extra?: Record<string, unknown>) {
+  const content_ids = params.content_ids.filter(Boolean)
+  const value = normalizeMetaValue(params.value)
+  const currency = normalizeMetaCurrency(params.currency)
+  return {
+    content_ids,
+    content_type: 'product' as const,
+    value,
+    currency,
+    contents: content_ids.map((id) => ({ id, quantity: 1 })),
+    num_items: params.num_items ?? content_ids.length,
+    ...extra,
+  }
+}
+
 type TrackOptions = {
   eventId?: string
   orderNumber?: string
@@ -234,13 +263,13 @@ function tiktokContents(contentIds: string[]) {
 }
 
 function tiktokCommercePayload(params: CommerceParams) {
-  const currency = params.currency ?? 'SAR'
+  const currency = normalizeMetaCurrency(params.currency)
   const quantity = params.num_items ?? params.content_ids.length
   return {
     contents: tiktokContents(params.content_ids),
     content_ids: params.content_ids,
     content_type: 'product' as const,
-    value: Number(params.value),
+    value: normalizeMetaValue(params.value),
     currency,
     quantity,
   }
@@ -249,20 +278,14 @@ function tiktokCommercePayload(params: CommerceParams) {
 function snapItemPayload(params: CommerceParams) {
   return {
     item_ids: params.content_ids,
-    price: params.value,
-    currency: params.currency ?? 'SAR',
+    price: normalizeMetaValue(params.value),
+    currency: normalizeMetaCurrency(params.currency),
     number_items: params.num_items ?? params.content_ids.length,
   }
 }
 
 export function trackViewContent(params: CommerceParams, options?: TrackOptions): void {
-  const currency = params.currency ?? 'SAR'
-  const metaParams = {
-    content_ids: params.content_ids,
-    content_type: 'product',
-    value: params.value,
-    currency,
-  }
+  const metaParams = metaCommerceParams(params)
   const tiktokParams = tiktokCommercePayload(params)
 
   runMetaWhenReady(() => {
@@ -273,14 +296,7 @@ export function trackViewContent(params: CommerceParams, options?: TrackOptions)
 }
 
 export function trackAddToCart(params: CommerceParams, options?: TrackOptions): void {
-  const currency = params.currency ?? 'SAR'
-  const metaParams = {
-    content_ids: params.content_ids,
-    content_type: 'product',
-    value: params.value,
-    currency,
-    num_items: params.num_items ?? 1,
-  }
+  const metaParams = metaCommerceParams(params, { num_items: params.num_items ?? 1 })
   const tiktokParams = tiktokCommercePayload(params)
 
   runMetaWhenReady(() => {
@@ -291,14 +307,7 @@ export function trackAddToCart(params: CommerceParams, options?: TrackOptions): 
 }
 
 export function trackInitiateCheckout(params: CommerceParams, options?: TrackOptions): void {
-  const currency = params.currency ?? 'SAR'
-  const metaParams = {
-    content_ids: params.content_ids,
-    content_type: 'product',
-    value: params.value,
-    currency,
-    num_items: params.num_items ?? params.content_ids.length,
-  }
+  const metaParams = metaCommerceParams(params)
   const tiktokParams = tiktokCommercePayload(params)
 
   runMetaWhenReady(() => {
@@ -309,13 +318,7 @@ export function trackInitiateCheckout(params: CommerceParams, options?: TrackOpt
 }
 
 export function trackAddToWishlist(params: CommerceParams, options?: TrackOptions): void {
-  const currency = params.currency ?? 'SAR'
-  const metaParams = {
-    content_ids: params.content_ids,
-    content_type: 'product',
-    value: params.value,
-    currency,
-  }
+  const metaParams = metaCommerceParams(params)
   const tiktokParams = tiktokCommercePayload(params)
 
   runMetaWhenReady(() => {
@@ -337,12 +340,7 @@ export function trackLead(params: CommerceParams, options: TrackOptions): void {
   const eventId = options.eventId
   if (!eventId) return
 
-  const metaParams = {
-    content_ids: params.content_ids,
-    content_type: 'product',
-    value: params.value,
-    currency: params.currency ?? 'SAR',
-  }
+  const metaParams = metaCommerceParams(params)
 
   // Events Manager lists this event as code Lead (not SubmitForm).
   trackTikTok('Lead', tiktokCommercePayload(params), { eventId })
@@ -355,17 +353,10 @@ export function trackLead(params: CommerceParams, options: TrackOptions): void {
 }
 
 export function trackPurchase(params: CommerceParams, options: TrackOptions): void {
-  const currency = params.currency ?? 'SAR'
   const eventId = options.eventId
   if (!eventId) return
 
-  const metaParams = {
-    content_ids: params.content_ids,
-    content_type: 'product',
-    value: params.value,
-    currency,
-    num_items: params.num_items ?? params.content_ids.length,
-  }
+  const metaParams = metaCommerceParams(params)
 
   const purchasePayload = {
     ...tiktokCommercePayload(params),

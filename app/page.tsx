@@ -146,7 +146,7 @@ export default function HomePage() {
               </h1>
 
               <p className="mb-6 max-w-md text-base leading-relaxed sm:text-lg" style={{ color: BRAND.muted }}>
-                ستة منتجات مرخّصة — علكات يومية وسواشيه مسحوق. جمال، هضم، نوم، شعر، بشرة، وأيام الدورة. تأكيد على 05 · COD · 2–4 أيام.
+                ستة منتجات مرخّصة — علكات يومية وسواشيه مسحوق. اسم + جوال 05 · تأكيد هاتفي · دفع عند الباب · 2–4 أيام.
               </p>
 
               <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
@@ -184,10 +184,10 @@ export default function HomePage() {
 
             {/* IMAGE — square card, image centered filling the frame (original style) */}
             <div className="order-1 w-full md:order-2">
-              <div
+            <div
                 className="w-full rounded-3xl bg-white p-3 sm:p-4 md:p-5"
-                style={{
-                  border: '1px solid #EADFD6',
+              style={{
+                border: '1px solid #EADFD6',
                   boxShadow: '0 22px 60px -24px rgba(28, 28, 28, 0.1), inset 0 1px 0 rgba(255,255,255,0.85)',
                 }}
               >
@@ -202,15 +202,15 @@ export default function HomePage() {
                     <p className="text-[9px] font-bold text-white/90">مباع في السعودية</p>
                   </div>
 
-                  <Image
-                    src="/hero-store-trio.jpg"
+                <Image
+                  src="/hero-store-trio.jpg"
                     alt="منتجات نبتة لابو — ستة منتجات علكة ومسحوق"
-                    width={1024}
-                    height={1024}
-                    priority
+                  width={1024}
+                  height={1024}
+                  priority
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 560px"
-                    className="block h-auto w-full object-contain"
-                  />
+                  className="block h-auto w-full object-contain"
+                />
 
                   <div
                     className="absolute bottom-2 start-2 z-10 max-w-[6.5rem] rounded-lg px-2 py-1.5 sm:bottom-3 sm:start-3 sm:px-2.5 sm:py-2"
@@ -360,7 +360,7 @@ export default function HomePage() {
           <div className="mb-8 text-start">
             <h2 className="text-2xl font-bold sm:text-3xl" style={{ color: BRAND.charcoal }}>
               مكوّنات واضحة — علكة ومسحوق، هدف لكل منتج
-            </h2>
+                </h2>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
@@ -378,10 +378,10 @@ export default function HomePage() {
                 <div className="flex items-center justify-between">
                   <span className="rounded-md px-2 py-0.5 text-[10px] font-mono font-bold" style={{ background: `${ing.accent}15`, color: ing.accent }}>
                     {ing.code}
-                  </span>
+                    </span>
                   <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: ing.accent }}>
                     {ing.product}
-                  </span>
+                    </span>
                 </div>
                 <p className="text-base font-bold" style={{ color: BRAND.charcoal }}>{ing.name}</p>
                 <p className="font-mono text-xs" style={{ color: ing.accent }}>{ing.latin}</p>
@@ -424,9 +424,9 @@ export default function HomePage() {
                     className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-black text-white"
                     style={{ background: r.accent }}
                   >
-                    {r.name[0]}
-                  </div>
-                  <div>
+                      {r.name[0]}
+                    </div>
+                    <div>
                     <p className="text-sm font-bold" style={{ color: BRAND.charcoal }}>{r.name}</p>
                     <p className="text-[11px]" style={{ color: BRAND.teal }}>✓ موثّقة · {r.city}</p>
                   </div>
