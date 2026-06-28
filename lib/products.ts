@@ -112,7 +112,7 @@ export const PRODUCTS: Product[] = [
       alt: 'مثال توضيحي قبل وبعد — رونق C',
     },
     ingredientsSectionImage: {
-      src: '/products/rawnaq-c-ingredients.png',
+      src: '/products/rawnaq-c-ingredients.jpg',
       width: 1024,
       height: 1024,
       alt: 'رونق C — صورة منتج بالعبوة والفاكهة؛ تعرض تفاصيل المكمّل الغذائي بجانب مكوّنات طبيعية.',
