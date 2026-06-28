@@ -1,6 +1,7 @@
 'use client'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Product, getPriceForQty, formatSarAmount } from '@/lib/products'
+import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import { useCartStore } from '@/stores/cart-store'
 import OfferSelector from '@/components/product/OfferSelector'
 import PdpRoutineNote from '@/components/product/PdpRoutineNote'
@@ -37,6 +38,7 @@ export default function ProductPageClient({
   product: Product
   addToCartLabel?: string
 }) {
+  useStorePricing()
   const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(1)
   const [stickyCtaVisible, setStickyCtaVisible] = useState(false)
   const priceBlockRef = useRef<HTMLDivElement>(null)

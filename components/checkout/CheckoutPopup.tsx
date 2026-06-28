@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCartStore } from '@/stores/cart-store'
 import { getPublicApiBase } from '@/lib/api'
-import { getBestUpsell, formatSarAmount } from '@/lib/products'
+import { getBestUpsell, formatSarAmount, getUpsellPriceSar } from '@/lib/products'
 import { CHECKOUT_UI_REV } from '@/lib/checkout-rev'
 import UpsellModal from './UpsellModal'
 import { newTrackingEventId, setTrackingUser } from '@/lib/tracking/client'
@@ -221,7 +221,7 @@ export default function CheckoutPopup({ onClose }: Props) {
         total: total(),
         upsellAccepted: upsellAcceptedOk,
         upsellProduct: upsellAcceptedOk && upsell ? upsell : null,
-        upsellPrice: upsellAcceptedOk ? 99 : 0,
+        upsellPrice: upsellAcceptedOk ? getUpsellPriceSar() : 0,
         finalTotal: parsed.total_sar as number,
         createdAt: new Date().toISOString(),
         orderNumber,

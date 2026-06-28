@@ -1,3 +1,5 @@
+import { getPriceForQty as getPriceForQtyFromStore, getOffers, getUpsellPriceSar } from '@/lib/store-pricing'
+
 export type ProductReview = {
   name: string
   text: string
@@ -483,7 +485,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'quwwat-sha3r',
     slug: 'quwwat-sha3r-collagen-powder',
-    sku: 'NBL-QSH-224801',
+    sku: 'SRHRPW',
     format: 'powder_sachet',
     isNew: true,
     nameAr: 'قوة شعر',
@@ -630,7 +632,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'wudouh',
     slug: 'wudouh-glow-skin-powder',
-    sku: 'NBL-WDH-331192',
+    sku: 'PSPFH',
     format: 'powder_sachet',
     isNew: true,
     nameAr: 'وضوح',
@@ -780,7 +782,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'shahr-hadi',
     slug: 'shahr-hadi-pms-powder',
-    sku: 'NBL-SHH-449023',
+    sku: 'CLCYPWFH',
     format: 'powder_sachet',
     isNew: true,
     nameAr: 'شهر هادئ',
@@ -923,11 +925,11 @@ export const PRODUCTS: Product[] = [
   },
 ]
 
-export const OFFERS = [
-  { qty: 1 as const, label: 'قطعة واحدة', price: 199, badge: null },
-  { qty: 2 as const, label: 'قطعتين', price: 279, badge: 'اختيار ذكي' },
-  { qty: 3 as const, label: '3 قطع', price: 349, badge: 'الأكثر توفيراً' },
-]
+export { getOffers, getUpsellPriceSar }
+
+export function getPriceForQty(qty: 1 | 2 | 3): number {
+  return getPriceForQtyFromStore(qty)
+}
 
 export function getProductBySlug(slug: string): Product | undefined {
   return PRODUCTS.find((p) => p.slug === slug)
@@ -954,11 +956,6 @@ export function getBestUpsell(cartProductIds: string[]): Product | null {
   if (cartProductIds.includes('rawnaq-c') && missing.includes('khiffabiotic')) return getProductById('khiffabiotic') ?? null
   if (cartProductIds.includes('laylmag') && missing.includes('rawnaq-c')) return getProductById('rawnaq-c') ?? null
   return getProductById(missing[0]) ?? null
-}
-
-export function getPriceForQty(qty: 1 | 2 | 3): number {
-  const map: Record<number, number> = { 1: 199, 2: 279, 3: 349 }
-  return map[qty]
 }
 
 /** عرض موحّد: الرقم ملاصق لـ «ريال سعودي» بدون رموز اتجاه خفية (تظهر أحياناً كفراغ غريب). */

@@ -3,7 +3,8 @@ import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useCartStore } from '@/stores/cart-store'
-import { PRODUCTS, getProductById, formatSarAmount } from '@/lib/products'
+import { PRODUCTS, getProductById, formatSarAmount, getPriceForQty } from '@/lib/products'
+import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 
 const CheckoutPopup = dynamic(() => import('@/components/checkout/CheckoutPopup'), { ssr: false })
@@ -34,6 +35,8 @@ function cartThumb(
 }
 
 export default function CartDrawer() {
+  useStorePricing()
+  const unitPrice = getPriceForQty(1)
   const { items, isOpen, closeCart, removeItem, addItem, total } = useCartStore()
   const [showCheckout, setShowCheckout] = useState(false)
 
@@ -126,12 +129,12 @@ export default function CartDrawer() {
                             <p className="font-semibold text-sm text-[#1C1C1C]">{p.nameAr}</p>
                             <p className="text-xs text-[#5c5656] truncate">{p.subtitleAr}</p>
                             <p className="mt-0.5 text-sm font-bold text-[#b8485c]">
-                              <span className="sar-price tabular-nums">{formatSarAmount(199)}</span>
+                              <span className="sar-price tabular-nums">{formatSarAmount(unitPrice)}</span>
                             </p>
                           </div>
                           <button
                             onClick={() => {
-                              addItem({ productId: p.id, offerQty: 1, price: 199, nameAr: p.nameAr, accentColor: p.accentColor, bgColor: p.bgColor })
+                              addItem({ productId: p.id, offerQty: 1, price: unitPrice, nameAr: p.nameAr, accentColor: p.accentColor, bgColor: p.bgColor })
                             }}
                             className="touch-manipulation shrink-0 rounded-full bg-primary px-4 py-2.5 text-xs font-bold text-white shadow-sm transition-colors hover:bg-primary-dark active:scale-[0.98] min-h-11 flex items-center justify-center"
                           >

@@ -1,17 +1,16 @@
 'use client'
-import { OFFERS, formatSarAmount } from '@/lib/products'
+import { getOffers, getPriceForQty, formatSarAmount } from '@/lib/products'
+import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import {
   getProductOfferActiveStyle,
   getProductOfferInactiveStyle,
   shadeTowardBlack,
 } from '@/lib/product-accent'
 
-const UNIT_COMPARE = 199
-
-function savingsForQty(qty: 1 | 2 | 3): number | null {
+function savingsForQty(qty: 1 | 2 | 3, unitCompare: number): number | null {
   if (qty === 1) return null
-  const full = UNIT_COMPARE * qty
-  const offer = OFFERS.find((o) => o.qty === qty)?.price
+  const full = unitCompare * qty
+  const offer = getOffers().find((o) => o.qty === qty)?.price
   if (offer == null) return null
   const s = full - offer
   return s > 0 ? s : null
@@ -25,6 +24,8 @@ type Props = {
 }
 
 export default function OfferSelector({ selected, onChange, accentColor = '#b8485c' }: Props) {
+  useStorePricing()
+  const offers = getOffers()
   const priceActive = shadeTowardBlack(accentColor, 0.18)
 
   return (
@@ -43,9 +44,9 @@ export default function OfferSelector({ selected, onChange, accentColor = '#b848
         />
       </div>
       <div className="flex min-w-0 flex-col gap-3 sm:gap-3.5">
-        {OFFERS.map((offer) => {
+        {offers.map((offer) => {
           const active = selected === offer.qty
-          const save = savingsForQty(offer.qty)
+          const save = savingsForQty(offer.qty, getPriceForQty(1))
           const multi = offer.qty > 1
           return (
             <button

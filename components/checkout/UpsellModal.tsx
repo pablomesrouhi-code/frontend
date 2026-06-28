@@ -1,7 +1,8 @@
 'use client'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import { formatSarAmount, type Product } from '@/lib/products'
+import { formatSarAmount, getPriceForQty, getUpsellPriceSar, type Product } from '@/lib/products'
+import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import { CHECKOUT_UI_REV } from '@/lib/checkout-rev'
 
 type Props = {
@@ -27,6 +28,9 @@ export default function UpsellModal({
   onAccept,
   onSkip,
 }: Props) {
+  useStorePricing()
+  const upsellPrice = getUpsellPriceSar()
+  const comparePrice = getPriceForQty(1)
   const [timeLeft, setTimeLeft] = useState(TIMER_SECONDS)
   const autoSkipFiredRef = useRef(false)
   const onSkipRef = useRef(onSkip)
@@ -118,10 +122,10 @@ export default function UpsellModal({
               <p className="text-xs text-[#5c5656] mt-1 leading-relaxed break-words">{product.subtitleAr}</p>
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-2">
                 <span className="text-2xl font-bold text-[#b8485c]">
-                  <span className="sar-price tabular-nums">{formatSarAmount(99)}</span>
+                  <span className="sar-price tabular-nums">{formatSarAmount(upsellPrice)}</span>
                 </span>
                 <span className="text-sm text-gray-400 line-through">
-                  <span className="sar-price tabular-nums">{formatSarAmount(199)}</span>
+                  <span className="sar-price tabular-nums">{formatSarAmount(comparePrice)}</span>
                 </span>
                 <span className="text-xs bg-[#f1e6e4] text-[#943c50] px-2 py-0.5 rounded-full font-bold">
                   50% خصم

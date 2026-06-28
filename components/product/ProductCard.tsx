@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Product, getPriceForQty, formatSarAmount, getFormatLabelAr } from '@/lib/products'
+import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import { getProductSolidButtonStyle } from '@/lib/product-accent'
 import { trackAddToWishlist } from '@/lib/tracking/client'
 import ProductSoldBadge from '@/components/product/ProductSoldBadge'
@@ -30,6 +31,7 @@ function NewImageBanner({ product }: { product: Product }) {
 }
 
 function PriceBlock({ product }: { product: Product }) {
+  useStorePricing()
   const priceOne = getPriceForQty(1)
   const priceThree = getPriceForQty(3)
 

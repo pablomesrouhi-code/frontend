@@ -8,6 +8,7 @@ import Footer from '@/components/layout/Footer'
 import PreFooterBanners from '@/components/layout/PreFooterBanners'
 import ClientCartDrawer from '@/components/layout/ClientCartDrawer'
 import BrandIntroSplash from '@/components/brand/BrandIntroSplash'
+import { StorePricingProvider } from '@/components/pricing/StorePricingProvider'
 import DeferredPixels from '@/components/tracking/DeferredPixels'
 import RouteChangePageViews from '@/components/tracking/RouteChangePageViews'
 import { BRAND_CONTACT_EMAIL } from '@/lib/brand'
@@ -111,11 +112,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
         <BrandIntroSplash />
-        <Header />
-        <main className="min-h-screen min-w-0 isolate pb-[env(safe-area-inset-bottom,0px)]">{children}</main>
-        <PreFooterBanners />
-        <Footer />
-        <ClientCartDrawer />
+        <StorePricingProvider>
+          <Header />
+          <main className="min-h-screen min-w-0 isolate pb-[env(safe-area-inset-bottom,0px)]">{children}</main>
+          <PreFooterBanners />
+          <Footer />
+          <ClientCartDrawer />
+        </StorePricingProvider>
         <DeferredPixels />
         <Suspense fallback={null}>
           <RouteChangePageViews />
