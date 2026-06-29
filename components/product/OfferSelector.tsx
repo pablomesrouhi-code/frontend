@@ -18,6 +18,24 @@ function savingsForQty(qty: 1 | 2 | 3, unitCompare: number, isPowder: boolean): 
   return s > 0 ? s : null
 }
 
+function OfferRadioDot({ active, accentColor }: { active: boolean; accentColor: string }) {
+  return (
+    <span
+      className={`flex h-[1.35rem] w-[1.35rem] shrink-0 items-center justify-center rounded-full border-2 transition-[border-color,background-color,box-shadow] duration-200 sm:h-6 sm:w-6 ${
+        active ? 'shadow-sm' : 'border-charcoal/20 bg-white'
+      }`}
+      style={
+        active
+          ? { borderColor: accentColor, backgroundColor: accentColor }
+          : undefined
+      }
+      aria-hidden
+    >
+      {active && <span className="h-2 w-2 rounded-full bg-white sm:h-2.5 sm:w-2.5" />}
+    </span>
+  )
+}
+
 type Props = {
   selected: 1 | 2 | 3
   onChange: (qty: 1 | 2 | 3) => void
@@ -50,7 +68,7 @@ export default function OfferSelector({
       <p className="mb-1 text-sm font-bold text-charcoal sm:text-base">{PDP_OFFER_HEADING}</p>
       <p className="mb-3 text-xs font-semibold text-muted sm:text-sm">{PDP_OFFER_TAGLINE}</p>
 
-      <div className="flex min-w-0 flex-col gap-2.5 sm:gap-3">
+      <div className="flex min-w-0 flex-col gap-2.5 sm:gap-3" role="radiogroup" aria-label={PDP_OFFER_HEADING}>
         {offers.map((offer) => {
           const active = selected === offer.qty
           const save = savingsForQty(offer.qty, getPriceForQty(1), isPowder)
@@ -58,20 +76,16 @@ export default function OfferSelector({
             <button
               type="button"
               key={offer.qty}
+              role="radio"
+              aria-checked={active}
               onClick={() => onChange(offer.qty)}
-              className={`relative grid min-h-[4.5rem] grid-cols-[1fr_auto] items-center gap-x-3 rounded-2xl border-2 px-4 py-3.5 text-right sm:px-5 sm:py-4 ${
+              className={`relative grid min-h-[4.5rem] grid-cols-[auto_1fr_auto] items-center gap-x-3 rounded-2xl border-2 px-3.5 py-3.5 text-right sm:gap-x-3.5 sm:px-4 sm:py-4 ${
                 active ? '' : 'hover:bg-white/90 active:scale-[0.99]'
               } cursor-pointer touch-manipulation overflow-hidden transition-[transform,border-color,background-color] duration-200`}
               style={active ? getProductOfferActiveStyle(accentColor) : getProductOfferInactiveStyle(accentColor)}
             >
-              {active && (
-                <span
-                  className="pointer-events-none absolute end-0 top-0 bottom-0 w-[3px]"
-                  style={{ background: accentColor }}
-                  aria-hidden
-                />
-              )}
-              <div className="relative z-[1] min-w-0 pe-2">
+              <OfferRadioDot active={active} accentColor={accentColor} />
+              <div className="relative z-[1] min-w-0">
                 <div className="flex flex-wrap items-center justify-start gap-x-2 gap-y-1">
                   <span className="text-sm font-bold text-charcoal sm:text-base">{offer.label}</span>
                   {offer.badge && (
