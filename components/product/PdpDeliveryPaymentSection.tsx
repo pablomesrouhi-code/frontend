@@ -16,6 +16,23 @@ const STEPS = [
   },
 ] as const
 
+const KSA_CITIES = [
+  'الرياض',
+  'جدة',
+  'مكة',
+  'المدينة',
+  'الدمام',
+  'الخبر',
+  'الطائف',
+  'بريدة',
+  'تبوك',
+  'أبها',
+  'حائل',
+  'نجران',
+  'ينبع',
+  'القصيم',
+] as const
+
 type Props = {
   accentColor: string
   bgColor: string
@@ -106,7 +123,20 @@ export default function PdpDeliveryPaymentSection({ accentColor, bgColor }: Prop
             style={{ background: accentColor }}
             aria-hidden
           />
-          <h3 className="relative mb-4 text-lg font-black text-charcoal sm:text-xl">نوصّل لجميع مناطق المملكة</h3>
+          <h3 className="relative mb-4 text-lg font-black text-charcoal sm:text-xl">نوصّل لكل مدن المملكة</h3>
+          <div className="relative mb-6 flex flex-wrap gap-2">
+            {KSA_CITIES.map((city) => (
+              <span
+                key={city}
+                className="rounded-full border border-border bg-white px-3 py-1.5 text-xs font-semibold text-charcoal"
+              >
+                {city}
+              </span>
+            ))}
+            <span className="rounded-full px-3 py-1.5 text-xs font-bold text-charcoal" style={{ background: `${accentColor}15`, color: accentColor }}>
+              + كل المناطق
+            </span>
+          </div>
           <p className="relative mb-8 max-w-2xl text-sm leading-relaxed text-charcoal sm:text-[15px]">
             توصيل 2–4 أيام عمل داخل المملكة العربية السعودية — نغطّي جميع المناطق عبر شركاء التوصيل المعتمدين.
           </p>

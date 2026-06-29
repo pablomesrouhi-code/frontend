@@ -1,16 +1,13 @@
 'use client'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Product, getPriceForQty, formatSarAmount } from '@/lib/products'
+import { Product, getPriceForQty, formatSarAmount, isPowderProduct } from '@/lib/products'
 import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import { useCartStore } from '@/stores/cart-store'
 import OfferSelector from '@/components/product/OfferSelector'
 import PdpRoutineNote from '@/components/product/PdpRoutineNote'
 import PdpStickyRoutineCta from '@/components/product/PdpStickyRoutineCta'
-import {
-  trackAddToCart,
-  trackViewContent,
-} from '@/lib/tracking/client'
-
+import PdpHeroTrustRow from '@/components/product/pdp/PdpHeroTrustRow'
+import { trackAddToCart, trackViewContent } from '@/lib/tracking/client'
 import { getProductSolidButtonStyle, shadeTowardBlack } from '@/lib/product-accent'
 
 function CartIcon({ className }: { className?: string }) {
@@ -34,12 +31,15 @@ function CartIcon({ className }: { className?: string }) {
 export default function ProductPageClient({
   product,
   addToCartLabel = 'اطلبي الآن',
+  isPowder: isPowderProp,
 }: {
   product: Product
   addToCartLabel?: string
+  isPowder?: boolean
 }) {
   useStorePricing()
-  const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(1)
+  const isPowder = isPowderProp ?? isPowderProduct(product)
+  const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(2)
   const [stickyCtaVisible, setStickyCtaVisible] = useState(false)
   const priceBlockRef = useRef<HTMLDivElement>(null)
   const { addItem, openCart } = useCartStore()
@@ -57,7 +57,6 @@ export default function ProductPageClient({
   useEffect(() => {
     const el = priceBlockRef.current
     if (!el) return
-
     const io = new IntersectionObserver(
       ([entry]) => {
         if (!entry) return
@@ -94,54 +93,33 @@ export default function ProductPageClient({
 
   return (
     <>
-    <div
-      ref={priceBlockRef}
-      className="relative min-w-0 max-w-full overflow-hidden rounded-[1.35rem] border p-5 shadow-[0_2px_8px_-2px_rgba(26,24,21,0.04),0_24px_56px_-28px_rgba(26,24,21,0.11),inset_0_1px_0_0_rgba(255,255,255,0.94)] ring-1 ring-black/[0.02] sm:rounded-3xl sm:p-6"
-      style={{
-        borderColor: `${accent}33`,
-        background: `linear-gradient(165deg, #ffffff 0%, color-mix(in srgb, ${product.bgColor} 35%, white) 55%, color-mix(in srgb, ${accent} 8%, white) 100%)`,
-      }}
-    >
       <div
-        className="pointer-events-none absolute -top-24 -left-24 h-48 w-48 rounded-full opacity-[0.12] blur-3xl"
-        style={{ background: accent }}
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute -bottom-16 -right-16 h-40 w-40 rounded-full opacity-[0.1] blur-2xl"
-        style={{ background: accent }}
-        aria-hidden
-      />
+        ref={priceBlockRef}
+        className="min-w-0 max-w-full rounded-2xl border border-border bg-white p-4 shadow-sm sm:rounded-3xl sm:p-5"
+      >
+        <OfferSelector
+          selected={selectedQty}
+          onChange={setSelectedQty}
+          accentColor={accent}
+          isPowder={isPowder}
+        />
 
-      <div className="relative flex min-w-0 max-w-full flex-col gap-5 sm:gap-6">
-        <OfferSelector selected={selectedQty} onChange={(qty) => setSelectedQty(qty)} accentColor={accent} />
+        <p className="mt-3 rounded-xl border border-dashed px-3 py-2 text-center text-[11px] font-semibold leading-snug text-charcoal sm:text-xs" style={{ borderColor: `${accent}44`, background: `${accent}06` }}>
+          ⚡ الدفع عند الاستلام · تأكيد هاتفي خلال ساعات · شحن لجميع مدن المملكة
+        </p>
 
         <PdpRoutineNote productId={product.id} format={product.format} accentColor={accent} />
-
-        <div className="h-px w-full" style={{ background: `linear-gradient(to left, transparent, ${accent}44, transparent)` }} aria-hidden />
 
         <button
           onClick={handleAdd}
           type="button"
-          className="group relative w-full max-w-full overflow-hidden rounded-2xl px-4 py-4 text-sm font-extrabold tracking-tight text-white transition-[transform,filter,box-shadow] duration-300 ease-out break-words touch-manipulation hover:brightness-105 hover:shadow-lg active:translate-y-[1px] sm:rounded-3xl sm:px-5 sm:py-[1.1rem] sm:text-base md:text-lg"
+          className="group relative mt-4 w-full overflow-hidden rounded-2xl px-4 py-4 text-sm font-extrabold text-white transition hover:brightness-105 active:translate-y-[1px] sm:py-[1.1rem] sm:text-base"
           style={getProductSolidButtonStyle(accent)}
         >
-          <span
-            className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/55 to-transparent opacity-70"
-            aria-hidden
-          />
-          <span
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/[0.12] via-transparent to-white/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-            aria-hidden
-          />
           <span className="relative z-[1] flex items-center justify-center gap-3 flex-row-reverse">
-            <CartIcon className="h-5 w-5 shrink-0 opacity-95 transition-transform duration-300 group-hover:scale-110 sm:h-6 sm:w-6" />
-            <span className="text-center text-[0.9375rem] font-extrabold leading-snug sm:text-base sm:leading-normal md:text-lg">
-              <span className="block sm:inline">{addToCartLabel}</span>
-              <span className="mx-1 text-white/90 sm:inline" aria-hidden>
-                {' '}
-                —{' '}
-              </span>
+            <CartIcon className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" />
+            <span>
+              {addToCartLabel} ·{' '}
               <span className="sar-price sar-price-dark tabular-nums">
                 {formatSarAmount(getPriceForQty(selectedQty))}
               </span>
@@ -149,30 +127,31 @@ export default function ProductPageClient({
           </span>
         </button>
 
-        <p className="text-center text-xs leading-relaxed text-charcoal sm:text-[13px]">
+        <p className="mt-2 text-center text-[11px] font-semibold text-muted sm:text-xs">
+          الدفع عند الاستلام · بدون دفع أونلاين
+        </p>
+
+        <PdpHeroTrustRow />
+
+        <p className="mt-3 text-center text-[11px] leading-relaxed text-muted">
           <a
             href="/returns-refunds"
-            className="font-semibold underline underline-offset-2 transition"
-            style={{ color: accent, textDecorationColor: `${accent}44` }}
+            className="font-semibold underline underline-offset-2"
+            style={{ color: accent }}
           >
             تفاصيل الضمان والاسترجاع
           </a>
-          <span className="text-border mx-2" aria-hidden>
-            ·
-          </span>
-          <span>الدفع عند الاستلام والتأكيد والشحن موضّحين في الشريط الملوّن تحت هذا القسم.</span>
         </p>
       </div>
-    </div>
 
-    <PdpStickyRoutineCta
-      visible={stickyCtaVisible}
-      accentColor={accent}
-      accentDeep={accentDeep}
-      label={addToCartLabel}
-      formattedPrice={formatSarAmount(getPriceForQty(selectedQty))}
-      onClick={scrollToPrice}
-    />
+      <PdpStickyRoutineCta
+        visible={stickyCtaVisible}
+        accentColor={accent}
+        accentDeep={accentDeep}
+        label={addToCartLabel}
+        formattedPrice={formatSarAmount(getPriceForQty(selectedQty))}
+        onClick={scrollToPrice}
+      />
     </>
   )
 }

@@ -9,28 +9,47 @@ function reviewInitials(name: string) {
   return (a + b).toUpperCase()
 }
 
-function ReviewCard({
+function ReviewCardNama({
   review,
   accentColor,
+  featured = false,
 }: {
   review: ProductReview
   accentColor: string
+  featured?: boolean
 }) {
   return (
-    <article className="flex min-w-0 flex-col gap-2.5 overflow-hidden rounded-2xl border border-border bg-white p-3 shadow-sm sm:flex-row sm:gap-3 sm:p-3.5">
-      <div
-        className="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-sm font-black text-white sm:mx-0"
-        style={{ background: accentColor }}
-        aria-hidden
-      >
-        {reviewInitials(review.name)}
-      </div>
-      <div className="min-w-0 flex-1 text-start">
-        <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-0.5">
-          <p className="text-sm font-bold text-charcoal">{review.name}</p>
-          <StarRating rating={review.rating} size="sm" />
+    <article
+      className={`flex min-w-0 flex-col rounded-2xl border border-border bg-white shadow-sm ${
+        featured ? 'p-6 sm:p-7' : 'p-5 sm:p-6'
+      }`}
+    >
+      <span className="text-3xl leading-none text-charcoal/20" aria-hidden>
+        "
+      </span>
+      <blockquote className={`mt-2 leading-relaxed text-charcoal ${featured ? 'text-base sm:text-lg' : 'text-sm sm:text-base'}`}>
+        {review.text}
+      </blockquote>
+      <div className="mt-4 flex items-center gap-3 border-t border-border/70 pt-4">
+        <div
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-black text-white"
+          style={{ background: accentColor }}
+          aria-hidden
+        >
+          {reviewInitials(review.name)}
         </div>
-        <blockquote className="text-[13px] leading-relaxed text-charcoal sm:text-sm">«{review.text}»</blockquote>
+        <div className="min-w-0 flex-1 text-start">
+          <p className="text-sm font-bold text-charcoal">{review.name}</p>
+          <div className="mt-0.5 flex flex-wrap items-center gap-2">
+            <StarRating rating={review.rating} size="sm" />
+            <span
+              className="rounded-full px-2 py-0.5 text-[10px] font-bold text-white"
+              style={{ background: accentColor }}
+            >
+              مؤكدة
+            </span>
+          </div>
+        </div>
       </div>
     </article>
   )
@@ -47,49 +66,51 @@ export default function PdpReviewsSection({ product }: Props) {
   return (
     <section
       id="pdp-reviews"
-      className="scroll-mt-28 overflow-x-hidden border-t border-border/60 py-8 sm:py-10 md:py-12"
-      style={{
-        background: `linear-gradient(180deg, color-mix(in srgb, ${product.bgColor} 45%, #fff) 0%, #fff 100%)`,
-      }}
+      className="scroll-mt-28 overflow-x-hidden border-b border-border/60 bg-[#faf9f8] py-10 sm:py-14"
     >
       <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
-        <div className="mb-6 flex flex-col gap-3 border-b border-border/80 pb-5 sm:mb-7 sm:flex-row sm:items-center sm:justify-between sm:pb-6">
-          <div className="max-w-xl text-start">
-            <p
-              className="mb-1.5 inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase tracking-[0.18em] text-white"
-              style={{ background: accent }}
-            >
-              {reviewsH.eyebrowAr ?? 'إثبات اجتماعي'}
-            </p>
-            <h2 className="text-lg font-black text-charcoal sm:text-xl md:text-2xl">
-              {reviewsH.titleAr ?? `وش قالت عميلات اختارت ${product.nameAr}؟`}
-            </h2>
-            <p className="mt-1.5 text-xs leading-relaxed text-charcoal sm:text-sm">
-              {reviewsH.subtitleAr ??
-                'آراء شخصية؛ النتيجة تختلف حسب الجسم والالتزام. للتفاصيل راجعي الأسئلة في آخر الصفحة.'}
-            </p>
+        <div className="mb-8 max-w-3xl text-start">
+          <p className="mb-2 text-[10px] font-black uppercase tracking-[0.22em] text-muted">
+            {reviewsH.eyebrowAr ?? 'تجارب حقيقية'}
+          </p>
+          <h2 className="text-xl font-black text-charcoal sm:text-2xl md:text-3xl">
+            {reviewsH.titleAr ?? `ما تقوله عميلات ${product.nameAr}`}
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-charcoal">
+            {reviewsH.subtitleAr ??
+              'مشتريات مؤكدة — آراء شخصية؛ النتيجة تختلف حسب الجسم والالتزام.'}
+          </p>
+          <div className="mt-4">
+            <StarRating rating={product.rating} count={product.reviewCount} size="md" accentColor={accent} />
           </div>
-          <StarRating rating={product.rating} count={product.reviewCount} size="sm" />
         </div>
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
-          {product.reviews.map((r, idx) => (
-            <ReviewCard key={`${product.id}-r-${idx}`} review={r} accentColor={accent} />
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          {product.reviews.slice(0, 3).map((r, idx) => (
+            <ReviewCardNama key={`${product.id}-r-top-${idx}`} review={r} accentColor={accent} featured />
           ))}
         </div>
 
+        {product.reviews.length > 3 && (
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {product.reviews.slice(3).map((r, idx) => (
+              <ReviewCardNama key={`${product.id}-r-${idx + 3}`} review={r} accentColor={accent} />
+            ))}
+          </div>
+        )}
+
         {product.afterReviewsBanner ? (
           <div
-            className="mt-6 rounded-xl border px-4 py-4 text-start min-w-0 sm:mt-7 sm:px-5"
-            style={{ borderColor: `${accent}44`, background: `${product.bgColor}b3` }}
+            className="mt-8 rounded-2xl border px-5 py-5 text-start sm:px-6"
+            style={{ borderColor: `${accent}33`, background: `${product.bgColor}99` }}
           >
             {product.afterReviewsBanner.titleAr && (
-              <h3 className="mb-1.5 text-base font-bold text-[#1C1C1C]">{product.afterReviewsBanner.titleAr}</h3>
+              <h3 className="mb-2 text-base font-black text-charcoal">{product.afterReviewsBanner.titleAr}</h3>
             )}
-            <p className="text-xs leading-relaxed text-charcoal sm:text-sm">{product.afterReviewsBanner.bodyAr}</p>
+            <p className="text-sm leading-relaxed text-charcoal">{product.afterReviewsBanner.bodyAr}</p>
             <a
               href="#pdp-buy-anchor"
-              className="mt-3 inline-flex rounded-xl px-4 py-2 text-xs font-extrabold text-white sm:text-sm"
+              className="mt-4 inline-flex rounded-xl px-5 py-2.5 text-sm font-extrabold text-white"
               style={{ background: accent }}
             >
               اختاري العرض واطلبي الآن ↑
