@@ -36,7 +36,7 @@ const STEPS = [
 ] as const
 
 const GOALS = [
-  { slug: 'rawnaq-c-collagen-gummies', icon: '✨', color: BRAND.rose, bg: '#f9efed', title: 'الجمال من الداخل', product: 'رونق C', desc: 'بيوتين + زنك + فيتامين D' },
+  { slug: 'rawnaq-c-collagen-gummies', icon: '✨', color: BRAND.rose, bg: '#f9efed', title: 'مقاومة التجاعيد', product: 'رونق C', desc: 'بيوتين + زنك + D3 — بشرة ثم شعر وأظافر' },
   { slug: 'khiffabiotic-probiotic-gummies', icon: '🍃', color: BRAND.peach, bg: '#f6eee9', title: 'خفّة بعد الأكل', product: 'خفّة بيوتك', desc: 'بروبيوتيك + ألياف' },
   { slug: 'laylmag-magnesium-gummies', icon: '🌙', color: BRAND.rose, bg: '#f3e9e7', title: 'هدوء المساء', product: 'ليل ماج', desc: 'مغنيسيوم + L-Theanine' },
   { slug: 'quwwat-sha3r-collagen-powder', icon: '💆🏻‍♀️', color: BRAND.cognac, bg: '#FAF1E8', title: 'قوة الشعر', product: 'قوة شعر', desc: 'كولاجين بحري + بيوتين + حديد' },
@@ -57,7 +57,7 @@ const REVIEWS = [
   {
     name: 'سارة م.',
     city: 'الرياض',
-    text: 'بعد 6 أسابيع التزام على رونق C وصلت نتيجة واضحة: شعري أقل تكسّر وأظافري ما تتكسر زي قبل.',
+    text: 'بعد 6 أسابيع التزام على رونق C وصلت نتيجة: خطوط الوجه أخف، بشرتي أنعم، وشعري أقل تكسّr.',
     rating: 5,
     product: 'رونق C',
     accent: BRAND.rose,

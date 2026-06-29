@@ -9,7 +9,7 @@ export const PDP_DOSE_SNIPPET_GUMMY = 'علكتان في الجرعة حسب ا�
 export const PDP_DOSE_SNIPPET_POWDER = 'ساشيه واحد يومياً حسب الجرعة على الغلاف المعتمد'
 
 export const PDP_ADD_CTA: Record<string, string> = {
-  'rawnaq-c': 'ابدئي روتين الصباح الآن',
+  'rawnaq-c': 'ابدئي روتين مقاومة التجاعيد الآن',
   khiffabiotic: 'ابدئي روتين أخف بعد الأكل',
   laylmag: 'ابدئي روتين المساء الآن',
   'quwwat-sha3r': 'ابدئي روتين الشعر من الداخل',
@@ -19,8 +19,8 @@ export const PDP_ADD_CTA: Record<string, string> = {
 
 export const PDP_ROUTINE_NOTE: Record<string, { titleAr: string; bodyAr: string }> = {
   'rawnaq-c': {
-    titleAr: 'روتين صباحي — علكتان في الجرعة',
-    bodyAr: 'صباحًا: علكتان حسب الغلاف (مو علكة وحدة). العروض والسعر النهائي واضحين قبل التأكيد.',
+    titleAr: 'روتين صباحي — علكتان لدعم البشرة والتجاعيد',
+    bodyAr: 'صباحًا: علكتان حسب الغلاف (مو علكة وحدة). يدعم البشرة ومقاومة التجاعيد من الداخل — ثم الشعر والأظافر. العروض والسعر النهائي واضحين قبل التأكيد.',
   },
   khiffabiotic: {
     titleAr: 'بعد الأكل — علكتان، مو صباح ولا كبسولة',
