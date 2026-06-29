@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
-import { PRODUCTS, getProductBySlug, getProductById, formatSoldCount } from '@/lib/products'
+import { PRODUCTS, getProductBySlug, getProductById, getPriceForQty, formatSarCompact } from '@/lib/products'
 import { getPdpSectionHeadlines } from '@/lib/pdp-section-headlines'
+import { getPdpHeroStats } from '@/lib/pdp-hero-stats'
 import StarRating from '@/components/ui/StarRating'
 import ProductPageClient from './ProductPageClient'
 import ProductCard from '@/components/product/ProductCard'
@@ -9,6 +10,7 @@ import PdpSquareImage from '@/components/product/PdpSquareImage'
 import PdpDeliveryPaymentSection from '@/components/product/PdpDeliveryPaymentSection'
 import PdpReviewsSection from '@/components/product/PdpReviewsSection'
 import PowderPlaceholder from '@/components/product/PowderPlaceholder'
+import PdpHeroStatPills from '@/components/product/pdp/PdpHeroStatPills'
 import { getPdpAddCta, getPdpComplianceNote } from '@/lib/pdp-copy'
 import { getFormatLabelAr } from '@/lib/products'
 
@@ -32,6 +34,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   if (!product) notFound()
 
   const isPowder = product.format === 'powder_sachet'
+  const unitLabel = isPowder ? 'عبوة' : 'علبة'
+  const heroStats = getPdpHeroStats(product)
+  const startPrice = formatSarCompact(getPriceForQty(1))
 
   const crossSellProducts = product.crossSells
     .map((id) => getProductById(id))
@@ -64,10 +69,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     : null
 
   const powderHeroPhoto = isPowder && product.pdpHeroImage
-
-  const magnetLine =
-    product.pdpMagnetLineAr ??
-    'مكمّل غذائي وفق الغلاف — اختاري العرض المناسب من خانة الطلب أسفل الصفحة.'
 
   const sh = getPdpSectionHeadlines(product.id)
   const painH = sh.pain ?? {}
@@ -127,104 +128,59 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               )}
             </div>
             <div className="order-2 min-w-0 text-pretty break-words text-start md:order-1 md:max-w-xl lg:max-w-none">
-              <div className="mb-2 flex flex-wrap items-center justify-end gap-2 sm:mb-3">
-                {product.isNew && (
-                  <span
-                    className="inline-flex rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white shadow sm:text-xs"
-                    style={{ background: accent }}
-                  >
-                    جديد
-                  </span>
-                )}
+              <p className="mb-3 text-center text-[11px] font-bold text-[#146b70] sm:text-xs md:text-start">
+                مكمّلات غذائية مرخّصة من هيئة الغذاء والدواء (SFDA)
+              </p>
+
+              <PdpHeroStatPills stats={heroStats} accentColor={accent} />
+
+              <h1
+                id="pdp-hook"
+                className="scroll-mt-[calc(5.5rem+env(safe-area-inset-top))] mb-3 text-2xl font-black leading-tight text-charcoal sm:text-3xl sm:leading-[1.12] md:text-[2rem]"
+              >
+                {product.heroHeadlineAr}
+              </h1>
+
+              <p className="mb-4 text-sm leading-relaxed text-charcoal sm:text-base">{product.heroSubAr}</p>
+
+              <div className="mb-3 flex flex-wrap items-center justify-end gap-x-2 gap-y-1 text-sm font-bold text-charcoal">
+                <StarRating rating={product.rating} count={product.reviewCount} size="md" accentColor={accent} />
+                <span className="text-muted">·</span>
+                <span>
+                  من {startPrice} / {unitLabel}
+                </span>
+                <span className="w-full text-xs font-semibold text-muted sm:w-auto">
+                  ({product.reviewCount.toLocaleString('en-US')} تقييم · مؤكدة)
+                </span>
+              </div>
+
+              <div className="mb-4 flex flex-wrap items-center justify-end gap-2">
                 <span
                   className="inline-flex rounded-full px-3 py-1 text-[10px] font-bold text-white sm:text-xs"
                   style={{ background: accent }}
                 >
                   {getFormatLabelAr(product)}
                 </span>
-              </div>
-              <span
-                className="mb-2 inline-flex max-w-full items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-black text-white shadow sm:mb-3 sm:gap-2 sm:px-3.5 sm:py-1.5 sm:text-xs"
-                style={{
-                  background: `linear-gradient(120deg, ${product.accentColor} 0%, color-mix(in srgb, ${product.accentColor} 65%, #1a1a1a) 100%)`,
-                  boxShadow: `0 10px 28px -12px ${product.accentColor}99`,
-                }}
-              >
-                <span aria-hidden className="opacity-95">
-                  ✦
+                <span
+                  className="inline-flex max-w-full items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-black text-white sm:text-xs"
+                  style={{
+                    background: `linear-gradient(120deg, ${accent} 0%, color-mix(in srgb, ${accent} 65%, #1a1a1a) 100%)`,
+                  }}
+                >
+                  {product.badgeAr}
                 </span>
-                {product.badgeAr}
-              </span>
-
-              <p
-                className="mb-4 border-r-2 pe-2.5 text-sm font-semibold leading-snug text-charcoal sm:mb-5 sm:pe-3 sm:text-[0.9375rem]"
-                style={{ borderColor: accent }}
-              >
-                {magnetLine}
-              </p>
-
-              <div className="mb-4 flex flex-col gap-3 sm:mb-5">
-                <div className="flex flex-wrap items-center justify-end gap-x-3 gap-y-2">
-                  <StarRating rating={product.rating} count={product.reviewCount} size="md" accentColor={accent} />
-                  <a
-                    href="#pdp-reviews"
-                    className="text-xs font-bold underline underline-offset-2 transition sm:text-sm"
-                    style={{ color: accent, textDecorationColor: `${accent}44` }}
-                  >
-                    اقرأي التقييمات ↓
-                  </a>
-                </div>
-                <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-2.5">
-                  <span
-                    className="inline-flex items-center gap-1.5 rounded-full border bg-white/90 px-3 py-1.5 text-[11px] font-bold text-charcoal shadow-sm sm:text-xs"
-                    style={{ borderColor: `${accent}33` }}
-                  >
-                    <span aria-hidden>⚡</span>
-                    توصيل 2–4 أيام
+                {product.isNew && (
+                  <span className="inline-flex rounded-full bg-charcoal px-3 py-1 text-[10px] font-black text-white sm:text-xs">
+                    جديد
                   </span>
-                  <span
-                    className="inline-flex items-center gap-1.5 rounded-full border bg-white/90 px-3 py-1.5 text-[11px] font-bold text-charcoal shadow-sm sm:text-xs"
-                    style={{ borderColor: `${accent}33` }}
-                  >
-                    <span aria-hidden>💵</span>
-                    دفع عند الاستلام
-                  </span>
-                  {(product.soldCount ?? 0) > 0 && (
-                    <span
-                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-bold text-white shadow-sm sm:text-xs"
-                      style={{ background: accent }}
-                    >
-                      <span aria-hidden>✓</span>
-                      {formatSoldCount(product.soldCount!)}+ طلب
-                    </span>
-                  )}
-                </div>
+                )}
               </div>
 
-              <h1 className="mb-2 break-words text-2xl font-black leading-tight tracking-tight text-charcoal sm:mb-3 sm:text-3xl sm:leading-[1.15]">
-                {product.nameAr}
-              </h1>
+              <p className="mb-1 text-lg font-black text-charcoal sm:text-xl">{product.nameAr}</p>
+              <p className="mb-4 text-xs leading-relaxed text-muted sm:text-sm">{product.subtitleAr}</p>
 
-              <p
-                id="pdp-hook"
-                className="scroll-mt-[calc(5.5rem+env(safe-area-inset-top))] mb-3 border-r-[3px] pe-3 text-pretty text-base font-black leading-snug text-charcoal sm:mb-4 sm:pe-4 sm:text-lg md:text-xl"
-                style={{ borderColor: accent }}
-              >
-                {product.heroHeadlineAr}
-              </p>
-
-              {product.copyAfterHeroPrice && (
-                <p className="mb-4 break-words text-xs leading-relaxed text-charcoal sm:mb-5 sm:text-sm">
-                  {product.copyAfterHeroPrice}
-                </p>
-              )}
-
-              <p className="mb-5 text-sm leading-relaxed text-charcoal sm:mb-6 sm:text-base sm:leading-relaxed">
-                {product.heroSubAr}
-              </p>
-
-              <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-charcoal sm:text-[11px]">خلاصة تركيبية</p>
-              <div className="mb-3 flex flex-wrap items-center justify-end gap-1.5 sm:mb-4 sm:gap-2">
+              <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-muted">خلاصة تركيبية</p>
+              <div className="mb-4 flex flex-wrap items-center justify-end gap-1.5 sm:gap-2">
                 {product.ingredients.slice(0, 3).map((ing) => (
                   <span
                     key={ing}
@@ -237,7 +193,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   <a
                     href="#pdp-ingredients"
                     className="rounded-full border border-dashed px-3 py-1 text-xs font-bold"
-                    style={{ borderColor: `${product.accentColor}55`, background: `${product.accentColor}0d`, color: product.accentColor }}
+                    style={{ borderColor: `${accent}55`, background: `${accent}0d`, color: accent }}
                   >
                     + المكوّنات كاملة
                   </a>
@@ -245,7 +201,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               </div>
 
               <div id="pdp-buy-anchor" className="scroll-mt-[calc(4.5rem+env(safe-area-inset-top))]">
-                <ProductPageClient product={product} addToCartLabel={getPdpAddCta(product.id)} />
+                <ProductPageClient
+                  product={product}
+                  addToCartLabel={getPdpAddCta(product.id)}
+                  isPowder={isPowder}
+                />
               </div>
             </div>
           </div>

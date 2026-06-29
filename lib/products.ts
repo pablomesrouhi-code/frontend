@@ -972,6 +972,11 @@ export function formatSarAmount(amount: number): string {
   return `${amount}ريال سعودي`
 }
 
+/** عرض مختصر للهيرو — مثل «199 ر.س» */
+export function formatSarCompact(amount: number): string {
+  return `${amount} ر.س`
+}
+
 /** «+3,200» — أرقام LTR داخل واجهة RTL */
 export function formatSoldCount(count: number): string {
   return `+${count.toLocaleString('en-US')}`

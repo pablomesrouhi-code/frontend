@@ -24,11 +24,32 @@ export function getUpsellPriceSar(): number {
   return active.upsell_sar
 }
 
-export function getOffers() {
+export function getOffers(isPowder = false) {
+  const unit = isPowder ? 'عبوة' : 'علبة'
+  const unitDual = isPowder ? 'عبوتان' : 'علبتان'
+  const units3 = isPowder ? '3 عبوات' : '3 علب'
   return [
-    { qty: 1 as const, label: 'قطعة واحدة', price: getPriceForQty(1), badge: null },
-    { qty: 2 as const, label: 'قطعتين', price: getPriceForQty(2), badge: 'اختيار ذكي' },
-    { qty: 3 as const, label: '3 قطع', price: getPriceForQty(3), badge: 'الأكثر توفيراً' },
+    {
+      qty: 1 as const,
+      label: `${unit} واحدة`,
+      sublabel: isPowder ? '30 ساشيه · شهر كامل' : '60 علكة · شهر كامل',
+      price: getPriceForQty(1),
+      badge: null as string | null,
+    },
+    {
+      qty: 2 as const,
+      label: `${unitDual} · ثبّتي النتيجة`,
+      sublabel: isPowder ? '60 ساشيه · شهر + تثبيت' : '120 علكة · شهر النتيجة + تثبيت',
+      price: getPriceForQty(2),
+      badge: 'الأكثر اختياراً',
+    },
+    {
+      qty: 3 as const,
+      label: `${units3} · النتيجة الكاملة`,
+      sublabel: isPowder ? '90 ساشيه · روتين كامل' : '180 علكة · نتيجة + تثبيت + توفير',
+      price: getPriceForQty(3),
+      badge: 'الأكثر توفيراً',
+    },
   ]
 }
 
