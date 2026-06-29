@@ -1,6 +1,8 @@
 'use client'
-import { getOffers, getPriceForQty, formatSarAmount } from '@/lib/products'
+import { getOffers, getPriceForQty, formatSarCompact } from '@/lib/products'
+import { PDP_OFFER_HEADING, PDP_OFFER_TAGLINE, formatOfferSavings } from '@/lib/pdp-offer-copy'
 import { useStorePricing } from '@/components/pricing/StorePricingProvider'
+import StarRating from '@/components/ui/StarRating'
 import {
   getProductOfferActiveStyle,
   getProductOfferInactiveStyle,
@@ -21,6 +23,8 @@ type Props = {
   onChange: (qty: 1 | 2 | 3) => void
   accentColor?: string
   isPowder?: boolean
+  rating?: number
+  reviewCount?: number
 }
 
 export default function OfferSelector({
@@ -28,15 +32,24 @@ export default function OfferSelector({
   onChange,
   accentColor = '#b8485c',
   isPowder = false,
+  rating,
+  reviewCount,
 }: Props) {
   useStorePricing()
   const offers = getOffers(isPowder)
   const priceActive = shadeTowardBlack(accentColor, 0.18)
 
   return (
-    <div className="min-w-0 max-w-full">
-      <p className="mb-0.5 text-xs font-bold uppercase tracking-[0.12em] text-muted">????? ?? ?????? ??????</p>
-      <p className="mb-3 text-sm font-bold text-charcoal sm:text-base">?????? ?????:</p>
+    <div className="min-w-0 max-w-full text-right" dir="rtl">
+      {rating != null && (
+        <div className="mb-2.5 flex justify-end">
+          <StarRating rating={rating} count={reviewCount} size="sm" accentColor={accentColor} />
+        </div>
+      )}
+
+      <p className="mb-1 text-sm font-bold text-charcoal sm:text-base">{PDP_OFFER_HEADING}</p>
+      <p className="mb-3 text-xs font-semibold text-muted sm:text-sm">{PDP_OFFER_TAGLINE}</p>
+
       <div className="flex min-w-0 flex-col gap-2.5 sm:gap-3">
         {offers.map((offer) => {
           const active = selected === offer.qty
@@ -46,20 +59,20 @@ export default function OfferSelector({
               type="button"
               key={offer.qty}
               onClick={() => onChange(offer.qty)}
-              className={`relative grid min-h-[4.5rem] grid-cols-[1fr_auto] items-center gap-x-3 rounded-2xl border-2 px-4 py-3.5 text-start sm:px-5 sm:py-4 ${
+              className={`relative grid min-h-[4.5rem] grid-cols-[1fr_auto] items-center gap-x-3 rounded-2xl border-2 px-4 py-3.5 text-right sm:px-5 sm:py-4 ${
                 active ? '' : 'hover:bg-white/90 active:scale-[0.99]'
               } cursor-pointer touch-manipulation overflow-hidden transition-[transform,border-color,background-color] duration-200`}
               style={active ? getProductOfferActiveStyle(accentColor) : getProductOfferInactiveStyle(accentColor)}
             >
               {active && (
                 <span
-                  className="pointer-events-none absolute start-0 top-0 bottom-0 w-[3px]"
+                  className="pointer-events-none absolute end-0 top-0 bottom-0 w-[3px]"
                   style={{ background: accentColor }}
                   aria-hidden
                 />
               )}
               <div className="relative z-[1] min-w-0 pe-2">
-                <div className="flex flex-wrap items-center justify-end gap-x-2 gap-y-1">
+                <div className="flex flex-wrap items-center justify-start gap-x-2 gap-y-1">
                   <span className="text-sm font-bold text-charcoal sm:text-base">{offer.label}</span>
                   {offer.badge && (
                     <span
@@ -74,12 +87,12 @@ export default function OfferSelector({
                   <p className="mt-0.5 text-[11px] leading-snug text-muted sm:text-xs">{offer.sublabel}</p>
                 )}
               </div>
-              <div className="relative z-[1] flex shrink-0 flex-col items-end gap-1">
+              <div className="relative z-[1] flex shrink-0 flex-col items-start gap-1">
                 <span
                   className="text-lg font-black tabular-nums whitespace-nowrap sm:text-xl"
                   style={{ color: active ? priceActive : '#1C1C1C' }}
                 >
-                  {formatSarAmount(offer.price)}
+                  {formatSarCompact(offer.price)}
                 </span>
                 {save != null && (
                   <span
@@ -90,7 +103,7 @@ export default function OfferSelector({
                       border: `1px solid ${accentColor}40`,
                     }}
                   >
-                    ????? {formatSarAmount(save)}
+                    {formatOfferSavings(save)}
                   </span>
                 )}
               </div>

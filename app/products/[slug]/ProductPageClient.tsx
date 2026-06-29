@@ -1,12 +1,10 @@
 'use client'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Product, getPriceForQty, formatSarAmount, isPowderProduct } from '@/lib/products'
+import { Product, getPriceForQty, formatSarRiial, isPowderProduct } from '@/lib/products'
 import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import { useCartStore } from '@/stores/cart-store'
 import OfferSelector from '@/components/product/OfferSelector'
-import PdpRoutineNote from '@/components/product/PdpRoutineNote'
 import PdpStickyRoutineCta from '@/components/product/PdpStickyRoutineCta'
-import PdpOfferTrustRow from '@/components/product/pdp/PdpOfferTrustRow'
 import { trackAddToCart, trackViewContent } from '@/lib/tracking/client'
 import { getProductSolidButtonStyle, shadeTowardBlack } from '@/lib/product-accent'
 
@@ -95,7 +93,8 @@ export default function ProductPageClient({
     <>
       <div
         ref={priceBlockRef}
-        className="relative min-w-0 max-w-full overflow-hidden rounded-2xl border bg-white p-4 shadow-sm sm:rounded-3xl sm:p-5"
+        dir="rtl"
+        className="relative min-w-0 max-w-full overflow-hidden rounded-2xl border bg-white p-4 text-right shadow-sm sm:rounded-3xl sm:p-5"
         style={{ borderColor: `${accent}33` }}
       >
         <OfferSelector
@@ -103,9 +102,9 @@ export default function ProductPageClient({
           onChange={setSelectedQty}
           accentColor={accent}
           isPowder={isPowder}
+          rating={product.rating}
+          reviewCount={product.reviewCount}
         />
-
-        <PdpRoutineNote productId={product.id} format={product.format} accentColor={accent} />
 
         <button
           onClick={handleAdd}
@@ -118,7 +117,7 @@ export default function ProductPageClient({
             <span>
               {addToCartLabel} ·{' '}
               <span className="sar-price sar-price-dark tabular-nums">
-                {formatSarAmount(getPriceForQty(selectedQty))}
+                {formatSarRiial(getPriceForQty(selectedQty))}
               </span>
             </span>
           </span>
@@ -127,8 +126,6 @@ export default function ProductPageClient({
         <p className="mt-2 text-center text-[11px] font-semibold text-muted sm:text-xs">
           الدفع عند الاستلام · بدون دفع أونلاين
         </p>
-
-        <PdpOfferTrustRow />
 
         <p className="mt-3 text-center text-[11px] leading-relaxed text-muted">
           <a
@@ -146,7 +143,7 @@ export default function ProductPageClient({
         accentColor={accent}
         accentDeep={accentDeep}
         label={addToCartLabel}
-        formattedPrice={formatSarAmount(getPriceForQty(selectedQty))}
+        formattedPrice={formatSarRiial(getPriceForQty(selectedQty))}
         onClick={scrollToPrice}
       />
     </>

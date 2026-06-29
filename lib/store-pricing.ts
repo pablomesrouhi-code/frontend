@@ -46,7 +46,7 @@ export function getOffers(isPowder = false) {
     {
       qty: 3 as const,
       label: `${units3} · النتيجة الكاملة`,
-      sublabel: isPowder ? '90 ساشيه · روتين كامل' : '180 علكة · نتيجة + تثبيت + توفير',
+      sublabel: isPowder ? '90 ساشيه · نتيجة + تثبيت + هدية' : '180 علكة · نتيجة + تثبيت + هدية',
       price: getPriceForQty(3),
       badge: 'الأكثر توفيراً',
     },
