@@ -117,7 +117,7 @@ export default function HomePage() {
   return (
     <div style={{ background: BRAND.cream }}>
 
-      {/* ═══ 1. HERO — Editorial asymmetric, warm cream, BIG image ═══ */}
+      {/* ═══ 1. HERO — Editorial asymmetric, warm cream ═══ */}
       <section
         id="top"
         className="relative overflow-hidden"
@@ -182,42 +182,73 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* IMAGE — square card, image centered filling the frame (original style) */}
+            {/* IMAGE — khalijkom-style: square cover frame + caption strip (image only) */}
             <div className="order-1 w-full md:order-2">
-            <div
-                className="w-full rounded-3xl bg-white p-3 sm:p-4 md:p-5"
-              style={{
-                border: '1px solid #EADFD6',
-                  boxShadow: '0 22px 60px -24px rgba(28, 28, 28, 0.1), inset 0 1px 0 rgba(255,255,255,0.85)',
-                }}
-              >
-                <div className="relative overflow-hidden rounded-2xl bg-[#FDF8F9]">
-                  <div
-                    className="absolute top-2 end-2 z-10 rounded-lg px-2 py-1.5 sm:top-3 sm:end-3 sm:px-2.5 sm:py-2"
-                    style={{ background: '#b8485cee', border: '1px solid rgba(255,255,255,0.35)' }}
-                  >
-                    <p dir="ltr" className="text-[10px] font-black tabular-nums text-white sm:text-[11px]">
-                      {formatSoldCount(STORE_SOLD_HEADLINE)}
-                    </p>
-                    <p className="text-[9px] font-bold text-white/90">مباع في السعودية</p>
-                  </div>
-
-                <Image
-                  src="/hero-store-trio.jpg"
-                    alt="منتجات نبتة لابو — ستة منتجات علكة ومسحوق"
-                  width={1024}
-                  height={1024}
-                  priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 560px"
-                  className="block h-auto w-full object-contain"
+              <div className="relative mx-auto w-full max-w-[min(90vw,36rem)] md:mx-0 md:ms-auto">
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute -top-1 -end-1 h-5 w-5 rounded-se-md border-t border-e border-[#B5896A]/50"
+                />
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute -top-1 -start-1 h-5 w-5 rounded-ss-md border-t border-s border-[#B5896A]/50"
+                />
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute -bottom-1 -end-1 h-5 w-5 rounded-ee-md border-b border-e border-[#B5896A]/50"
+                />
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute -bottom-1 -start-1 h-5 w-5 rounded-es-md border-b border-s border-[#B5896A]/50"
                 />
 
+                <span
+                  className="absolute -top-3 -start-3 z-10 inline-flex flex-col rounded-full px-3 py-1.5 shadow-lg"
+                  style={{
+                    background: BRAND.rose,
+                    border: `1px solid ${BRAND.rose}66`,
+                    boxShadow: `0 10px 24px -8px ${BRAND.rose}55`,
+                  }}
+                >
+                  <span dir="ltr" className="text-[10px] font-black tabular-nums text-white">
+                    {formatSoldCount(STORE_SOLD_HEADLINE)}
+                  </span>
+                  <span className="text-[9px] font-bold text-white/90">مباع في السعودية</span>
+                </span>
+
+                <div
+                  className="relative overflow-hidden rounded-[1.5rem] bg-white ring-1 ring-[#1A1815]/8"
+                  style={{ boxShadow: '0 25px 50px -12px rgba(26, 24, 21, 0.18)' }}
+                >
+                  <div className="relative aspect-square">
+                    <Image
+                      src="/hero-store-trio.jpg"
+                      alt="منتجات نبتة لابو — ستة منتجات علكة ومسحوق"
+                      fill
+                      priority
+                      sizes="(max-width: 768px) 90vw, 36rem"
+                      className="object-cover object-center"
+                    />
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#1A1815]/12 via-transparent to-transparent"
+                    />
+                  </div>
                   <div
-                    className="absolute bottom-2 start-2 z-10 max-w-[6.5rem] rounded-lg px-2 py-1.5 sm:bottom-3 sm:start-3 sm:px-2.5 sm:py-2"
-                    style={{ background: '#ffffffee', border: '1px solid rgba(20,107,112,0.35)' }}
+                    className="relative border-t px-4 py-2.5"
+                    style={{ borderColor: BRAND.border, background: '#fff' }}
                   >
-                    <p className="text-[9px] font-bold uppercase text-[#146b70]">مرخّص SFDA</p>
-                    <p className="text-[10px] font-black text-[#1C1C1C]">علكة + مسحوق</p>
+                    <div className="flex items-center justify-between gap-3">
+                      <span
+                        className="text-[10px] font-black uppercase tracking-[0.16em]"
+                        style={{ color: BRAND.muted }}
+                      >
+                        متوافق مع اشتراطات SFDA
+                      </span>
+                      <span className="text-[10px] font-black tracking-[0.16em]" style={{ color: BRAND.peach }}>
+                        علكة + مسحوق
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
