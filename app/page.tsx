@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { PRODUCTS, STORE_REVIEW_HEADLINE, STORE_SOLD_HEADLINE, formatSoldCount } from '@/lib/products'
-import { BRAND_CONTACT_EMAIL } from '@/lib/brand'
 import ProductCard from '@/components/product/ProductCard'
 
 // ───────── Brand palette (refined warm) ─────────
@@ -374,7 +373,12 @@ export default function HomePage() {
             <h2 className="text-2xl font-bold leading-tight sm:text-3xl" style={{ color: BRAND.charcoal }}>
               اختيارات عميلات نبتة لابو
             </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
+            <span
+              aria-hidden
+              className="mt-3 block h-1 w-16 rounded-full"
+              style={{ background: `linear-gradient(90deg, ${BRAND.rose}, ${BRAND.peach})` }}
+            />
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
               ثلاثة الأكثر طلباً — بإطار واحد يميّزهم.
             </p>
           </div>
@@ -404,7 +408,12 @@ export default function HomePage() {
             <h2 className="text-2xl font-bold leading-tight sm:text-3xl" style={{ color: BRAND.charcoal }}>
               منتجاتنا
             </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
+            <span
+              aria-hidden
+              className="mt-3 block h-1 w-16 rounded-full"
+              style={{ background: `linear-gradient(90deg, ${BRAND.rose}, ${BRAND.peach})` }}
+            />
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
               ستة منتجات مرخّصة — علكة ومسحوق. جمال، هضم، نوم، شعر، بشرة، وأيام الدورة.
             </p>
           </div>
@@ -451,6 +460,11 @@ export default function HomePage() {
             <h2 className="text-2xl font-bold sm:text-3xl" style={{ color: BRAND.charcoal }}>
               قالت عميلاتنا في المملكة
             </h2>
+            <span
+              aria-hidden
+              className="mt-3 block h-1 w-16 rounded-full"
+              style={{ background: `linear-gradient(90deg, ${BRAND.rose}, ${BRAND.peach})` }}
+            />
           </div>
           <div className="grid gap-5 sm:grid-cols-2">
             {REVIEWS.map((r) => (
@@ -495,7 +509,12 @@ export default function HomePage() {
             <h2 className="text-2xl font-bold sm:text-3xl" style={{ color: BRAND.charcoal }}>
               كل مكوّن بجرعته الحقيقية
             </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
+            <span
+              aria-hidden
+              className="mt-3 block h-1 w-16 rounded-full"
+              style={{ background: `linear-gradient(90deg, ${BRAND.rose}, ${BRAND.peach})` }}
+            />
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
               نفس التركيبة المكتوبة على العلبة — كل مادة فعّالة بمقدارها بالضبط، بدون وعود فاضية.
             </p>
           </div>
@@ -744,57 +763,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 11. ضمان راحتك — compact trust ribbon ═══ */}
-      <section className="border-t border-[#E7DDD3] bg-[#faf9f8] py-10">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6">
-          <div className="rounded-3xl border border-[#ebe4e0] bg-white p-6 shadow-sm sm:p-8">
-            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 text-center">
-              {[
-                { icon: '🔒', label: 'بدون بطاقة بنكية' },
-                { icon: '💵', label: 'دفع عند الاستلام' },
-                { icon: '🔬', label: 'SFDA · حلال' },
-                { icon: '⚡', label: 'توصيل 2–4 أيام' },
-                { icon: '💬', label: 'تأكيد بشري' },
-              ].map((t) => (
-                <span
-                  key={t.label}
-                  className="inline-flex items-center gap-2 text-sm font-bold"
-                  style={{ color: BRAND.charcoal }}
-                >
-                  <span aria-hidden>{t.icon}</span>
-                  {t.label}
-                </span>
-              ))}
-            </div>
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5 border-t border-[#efe8e4] pt-5">
-              {[
-                { href: '/returns-refunds', label: 'سياسة الاسترجاع' },
-                { href: '/shipping-policy', label: 'سياسة الشحن' },
-                { href: '/cod-policy', label: 'الدفع عند الاستلام' },
-                { href: '/privacy-policy', label: 'الخصوصية' },
-              ].map((l) => (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  className="rounded-full border border-[#d8c9c6] bg-white px-4 py-1.5 text-xs font-semibold transition-colors hover:border-[#146b70] hover:text-[#146b70]"
-                  style={{ color: BRAND.muted }}
-                >
-                  {l.label}
-                </Link>
-              ))}
-              <a
-                href={`mailto:${BRAND_CONTACT_EMAIL}`}
-                className="rounded-full px-4 py-1.5 text-xs font-bold underline decoration-dotted underline-offset-4"
-                style={{ color: BRAND.teal }}
-              >
-                {BRAND_CONTACT_EMAIL}
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ 12. FINAL CTA ═══ */}
+      {/* ═══ 11. FINAL CTA ═══ */}
       <section className="relative overflow-hidden py-16 sm:py-20">
         <div
           className="absolute inset-0"
@@ -802,6 +771,11 @@ export default function HomePage() {
           aria-hidden
         />
         <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-sm font-bold text-white backdrop-blur">
+            <span style={{ color: '#f4c869' }}>★★★★★</span>
+            <span className="tabular-nums">4.8</span>
+            <span className="text-white/70">· {STORE_REVIEW_HEADLINE}+ تقييم 🇸🇦</span>
+          </div>
           <h2 className="mb-4 text-3xl font-black text-white sm:text-4xl">جاهزة لروتين نبتة لابو؟</h2>
           <p className="mx-auto mb-8 max-w-xl text-base leading-relaxed text-white/85">
             علكة ومسحوق — ستة منتجات لكل احتياج. اختاري الأقرب ليومك، أكّدي على 05، وادفعي عند الاستلام.
