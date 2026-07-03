@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { PRODUCTS, STORE_REVIEW_HEADLINE, STORE_SOLD_HEADLINE, formatSoldCount } from '@/lib/products'
+import { BRAND_CONTACT_EMAIL } from '@/lib/brand'
 import ProductCard from '@/components/product/ProductCard'
 
 // ───────── Brand palette (refined warm) ─────────
@@ -101,6 +102,86 @@ const REVIEWS = [
     rating: 5,
     product: 'شهر هادئ',
     accent: BRAND.mauve,
+  },
+] as const
+
+const SUPP_FACTS = [
+  {
+    product: 'رونق C',
+    goal: 'بشرة مشرقة + مقاومة التجاعيد',
+    accent: BRAND.rose,
+    rows: [
+      { ar: 'كولاجين متحلل', latin: 'Hydrolyzed Collagen', dose: '5000 mg' },
+      { ar: 'فيتامين C', latin: 'Vitamin C', dose: '250 mg' },
+      { ar: 'بيوتين', latin: 'Biotin', dose: '5000 mcg' },
+      { ar: 'زنك', latin: 'Zinc', dose: '10 mg' },
+      { ar: 'فيتامين D3', latin: 'Vitamin D3', dose: '1000 IU' },
+      { ar: 'حمض الهيالورونيك', latin: 'Hyaluronic Acid', dose: '80 mg' },
+    ],
+  },
+  {
+    product: 'خفّة بيوتك',
+    goal: 'هضم مريح + تقليل الانتفاخ',
+    accent: BRAND.peach,
+    rows: [
+      { ar: 'خليط بروبيوتيك', latin: 'Probiotic Blend', dose: '10B CFU' },
+      { ar: 'إينولين (ألياف)', latin: 'Inulin', dose: '3000 mg' },
+      { ar: 'إنزيمات هاضمة', latin: 'Digestive Enzymes', dose: '150 mg' },
+      { ar: 'خلاصة الزنجبيل', latin: 'Ginger Extract', dose: '150 mg' },
+    ],
+  },
+  {
+    product: 'ليل ماج',
+    goal: 'نوم أعمق + استرخاء',
+    accent: BRAND.rose,
+    rows: [
+      { ar: 'مغنيسيوم غليسينات', latin: 'Magnesium Glycinate', dose: '250 mg' },
+      { ar: 'غلايسين', latin: 'Glycine', dose: '2000 mg' },
+      { ar: 'ل-ثيانين', latin: 'L-Theanine', dose: '200 mg' },
+      { ar: 'أشواغاندا', latin: 'Ashwagandha KSM-66', dose: '300 mg' },
+      { ar: 'فيتامين B6', latin: 'Vitamin B6', dose: '2 mg' },
+    ],
+  },
+  {
+    product: 'قوة شعر',
+    goal: 'تقليل التساقط + شعر أقوى',
+    accent: BRAND.cognac,
+    rows: [
+      { ar: 'كولاجين بحري', latin: 'Marine Collagen', dose: '5000 mg' },
+      { ar: 'بيوتين', latin: 'Biotin', dose: '5000 mcg' },
+      { ar: 'زنك', latin: 'Zinc', dose: '15 mg' },
+      { ar: 'حديد', latin: 'Iron Bisglycinate', dose: '14 mg' },
+      { ar: 'حمض الفوليك', latin: 'Folic Acid', dose: '400 mcg' },
+      { ar: 'فيتامين D3', latin: 'Vitamin D3', dose: '2000 IU' },
+      { ar: 'كيراتين متحلل', latin: 'Hydrolyzed Keratin', dose: '500 mg' },
+    ],
+  },
+  {
+    product: 'وضوح',
+    goal: 'تصفية البشرة + إشراق',
+    accent: BRAND.sage,
+    rows: [
+      { ar: 'كولاجين بحري', latin: 'Marine Collagen', dose: '3000 mg' },
+      { ar: 'غلوتاثيون', latin: 'Glutathione', dose: '500 mg' },
+      { ar: 'فيتامين C', latin: 'Vitamin C', dose: '250 mg' },
+      { ar: 'زنك', latin: 'Zinc', dose: '15 mg' },
+      { ar: 'ن-أسيتيل سيستئين', latin: 'NAC', dose: '300 mg' },
+      { ar: 'خلاصة الكركم', latin: 'Turmeric Extract', dose: '150 mg' },
+    ],
+  },
+  {
+    product: 'شهر هادئ',
+    goal: 'تخفيف آلام الدورة + توازن',
+    accent: BRAND.mauve,
+    rows: [
+      { ar: 'مايو-إينوسيتول', latin: 'Myo-Inositol', dose: '2000 mg' },
+      { ar: 'مغنيسيوم', latin: 'Magnesium', dose: '250 mg' },
+      { ar: 'فيتكس (كف مريم)', latin: 'Vitex', dose: '300 mg' },
+      { ar: 'كالسيوم', latin: 'Calcium', dose: '300 mg' },
+      { ar: 'فيتامين B6', latin: 'Vitamin B6', dose: '5 mg' },
+      { ar: 'فيتامين D3', latin: 'Vitamin D3', dose: '1000 IU' },
+      { ar: 'خلاصة الزنجبيل', latin: 'Ginger Extract', dose: '150 mg' },
+    ],
   },
 ] as const
 
@@ -352,77 +433,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 5. HOW IT WORKS ═══ */}
-      <section id="how" className="scroll-mt-24 py-14 sm:py-16" style={{ background: '#f1e6e4' }}>
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="mb-8 text-start">
-            <h2 className="text-2xl font-bold sm:text-3xl" style={{ color: BRAND.charcoal }}>
-              كيف الطلب؟
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-              تأكيد بشري، دفع عند الاستلام، وتوصيل لكل مناطق المملكة.
-            </p>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {STEPS.map((s, i) => (
-              <div
-                key={s.n}
-                className="rounded-2xl border border-[#d8c9c6] bg-white p-5 text-start"
-              >
-                <div
-                  className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl text-sm font-black text-white"
-                  style={{ background: 'linear-gradient(135deg, #b8485c 0%, #943c50 100%)' }}
-                >
-                  {i + 1}
-                </div>
-                <div className="mb-1 text-xl" aria-hidden>{s.icon}</div>
-                <h3 className="mb-1 text-base font-bold" style={{ color: BRAND.charcoal }}>{s.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: BRAND.muted }}>{s.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ 6. INGREDIENTS ═══ */}
-      <section className="bg-white py-14 sm:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="mb-8 text-start">
-            <h2 className="text-2xl font-bold sm:text-3xl" style={{ color: BRAND.charcoal }}>
-              مكوّنات واضحة — علكة ومسحوق، هدف لكل منتج
-                </h2>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              { code: 'NL-01', name: 'بيوتين + زنك + فيتامين D', latin: 'Biotin · Zinc · Vit D', product: 'رونق C', accent: BRAND.rose },
-              { code: 'NL-02', name: 'بروبيوتيك + ألياف', latin: 'Probiotics · Fiber', product: 'خفّة بيوتك', accent: BRAND.peach },
-              { code: 'NL-03', name: 'مغنيسيوم + L-Theanine', latin: 'Magnesium · L-Theanine', product: 'ليل ماج', accent: BRAND.rose },
-              { code: 'NL-04', name: 'كولاجين بحري + حديد', latin: 'Marine Collagen · Iron', product: 'قوة شعر', accent: BRAND.cognac },
-              { code: 'NL-05', name: 'غلوتاثيون + كولاجين + زنك', latin: 'Glutathione · Collagen · Zinc', product: 'وضوح', accent: BRAND.sage },
-              { code: 'NL-06', name: 'مايو-إينوسيتول + فيتكس', latin: 'Myo-Inositol · Vitex · B6', product: 'شهر هادئ', accent: BRAND.mauve },
-            ].map((ing) => (
-              <div
-                key={ing.code}
-                className="flex flex-col gap-2 rounded-2xl border border-[#d8c9c6] bg-[#faf9f8] p-4"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="rounded-md px-2 py-0.5 text-[10px] font-mono font-bold" style={{ background: `${ing.accent}15`, color: ing.accent }}>
-                    {ing.code}
-                    </span>
-                  <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: ing.accent }}>
-                    {ing.product}
-                    </span>
-                </div>
-                <p className="text-base font-bold" style={{ color: BRAND.charcoal }}>{ing.name}</p>
-                <p className="font-mono text-xs" style={{ color: ing.accent }}>{ing.latin}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ 7. REVIEWS ═══ */}
+      {/* ═══ 5. REVIEWS (moved up — in place of how it works) ═══ */}
       <section id="reviews" className="scroll-mt-24 py-14 sm:py-16" style={{ background: '#f1e6e4' }}>
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-8 text-start">
@@ -468,6 +479,136 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══ 6. INGREDIENTS — real supplement-facts cards ═══ */}
+      <section className="bg-white py-14 sm:py-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mb-8 text-start">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em]" style={{ color: BRAND.rose }}>
+              مكوّنات حقيقية · جرعات واضحة
+            </p>
+            <h2 className="text-2xl font-bold sm:text-3xl" style={{ color: BRAND.charcoal }}>
+              كل مكوّن وجرعته — بلا مبالغة
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
+              نكتب لك التركيبة كما هي على العلبة — كل مادة فعّالة بمقدارها بالضبط.
+            </p>
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {SUPP_FACTS.map((card) => (
+              <div
+                key={card.product}
+                className="flex flex-col overflow-hidden rounded-2xl border border-[#ebe4e0] bg-white shadow-sm"
+              >
+                <div
+                  className="flex items-center justify-between px-5 py-3.5"
+                  style={{ background: `${card.accent}12`, borderBottom: `1px solid ${card.accent}22` }}
+                >
+                  <div>
+                    <p className="text-base font-black" style={{ color: BRAND.charcoal }}>{card.product}</p>
+                    <p className="text-[11px] font-semibold" style={{ color: card.accent }}>{card.goal}</p>
+                  </div>
+                  <span
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[10px] font-black text-white"
+                    style={{ background: card.accent }}
+                  >
+                    {card.rows.length}
+                  </span>
+                </div>
+                <ul className="flex flex-col px-5 py-2">
+                  {card.rows.map((row) => (
+                    <li
+                      key={row.latin}
+                      className="flex items-center justify-between gap-3 border-b border-dashed border-[#efe8e4] py-2 last:border-b-0"
+                    >
+                      <span className="min-w-0">
+                        <span className="block truncate text-sm font-bold" style={{ color: BRAND.charcoal }}>{row.ar}</span>
+                        <span className="block truncate font-mono text-[10px]" style={{ color: BRAND.muted }}>{row.latin}</span>
+                      </span>
+                      <span
+                        dir="ltr"
+                        className="shrink-0 rounded-md px-2 py-1 font-mono text-xs font-black tabular-nums"
+                        style={{ background: `${card.accent}14`, color: card.accent }}
+                      >
+                        {row.dose}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-6 text-center text-xs" style={{ color: BRAND.muted }}>
+            * القيم اليومية حسب معايير NIH · مكمّل غذائي لا يُشخّص ولا يعالج · استشيري طبيبك عند الحاجة.
+          </p>
+        </div>
+      </section>
+
+      {/* ═══ 7. الوعد — brand promise band (aesthetic) ═══ */}
+      <section
+        className="relative overflow-hidden py-16 sm:py-20"
+        style={{ background: 'linear-gradient(135deg, #FBF7F3 0%, #F5E6E0 55%, #F1E6E4 100%)' }}
+      >
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -start-20 -top-20 h-64 w-64 rounded-full opacity-40 blur-3xl"
+          style={{ background: '#c9937e55' }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -end-20 -bottom-24 h-72 w-72 rounded-full opacity-30 blur-3xl"
+          style={{ background: '#146b7033' }}
+        />
+
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mb-10 text-center">
+            <span
+              className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-1.5 text-[11px] font-bold backdrop-blur"
+              style={{ color: BRAND.rose, border: `1px solid ${BRAND.rose}30` }}
+            >
+              <span className="h-1.5 w-1.5 rounded-full" style={{ background: BRAND.rose }} aria-hidden />
+              وعد نبتة لابو
+            </span>
+            <h2 className="text-2xl font-bold sm:text-3xl" style={{ color: BRAND.charcoal }}>
+              ليش تثق فينا آلاف السعوديات
+            </h2>
+            <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
+              تجربة شراء مريحة من أول نقرة حتى باب البيت — بلا مخاطرة.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+            {[
+              { icon: '🚚', title: 'دفع عند الاستلام', desc: 'ما تدفعين إلا لمّا يوصلك الطلب لباب بيتك', accent: BRAND.rose },
+              { icon: '🛡️', title: 'مرخّص SFDA', desc: 'مكمّلات مطابقة للاشتراطات · حلال', accent: BRAND.teal },
+              { icon: '⚡', title: 'توصيل 2–4 أيام', desc: 'لكل مناطق المملكة مع إشعار قبل الوصول', accent: BRAND.cognac },
+              { icon: '💬', title: 'تأكيد بشري', desc: 'نتواصل معك هاتفياً قبل الشحن للتأكيد', accent: BRAND.mauve },
+            ].map((p) => (
+              <div
+                key={p.title}
+                className="group relative flex flex-col gap-2 overflow-hidden rounded-2xl border border-white/60 bg-white/70 p-5 text-start shadow-sm backdrop-blur transition-all hover:-translate-y-1 hover:shadow-lg"
+              >
+                <span
+                  aria-hidden
+                  className="absolute inset-x-0 top-0 h-1 origin-start scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
+                  style={{ background: p.accent }}
+                />
+                <span
+                  className="flex h-12 w-12 items-center justify-center rounded-2xl text-2xl"
+                  style={{ background: `${p.accent}14` }}
+                  aria-hidden
+                >
+                  {p.icon}
+                </span>
+                <h3 className="text-sm font-black sm:text-base" style={{ color: BRAND.charcoal }}>{p.title}</h3>
+                <p className="text-xs leading-relaxed sm:text-[13px]" style={{ color: BRAND.muted }}>{p.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ═══ 8. FAQ ═══ */}
       <section id="faq" className="scroll-mt-24 bg-white py-14 sm:py-16">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
@@ -496,7 +637,114 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 9. FINAL CTA ═══ */}
+      {/* ═══ 9. كيف الطلب — HOW IT WORKS (moved to last) ═══ */}
+      <section id="how" className="scroll-mt-24 py-14 sm:py-16" style={{ background: '#f1e6e4' }}>
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mb-8 text-start">
+            <h2 className="text-2xl font-bold sm:text-3xl" style={{ color: BRAND.charcoal }}>
+              كيف الطلب؟
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
+              تأكيد بشري، دفع عند الاستلام، وتوصيل لكل مناطق المملكة.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {STEPS.map((s, i) => (
+              <div
+                key={s.n}
+                className="rounded-2xl border border-[#d8c9c6] bg-white p-5 text-start"
+              >
+                <div
+                  className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl text-sm font-black text-white"
+                  style={{ background: 'linear-gradient(135deg, #b8485c 0%, #943c50 100%)' }}
+                >
+                  {i + 1}
+                </div>
+                <div className="mb-1 text-xl" aria-hidden>{s.icon}</div>
+                <h3 className="mb-1 text-base font-bold" style={{ color: BRAND.charcoal }}>{s.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: BRAND.muted }}>{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ 10. ثقة وأمان — trust & safety band ═══ */}
+      <section className="border-t border-[#E7DDD3] bg-white py-14 sm:py-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mb-9 text-center">
+            <span
+              className="mb-3 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold"
+              style={{ color: BRAND.teal, background: `${BRAND.teal}12`, border: `1px solid ${BRAND.teal}25` }}
+            >
+              <span aria-hidden>🔒</span>
+              ثقة وأمان
+            </span>
+            <h2 className="text-2xl font-bold sm:text-3xl" style={{ color: BRAND.charcoal }}>
+              اطلبي وأنتِ مطمئنة تماماً
+            </h2>
+            <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
+              ما نطلب بطاقة بنكية، وما تدفعين إلا لمّا يوصلك الطلب — وكل التفاصيل مكتوبة بوضوح.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+            {[
+              { icon: '🔒', title: 'بدون بطاقة بنكية', desc: 'ما نطلب أي معلومات دفع — فقط اسمك ورقم جوّالك', accent: BRAND.teal },
+              { icon: '✅', title: 'أصلي ومرخّص', desc: 'مكمّلات مطابقة لاشتراطات SFDA · حلال', accent: BRAND.sage },
+              { icon: '🔁', title: 'سياسات واضحة', desc: 'شروط الاسترجاع والشحن مكتوبة وصريحة', accent: BRAND.rose },
+              { icon: '✉️', title: 'دعم يرد عليك', desc: 'فريق حقيقي يجاوب استفساراتك بسرعة', accent: BRAND.cognac },
+            ].map((t) => (
+              <div
+                key={t.title}
+                className="flex flex-col gap-2 rounded-2xl border border-[#ebe4e0] bg-[#faf9f8] p-5 text-start"
+              >
+                <span
+                  className="flex h-11 w-11 items-center justify-center rounded-xl text-xl"
+                  style={{ background: `${t.accent}14` }}
+                  aria-hidden
+                >
+                  {t.icon}
+                </span>
+                <h3 className="text-sm font-black sm:text-base" style={{ color: BRAND.charcoal }}>{t.title}</h3>
+                <p className="text-xs leading-relaxed sm:text-[13px]" style={{ color: BRAND.muted }}>{t.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
+            {[
+              { href: '/returns-refunds', label: 'سياسة الاسترجاع' },
+              { href: '/shipping-policy', label: 'سياسة الشحن' },
+              { href: '/cod-policy', label: 'الدفع عند الاستلام' },
+              { href: '/privacy-policy', label: 'الخصوصية' },
+            ].map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="rounded-full border border-[#d8c9c6] bg-white px-4 py-2 text-xs font-semibold transition-colors hover:border-[#146b70] hover:text-[#146b70]"
+                style={{ color: BRAND.muted }}
+              >
+                {l.label}
+              </Link>
+            ))}
+          </div>
+
+          <p className="mt-6 text-center text-sm" style={{ color: BRAND.muted }}>
+            دعم العملاء:{' '}
+            <a
+              href={`mailto:${BRAND_CONTACT_EMAIL}`}
+              className="font-bold underline decoration-dotted underline-offset-4"
+              style={{ color: BRAND.teal }}
+            >
+              {BRAND_CONTACT_EMAIL}
+            </a>
+          </p>
+        </div>
+      </section>
+
+      {/* ═══ 11. FINAL CTA ═══ */}
       <section className="relative overflow-hidden py-16 sm:py-20">
         <div
           className="absolute inset-0"
