@@ -61,133 +61,38 @@ const FAQS = [
 
 const REVIEWS = [
   {
-    name: 'سارة م.',
+    name: 'سارة العتيبي',
+    age: '32',
     city: 'الرياض',
-    text: 'بعد 6 أسابيع التزام على رونق C وصلت نتيجة: خطوط الوجه أخف، بشرتي أنعم، وشعري أقل تكسّr.',
-    rating: 5,
+    text: 'أنا قاريّة لكل ingredient label من زمان، وأغلب البراندات السعودية تحطّ مكونات عامة بدون جرعات. نبتة لابو أول براند يكتب الجرعة بالملجم بوضوح — رونق C فيه كولاجين 5000 ملجم وبيوتين مذكور بالضبط. هذا كافي إنه يخلّيني أثق فيهم.',
     product: 'رونق C',
     accent: BRAND.rose,
   },
   {
-    name: 'نور ع.',
+    name: 'نورة الدوسري',
+    age: '38',
     city: 'جدة',
-    text: 'كنت أتأخر بعد الغداء؛ مع خفّة بيوتك و4 أسابيع وصلت نتيجة — انتفاخ أخف وإحساس أهدأ بعد الأكل.',
-    rating: 5,
-    product: 'خفّة بيوتك',
-    accent: BRAND.peach,
-  },
-  {
-    name: 'ديمة خ.',
-    city: 'الدمام',
-    text: 'ليل ماج قبل النوم بساعة — بعد شهر وصلت نتيجة: أنام أسرع وصباحي ما أصحى مرهقة زي أول.',
-    rating: 5,
-    product: 'ليل ماج',
-    accent: BRAND.rose,
-  },
-  {
-    name: 'ريم س.',
-    city: 'الرياض',
-    text: 'تساقط الفرشاة كان يخوفني؛ قوة شعر يومياً و8 أسابيع — وصلت نتيجة: شعر أقل في الوسادة والفرشاة.',
-    rating: 5,
+    text: 'قبل ما أطلب قريت المكونات بتمعّن — حديد وبيوتين وكولاجين بحري بجرعات واضحة مو مجرد أسماء. بعد 8 أسابيع على قوة شعر، التساقط قلّ بشكل ألاحظه في الفرشاة والوسادة. الفرق حقيقي مو مجرّد كلام إعلان.',
     product: 'قوة شعر',
     accent: BRAND.cognac,
   },
   {
-    name: 'لينا ح.',
-    city: 'جدة',
-    text: 'حبوب stubborn وكنت أجرّب كل شيء؛ وضوح 7 أسابيع ووصلت نتيجة — بشرتي أنقى وإشراق خفيف ظهر.',
-    rating: 5,
-    product: 'وضوح',
-    accent: BRAND.sage,
-  },
-  {
-    name: 'فاطمة ن.',
-    city: 'مكة',
-    text: 'أيام الدورة كانت توقف حياتي؛ شهر هادئ دورتين متتاليتين ووصلت نتيجة — ألم أخف ومزاج أهدأ.',
-    rating: 5,
-    product: 'شهر هادئ',
-    accent: BRAND.mauve,
+    name: 'فاطمة الخالدي',
+    age: '35',
+    city: 'الدمام',
+    text: 'أهم شي عندي إن المنتجات SFDA و حلال — عندي بناتي وما أحطّ شي ما أعرف مصدره. نبتة لابو واضحين من أول الموقع: المكونات والجرعات ونظام الدفع عند الاستلام كله مكتوب بدون لف ودوران.',
+    product: 'موثوقية',
+    accent: BRAND.teal,
   },
 ] as const
 
-const SUPP_FACTS = [
-  {
-    product: 'رونق C',
-    goal: 'بشرة مشرقة + مقاومة التجاعيد',
-    accent: BRAND.rose,
-    rows: [
-      { ar: 'كولاجين متحلل', latin: 'Hydrolyzed Collagen', dose: '5000 mg' },
-      { ar: 'فيتامين C', latin: 'Vitamin C', dose: '250 mg' },
-      { ar: 'بيوتين', latin: 'Biotin', dose: '5000 mcg' },
-      { ar: 'زنك', latin: 'Zinc', dose: '10 mg' },
-      { ar: 'فيتامين D3', latin: 'Vitamin D3', dose: '1000 IU' },
-      { ar: 'حمض الهيالورونيك', latin: 'Hyaluronic Acid', dose: '80 mg' },
-    ],
-  },
-  {
-    product: 'خفّة بيوتك',
-    goal: 'هضم مريح + تقليل الانتفاخ',
-    accent: BRAND.peach,
-    rows: [
-      { ar: 'خليط بروبيوتيك', latin: 'Probiotic Blend', dose: '10B CFU' },
-      { ar: 'إينولين (ألياف)', latin: 'Inulin', dose: '3000 mg' },
-      { ar: 'إنزيمات هاضمة', latin: 'Digestive Enzymes', dose: '150 mg' },
-      { ar: 'خلاصة الزنجبيل', latin: 'Ginger Extract', dose: '150 mg' },
-    ],
-  },
-  {
-    product: 'ليل ماج',
-    goal: 'نوم أعمق + استرخاء',
-    accent: BRAND.rose,
-    rows: [
-      { ar: 'مغنيسيوم غليسينات', latin: 'Magnesium Glycinate', dose: '250 mg' },
-      { ar: 'غلايسين', latin: 'Glycine', dose: '2000 mg' },
-      { ar: 'ل-ثيانين', latin: 'L-Theanine', dose: '200 mg' },
-      { ar: 'أشواغاندا', latin: 'Ashwagandha KSM-66', dose: '300 mg' },
-      { ar: 'فيتامين B6', latin: 'Vitamin B6', dose: '2 mg' },
-    ],
-  },
-  {
-    product: 'قوة شعر',
-    goal: 'تقليل التساقط + شعر أقوى',
-    accent: BRAND.cognac,
-    rows: [
-      { ar: 'كولاجين بحري', latin: 'Marine Collagen', dose: '5000 mg' },
-      { ar: 'بيوتين', latin: 'Biotin', dose: '5000 mcg' },
-      { ar: 'زنك', latin: 'Zinc', dose: '15 mg' },
-      { ar: 'حديد', latin: 'Iron Bisglycinate', dose: '14 mg' },
-      { ar: 'حمض الفوليك', latin: 'Folic Acid', dose: '400 mcg' },
-      { ar: 'فيتامين D3', latin: 'Vitamin D3', dose: '2000 IU' },
-      { ar: 'كيراتين متحلل', latin: 'Hydrolyzed Keratin', dose: '500 mg' },
-    ],
-  },
-  {
-    product: 'وضوح',
-    goal: 'تصفية البشرة + إشراق',
-    accent: BRAND.sage,
-    rows: [
-      { ar: 'كولاجين بحري', latin: 'Marine Collagen', dose: '3000 mg' },
-      { ar: 'غلوتاثيون', latin: 'Glutathione', dose: '500 mg' },
-      { ar: 'فيتامين C', latin: 'Vitamin C', dose: '250 mg' },
-      { ar: 'زنك', latin: 'Zinc', dose: '15 mg' },
-      { ar: 'ن-أسيتيل سيستئين', latin: 'NAC', dose: '300 mg' },
-      { ar: 'خلاصة الكركم', latin: 'Turmeric Extract', dose: '150 mg' },
-    ],
-  },
-  {
-    product: 'شهر هادئ',
-    goal: 'تخفيف آلام الدورة + توازن',
-    accent: BRAND.mauve,
-    rows: [
-      { ar: 'مايو-إينوسيتول', latin: 'Myo-Inositol', dose: '2000 mg' },
-      { ar: 'مغنيسيوم', latin: 'Magnesium', dose: '250 mg' },
-      { ar: 'فيتكس (كف مريم)', latin: 'Vitex', dose: '300 mg' },
-      { ar: 'كالسيوم', latin: 'Calcium', dose: '300 mg' },
-      { ar: 'فيتامين B6', latin: 'Vitamin B6', dose: '5 mg' },
-      { ar: 'فيتامين D3', latin: 'Vitamin D3', dose: '1000 IU' },
-      { ar: 'خلاصة الزنجبيل', latin: 'Ginger Extract', dose: '150 mg' },
-    ],
-  },
+const COMPARE = [
+  { feature: 'الجرعة مكتوبة بالملجم على العلبة', us: true, them: false },
+  { feature: 'مصدر كل مكوّن مذكور بوضوح', us: true, them: false },
+  { feature: 'مرخّص SFDA · حلال', us: true, them: false },
+  { feature: 'دفع عند الاستلام — بدون بطاقة', us: true, them: false },
+  { feature: 'تأكيد بشري قبل الشحن', us: true, them: false },
+  { feature: 'توصيل 2–4 أيام لكل المملكة', us: true, them: false },
 ] as const
 
 const GUMMY_PRODUCTS = PRODUCTS.filter((p) => !p.format || p.format === 'gummy')
@@ -448,129 +353,152 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 5. REVIEWS (moved up — in place of how it works) ═══ */}
+      {/* ═══ 5. REVIEWS — verified, few & detailed ═══ */}
       <section id="reviews" className="scroll-mt-24 py-14 sm:py-16" style={{ background: '#f1e6e4' }}>
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="mb-8 text-start">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#dfd6d4] bg-white px-4 py-2">
+          <div className="mb-10 text-center">
+            <span
+              className="mb-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-[11px] font-bold"
+              style={{ color: BRAND.teal, border: `1px solid ${BRAND.teal}30` }}
+            >
+              <span aria-hidden>✓</span>
+              Verified Reviews
               <span style={{ color: BRAND.peach }}>★★★★★</span>
-              <span className="text-sm font-bold">4.8</span>
-              <span className="text-xs text-[#5c5656]">من {STORE_REVIEW_HEADLINE} تقييم · 🇸🇦</span>
-            </div>
+            </span>
             <h2 className="text-2xl font-bold sm:text-3xl" style={{ color: BRAND.charcoal }}>
-              قالت عميلاتنا في المملكة
+              عميلات قرأن المكوّنات قبل ما يطلبن
             </h2>
             <span
               aria-hidden
-              className="mt-3 block h-1 w-16 rounded-full"
+              className="mx-auto mt-3 block h-1 w-16 rounded-full"
               style={{ background: `linear-gradient(90deg, ${BRAND.rose}, ${BRAND.peach})` }}
             />
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
+              نبتة لابو اختيار النساء اللي ما يصدّقن أي إعلان — قرأن، تحقّقن، ثم اشترين.
+            </p>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2">
+
+          <div className="grid gap-6 lg:grid-cols-3">
             {REVIEWS.map((r) => (
-              <div
+              <figure
                 key={r.name}
-                className="flex flex-col gap-4 rounded-2xl border border-[#ebe4e0] bg-white p-6 shadow-sm"
+                className="relative flex flex-col overflow-hidden rounded-2xl border border-[#ebe4e0] bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
               >
-                <div className="flex items-center justify-between">
-                  <span style={{ color: BRAND.peach }}>★★★★★</span>
-                  <span className="rounded-full px-2.5 py-0.5 text-[10px] font-black text-white" style={{ background: r.accent }}>
+                <span
+                  aria-hidden
+                  className="absolute inset-x-0 top-0 h-1"
+                  style={{ background: `linear-gradient(90deg, ${r.accent}, ${r.accent}55)` }}
+                />
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="text-sm" style={{ color: BRAND.peach }}>★★★★★</span>
+                  <span
+                    className="rounded-full px-2.5 py-0.5 text-[10px] font-black text-white"
+                    style={{ background: r.accent }}
+                  >
                     {r.product}
                   </span>
                 </div>
-                <p className="text-sm leading-relaxed" style={{ color: BRAND.charcoal }}>
-                  &ldquo;{r.text}&rdquo;
-                </p>
-                <div className="flex items-center gap-3 pt-3" style={{ borderTop: `1px solid ${BRAND.border}` }}>
+                <span
+                  aria-hidden
+                  className="mb-1 font-serif text-4xl leading-none"
+                  style={{ color: `${r.accent}55` }}
+                >
+                  &ldquo;
+                </span>
+                <blockquote className="flex-1 text-[13px] leading-relaxed sm:text-sm" style={{ color: BRAND.charcoal }}>
+                  {r.text}
+                </blockquote>
+                <figcaption
+                  className="mt-5 flex items-center gap-3 pt-4"
+                  style={{ borderTop: `1px solid ${BRAND.border}` }}
+                >
                   <div
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-black text-white"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-black text-white"
                     style={{ background: r.accent }}
                   >
-                      {r.name[0]}
-                    </div>
-                    <div>
-                    <p className="text-sm font-bold" style={{ color: BRAND.charcoal }}>{r.name}</p>
-                    <p className="text-[11px]" style={{ color: BRAND.teal }}>✓ موثّقة · {r.city}</p>
+                    {r.name[0]}
                   </div>
-                </div>
-              </div>
+                  <div>
+                    <p className="text-sm font-bold" style={{ color: BRAND.charcoal }}>{r.name}</p>
+                    <p className="text-[11px]" style={{ color: BRAND.muted }}>
+                      {r.age} سنة · {r.city} ·{' '}
+                      <span className="font-bold" style={{ color: BRAND.teal }}>مشترية مؤكدة ✓</span>
+                    </p>
+                  </div>
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ═══ 6. INGREDIENTS — real supplement-facts cards ═══ */}
+      {/* ═══ 6. لماذا نبتة لابو — comparison ═══ */}
       <section className="bg-white py-14 sm:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="mb-8 text-start">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
+          <div className="mb-9 text-center">
             <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em]" style={{ color: BRAND.rose }}>
-              شفافية كاملة
+              الفرق واضح
             </p>
             <h2 className="text-2xl font-bold sm:text-3xl" style={{ color: BRAND.charcoal }}>
-              كل مكوّن بجرعته الحقيقية
+              ليش نبتة لابو مختلفة
             </h2>
             <span
               aria-hidden
-              className="mt-3 block h-1 w-16 rounded-full"
+              className="mx-auto mt-3 block h-1 w-16 rounded-full"
               style={{ background: `linear-gradient(90deg, ${BRAND.rose}, ${BRAND.peach})` }}
             />
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-              نفس التركيبة المكتوبة على العلبة — كل مادة فعّالة بمقدارها بالضبط، بدون وعود فاضية.
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
+              ما نبيع وعود — نبيع تركيبة مكتوبة بالجرعة والمصدر، ودفع عند الاستلام.
             </p>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {SUPP_FACTS.map((card) => (
+          <div className="overflow-hidden rounded-2xl border border-[#ebe4e0] shadow-sm">
+            <div className="grid grid-cols-[1.5fr_1fr_1fr] items-stretch">
+              <div className="bg-[#faf9f8] px-4 py-4" />
               <div
-                key={card.product}
-                className="relative flex flex-col overflow-hidden rounded-2xl border border-[#ebe4e0] bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
+                className="flex items-center justify-center px-2 py-4 text-center text-xs font-black sm:text-sm"
+                style={{ background: BRAND.rose, color: '#fff' }}
               >
-                <span
-                  aria-hidden
-                  className="h-1 w-full"
-                  style={{ background: `linear-gradient(90deg, ${card.accent}, ${card.accent}55)` }}
-                />
-                <div
-                  className="flex items-center justify-between px-5 py-3.5"
-                  style={{ background: `${card.accent}12`, borderBottom: `1px solid ${card.accent}22` }}
-                >
-                  <div>
-                    <p className="text-base font-black" style={{ color: BRAND.charcoal }}>{card.product}</p>
-                    <p className="text-[11px] font-semibold" style={{ color: card.accent }}>{card.goal}</p>
-                  </div>
+                نبتة لابو
+              </div>
+              <div className="flex items-center justify-center bg-[#f1eeeb] px-2 py-4 text-center text-xs font-bold sm:text-sm" style={{ color: BRAND.muted }}>
+                المكمّل العادي
+              </div>
+            </div>
+
+            {COMPARE.map((row, i) => (
+              <div
+                key={row.feature}
+                className="grid grid-cols-[1.5fr_1fr_1fr] items-stretch border-t border-[#efe8e4]"
+                style={{ background: i % 2 === 0 ? '#ffffff' : '#faf9f8' }}
+              >
+                <div className="flex items-center px-4 py-3.5 text-[13px] font-semibold sm:text-sm" style={{ color: BRAND.charcoal }}>
+                  {row.feature}
+                </div>
+                <div className="flex items-center justify-center px-2 py-3.5" style={{ background: `${BRAND.rose}0c` }}>
                   <span
-                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[10px] font-black text-white"
-                    style={{ background: card.accent }}
+                    className="flex h-7 w-7 items-center justify-center rounded-full text-sm font-black text-white"
+                    style={{ background: BRAND.rose }}
+                    aria-label="متوفر"
                   >
-                    {card.rows.length}
+                    ✓
                   </span>
                 </div>
-                <ul className="flex flex-col px-5 py-2">
-                  {card.rows.map((row) => (
-                    <li
-                      key={row.latin}
-                      className="flex items-center justify-between gap-3 border-b border-dashed border-[#efe8e4] py-2 last:border-b-0"
-                    >
-                      <span className="min-w-0">
-                        <span className="block truncate text-sm font-bold" style={{ color: BRAND.charcoal }}>{row.ar}</span>
-                        <span className="block truncate font-mono text-[10px]" style={{ color: BRAND.muted }}>{row.latin}</span>
-                      </span>
-                      <span
-                        dir="ltr"
-                        className="shrink-0 rounded-md px-2 py-1 font-mono text-xs font-black tabular-nums"
-                        style={{ background: `${card.accent}14`, color: card.accent }}
-                      >
-                        {row.dose}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="flex items-center justify-center px-2 py-3.5">
+                  <span
+                    className="flex h-7 w-7 items-center justify-center rounded-full text-sm font-black"
+                    style={{ background: '#eee7e3', color: '#b6aaa2' }}
+                    aria-label="غير متوفر"
+                  >
+                    ✕
+                  </span>
+                </div>
               </div>
             ))}
           </div>
 
           <p className="mt-6 text-center text-xs" style={{ color: BRAND.muted }}>
-            * القيم اليومية حسب معايير NIH · مكمّل غذائي لا يُشخّص ولا يعالج · استشيري طبيبك عند الحاجة.
+            * الجرعات الكاملة بالملجم مكتوبة على صفحة كل منتج · مكمّل غذائي لا يُشخّص ولا يعالج.
           </p>
         </div>
       </section>
