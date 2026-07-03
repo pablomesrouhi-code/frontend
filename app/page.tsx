@@ -36,6 +36,12 @@ const STEPS = [
   { n: '04', icon: '📦', title: 'لمّا يوصلك الطلب', desc: 'نوصل لمناطق المملكة، نخبرك قبل التوصيل، وتدفعين كاش عند الاستلام.' },
 ] as const
 
+const JOURNEY = [
+  { n: 1, range: 'اليوم 1–7', title: 'الامتصاص', desc: 'المكوّنات تبدأ العمل على المستوى الخلوي', icon: '🌱', accent: BRAND.rose },
+  { n: 2, range: 'اليوم 8–21', title: 'الإصلاح الداخلي', desc: 'ترميم وتجديد من الداخل للخارج', icon: '✨', accent: BRAND.teal },
+  { n: 3, range: 'اليوم 22–30', title: 'النتائج المرئية', desc: 'فرق واضح تلاحظينه أنتِ ومن حولك', icon: '💎', accent: BRAND.cognac },
+] as const
+
 const GOALS = [
   { slug: 'rawnaq-c-collagen-gummies', icon: '✨', color: BRAND.rose, bg: '#f9efed', title: 'مقاومة التجاعيد', product: 'رونق C', desc: 'بيوتين + زنك + D3 — بشرة ثم شعر وأظافر' },
   { slug: 'khiffabiotic-probiotic-gummies', icon: '🍃', color: BRAND.peach, bg: '#f6eee9', title: 'خفّة بعد الأكل', product: 'خفّة بيوتك', desc: 'بروبيوتيك + ألياف' },
@@ -484,13 +490,13 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-8 text-start">
             <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em]" style={{ color: BRAND.rose }}>
-              مكوّنات حقيقية · جرعات واضحة
+              شفافية كاملة
             </p>
             <h2 className="text-2xl font-bold sm:text-3xl" style={{ color: BRAND.charcoal }}>
-              كل مكوّن وجرعته — بلا مبالغة
+              كل مكوّن بجرعته الحقيقية
             </h2>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-              نكتب لك التركيبة كما هي على العلبة — كل مادة فعّالة بمقدارها بالضبط.
+              نفس التركيبة المكتوبة على العلبة — كل مادة فعّالة بمقدارها بالضبط، بدون وعود فاضية.
             </p>
           </div>
 
@@ -498,8 +504,13 @@ export default function HomePage() {
             {SUPP_FACTS.map((card) => (
               <div
                 key={card.product}
-                className="flex flex-col overflow-hidden rounded-2xl border border-[#ebe4e0] bg-white shadow-sm"
+                className="relative flex flex-col overflow-hidden rounded-2xl border border-[#ebe4e0] bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
               >
+                <span
+                  aria-hidden
+                  className="h-1 w-full"
+                  style={{ background: `linear-gradient(90deg, ${card.accent}, ${card.accent}55)` }}
+                />
                 <div
                   className="flex items-center justify-between px-5 py-3.5"
                   style={{ background: `${card.accent}12`, borderBottom: `1px solid ${card.accent}22` }}
@@ -670,81 +681,120 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 10. ثقة وأمان — trust & safety band ═══ */}
-      <section className="border-t border-[#E7DDD3] bg-white py-14 sm:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="mb-9 text-center">
+      {/* ═══ 10. رحلتك خلال 30 يوم — journey timeline ═══ */}
+      <section
+        className="relative overflow-hidden py-16 sm:py-20"
+        style={{ background: 'linear-gradient(160deg, #FBF7F3 0%, #F1E6E4 100%)' }}
+      >
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mb-12 text-center">
             <span
-              className="mb-3 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold"
-              style={{ color: BRAND.teal, background: `${BRAND.teal}12`, border: `1px solid ${BRAND.teal}25` }}
+              className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-1.5 text-[11px] font-bold backdrop-blur"
+              style={{ color: BRAND.rose, border: `1px solid ${BRAND.rose}30` }}
             >
-              <span aria-hidden>🔒</span>
-              ثقة وأمان
+              <span aria-hidden>🗓️</span>
+              رحلتك مع نبتة لابو
             </span>
             <h2 className="text-2xl font-bold sm:text-3xl" style={{ color: BRAND.charcoal }}>
-              اطلبي وأنتِ مطمئنة تماماً
+              رحلتك خلال 30 يوم
             </h2>
             <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-              ما نطلب بطاقة بنكية، وما تدفعين إلا لمّا يوصلك الطلب — وكل التفاصيل مكتوبة بوضوح.
+              النتائج تتراكم مع الالتزام — خطوة بخطوة من أول أسبوع.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
-            {[
-              { icon: '🔒', title: 'بدون بطاقة بنكية', desc: 'ما نطلب أي معلومات دفع — فقط اسمك ورقم جوّالك', accent: BRAND.teal },
-              { icon: '✅', title: 'أصلي ومرخّص', desc: 'مكمّلات مطابقة لاشتراطات SFDA · حلال', accent: BRAND.sage },
-              { icon: '🔁', title: 'سياسات واضحة', desc: 'شروط الاسترجاع والشحن مكتوبة وصريحة', accent: BRAND.rose },
-              { icon: '✉️', title: 'دعم يرد عليك', desc: 'فريق حقيقي يجاوب استفساراتك بسرعة', accent: BRAND.cognac },
-            ].map((t) => (
+          <div className="relative grid gap-6 md:grid-cols-3 md:gap-8">
+            <span
+              aria-hidden
+              className="pointer-events-none absolute top-[3.25rem] hidden h-0.5 md:block"
+              style={{
+                insetInlineStart: '16%',
+                insetInlineEnd: '16%',
+                background: `linear-gradient(90deg, ${BRAND.rose}, ${BRAND.teal}, ${BRAND.cognac})`,
+                opacity: 0.35,
+              }}
+            />
+            {JOURNEY.map((j) => (
               <div
-                key={t.title}
-                className="flex flex-col gap-2 rounded-2xl border border-[#ebe4e0] bg-[#faf9f8] p-5 text-start"
+                key={j.n}
+                className="relative z-10 flex flex-col items-center rounded-2xl border border-[#ebe4e0] bg-white p-6 text-center shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
               >
-                <span
-                  className="flex h-11 w-11 items-center justify-center rounded-xl text-xl"
-                  style={{ background: `${t.accent}14` }}
-                  aria-hidden
+                <div
+                  className="mb-4 flex h-14 w-14 items-center justify-center rounded-full text-lg font-black text-white"
+                  style={{ background: j.accent, boxShadow: `0 10px 24px -8px ${j.accent}88` }}
                 >
-                  {t.icon}
+                  {j.n}
+                </div>
+                <span
+                  className="mb-3 inline-flex rounded-full px-3 py-1 text-[11px] font-bold"
+                  style={{ background: `${j.accent}14`, color: j.accent }}
+                >
+                  {j.range}
                 </span>
-                <h3 className="text-sm font-black sm:text-base" style={{ color: BRAND.charcoal }}>{t.title}</h3>
-                <p className="text-xs leading-relaxed sm:text-[13px]" style={{ color: BRAND.muted }}>{t.desc}</p>
+                <div className="mb-1 text-2xl" aria-hidden>{j.icon}</div>
+                <h3 className="mb-1 text-lg font-black" style={{ color: BRAND.charcoal }}>{j.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: BRAND.muted }}>{j.desc}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
-            {[
-              { href: '/returns-refunds', label: 'سياسة الاسترجاع' },
-              { href: '/shipping-policy', label: 'سياسة الشحن' },
-              { href: '/cod-policy', label: 'الدفع عند الاستلام' },
-              { href: '/privacy-policy', label: 'الخصوصية' },
-            ].map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className="rounded-full border border-[#d8c9c6] bg-white px-4 py-2 text-xs font-semibold transition-colors hover:border-[#146b70] hover:text-[#146b70]"
-                style={{ color: BRAND.muted }}
-              >
-                {l.label}
-              </Link>
-            ))}
-          </div>
-
-          <p className="mt-6 text-center text-sm" style={{ color: BRAND.muted }}>
-            دعم العملاء:{' '}
-            <a
-              href={`mailto:${BRAND_CONTACT_EMAIL}`}
-              className="font-bold underline decoration-dotted underline-offset-4"
-              style={{ color: BRAND.teal }}
-            >
-              {BRAND_CONTACT_EMAIL}
-            </a>
+          <p className="mx-auto mt-8 max-w-xl text-center text-xs" style={{ color: BRAND.muted }}>
+            * النتائج تختلف من شخص لآخر — الالتزام على الروتين هو الأساس.
           </p>
         </div>
       </section>
 
-      {/* ═══ 11. FINAL CTA ═══ */}
+      {/* ═══ 11. ضمان راحتك — compact trust ribbon ═══ */}
+      <section className="border-t border-[#E7DDD3] bg-[#faf9f8] py-10">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+          <div className="rounded-3xl border border-[#ebe4e0] bg-white p-6 shadow-sm sm:p-8">
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 text-center">
+              {[
+                { icon: '🔒', label: 'بدون بطاقة بنكية' },
+                { icon: '💵', label: 'دفع عند الاستلام' },
+                { icon: '🔬', label: 'SFDA · حلال' },
+                { icon: '⚡', label: 'توصيل 2–4 أيام' },
+                { icon: '💬', label: 'تأكيد بشري' },
+              ].map((t) => (
+                <span
+                  key={t.label}
+                  className="inline-flex items-center gap-2 text-sm font-bold"
+                  style={{ color: BRAND.charcoal }}
+                >
+                  <span aria-hidden>{t.icon}</span>
+                  {t.label}
+                </span>
+              ))}
+            </div>
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5 border-t border-[#efe8e4] pt-5">
+              {[
+                { href: '/returns-refunds', label: 'سياسة الاسترجاع' },
+                { href: '/shipping-policy', label: 'سياسة الشحن' },
+                { href: '/cod-policy', label: 'الدفع عند الاستلام' },
+                { href: '/privacy-policy', label: 'الخصوصية' },
+              ].map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className="rounded-full border border-[#d8c9c6] bg-white px-4 py-1.5 text-xs font-semibold transition-colors hover:border-[#146b70] hover:text-[#146b70]"
+                  style={{ color: BRAND.muted }}
+                >
+                  {l.label}
+                </Link>
+              ))}
+              <a
+                href={`mailto:${BRAND_CONTACT_EMAIL}`}
+                className="rounded-full px-4 py-1.5 text-xs font-bold underline decoration-dotted underline-offset-4"
+                style={{ color: BRAND.teal }}
+              >
+                {BRAND_CONTACT_EMAIL}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ 12. FINAL CTA ═══ */}
       <section className="relative overflow-hidden py-16 sm:py-20">
         <div
           className="absolute inset-0"
