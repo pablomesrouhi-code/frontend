@@ -143,14 +143,18 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
               <p className="mb-4 text-sm leading-relaxed text-charcoal sm:text-base">{product.heroSubAr}</p>
 
-              <div className="mb-3 flex flex-wrap items-center justify-end gap-x-2 gap-y-1 text-sm font-bold text-charcoal">
-                <StarRating rating={product.rating} count={product.reviewCount} size="md" accentColor={accent} />
-                <span className="text-muted">·</span>
-                <span>
-                  من {startPrice} / {unitLabel}
+              <div className="mb-4 flex flex-wrap items-center justify-end gap-2.5">
+                <span
+                  className="inline-flex items-center gap-2 rounded-full border bg-white px-3.5 py-1.5 shadow-sm"
+                  style={{ borderColor: `${accent}33` }}
+                >
+                  <StarRating rating={product.rating} size="md" accentColor={accent} />
+                  <span className="text-[11px] font-semibold text-muted">
+                    · {product.reviewCount.toLocaleString('en-US')} تقييم موثّق
+                  </span>
                 </span>
-                <span className="w-full text-xs font-semibold text-muted sm:w-auto">
-                  ({product.reviewCount.toLocaleString('en-US')} تقييم · مؤكدة)
+                <span className="text-sm font-bold text-charcoal">
+                  من {startPrice} / {unitLabel}
                 </span>
               </div>
 
@@ -274,7 +278,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <div className="rounded-3xl border p-5 shadow-sm ring-1 ring-black/[0.03] sm:p-6" style={{ borderColor: `${accent}44`, background: `${accent}0a` }}>
                 <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: accent }}>{painH.feelTitleAr ?? 'تعرفين هذا الإحساس؟'}</p>
                 <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">{painH.whyTitleAr ?? 'ليش يختارونه أصلاً؟'}</h3>
-                <p className="mt-3 text-base leading-relaxed text-charcoal sm:text-lg">{product.painCopy}</p>
+                <p className="mt-3 text-[15px] leading-loose text-charcoal">{product.painCopy}</p>
               </div>
               <div className="rounded-3xl border p-5 shadow-sm sm:p-6" style={{ borderColor: `${accent}44`, background: `${accent}08` }}>
                 <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: accent }}>بأسلوب واقعي</p>
@@ -288,7 +292,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                       >
                         ✓
                       </span>
-                      <span className="min-w-0 flex-1 text-base leading-relaxed text-charcoal sm:text-lg">{b}</span>
+                      <span className="min-w-0 flex-1 text-[15px] leading-relaxed text-charcoal">{b}</span>
                     </li>
                   ))}
                 </ul>
@@ -360,7 +364,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <div className="text-start min-w-0 max-w-full break-words">
                 <p className="text-xs font-bold tracking-[0.18em] text-[#c9937e] mb-2 uppercase">لمسة إضافية</p>
                 <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-3 sm:mb-4 break-words">{product.extraStory.titleAr}</h2>
-                <p className="text-charcoal leading-relaxed text-base sm:text-lg break-words">{product.extraStory.bodyAr}</p>
+                <p className="text-charcoal leading-loose text-[15px] break-words max-w-prose">{product.extraStory.bodyAr}</p>
               </div>
               <div className="w-full max-w-[min(100%,440px)] md:max-w-full mx-auto md:mx-0 min-w-0">
                 <PdpSquareImage
@@ -408,7 +412,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   <p className="text-xs font-bold tracking-[0.18em] text-[#c9937e] mb-2 uppercase">{product.persuasionBlock.eyebrowAr}</p>
                 )}
                 <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-4 break-words">{product.persuasionBlock.titleAr}</h2>
-                <p className="text-charcoal leading-relaxed text-[15px] sm:text-lg mb-5 break-words">{product.persuasionBlock.bodyAr}</p>
+                <p className="text-charcoal leading-loose text-[15px] mb-5 break-words max-w-prose">{product.persuasionBlock.bodyAr}</p>
                 {product.persuasionBlock.bullets && product.persuasionBlock.bullets.length > 0 && (
                   <ul className="flex flex-col gap-3 text-start">
                     {product.persuasionBlock.bullets.map((line) => (
@@ -516,7 +520,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <h2 className="break-words text-xl font-black text-charcoal sm:text-2xl">
               {routineH.titleAr ?? 'وش تسوين بالضبط؟ (روتين بسيط)'}
             </h2>
-            <p className="mt-4 break-words text-[15px] leading-relaxed text-charcoal sm:text-lg">{product.howToUse}</p>
+            <p className="mx-auto mt-4 max-w-xl break-words text-[15px] leading-loose text-charcoal">{product.howToUse}</p>
             <p className="mt-4 rounded-2xl bg-white/60 px-4 py-3 text-sm leading-relaxed text-charcoal ring-1 ring-black/[0.04]">
               <strong className="text-charcoal">{complianceNote.lead}</strong> {complianceNote.rest}{' '}
               <strong className="text-charcoal">يختلف</strong> حسب الشخص والنوم والأكل والالتزام.{' '}
@@ -561,7 +565,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <p className="text-xs font-bold tracking-[0.18em] text-[#c9937e] mb-2 uppercase">{product.closingPersuasion.eyebrowAr}</p>
               )}
               <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-4 break-words">{product.closingPersuasion.titleAr}</h2>
-              <p className="text-charcoal leading-relaxed text-[15px] sm:text-lg mb-5 break-words">{product.closingPersuasion.bodyAr}</p>
+              <p className="text-charcoal leading-loose text-[15px] mb-5 break-words max-w-prose">{product.closingPersuasion.bodyAr}</p>
               {product.closingPersuasion.bullets && product.closingPersuasion.bullets.length > 0 && (
                 <ul className="flex flex-col gap-3 text-start">
                   {product.closingPersuasion.bullets.map((line) => (
@@ -587,12 +591,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <section className="border-t border-border bg-white py-10 sm:py-12 md:py-14">
           <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
             <p className="mb-2 text-center text-xs font-black uppercase tracking-[0.2em]" style={{ color: accent }}>كمّلي السلة بحكمة</p>
-            <h2 className="text-2xl font-black text-charcoal mb-3 text-center break-words px-1 sm:text-3xl">
-              غالبًا عميلاتنا يكمّلوا روتين كامل قبل ما تصير العروض أغلى
+            <h2 className="mx-auto mb-3 max-w-2xl text-center text-xl font-black text-charcoal break-words px-1 sm:text-2xl">
+              كملي روتينك قبل ما تغلى العروض
             </h2>
-            <p className="mx-auto mb-10 max-w-2xl text-center text-[15px] leading-relaxed text-charcoal break-words px-1 sm:text-lg">
-              إعلان واحد ما يحل اليوم كامل؛ كل منتج له دوره (صبح، بعد الأكل، مساء). اختاري اللي يطابقكم — مو لازم تاخذي كلشي مرّة وحدة، بس الوضوح قبل الطلب{' '}
-              <strong className="font-bold text-charcoal">يوفّر وقت وردّات أكثر تنظيمًا</strong>.
+            <p className="mx-auto mb-10 max-w-xl text-center text-[15px] leading-loose text-charcoal break-words px-1">
+              كل منتج له دوره: صبح · بعد الأكل · مساء. اختاري اللي يناسبك —{' '}
+              <strong className="font-bold text-charcoal">الوضوح قبل الطلب يوفّر وقت.</strong>
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
               {crossSellProducts.map((p) => (

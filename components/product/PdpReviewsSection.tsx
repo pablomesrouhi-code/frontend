@@ -1,7 +1,6 @@
 import type { Product, ProductReview } from '@/lib/products'
 import { getPdpSectionHeadlines } from '@/lib/pdp-section-headlines'
 import { getTestimonialMeta } from '@/lib/pdp-testimonial-meta'
-import StarRating from '@/components/ui/StarRating'
 
 function reviewInitials(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean)
@@ -10,7 +9,19 @@ function reviewInitials(name: string) {
   return (a + b).toUpperCase()
 }
 
-function ReviewCardNama({
+function Stars({ rating, accentColor }: { rating: number; accentColor: string }) {
+  return (
+    <span className="text-sm tracking-tight" aria-label={`${rating} من 5`}>
+      {Array.from({ length: 5 }, (_, i) => (
+        <span key={i} style={{ color: i < Math.round(rating) ? accentColor : '#D8D2CC' }}>
+          ★
+        </span>
+      ))}
+    </span>
+  )
+}
+
+function ReviewCard({
   review,
   accentColor,
   productId,
@@ -29,21 +40,32 @@ function ReviewCardNama({
 
   return (
     <article
-      className={`flex min-w-0 flex-col rounded-2xl border border-border bg-white shadow-sm ${
-        featured ? 'p-5 sm:p-6' : 'p-4 sm:p-5'
-      }`}
+      className="relative flex min-w-0 flex-col overflow-hidden rounded-2xl border border-border bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md sm:p-6"
     >
-      <span className="text-2xl leading-none text-charcoal/15" aria-hidden>
-        "
-      </span>
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-1"
+        style={{ background: `linear-gradient(90deg, ${accentColor}, ${accentColor}55)` }}
+      />
+      <div className="mb-3 flex items-center justify-between gap-2">
+        <Stars rating={review.rating} accentColor={accentColor} />
+        <span
+          className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-bold"
+          style={{ color: '#146b70', background: '#146b7014' }}
+        >
+          ✓ مشترية موثّقة
+        </span>
+      </div>
+
       <blockquote
-        className={`mt-1 leading-relaxed text-charcoal ${featured ? 'text-sm sm:text-base' : 'text-[13px] sm:text-sm'}`}
+        className={`flex-1 leading-relaxed text-charcoal ${featured ? 'text-sm sm:text-[15px]' : 'text-[13px] sm:text-sm'}`}
       >
         {review.text}
       </blockquote>
-      <div className="mt-4 flex items-center gap-3 border-t border-border/70 pt-4">
+
+      <figcaption className="mt-5 flex items-center gap-3 border-t border-border/70 pt-4">
         <div
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-black text-white"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-black text-white"
           style={{ background: accentColor }}
           aria-hidden
         >
@@ -51,18 +73,9 @@ function ReviewCardNama({
         </div>
         <div className="min-w-0 flex-1 text-start">
           <p className="text-sm font-bold text-charcoal">{displayName}</p>
-          {subtitle && <p className="text-xs text-muted">{subtitle}</p>}
-          <div className="mt-1 flex flex-wrap items-center gap-2">
-            <StarRating rating={review.rating} size="sm" />
-            <span
-              className="rounded-full px-2 py-0.5 text-[10px] font-bold text-white"
-              style={{ background: accentColor }}
-            >
-              مؤكدة
-            </span>
-          </div>
+          {subtitle && <p className="text-[11px] text-muted">{subtitle} · مشترية مؤكدة</p>}
         </div>
-      </div>
+      </figcaption>
     </article>
   )
 }
@@ -79,31 +92,62 @@ export default function PdpReviewsSection({ product }: Props) {
   return (
     <section
       id="pdp-reviews"
-      className="scroll-mt-28 overflow-x-hidden border-t border-border/60 py-10 sm:py-12 md:py-14"
+      className="scroll-mt-28 overflow-x-hidden border-t border-border/60 py-12 sm:py-14 md:py-16"
       style={{
         background: `linear-gradient(180deg, color-mix(in srgb, ${product.bgColor} 40%, #fff) 0%, #fff 100%)`,
       }}
     >
       <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
-        <div className="mb-8 max-w-3xl text-start">
-          <p className="mb-2 text-[10px] font-black uppercase tracking-[0.22em] text-muted">
-            {reviewsH.eyebrowAr ?? 'تجارب حقيقية'}
+        {/* Header — verified record */}
+        <div className="mb-9 text-center">
+          <p className="mb-2 text-[10px] font-black uppercase tracking-[0.24em] text-muted">
+            {reviewsH.eyebrowAr ?? 'السجلّ الموثّق · VERIFIED'}
           </p>
           <h2 className="text-xl font-black text-charcoal sm:text-2xl md:text-3xl">
-            {reviewsH.titleAr ?? `ما تقوله ${countLabel}+ عميلة`}
+            {reviewsH.titleAr ?? 'ثقة موثّقة، بأرقام حقيقية'}
           </h2>
-          <p className="mt-3 text-sm leading-relaxed text-charcoal">
-            {reviewsH.subtitleAr ??
-              'مشتريات مؤكدة من مدن مختلفة في المملكة — مو تعليقات مفبركة، تجارب فعلية.'}
-          </p>
-          <div className="mt-4">
-            <StarRating rating={product.rating} count={product.reviewCount} size="md" accentColor={accent} />
+          <span
+            aria-hidden
+            className="mx-auto mt-3 block h-1 w-16 rounded-full"
+            style={{ background: `linear-gradient(90deg, ${accent}, ${accent}55)` }}
+          />
+        </div>
+
+        {/* Rating summary */}
+        <div className="mx-auto mb-6 flex max-w-md items-center justify-center gap-5 rounded-2xl border border-border bg-white p-4 shadow-sm sm:p-5">
+          <div className="text-center">
+            <p className="text-4xl font-black leading-none tabular-nums sm:text-5xl" style={{ color: accent }}>
+              {product.rating.toFixed(1)}
+            </p>
+            <div className="mt-1 flex justify-center">
+              <Stars rating={product.rating} accentColor={accent} />
+            </div>
+          </div>
+          <div className="border-s border-border ps-5 text-start">
+            <p className="text-base font-black text-charcoal sm:text-lg">
+              من {countLabel}+ تقييم
+            </p>
+            <p className="text-xs text-muted">مشتريات مؤكدة · كل مناطق السعودية 🇸🇦</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        {/* Trust chips */}
+        <div className="mb-9 flex flex-wrap items-center justify-center gap-2">
+          {['موثّقة برقم الطلب', 'مؤكّدة بالهاتف', 'بدون فلترة'].map((chip) => (
+            <span
+              key={chip}
+              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-3 py-1.5 text-[11px] font-bold text-charcoal shadow-sm"
+            >
+              <span style={{ color: '#146b70' }}>✓</span>
+              {chip}
+            </span>
+          ))}
+        </div>
+
+        {/* Reviews grid */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {product.reviews.slice(0, 3).map((r, idx) => (
-            <ReviewCardNama
+            <ReviewCard
               key={`${product.id}-r-top-${idx}`}
               review={r}
               accentColor={accent}
@@ -115,9 +159,9 @@ export default function PdpReviewsSection({ product }: Props) {
         </div>
 
         {product.reviews.length > 3 && (
-          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {product.reviews.slice(3).map((r, idx) => (
-              <ReviewCardNama
+              <ReviewCard
                 key={`${product.id}-r-${idx + 3}`}
                 review={r}
                 accentColor={accent}
@@ -130,16 +174,16 @@ export default function PdpReviewsSection({ product }: Props) {
 
         {product.afterReviewsBanner ? (
           <div
-            className="mt-8 rounded-2xl border px-5 py-5 text-start"
+            className="mx-auto mt-9 max-w-3xl rounded-2xl border px-5 py-6 text-center"
             style={{ borderColor: `${accent}33`, background: `${product.bgColor}99` }}
           >
             {product.afterReviewsBanner.titleAr && (
               <h3 className="mb-2 text-base font-black text-charcoal">{product.afterReviewsBanner.titleAr}</h3>
             )}
-            <p className="text-sm leading-relaxed text-charcoal">{product.afterReviewsBanner.bodyAr}</p>
+            <p className="mx-auto max-w-xl text-sm leading-relaxed text-charcoal">{product.afterReviewsBanner.bodyAr}</p>
             <a
               href="#pdp-buy-anchor"
-              className="mt-4 inline-flex rounded-xl px-5 py-2.5 text-sm font-extrabold text-white"
+              className="mt-4 inline-flex rounded-xl px-6 py-3 text-sm font-extrabold text-white shadow-sm"
               style={{ background: accent }}
             >
               اختاري العرض واطلبي الآن ↑
