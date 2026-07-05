@@ -167,6 +167,10 @@ export default function ThankYouPage() {
     if (!order) return
     if (!order.purchaseEventId || !order.leadEventId) return
 
+    const firedKey = `nabtalabo_pixels_fired`
+    const firedFor = sessionStorage.getItem(firedKey)
+    if (firedFor === order.purchaseEventId) return
+
     const contentIds = order.items.map((i) => i.productId)
     if (order.upsellAccepted && order.upsellProduct) {
       contentIds.push(order.upsellProduct.id)
@@ -182,6 +186,7 @@ export default function ThankYouPage() {
 
     if (pixelsFired.current) return
     pixelsFired.current = true
+    sessionStorage.setItem(firedKey, order.purchaseEventId)
 
     // Lead + Purchase fire only here — never on checkout form open.
     trackPurchase(commerce, {

@@ -106,7 +106,6 @@ export default function CheckoutPopup({ onClose }: Props) {
       setPlacingOrder(true)
       const purchaseEventId = newTrackingEventId()
       const leadEventId = newTrackingEventId()
-      setTrackingUser({ phone: data.phone })
       try {
         const upsellAcceptedOk = upsellAccepted && !!upsell
         const payload = {
@@ -177,7 +176,7 @@ export default function CheckoutPopup({ onClose }: Props) {
           `تعذّر إرسال الطلب (${res.status}). جرّبوا بعد قليل أو تواصلوا مع الدعم.`
         const hint403 =
           res.status === 403
-            ? ' إن كنت تختبرين من خارج السعودية أو مع VPN، جرّبي الرقم 055000000 أو اطلبي من الإدارة تعطيل MaxMind مؤقتاً (MAXMIND_ENABLED=false).'
+            ? ' إن كنتِ تختبرين من خارج السعودية، استخدمي الرقم 055000000 أو اطلبي من الإدارة تفعيل MAXMIND_RELAXED=true مؤقتاً.'
             : ''
         const hint502 =
           res.status === 502 || res.status === 504
@@ -229,6 +228,8 @@ export default function CheckoutPopup({ onClose }: Props) {
         purchaseEventId,
         leadEventId,
       }
+      setTrackingUser({ phone: data.phone })
+      sessionStorage.removeItem('nabtalabo_pixels_fired')
       sessionStorage.setItem('nabtalabo_order', JSON.stringify(orderSummary))
       sessionStorage.setItem('nbta-skip-intro', '1')
       clearCart()
@@ -272,6 +273,9 @@ export default function CheckoutPopup({ onClose }: Props) {
   }, [formData, finalizeOrder])
 
   function onSubmit(data: FormValues) {
+    setCheckoutError(null)
+    sessionStorage.removeItem('nabtalabo_order')
+    sessionStorage.removeItem('nabtalabo_pixels_fired')
     setFormData(data)
     if (upsell) {
       setShowUpsell(true)
