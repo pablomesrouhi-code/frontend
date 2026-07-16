@@ -20,12 +20,13 @@ type Props = {
 
 function NewImageBanner({ product }: { product: Product }) {
   if (!product.isNew) return null
+  const label = product.isBestSeller ? (product.featuredBadgeAr ?? 'الأكثر مبيعاً') : 'جديد'
   return (
     <div
       className="absolute inset-x-0 top-0 z-20 flex items-center justify-center py-1.5 shadow-sm sm:py-2"
       style={{ background: `linear-gradient(90deg, ${product.accentColor}ee, ${product.accentColor})` }}
     >
-      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white sm:text-[11px]">جديد</span>
+      <span className="text-[10px] font-black tracking-[0.12em] text-white sm:text-[11px]">🇸🇦 {label}</span>
     </div>
   )
 }
@@ -71,13 +72,17 @@ function BadgeRow({ product, hideNewBadge }: { product: Product; hideNewBadge?: 
 
 function CtaRow({ product }: { product: Product }) {
   const accent = product.accentColor
+  const soldOut = product.availability === 'sold_out'
 
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group/btn mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold text-white transition-[transform,filter,box-shadow] duration-200 ease-out hover:brightness-105 active:scale-[0.99] motion-reduce:transition-none motion-reduce:active:scale-100"
-      style={getProductSolidButtonStyle(accent)}
+      className={`group/btn mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold text-white transition-[transform,filter,box-shadow] duration-200 ease-out motion-reduce:transition-none ${
+        soldOut ? 'bg-charcoal/75' : 'hover:brightness-105 active:scale-[0.99] motion-reduce:active:scale-100'
+      }`}
+      style={soldOut ? undefined : getProductSolidButtonStyle(accent)}
       onClick={() => {
+        if (soldOut) return
         trackAddToWishlist({
           content_ids: [product.id],
           value: getPriceForQty(1),
@@ -85,7 +90,7 @@ function CtaRow({ product }: { product: Product }) {
         })
       }}
     >
-      <span>اكتشفي المنتج</span>
+      <span>{soldOut ? 'نفدت الكمية · عرض التفاصيل' : 'اكتشفي المنتج'}</span>
       <span className="transition-transform group-hover/btn:-translate-x-1">←</span>
     </Link>
   )

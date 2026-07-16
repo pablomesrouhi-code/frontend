@@ -10,6 +10,8 @@ export type ProductReview = {
 export type Product = {
   id: string
   slug: string
+  /** حالة البيع الحالية؛ المنتجات غير المتوفرة تبقى ظاهرة لكن لا تدخل السلة أو الـ upsell. */
+  availability?: 'in_stock' | 'sold_out'
   /** رمز تخزين ثابت لكل منتج (يُعاد عبر الـ API والشيت) */
   sku: string
   /** علكة أو مسحوق في عبوة مع مكيال — يظهر كشارة على البطاقة */
@@ -77,6 +79,8 @@ export type Product = {
   soldCount?: number
   /** شارة «الأكثر مبيعاً» على البطاقة */
   isBestSeller?: boolean
+  /** نص شارة التمييز؛ الافتراضي «الأكثر مبيعاً». */
+  featuredBadgeAr?: string
   /** شارة «جديد» — خط المسحوق الجديد */
   isNew?: boolean
   reviews: ProductReview[]
@@ -85,10 +89,11 @@ export type Product = {
   productInfoSheets?: { titleAr: string; bodyAr: string }[]
 }
 
-export const PRODUCTS: Product[] = [
+const ALL_PRODUCTS: Product[] = [
   {
     id: 'rawnaq-c',
     slug: 'rawnaq-c-collagen-gummies',
+    availability: 'in_stock',
     sku: 'RWCFH',
     nameAr: 'رونق C',
     nameEn: 'Rawnaq-C Anti-Aging Skin Hair & Nails Gummies',
@@ -101,7 +106,7 @@ export const PRODUCTS: Product[] = [
     badgeAr: 'دعم البشرة ومقاومة التجاعيد',
     accentColor: '#b8485c',
     bgColor: '#f1e6e4',
-    coverImage: '/products/rawnaq-c-cover.jpg',
+    coverImage: '/products/home-rawnaq-c.png',
     coverWidth: 1024,
     coverHeight: 1024,
     homeCardImage: '/products/home-rawnaq-c.png',
@@ -196,11 +201,12 @@ export const PRODUCTS: Product[] = [
           'لا تستخدميه دون استشارة طبية أو صيدلانية إذا كنتِ حاملاً أو مرضعة. يُمنع عند الحساسية لأي مكوّن في قائمة الغلاف. لا يُنصح للأطفال دون السن المذكور على العبوة. من يتناول أدوية مزمنة أو مكمّلات بجرعات عالية (خصوصًا زنك أو فيتامين D): استشارة مختص قبل الاستخدام. لا تتجاوزي الجرعة اليومية على الغلاف. ليس بديلًا عن علاج أو وصفة يصفها الطبيب.',
       },
     ],
-    crossSells: ['khiffabiotic', 'laylmag'],
+    crossSells: ['shahr-hadi'],
     rating: 4.8,
     reviewCount: 104,
     soldCount: 6800,
     isBestSeller: true,
+    featuredBadgeAr: 'الأكثر مبيعاً',
         reviews: [
       {
         name: 'سارة م.',
@@ -374,6 +380,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'laylmag',
     slug: 'laylmag-magnesium-powder',
+    availability: 'sold_out',
     sku: 'MGAGFD',
     format: 'powder_pouch',
     nameAr: 'ليل ماج',
@@ -462,7 +469,7 @@ export const PRODUCTS: Product[] = [
       'مساءً قبل النوم بحوالي 30–60 دقيقة: ذوّبي الجرعة المحددة على الغلاف في كوب ماء وحرّكي جيداً. لا تتجاوزي الجرعة اليومية الموصى بها.',
     painCopy:
       'تعرفين الإحساس: يوم طويل، شاشة، ومكالمات… ووقت السرير الجسم «ما زال شغّال»؟ المشكلة مو نقص ساعات فقط — نقص إشارة هدوء قبل النوم. ليل ماج (مغنيسيوم + L-Theanine) يدعم الاسترخاء ضمن نوم أنظف، مع تقليل الشاشة وروتينك. مو بديل طبيب إذا الأرق مستمر.',
-    crossSells: ['rawnaq-c', 'khiffabiotic'],
+    crossSells: ['rawnaq-c', 'shahr-hadi'],
     rating: 4.9,
     reviewCount: 128,
     soldCount: 5400,
@@ -644,6 +651,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'wudouh',
     slug: 'wudouh-glow-skin-powder',
+    availability: 'sold_out',
     sku: 'PSPFH',
     format: 'powder_pouch',
     isNew: true,
@@ -752,7 +760,7 @@ export const PRODUCTS: Product[] = [
           'حوامل ومرضعات دون استشارة. من لديهم حساسية لمنتجات السمك (كولاجين بحري). لا تتجاوزي الجرعة اليومية على الغلاف.',
       },
     ],
-    crossSells: ['quwwat-sha3r', 'rawnaq-c'],
+    crossSells: ['rawnaq-c', 'shahr-hadi'],
     rating: 4.8,
     reviewCount: 5,
     soldCount: 0,
@@ -794,6 +802,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'shahr-hadi',
     slug: 'shahr-hadi-pms-powder',
+    availability: 'in_stock',
     sku: 'CLCYPWFH',
     format: 'powder_pouch',
     isNew: true,
@@ -896,10 +905,12 @@ export const PRODUCTS: Product[] = [
           'حوامل ومرضعات دون استشارة. من على أدوية هرمونية أو حبوب منع الحمل — استشيري الطبيب. لا تتجاوزي الجرعة اليومية على الغلاف.',
       },
     ],
-    crossSells: ['laylmag', 'wudouh'],
+    crossSells: ['rawnaq-c'],
     rating: 4.9,
     reviewCount: 5,
     soldCount: 0,
+    isBestSeller: true,
+    featuredBadgeAr: 'الأكثر مبيعاً',
         reviews: [
       {
         name: 'فاطمة ن.',
@@ -937,6 +948,11 @@ export const PRODUCTS: Product[] = [
   },
 ]
 
+const STOREFRONT_PRODUCT_IDS = new Set(['rawnaq-c', 'laylmag', 'wudouh', 'shahr-hadi'])
+
+/** المنتجات الأربعة التي تظهر في المتجر حالياً. */
+export const PRODUCTS: Product[] = ALL_PRODUCTS.filter((product) => STOREFRONT_PRODUCT_IDS.has(product.id))
+
 export { getOffers, getUpsellPriceSar }
 
 export function getPriceForQty(qty: 1 | 2 | 3): number {
@@ -951,22 +967,25 @@ export function getProductById(id: string): Product | undefined {
   return PRODUCTS.find((p) => p.id === id)
 }
 
+export function isProductAvailable(product: Product | undefined | null): product is Product {
+  return product?.availability === 'in_stock'
+}
+
 export function getCrossSellProducts(productId: string): Product[] {
   const product = getProductById(productId)
   if (!product) return []
-  return product.crossSells.map((id) => getProductById(id)).filter(Boolean) as Product[]
+  return product.crossSells
+    .map((id) => getProductById(id))
+    .filter(isProductAvailable)
 }
 
 export function getBestUpsell(cartProductIds: string[]): Product | null {
-  const all = PRODUCTS.map((p) => p.id)
+  const all = PRODUCTS.filter(isProductAvailable).map((p) => p.id)
   const missing = all.filter((id) => !cartProductIds.includes(id))
   if (missing.length === 0) return null
-  // Pair powder upsells with complementary products
-  if (cartProductIds.includes('quwwat-sha3r') && missing.includes('wudouh')) return getProductById('wudouh') ?? null
-  if (cartProductIds.includes('wudouh') && missing.includes('quwwat-sha3r')) return getProductById('quwwat-sha3r') ?? null
-  if (cartProductIds.includes('shahr-hadi') && missing.includes('laylmag')) return getProductById('laylmag') ?? null
-  if (cartProductIds.includes('rawnaq-c') && missing.includes('khiffabiotic')) return getProductById('khiffabiotic') ?? null
-  if (cartProductIds.includes('laylmag') && missing.includes('rawnaq-c')) return getProductById('rawnaq-c') ?? null
+  // الـ upsell محصور في المنتجين المتوفرين ويكمل كل واحد منهما الآخر.
+  if (cartProductIds.includes('rawnaq-c') && missing.includes('shahr-hadi')) return getProductById('shahr-hadi') ?? null
+  if (cartProductIds.includes('shahr-hadi') && missing.includes('rawnaq-c')) return getProductById('rawnaq-c') ?? null
   return getProductById(missing[0]) ?? null
 }
 

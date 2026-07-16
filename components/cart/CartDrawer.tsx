@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useCartStore } from '@/stores/cart-store'
-import { PRODUCTS, getProductById, formatSarAmount, getPriceForQty } from '@/lib/products'
+import { PRODUCTS, getProductById, formatSarAmount, getPriceForQty, isProductAvailable } from '@/lib/products'
 import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 
@@ -42,7 +42,16 @@ export default function CartDrawer() {
 
   // Cross-sells: products not in cart
   const cartIds = items.map((i) => i.productId)
-  const crossSells = PRODUCTS.filter((p) => !cartIds.includes(p.id))
+  const totalQty = items.reduce((sum, item) => sum + item.offerQty, 0)
+  const crossSells = totalQty < 3
+    ? PRODUCTS.filter((p) => isProductAvailable(p) && !cartIds.includes(p.id))
+    : []
+
+  useEffect(() => {
+    items.forEach((item) => {
+      if (!isProductAvailable(getProductById(item.productId))) removeItem(item.productId)
+    })
+  }, [items, removeItem])
 
   useEffect(() => {
     if (isOpen) document.body.style.overflow = 'hidden'

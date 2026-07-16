@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { PRODUCTS, STORE_REVIEW_HEADLINE, STORE_SOLD_HEADLINE, formatSoldCount } from '@/lib/products'
 import ProductCard from '@/components/product/ProductCard'
+import HomeMixedBundle from '@/components/home/HomeMixedBundle'
 
 // ───────── Brand palette (refined warm) ─────────
 const BRAND = {
@@ -24,12 +25,12 @@ const BRAND = {
 const STAT_NUMBERS = [
   { value: formatSoldCount(STORE_SOLD_HEADLINE), label: 'طلب مؤكّد', sub: 'في المملكة' },
   { value: '4.8/5', label: `${STORE_REVIEW_HEADLINE}+ تقييم`, sub: '🇸🇦' },
-  { value: '6', label: 'منتجات', sub: 'علكة + مسحوق' },
+  { value: '4', label: 'منتجات', sub: 'علكة + مسحوق' },
   { value: '2-4', label: 'أيام توصيل', sub: 'كل المناطق' },
 ] as const
 
 const STEPS = [
-  { n: '01', icon: '✨', title: 'اختاري اللي يناسبك', desc: 'علكة يومية أو عبوة مسحوق مع مكيال — ستة منتجات، كل واحد له هدف واضح.' },
+  { n: '01', icon: '✨', title: 'اختاري اللي يناسبك', desc: 'علكة يومية أو عبوة مسحوق مع مكيال — أربعة منتجات، كل واحد له هدف واضح.' },
   { n: '02', icon: '💎', title: 'على قد ما تستخدمين', desc: 'قطعة، اثنتين، أو ثلاث حسب وتيرتك؛ السعر يتفصّل معك بدون ضغط.' },
   { n: '03', icon: '☎️', title: 'تأكيد بسيط وبراحتك', desc: 'اسمك ورقم جوال سعودي يكفيان؛ ما نطلب بطاقة، ونتواصل للتأكيد.' },
   { n: '04', icon: '📦', title: 'لمّا يوصلك الطلب', desc: 'نوصل لمناطق المملكة، نخبرك قبل التوصيل، وتدفعين كاش عند الاستلام.' },
@@ -39,15 +40,6 @@ const JOURNEY = [
   { n: 1, range: 'اليوم 1–7', title: 'الامتصاص', desc: 'المكوّنات تبدأ العمل على المستوى الخلوي', icon: '🌱', accent: BRAND.rose },
   { n: 2, range: 'اليوم 8–21', title: 'الإصلاح الداخلي', desc: 'ترميم وتجديد من الداخل للخارج', icon: '✨', accent: BRAND.teal },
   { n: 3, range: 'اليوم 22–30', title: 'النتائج المرئية', desc: 'فرق واضح تلاحظينه أنتِ ومن حولك', icon: '💎', accent: BRAND.cognac },
-] as const
-
-const GOALS = [
-  { slug: 'rawnaq-c-collagen-gummies', icon: '✨', color: BRAND.rose, bg: '#f9efed', title: 'مقاومة التجاعيد', product: 'رونق C', desc: 'بيوتين + زنك + D3 — بشرة ثم شعر وأظافر' },
-  { slug: 'khiffabiotic-probiotic-gummies', icon: '🍃', color: BRAND.peach, bg: '#f6eee9', title: 'خفّة بعد الأكل', product: 'خفّة بيوتك', desc: 'بروبيوتيك + ألياف' },
-  { slug: 'laylmag-magnesium-powder', icon: '🌙', color: BRAND.rose, bg: '#f3e9e7', title: 'هدوء المساء', product: 'ليل ماج', desc: 'مسحوق مغنيسيوم 14 في 1 + L-Theanine' },
-  { slug: 'quwwat-sha3r-collagen-powder', icon: '💆🏻‍♀️', color: BRAND.cognac, bg: '#FAF1E8', title: 'قوة الشعر', product: 'قوة شعر', desc: 'كولاجين بحري + بيوتين + حديد' },
-  { slug: 'wudouh-glow-skin-powder', icon: '🌿', color: BRAND.sage, bg: '#EDF2EE', title: 'بشرة نقية', product: 'وضوح', desc: 'غلوتاثيون + كولاجين + زنك' },
-  { slug: 'shahr-hadi-pms-powder', icon: '🌸', color: BRAND.mauve, bg: '#F0E9F0', title: 'دورة هادئة', product: 'شهر هادئ', desc: 'مايو-إينوسيتول + فيتكس' },
 ] as const
 
 const FAQS = [
@@ -72,8 +64,8 @@ const REVIEWS = [
     name: 'نورة الدوسري',
     age: '38',
     city: 'جدة',
-    text: 'قبل ما أطلب قريت المكونات بتمعّن — حديد وبيوتين وكولاجين بحري بجرعات واضحة مو مجرد أسماء. بعد 8 أسابيع على قوة شعر، التساقط قلّ بشكل ألاحظه في الفرشاة والوسادة. الفرق حقيقي مو مجرّد كلام إعلان.',
-    product: 'قوة شعر',
+    text: 'قبل ما أطلب قريت المكونات بتمعّن — التركيبة والجرعة واضحتان مو مجرد أسماء. الباك جمع لي البيوتين مع التوازن الهرموني في طلب واحد والتأكيد الهاتفي ريّحني.',
+    product: 'باك الجمال والتوازن',
     accent: BRAND.cognac,
   },
   {
@@ -94,13 +86,6 @@ const COMPARE = [
   { feature: 'تأكيد بشري قبل الشحن', us: true, them: false },
   { feature: 'توصيل 2–4 أيام لكل المملكة', us: true, them: false },
 ] as const
-
-const GUMMY_PRODUCTS = PRODUCTS.filter((p) => !p.format || p.format === 'gummy')
-const POWDER_PRODUCTS = PRODUCTS.filter((p) => p.format === 'powder_sachet' || p.format === 'powder_pouch')
-const TOP_GUMMIES = [...GUMMY_PRODUCTS].sort((a, b) => (b.soldCount ?? 0) - (a.soldCount ?? 0)).slice(0, 2)
-const TOP_POWDER = [...POWDER_PRODUCTS].sort((a, b) => (b.soldCount ?? 0) - (a.soldCount ?? 0))[0]
-const BEST_SELLERS = [...TOP_GUMMIES, ...(TOP_POWDER ? [TOP_POWDER] : [])]
-const BEST_SELLER_FRAME = BRAND.rose
 
 // ───────────────────────────────────────────────
 
@@ -137,7 +122,7 @@ export default function HomePage() {
               </h1>
 
               <p className="mb-6 max-w-md text-base leading-relaxed sm:text-lg" style={{ color: BRAND.muted }}>
-                ستة منتجات مرخّصة — علكات يومية وعبوات مسحوق مع مكاييل. اسم + جوال 05 · تأكيد هاتفي · دفع عند الباب · 2–4 أيام.
+                أربعة منتجات مرخّصة — علكة يومية وعبوات مسحوق مع مكاييل. اسم + جوال 05 · تأكيد هاتفي · دفع عند الباب · 2–4 أيام.
               </p>
 
               <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
@@ -214,7 +199,7 @@ export default function HomePage() {
                   <div className="relative aspect-square">
                     <Image
                       src="/hero-store-trio.jpg"
-                      alt="منتجات نبتة لابو — ستة منتجات علكة ومسحوق"
+                      alt="منتجات نبتة لابو — علكة ومسحوق"
                       fill
                       priority
                       sizes="(max-width: 768px) 90vw, 36rem"
@@ -268,46 +253,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 3. BEST SELLERS — 3 products side by side, accent frame each ═══ */}
-      <section id="best-sellers" className="scroll-mt-24 bg-white py-14 sm:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="mb-8 text-start sm:mb-10">
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em]" style={{ color: BRAND.rose }}>
-              الأكثر مبيعاً
-            </p>
-            <h2 className="text-2xl font-bold leading-tight sm:text-3xl" style={{ color: BRAND.charcoal }}>
-              اختيارات عميلات نبتة لابو
-            </h2>
-            <span
-              aria-hidden
-              className="mt-3 block h-1 w-16 rounded-full"
-              style={{ background: `linear-gradient(90deg, ${BRAND.rose}, ${BRAND.peach})` }}
-            />
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-              ثلاثة الأكثر طلباً — بإطار واحد يميّزهم.
-            </p>
-          </div>
-
-          <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-            {BEST_SELLERS.map((p) => (
-              <div
-                key={p.id}
-                className="h-full rounded-[1.4rem] p-[3px] sm:rounded-[1.5rem] sm:p-[3.5px]"
-                style={{
-                  background: `linear-gradient(155deg, ${BEST_SELLER_FRAME} 0%, ${BEST_SELLER_FRAME}88 55%, ${BEST_SELLER_FRAME}44 100%)`,
-                  boxShadow: `0 16px 48px -20px ${BEST_SELLER_FRAME}55`,
-                }}
-              >
-                <ProductCard product={p} useHomeCardImage />
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* ═══ 4. منتجاتنا — كل المنتجات ═══ */}
-      <section id="products" className="scroll-mt-24 border-t border-[#E7DDD3] bg-[#faf9f8] py-14 sm:py-20">
+      {/* ═══ 3. منتجاتنا — كل المنتجات في قسم واحد ═══ */}
+      <section id="products" className="scroll-mt-24 bg-[#faf9f8] py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-8 text-start sm:mb-10">
             <h2 className="text-2xl font-bold leading-tight sm:text-3xl" style={{ color: BRAND.charcoal }}>
@@ -319,23 +266,52 @@ export default function HomePage() {
               style={{ background: `linear-gradient(90deg, ${BRAND.rose}, ${BRAND.peach})` }}
             />
             <p className="mt-3 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-              ستة منتجات مرخّصة — علكة ومسحوق. جمال، هضم، نوم، شعر، بشرة، وأيام الدورة.
+              أربعة منتجات تكمل بعضها — البيوتين والتوازن الهرموني متوفران الآن، والباقي يعود قريباً.
             </p>
           </div>
 
-          <div className="mb-8 flex flex-wrap gap-2 sm:mb-10">
-            {GOALS.map((item) => (
-              <Link
-                key={item.slug}
-                href={`/products/${item.slug}`}
-                className="rounded-full border border-[#d8c9c6] bg-white px-4 py-2 text-xs font-semibold text-[#5c5656] transition-colors hover:border-[#b8485c] hover:bg-[#b8485c] hover:text-white sm:text-sm"
+          <div className="mb-8 grid gap-3 sm:grid-cols-3">
+            {[
+              {
+                icon: '🔥',
+                title: 'الأكثر طلباً الآن',
+                text: 'Rawnaq C وHormonal Balance متوفران للطلب',
+                color: BRAND.rose,
+              },
+              {
+                icon: '✨',
+                title: 'روتين يكمل بعضه',
+                text: 'باك 1 بيوتين + 2 توازن هرموني بـ349 ريال',
+                color: BRAND.teal,
+              },
+              {
+                icon: '📦',
+                title: 'اطلبي براحتك',
+                text: 'تأكيد هاتفي ودفع عند الاستلام',
+                color: BRAND.cognac,
+              },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="flex items-center gap-3 rounded-2xl border bg-white p-4 shadow-sm"
+                style={{ borderColor: `${item.color}30` }}
               >
-                {item.product}
-              </Link>
+                <span
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-lg"
+                  style={{ background: `${item.color}14` }}
+                  aria-hidden
+                >
+                  {item.icon}
+                </span>
+                <div>
+                  <p className="text-sm font-black" style={{ color: item.color }}>{item.title}</p>
+                  <p className="mt-0.5 text-xs leading-relaxed" style={{ color: BRAND.muted }}>{item.text}</p>
+                </div>
+              </div>
             ))}
           </div>
 
-          <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+          <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:gap-8">
             {PRODUCTS.map((p) => (
               <ProductCard key={p.id} product={p} useHomeCardImage showNewImageBanner />
             ))}
@@ -691,6 +667,13 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══ PACK — أسفل الصفحة بنفس ألوان المتجر ═══ */}
+      <section className="border-t border-[#E7DDD3] bg-[#faf9f8] py-14 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <HomeMixedBundle />
+        </div>
+      </section>
+
       {/* ═══ 11. FINAL CTA ═══ */}
       <section className="relative overflow-hidden py-16 sm:py-20">
         <div
@@ -706,7 +689,7 @@ export default function HomePage() {
           </div>
           <h2 className="mb-4 text-3xl font-black text-white sm:text-4xl">جاهزة لروتين نبتة لابو؟</h2>
           <p className="mx-auto mb-8 max-w-xl text-base leading-relaxed text-white/85">
-            علكة ومسحوق — ستة منتجات لكل احتياج. اختاري الأقرب ليومك، أكّدي على 05، وادفعي عند الاستلام.
+            علكة ومسحوق — أربعة منتجات تكمل بعضها. اختاري الأقرب ليومك، أكّدي على 05، وادفعي عند الاستلام.
           </p>
           <Link
             href="#products"

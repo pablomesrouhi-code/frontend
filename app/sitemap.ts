@@ -21,13 +21,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/products/khiffabiotic-probiotic-gummies`,
+      url: `${BASE_URL}/products/laylmag-magnesium-powder`,
       lastModified: now,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/products/laylmag-magnesium-powder`,
+      url: `${BASE_URL}/products/wudouh-glow-skin-powder`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/products/shahr-hadi-pms-powder`,
       lastModified: now,
       changeFrequency: 'weekly',
       priority: 0.8,

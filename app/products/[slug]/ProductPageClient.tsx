@@ -40,6 +40,7 @@ export default function ProductPageClient({
   const { addItem, openCart } = useCartStore()
   const accent = product.accentColor
   const accentDeep = shadeTowardBlack(accent, 0.28)
+  const soldOut = product.availability === 'sold_out'
 
   useEffect(() => {
     trackViewContent({
@@ -69,6 +70,7 @@ export default function ProductPageClient({
   }, [])
 
   function handleAdd() {
+    if (soldOut) return
     addItem({
       productId: product.id,
       offerQty: selectedQty,
@@ -94,34 +96,43 @@ export default function ProductPageClient({
         className="relative min-w-0 max-w-full overflow-hidden rounded-2xl border bg-white p-4 text-right shadow-sm sm:rounded-3xl sm:p-5"
         style={{ borderColor: `${accent}33` }}
       >
-        <OfferSelector
-          selected={selectedQty}
-          onChange={setSelectedQty}
-          accentColor={accent}
-          format={product.format}
-          rating={product.rating}
-          reviewCount={product.reviewCount}
-        />
+        <div className={soldOut ? 'pointer-events-none opacity-50' : undefined} aria-disabled={soldOut}>
+          <OfferSelector
+            selected={selectedQty}
+            onChange={setSelectedQty}
+            accentColor={accent}
+            format={product.format}
+            rating={product.rating}
+            reviewCount={product.reviewCount}
+          />
+        </div>
 
         <button
           onClick={handleAdd}
+          disabled={soldOut}
           type="button"
-          className="group relative mt-4 w-full overflow-hidden rounded-2xl px-4 py-4 text-sm font-extrabold text-white transition hover:brightness-105 active:translate-y-[1px] sm:py-[1.1rem] sm:text-base md:text-lg"
-          style={getProductSolidButtonStyle(accent)}
+          className="group relative mt-4 w-full overflow-hidden rounded-2xl px-4 py-4 text-sm font-extrabold text-white transition enabled:hover:brightness-105 enabled:active:translate-y-[1px] disabled:cursor-not-allowed disabled:bg-charcoal/70 sm:py-[1.1rem] sm:text-base md:text-lg"
+          style={soldOut ? undefined : getProductSolidButtonStyle(accent)}
         >
           <span className="relative z-[1] flex items-center justify-center gap-3 flex-row-reverse">
             <CartIcon className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" />
             <span>
-              {addToCartLabel} ·{' '}
-              <span className="sar-price sar-price-dark tabular-nums">
-                {formatSarRiial(getPriceForQty(selectedQty))}
-              </span>
+              {soldOut ? (
+                'نفدت الكمية حالياً'
+              ) : (
+                <>
+                  {addToCartLabel} ·{' '}
+                  <span className="sar-price sar-price-dark tabular-nums">
+                    {formatSarRiial(getPriceForQty(selectedQty))}
+                  </span>
+                </>
+              )}
             </span>
           </span>
         </button>
 
         <p className="mt-2 text-center text-[11px] font-semibold text-muted sm:text-xs">
-          الدفع عند الاستلام · بدون دفع أونلاين
+          {soldOut ? 'سيعود قريباً — هذا المنتج غير قابل للطلب الآن' : 'الدفع عند الاستلام · بدون دفع أونلاين'}
         </p>
 
         <p className="mt-3 text-center text-[11px] leading-relaxed text-muted">
@@ -136,7 +147,7 @@ export default function ProductPageClient({
       </div>
 
       <PdpStickyRoutineCta
-        visible={stickyCtaVisible}
+        visible={!soldOut && stickyCtaVisible}
         accentColor={accent}
         accentDeep={accentDeep}
         label={addToCartLabel}

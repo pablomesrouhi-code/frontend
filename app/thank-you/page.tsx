@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { PRODUCTS, type Product, formatSarAmount, getPriceForQty } from '@/lib/products'
+import { PRODUCTS, type Product, formatSarAmount, getPriceForQty, isProductAvailable } from '@/lib/products'
 import { getPublicApiBase } from '@/lib/api'
 import { ensureSheetDelivery } from '@/lib/sheet-ensure'
 import { ensureLeadCapi } from '@/lib/lead-capi-ensure'
@@ -140,7 +140,7 @@ export default function ThankYouPage() {
   }, [order])
 
   const recommendations = useMemo(
-    () => PRODUCTS.filter((p) => !orderedIds.includes(p.id)),
+    () => PRODUCTS.filter((p) => isProductAvailable(p) && !orderedIds.includes(p.id)),
     [orderedIds],
   )
 
@@ -154,7 +154,7 @@ export default function ThankYouPage() {
       for (const id of p.crossSells) {
         if (seen.has(id) || orderedIds.includes(id)) continue
         const add = PRODUCTS.find((x) => x.id === id)
-        if (add && !seen.has(add.id)) {
+        if (isProductAvailable(add) && !seen.has(add.id)) {
           seen.add(add.id)
           out.push(add)
         }
