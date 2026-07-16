@@ -1,5 +1,6 @@
 'use client'
 import { getOffers, getPriceForQty, formatSarCompact } from '@/lib/products'
+import type { Product } from '@/lib/products'
 import { PDP_OFFER_HEADING, PDP_OFFER_TAGLINE, formatOfferSavings } from '@/lib/pdp-offer-copy'
 import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import StarRating from '@/components/ui/StarRating'
@@ -9,10 +10,10 @@ import {
   shadeTowardBlack,
 } from '@/lib/product-accent'
 
-function savingsForQty(qty: 1 | 2 | 3, unitCompare: number, isPowder: boolean): number | null {
+function savingsForQty(qty: 1 | 2 | 3, unitCompare: number, format: Product['format']): number | null {
   if (qty === 1) return null
   const full = unitCompare * qty
-  const offer = getOffers(isPowder).find((o) => o.qty === qty)?.price
+  const offer = getOffers(format ?? 'gummy').find((o) => o.qty === qty)?.price
   if (offer == null) return null
   const s = full - offer
   return s > 0 ? s : null
@@ -40,7 +41,7 @@ type Props = {
   selected: 1 | 2 | 3
   onChange: (qty: 1 | 2 | 3) => void
   accentColor?: string
-  isPowder?: boolean
+  format?: Product['format']
   rating?: number
   reviewCount?: number
 }
@@ -49,12 +50,12 @@ export default function OfferSelector({
   selected,
   onChange,
   accentColor = '#b8485c',
-  isPowder = false,
+  format,
   rating,
   reviewCount,
 }: Props) {
   useStorePricing()
-  const offers = getOffers(isPowder)
+  const offers = getOffers(format ?? 'gummy')
   const priceActive = shadeTowardBlack(accentColor, 0.18)
 
   return (
@@ -71,7 +72,7 @@ export default function OfferSelector({
       <div className="flex min-w-0 flex-col gap-2.5 sm:gap-3" role="radiogroup" aria-label={PDP_OFFER_HEADING}>
         {offers.map((offer) => {
           const active = selected === offer.qty
-          const save = savingsForQty(offer.qty, getPriceForQty(1), isPowder)
+          const save = savingsForQty(offer.qty, getPriceForQty(1), format)
           return (
             <button
               type="button"

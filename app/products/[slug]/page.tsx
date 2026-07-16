@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { PRODUCTS, getProductBySlug, getProductById, getPriceForQty, formatSarCompact } from '@/lib/products'
+import { PRODUCTS, getProductBySlug, getProductById, getPriceForQty, formatSarCompact, getFormatLabelAr, isPowderProduct } from '@/lib/products'
 import { getPdpSectionHeadlines } from '@/lib/pdp-section-headlines'
 import { getPdpHeroStats } from '@/lib/pdp-hero-stats'
 import StarRating from '@/components/ui/StarRating'
@@ -12,7 +12,6 @@ import PdpReviewsSection from '@/components/product/PdpReviewsSection'
 import PowderPlaceholder from '@/components/product/PowderPlaceholder'
 import PdpHeroStatPills from '@/components/product/pdp/PdpHeroStatPills'
 import { getPdpAddCta, getPdpComplianceNote } from '@/lib/pdp-copy'
-import { getFormatLabelAr } from '@/lib/products'
 
 export async function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }))
@@ -33,7 +32,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const product = getProductBySlug(slug)
   if (!product) notFound()
 
-  const isPowder = product.format === 'powder_sachet'
+  const isPowder = isPowderProduct(product)
   const unitLabel = isPowder ? 'عبوة' : 'علبة'
   const heroStats = getPdpHeroStats(product)
   const startPrice = formatSarCompact(getPriceForQty(1))
@@ -208,7 +207,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <ProductPageClient
                   product={product}
                   addToCartLabel={getPdpAddCta(product.id)}
-                  isPowder={isPowder}
                 />
               </div>
             </div>

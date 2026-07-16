@@ -1,6 +1,6 @@
 'use client'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Product, getPriceForQty, formatSarRiial, isPowderProduct } from '@/lib/products'
+import { Product, getPriceForQty, formatSarRiial } from '@/lib/products'
 import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import { useCartStore } from '@/stores/cart-store'
 import OfferSelector from '@/components/product/OfferSelector'
@@ -29,14 +29,11 @@ function CartIcon({ className }: { className?: string }) {
 export default function ProductPageClient({
   product,
   addToCartLabel = 'اطلبي الآن',
-  isPowder: isPowderProp,
 }: {
   product: Product
   addToCartLabel?: string
-  isPowder?: boolean
 }) {
   useStorePricing()
-  const isPowder = isPowderProp ?? isPowderProduct(product)
   const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(2)
   const [stickyCtaVisible, setStickyCtaVisible] = useState(false)
   const priceBlockRef = useRef<HTMLDivElement>(null)
@@ -101,7 +98,7 @@ export default function ProductPageClient({
           selected={selectedQty}
           onChange={setSelectedQty}
           accentColor={accent}
-          isPowder={isPowder}
+          format={product.format}
           rating={product.rating}
           reviewCount={product.reviewCount}
         />

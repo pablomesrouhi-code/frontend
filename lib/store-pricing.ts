@@ -24,7 +24,11 @@ export function getUpsellPriceSar(): number {
   return active.upsell_sar
 }
 
-export function getOffers(isPowder = false) {
+export type ProductOfferFormat = 'gummy' | 'powder_sachet' | 'powder_pouch'
+
+export function getOffers(format: ProductOfferFormat = 'gummy') {
+  const isPowder = format === 'powder_sachet' || format === 'powder_pouch'
+  const isPouch = format === 'powder_pouch'
   const unit = isPowder ? 'عبوة' : 'علبة'
   const unitDual = isPowder ? 'عبوتان' : 'علبتان'
   const units3 = isPowder ? '3 عبوات' : '3 علب'
@@ -32,21 +36,21 @@ export function getOffers(isPowder = false) {
     {
       qty: 1 as const,
       label: `${unit} واحدة`,
-      sublabel: isPowder ? '30 ساشيه · شهر كامل' : '60 علكة · شهر كامل',
+      sublabel: isPouch ? 'عبوة مسحوق مع مكيال · الجرعة حسب الغلاف' : isPowder ? '30 مكيال · شهر كامل' : '60 علكة · شهر كامل',
       price: getPriceForQty(1),
       badge: null as string | null,
     },
     {
       qty: 2 as const,
       label: `${unitDual} · ثبّتي النتيجة`,
-      sublabel: isPowder ? '60 ساشيه · شهر + تثبيت' : '120 علكة · شهر النتيجة + تثبيت',
+      sublabel: isPouch ? 'عبوتان مسحوق · روتين أطول' : isPowder ? '60 مكيال · شهر + تثبيت' : '120 علكة · شهر النتيجة + تثبيت',
       price: getPriceForQty(2),
       badge: 'الأكثر اختياراً',
     },
     {
       qty: 3 as const,
       label: `${units3} · النتيجة الكاملة`,
-      sublabel: isPowder ? '90 ساشيه · نتيجة + تثبيت + هدية' : '180 علكة · نتيجة + تثبيت + هدية',
+      sublabel: isPouch ? '3 عبوات مسحوق · أفضل توفير' : isPowder ? '90 مكيال · نتيجة + تثبيت + هدية' : '180 علكة · نتيجة + تثبيت + هدية',
       price: getPriceForQty(3),
       badge: 'الأكثر توفيراً',
     },

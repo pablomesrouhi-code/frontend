@@ -8,13 +8,22 @@ function backendInternalProxyTarget(): string {
   ).replace(/\/+$/, "");
 }
 
-function useLocalBackendProxyFlag(): boolean {
+function shouldUseLocalBackendProxy(): boolean {
   const v = process.env.NEXT_PUBLIC_USE_LOCAL_API?.trim()?.toLowerCase();
   return v === "true" || v === "1";
 }
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  async redirects() {
+    return [
+      {
+        source: "/products/laylmag-magnesium-gummies",
+        destination: "/products/laylmag-magnesium-powder",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [384, 640, 750, 828, 1080, 1200],
@@ -24,7 +33,7 @@ const nextConfig: NextConfig = {
   async rewrites() {
     const base = backendInternalProxyTarget();
     const cond =
-      useLocalBackendProxyFlag() || process.env.NODE_ENV === "development";
+      shouldUseLocalBackendProxy() || process.env.NODE_ENV === "development";
     if (!cond) {
       return [];
     }

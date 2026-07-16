@@ -29,7 +29,7 @@ const STAT_NUMBERS = [
 ] as const
 
 const STEPS = [
-  { n: '01', icon: '✨', title: 'اختاري اللي يناسبك', desc: 'علكة يومية أو ساشيه مسحوق — ستة منتجات، كل واحد له هدف واضح.' },
+  { n: '01', icon: '✨', title: 'اختاري اللي يناسبك', desc: 'علكة يومية أو عبوة مسحوق مع مكيال — ستة منتجات، كل واحد له هدف واضح.' },
   { n: '02', icon: '💎', title: 'على قد ما تستخدمين', desc: 'قطعة، اثنتين، أو ثلاث حسب وتيرتك؛ السعر يتفصّل معك بدون ضغط.' },
   { n: '03', icon: '☎️', title: 'تأكيد بسيط وبراحتك', desc: 'اسمك ورقم جوال سعودي يكفيان؛ ما نطلب بطاقة، ونتواصل للتأكيد.' },
   { n: '04', icon: '📦', title: 'لمّا يوصلك الطلب', desc: 'نوصل لمناطق المملكة، نخبرك قبل التوصيل، وتدفعين كاش عند الاستلام.' },
@@ -44,7 +44,7 @@ const JOURNEY = [
 const GOALS = [
   { slug: 'rawnaq-c-collagen-gummies', icon: '✨', color: BRAND.rose, bg: '#f9efed', title: 'مقاومة التجاعيد', product: 'رونق C', desc: 'بيوتين + زنك + D3 — بشرة ثم شعر وأظافر' },
   { slug: 'khiffabiotic-probiotic-gummies', icon: '🍃', color: BRAND.peach, bg: '#f6eee9', title: 'خفّة بعد الأكل', product: 'خفّة بيوتك', desc: 'بروبيوتيك + ألياف' },
-  { slug: 'laylmag-magnesium-gummies', icon: '🌙', color: BRAND.rose, bg: '#f3e9e7', title: 'هدوء المساء', product: 'ليل ماج', desc: 'مغنيسيوم + L-Theanine' },
+  { slug: 'laylmag-magnesium-powder', icon: '🌙', color: BRAND.rose, bg: '#f3e9e7', title: 'هدوء المساء', product: 'ليل ماج', desc: 'مسحوق مغنيسيوم 14 في 1 + L-Theanine' },
   { slug: 'quwwat-sha3r-collagen-powder', icon: '💆🏻‍♀️', color: BRAND.cognac, bg: '#FAF1E8', title: 'قوة الشعر', product: 'قوة شعر', desc: 'كولاجين بحري + بيوتين + حديد' },
   { slug: 'wudouh-glow-skin-powder', icon: '🌿', color: BRAND.sage, bg: '#EDF2EE', title: 'بشرة نقية', product: 'وضوح', desc: 'غلوتاثيون + كولاجين + زنك' },
   { slug: 'shahr-hadi-pms-powder', icon: '🌸', color: BRAND.mauve, bg: '#F0E9F0', title: 'دورة هادئة', product: 'شهر هادئ', desc: 'مايو-إينوسيتول + فيتكس' },
@@ -52,7 +52,7 @@ const GOALS = [
 
 const FAQS = [
   { q: 'هل الدفع عند الاستلام متاح؟', a: 'نعم، جميع طلبات نبتة لابو بنظام الدفع عند الاستلام فقط.' },
-  { q: 'ما الفرق بين العلكة والساشيه المسحوق؟', a: 'كل منتج له هدف مختلف — جمال، هضم، نوم، شعر، بشرة، أو دورة شهرية. اختاري الأقرب لاحتياجك؛ التفاصيل على صفحة كل منتج.' },
+  { q: 'ما الفرق بين العلكة ومنتجات المسحوق؟', a: 'منتجات المسحوق تأتي في عبوة قابلة للإغلاق ومعها مكيال للجرعة اليومية. كل تركيبة لها هدف مختلف؛ التفاصيل والجرعة على صفحة كل منتج.' },
   { q: 'كيف يتم تأكيد الطلب؟', a: 'يتواصل فريقنا معكِ على رقم جوّالك لتأكيد الطلب وترتيب التوصيل.' },
   { q: 'كم يستغرق التوصيل؟', a: 'يتم التوصيل إلى جميع مناطق المملكة خلال 2-4 أيام عمل.' },
   { q: 'متى أرى النتائج؟', a: 'تختلف من شخص لآخر؛ المداومة على الروتين 4–8 أسابيع هي الأقرب لفائدة حقيقية.' },
@@ -96,7 +96,7 @@ const COMPARE = [
 ] as const
 
 const GUMMY_PRODUCTS = PRODUCTS.filter((p) => !p.format || p.format === 'gummy')
-const POWDER_PRODUCTS = PRODUCTS.filter((p) => p.format === 'powder_sachet')
+const POWDER_PRODUCTS = PRODUCTS.filter((p) => p.format === 'powder_sachet' || p.format === 'powder_pouch')
 const TOP_GUMMIES = [...GUMMY_PRODUCTS].sort((a, b) => (b.soldCount ?? 0) - (a.soldCount ?? 0)).slice(0, 2)
 const TOP_POWDER = [...POWDER_PRODUCTS].sort((a, b) => (b.soldCount ?? 0) - (a.soldCount ?? 0))[0]
 const BEST_SELLERS = [...TOP_GUMMIES, ...(TOP_POWDER ? [TOP_POWDER] : [])]
@@ -137,7 +137,7 @@ export default function HomePage() {
               </h1>
 
               <p className="mb-6 max-w-md text-base leading-relaxed sm:text-lg" style={{ color: BRAND.muted }}>
-                ستة منتجات مرخّصة — علكات يومية وسواشيه مسحوق. اسم + جوال 05 · تأكيد هاتفي · دفع عند الباب · 2–4 أيام.
+                ستة منتجات مرخّصة — علكات يومية وعبوات مسحوق مع مكاييل. اسم + جوال 05 · تأكيد هاتفي · دفع عند الباب · 2–4 أيام.
               </p>
 
               <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">

@@ -1,4 +1,4 @@
-import { PRODUCTS } from '@/lib/products'
+import { PRODUCTS, isPowderProduct } from '@/lib/products'
 import ProductCard from '@/components/product/ProductCard'
 import ProductsSoldProofBar from '@/components/product/ProductsSoldProofBar'
 import StarRating from '@/components/ui/StarRating'
@@ -12,7 +12,7 @@ export const metadata = {
 
 const STORE_REVIEW_COUNT_FALLBACK = 850
 const GUMMY_PRODUCTS = PRODUCTS.filter((p) => !p.format || p.format === 'gummy')
-const POWDER_PRODUCTS = PRODUCTS.filter((p) => p.format === 'powder_sachet')
+const POWDER_PRODUCTS = PRODUCTS.filter(isPowderProduct)
 
 export default function CollectionPage() {
   return (
@@ -26,7 +26,7 @@ export default function CollectionPage() {
           </span>
           <h1 className="text-4xl sm:text-5xl font-bold text-[#1C1C1C] mb-2 leading-tight">ستة منتجات — علكة ومسحوق</h1>
           <p className="text-[#146b70] font-semibold text-sm sm:text-base mb-3 max-w-2xl">
-            ثلاث علكات يومية وثلاثة سواشيه مسحوق — اختاري الأقرب لاحتياجك.
+            علكتان يوميتان وأربعة منتجات مسحوق — اختاري الأقرب لاحتياجك.
           </p>
           <p className="text-[#5c5656] text-base sm:text-lg max-w-2xl leading-relaxed">
             جمال شعر وبشرة، راحة بعد الأكل، هدوء المساء، تساقط الشعر، حبوب البشرة، وأيام الدورة — لغة مكمّل غذائي بدون مبالغة.
@@ -107,8 +107,8 @@ export default function CollectionPage() {
           <ProductsSoldProofBar />
           <div className="mb-6 text-start">
             <p className="mb-1 text-xs font-bold uppercase tracking-[0.18em] text-[#146b70]">الخط الكلاسيكي</p>
-            <h2 className="text-xl font-bold text-[#1C1C1C] sm:text-2xl">ثلاث علكات يومية</h2>
-            <p className="mt-1 text-sm text-[#5c5656]">جمال، هضم، نوم — علكتان في الجرعة حسب الغلاف.</p>
+            <h2 className="text-xl font-bold text-[#1C1C1C] sm:text-2xl">منتجان بصيغة العلكة</h2>
+            <p className="mt-1 text-sm text-[#5c5656]">جمال وهضم — علكتان في الجرعة حسب الغلاف.</p>
           </div>
           <div className="grid min-w-0 w-full grid-cols-1 items-stretch gap-6 md:gap-8">
             {GUMMY_PRODUCTS.map((p) => (
@@ -125,9 +125,9 @@ export default function CollectionPage() {
             <span className="mb-2 inline-flex rounded-full bg-charcoal px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white sm:text-xs">
               جديد
             </span>
-            <h2 className="mt-2 text-xl font-bold text-[#1C1C1C] sm:text-2xl">خط ساشيه المسحوق</h2>
+            <h2 className="mt-2 text-xl font-bold text-[#1C1C1C] sm:text-2xl">خط المسحوق مع المكيال</h2>
             <p className="mt-1 max-w-2xl text-sm text-[#5c5656]">
-              ثلاثة منتجات جديدة — ساشيه يُذاب في ماء أو عصير فاتر. شعر، بشرة، وأيام الدورة — مو علكة.
+              أربعة منتجات مسحوق في عبوات قابلة للإغلاق ومع كل عبوة مكيال. تُذاب الجرعة في الماء حسب الغلاف.
             </p>
           </div>
           <div className="grid min-w-0 w-full grid-cols-1 items-stretch gap-6 md:gap-8">

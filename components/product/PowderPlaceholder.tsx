@@ -8,7 +8,7 @@ type Props = {
 
 /**
  * Elegant branded placeholder for products without real images yet.
- * Used by ProductCard and PDP sections for powder_sachet products.
+ * Used by ProductCard and PDP sections for powder products.
  */
 export default function PowderPlaceholder({ product, size = 'card', className = '' }: Props) {
   const sizing = {
@@ -56,7 +56,7 @@ export default function PowderPlaceholder({ product, size = 'card', className = 
         className="relative rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-wider"
         style={{ background: 'white', color: product.accentColor, border: `1px solid ${product.accentColor}30` }}
       >
-        ساشيه مسحوق
+        عبوة مسحوق + مكيال
       </span>
     </div>
   )

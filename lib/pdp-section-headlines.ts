@@ -85,7 +85,7 @@ export const PDP_SECTION_HEADLINES: Record<string, PdpSectionHeadlines> = {
       eyebrowAr: 'راسك ما يرتاح قبل النوم؟',
       titleAr: 'مو منوم وصفة — إشارة هدوء قبل ما تنامين',
       subtitleAr:
-        'ليل ماج مغنيسيوم + L-Theanine: روتين مسائي بعلكتين يثبت قبل ما تطفين الشاشة.',
+        'ليل ماج مسحوق مغنيسيوم 14 في 1 بنكهة التوت: جرعة في كوب ماء تكمل روتينك قبل ما تطفين الشاشة.',
       feelTitleAr: 'تعرفين هذا الإحساس؟',
       whyTitleAr: 'ليش يختارونه قبل النوم؟',
       desireTitleAr: 'وش يقدر يكمّل مساءكِ — بلا ادّعاء سحر؟',
@@ -95,7 +95,7 @@ export const PDP_SECTION_HEADLINES: Record<string, PdpSectionHeadlines> = {
       titleAr: 'مغنيسيوم · L-Theanine — دعم استرخاء قبل النوم',
       subtitleAr: 'مو بديل نوم طبيعي؛ روتين يكمّل نومكِ وعاداتكِ.',
     },
-    routine: { titleAr: 'قبل النوم بـ30–60 دقيقة — علكتان وروتين يثبت' },
+    routine: { titleAr: 'قبل النوم بـ30–60 دقيقة — مسحوق في كوب ماء وروتين يثبت' },
     faq: {
       titleAr: 'أسئلة «ليل ماج» قبل ما تدفعي عند الباب',
     },
@@ -111,7 +111,7 @@ export const PDP_SECTION_HEADLINES: Record<string, PdpSectionHeadlines> = {
       eyebrowAr: 'شعر على الوسادة، فراغات، خيط يتكسر؟',
       titleAr: 'التساقط يبدأ من الداخل — مو من سيروم واحد',
       subtitleAr:
-        'قوة شعر كولاجين بحري + بيوتين + زنك + حديد: ساشيه يومي يذاب في الماء ويثبت الروتين.',
+        'قوة شعر كولاجين بحري + بيوتين + زنك + حديد: مكيال يومي يذاب في الماء ويثبت الروتين.',
       feelTitleAr: 'تعرفين هذا الإحساس؟',
       whyTitleAr: 'ليش يختارونه للتساقط؟',
       desireTitleAr: 'وش يقدر يكمّل روتين شعركِ — واقعيًا؟',
@@ -119,9 +119,9 @@ export const PDP_SECTION_HEADLINES: Record<string, PdpSectionHeadlines> = {
     ingredients: {
       eyebrowAr: 'من الداخل',
       titleAr: 'كولاجين بحري · بيوتين · زنك · حديد — تركيبة شعر من جوّا',
-      subtitleAr: 'ساشيه يومي؛ الجرعة والتفاصيل على الغلاف المعتمد.',
+      subtitleAr: 'مكيال يومي؛ الجرعة والتفاصيل على الغلاف المعتمد.',
     },
-    routine: { titleAr: 'ساشيه واحد في الماء — روتين شعر بسيط يثبت' },
+    routine: { titleAr: 'مكيال واحد في الماء — روتين شعر بسيط يثبت' },
     faq: {
       titleAr: 'أسئلة «قوة شعر» — قبل الطلب والدفع عند الاستلام',
     },
@@ -137,7 +137,7 @@ export const PDP_SECTION_HEADLINES: Record<string, PdpSectionHeadlines> = {
       eyebrowAr: 'حبوب stubborn ما تروح بالكريمات؟',
       titleAr: 'البشرة النقية تبدأ مما تأكلين — مو من concealer فقط',
       subtitleAr:
-        'وضوح غلوتاثيون + كولاجين + زنك + C: ساشيه يومي يدعم إشراق البشرة من الداخل.',
+        'وضوح غلوتاثيون + كولاجين + زنك + C: مكيال يومي يدعم إشراق البشرة من الداخل.',
       feelTitleAr: 'تعرفين هذا الإحساس؟',
       whyTitleAr: 'ليش يختارونه للبشرة؟',
       desireTitleAr: 'وش يقدر يكمّل عنايتكِ — بلا وعود طبية؟',
@@ -147,7 +147,7 @@ export const PDP_SECTION_HEADLINES: Record<string, PdpSectionHeadlines> = {
       titleAr: 'غلوتاثيون · كولاجين · زنك · C — تركيبة وضوح واضحة',
       subtitleAr: 'يكمّل SPF وعناية خارجية؛ مو بديل طبيب جلدية.',
     },
-    routine: { titleAr: 'ساشيه صباحًا في الماء — روتين بشرة يثبت' },
+    routine: { titleAr: 'مكيال صباحًا في الماء — روتين بشرة يثبت' },
     faq: {
       titleAr: 'أسئلة «وضوح» — شفافية قبل ما تطلبي',
     },
@@ -163,7 +163,7 @@ export const PDP_SECTION_HEADLINES: Record<string, PdpSectionHeadlines> = {
       eyebrowAr: 'أيام الدورة صعبة، تقلبات، تعب؟',
       titleAr: 'الشهر أهدأ يبدأ من روتين صغير — مو من صبر وحده',
       subtitleAr:
-        'شهر هادئ مايو-إينوسيتول + فيتكس + مغنيسيوم + B6: ساشيه يومي يدعم توازنكِ.',
+        'شهر هادئ مايو-إينوسيتول + فيتكس + مغنيسيوم + B6: مكيال يومي يدعم توازنكِ.',
       feelTitleAr: 'تعرفين هذا الإحساس؟',
       whyTitleAr: 'ليش يختارونه أيام الدورة؟',
       desireTitleAr: 'وش يقدر يكمّل شهركِ — واقعيًا؟',
@@ -173,7 +173,7 @@ export const PDP_SECTION_HEADLINES: Record<string, PdpSectionHeadlines> = {
       titleAr: 'مايو-إينوسيتول · فيتكس · مغنيسيوم · B6 — تركيبة شهر هادئ',
       subtitleAr: 'مكمّل غذائي يكمّل نمط حياتك؛ مو بديل متابعة طبية.',
     },
-    routine: { titleAr: 'ساشيه يومي — روتين بسيط قبل أيام الدورة' },
+    routine: { titleAr: 'مكيال يومي — روتين بسيط قبل أيام الدورة' },
     faq: {
       titleAr: 'أسئلة «شهر هادئ» — قبل الطلب',
     },

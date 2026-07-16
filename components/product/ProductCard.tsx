@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Product, getPriceForQty, formatSarAmount, getFormatLabelAr } from '@/lib/products'
+import { Product, getPriceForQty, formatSarAmount, getFormatLabelAr, isPowderProduct } from '@/lib/products'
 import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import { getProductSolidButtonStyle } from '@/lib/product-accent'
 import { trackAddToWishlist } from '@/lib/tracking/client'
@@ -92,7 +92,7 @@ function CtaRow({ product }: { product: Product }) {
 }
 
 export default function ProductCard({ product, layout = 'grid', useHomeCardImage = false, showNewImageBanner = false }: Props) {
-  const isPowder = product.format === 'powder_sachet'
+  const isPowder = isPowderProduct(product)
   const cardImage = useHomeCardImage && product.homeCardImage ? product.homeCardImage : product.coverImage
   const showCardPhoto = !isPowder || Boolean(useHomeCardImage && product.homeCardImage)
   const imageBanner = showNewImageBanner && product.isNew

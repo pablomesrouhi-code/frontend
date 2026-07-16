@@ -27,7 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/products/laylmag-magnesium-gummies`,
+      url: `${BASE_URL}/products/laylmag-magnesium-powder`,
       lastModified: now,
       changeFrequency: 'weekly',
       priority: 0.8,
