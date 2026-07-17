@@ -1,11 +1,17 @@
 import { Product, formatSoldCount } from '@/lib/products'
 
-export default function ProductSoldBadge({ product }: { product: Product }) {
-  if (!product.soldCount && !product.isBestSeller) return null
+export default function ProductSoldBadge({
+  product,
+  hideFeatured = false,
+}: {
+  product: Product
+  hideFeatured?: boolean
+}) {
+  if (!product.soldCount && (!product.isBestSeller || hideFeatured)) return null
 
   return (
     <>
-      {product.isBestSeller ? (
+      {product.isBestSeller && !hideFeatured ? (
         <span className="absolute top-3 end-3 z-10 rounded-full px-2.5 py-1 text-[10px] font-bold text-white shadow ring-1 ring-white/30 sm:text-[11px]" style={{ background: product.accentColor, boxShadow: `0 4px 14px -4px ${product.accentColor}99` }}>
           🇸🇦 {product.featuredBadgeAr ?? 'الأكثر مبيعاً'}
         </span>

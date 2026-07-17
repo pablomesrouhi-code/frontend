@@ -104,12 +104,12 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
   const cardImageNode = (
     <>
       {imageBanner ? <NewImageBanner product={product} /> : null}
-      <ProductSoldBadge product={product} />
+      <ProductSoldBadge product={product} hideFeatured={imageBanner} />
       <Image
         src={cardImage}
         alt={product.nameAr}
         fill
-        sizes={layout === 'grid' ? '(max-width: 767px) 100vw, 33vw' : '(max-width: 767px) 100vw, (max-width: 1200px) 45vw, 320px'}
+        sizes={layout === 'grid' ? '(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 25vw' : '(max-width: 767px) 100vw, (max-width: 1200px) 45vw, 320px'}
         className="object-cover object-center"
       />
     </>
@@ -134,10 +134,10 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
           aria-hidden
         />
 
-        <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:gap-4 sm:p-7">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:p-5">
           <BadgeRow product={product} hideNewBadge={imageBanner} />
 
-          <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight sm:text-3xl md:text-[1.875rem]" style={{ color: product.accentColor }}>
+          <h3 className="break-words text-[1.25rem] font-bold leading-snug tracking-tight sm:text-2xl" style={{ color: product.accentColor }}>
             {product.nameAr}
           </h3>
 

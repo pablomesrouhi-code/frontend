@@ -198,8 +198,8 @@ export default function HomePage() {
                 >
                   <div className="relative aspect-square">
                     <Image
-                      src="/hero-store-trio.jpg"
-                      alt="منتجات نبتة لابو — علكة ومسحوق"
+                      src="/hero-store-trio-v2.jpg"
+                      alt="أربعة منتجات نبتة لابو — بيوتين، توازن هرموني، مغنيسيوم، وغلوتاثيون كولاجين"
                       fill
                       priority
                       sizes="(max-width: 768px) 90vw, 36rem"
@@ -311,7 +311,7 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="grid min-w-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:gap-8">
+          <div className="grid min-w-0 grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
             {PRODUCTS.map((p) => (
               <ProductCard key={p.id} product={p} useHomeCardImage showNewImageBanner />
             ))}
