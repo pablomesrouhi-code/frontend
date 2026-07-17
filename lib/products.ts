@@ -94,7 +94,7 @@ const ALL_PRODUCTS: Product[] = [
     id: 'rawnaq-c',
     slug: 'rawnaq-c-collagen-gummies',
     availability: 'in_stock',
-    sku: 'RWCFH',
+    sku: 'MP-39GYGBTANIO7',
     nameAr: 'رونق C',
     nameEn: 'Rawnaq-C Anti-Aging Skin Hair & Nails Gummies',
     subtitleAr:
