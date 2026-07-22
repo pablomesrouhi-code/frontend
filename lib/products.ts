@@ -1085,8 +1085,13 @@ const ALL_PRODUCTS: Product[] = [
 
 const STOREFRONT_PRODUCT_IDS = new Set(['rawnaq-c', 'laylmag', 'wudouh', 'shahr-hadi', 'naseej'])
 
-/** المنتجات الأربعة التي تظهر في المتجر حالياً. */
-export const PRODUCTS: Product[] = ALL_PRODUCTS.filter((product) => STOREFRONT_PRODUCT_IDS.has(product.id))
+/** المتجر الحالي — المتوفر أولاً (صف 3 على الكمبيوتر) ثم النافد تحته. */
+export const PRODUCTS: Product[] = ALL_PRODUCTS
+  .filter((product) => STOREFRONT_PRODUCT_IDS.has(product.id))
+  .sort((a, b) => {
+    const rank = (p: Product) => (p.availability === 'in_stock' ? 0 : 1)
+    return rank(a) - rank(b)
+  })
 
 export { getOffers, getUpsellPriceSar }
 

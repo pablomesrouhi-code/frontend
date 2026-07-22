@@ -266,7 +266,7 @@ export default function HomePage() {
               style={{ background: `linear-gradient(90deg, ${BRAND.rose}, ${BRAND.peach})` }}
             />
             <p className="mt-3 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-              أربعة منتجات تكمل بعضها — البيوتين والتوازن الهرموني متوفران الآن، والباقي يعود قريباً.
+              ثلاثة منتجات متوفرة الآن — رونق C، شهر هادئ، ونسيج — والباقي يعود قريباً.
             </p>
           </div>
 
@@ -275,13 +275,13 @@ export default function HomePage() {
               {
                 icon: '🔥',
                 title: 'الأكثر طلباً الآن',
-                text: 'Rawnaq C وHormonal Balance متوفران للطلب',
+                text: 'رونق C · شهر هادئ · نسيج متوفرون للطلب',
                 color: BRAND.rose,
               },
               {
                 icon: '✨',
-                title: 'روتين يكمل بعضه',
-                text: 'باك 1 بيوتين + 2 توازن هرموني بـ349 ريال',
+                title: 'باك الثلاثة',
+                text: 'عبوة من كل منتج بـ349 ريال',
                 color: BRAND.teal,
               },
               {
@@ -311,7 +311,8 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="grid min-w-0 grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 lg:gap-5">
+          {/* كمبيوتر: 3 فوق و3 تحت — المتوفر أولاً ثم النافد */}
+          <div className="grid min-w-0 grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
             {PRODUCTS.map((p) => (
               <ProductCard key={p.id} product={p} useHomeCardImage showNewImageBanner />
             ))}
