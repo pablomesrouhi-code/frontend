@@ -311,7 +311,7 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="grid min-w-0 grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+          <div className="grid min-w-0 grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 lg:gap-5">
             {PRODUCTS.map((p) => (
               <ProductCard key={p.id} product={p} useHomeCardImage showNewImageBanner />
             ))}

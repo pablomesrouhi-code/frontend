@@ -15,6 +15,7 @@ export const PDP_ADD_CTA: Record<string, string> = {
   'quwwat-sha3r': 'ابدئي روتين الشعر من الداخل',
   wudouh: 'ابدئي روتين البشرة من الداخل',
   'shahr-hadi': 'ابدئي شهراً أهدأ',
+  naseej: 'ابدئي روتين التماسك من الداخل',
 }
 
 export const PDP_ROUTINE_NOTE: Record<string, { titleAr: string; bodyAr: string }> = {
@@ -41,6 +42,11 @@ export const PDP_ROUTINE_NOTE: Record<string, { titleAr: string; bodyAr: string 
   'shahr-hadi': {
     titleAr: 'يومياً وباستمرار — مكيال واحد',
     bodyAr: 'مكيال واحد يومياً في ماء أو عصير — الاستمرار أهم من «أيام الدورة» فقط. العروض من خانة الطلب أدناه.',
+  },
+  naseej: {
+    titleAr: 'يومياً — مكيال كولاجين للتماسك من الداخل',
+    bodyAr:
+      'صباحاً أو مع وجبة: مكيال واحد في ماء أو عصير فاتر حسب الغلاف. زاوية تماسك وبنية — مختلفة عن علكة رونق C. العروض والسعر واضحين قبل التأكيد.',
   },
 }
 

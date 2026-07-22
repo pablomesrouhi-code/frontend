@@ -184,6 +184,37 @@ export const PDP_SECTION_HEADLINES: Record<string, PdpSectionHeadlines> = {
       titleAr: 'جاهزة؟ العروض فوق — تأكيد هاتفي + دفع عند الاستلام',
     },
   },
+  naseej: {
+    pain: {
+      eyebrowAr: 'بشرة فاضيّة تحت المكياج؟ تماسك ضاع؟',
+      titleAr: 'المشكل مو كريم إضافي — النسيج نفسه يضعف من الداخل',
+      subtitleAr:
+        'نسيج كولاجين متعدد الأنواع + هيالورونيك + فيتامين C + بيوتين: مكيال يومي لزاوية التماسك — مو نفس زاوية علكة رونق C.',
+      feelTitleAr: 'تعرفين هذا الإحساس؟',
+      whyTitleAr: 'ليش يختارونه للتماسك من الداخل؟',
+      desireTitleAr: 'وش يقدر يكمّل روتينكِ — بلا ادّعاء شدّ؟',
+    },
+    ingredients: {
+      eyebrowAr: 'بنية من الداخل',
+      titleAr: 'كولاجين متعدد · هيالورونيك · فيتامين C · بيوتين',
+      subtitleAr: 'ملخص تسويقي؛ الجرعة والقائمة الكاملة على الغلاف المعتمد.',
+    },
+    routine: { titleAr: 'مكيال واحد في الماء — روتين تماسك يثبت' },
+    faq: {
+      eyebrowAr: 'جايّة من إعلان «نسيج»؟',
+      titleAr: 'كل اللي تبغين تعرفينه قبل الطلب — بدون لفّ',
+      subtitleAr: 'فرق واضح عن رونق C، دفع عند الباب، تأكيد هاتفي.',
+    },
+    reviews: {
+      eyebrowAr: 'تجارب حقيقية',
+      titleAr: 'عميلات اختارت نسيج للتماسك — كلام روتين، مو وعود سحرية',
+      subtitleAr: 'آراء شخصية؛ النتيجة تعتمد على الالتزام والجسم.',
+    },
+    closingOffer: {
+      eyebrowAr: 'قرار اليوم',
+      titleAr: 'اختاري عرض نسيج واطلبي — نفس الأسعار اللي شفتيها',
+    },
+  },
 }
 
 export function getPdpSectionHeadlines(productId: string): PdpSectionHeadlines {
