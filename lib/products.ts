@@ -964,12 +964,38 @@ const ALL_PRODUCTS: Product[] = [
     badgeAr: 'دعم تماسك النسيج من الداخل',
     accentColor: '#6B4C7A',
     bgColor: '#F3EEF5',
-    // صورة مؤقتة فارغة — استبدليها بملفات حقيقية تحت public/products/
-    coverImage: '/products/placeholder-powder.png',
+    coverImage: '/products/naseej-powder.png',
     coverWidth: 1024,
     coverHeight: 1024,
-    // بلا pdpHeroImage / pain / ingredients / homeCard → تظهر مساحات «صورة قادمة»
-    captionUnderHeroImage: 'مساحة صورة المنتج — أضيفي الصورة النهائية هنا لاحقاً.',
+    homeCardImage: '/products/naseej-powder.png',
+    pdpHeroImage: {
+      src: '/products/naseej-powder-hero.png',
+      width: 1024,
+      height: 1024,
+      alt: 'نسيج — قبل وبعد: من تعب وتجاعيد إلى بشرة أنعم مع عبوة مسحوق الكولاجين المتعدد',
+    },
+    painSectionImage: {
+      src: '/products/naseej-powder-pain.png',
+      width: 1024,
+      height: 1024,
+      alt: 'امرأة متعبة أمام المرآة — إحساس فقد التماسك والتجاعيد؛ المكمّل يدعم النسيج من الداخل وليس علاجاً طبياً',
+    },
+    ingredientsSectionImage: {
+      src: '/products/naseej-powder-ingredients.png',
+      width: 1024,
+      height: 1024,
+      alt: 'عبوة نسيج مسحوق الكولاجين المتعدد مع مكيال وماء وزهور',
+    },
+    extraStory: {
+      src: '/products/naseej-powder-lifestyle.png',
+      width: 1024,
+      height: 1024,
+      alt: 'نسيج على طاولة الحمام مع مكيال وماء — روتين يومي لتماسك النسيج من الداخل',
+      titleAr: 'التماسك يبدأ من روتين يومي بسيط',
+      bodyAr:
+        'مو كل فرق يجي من كريم ليلة واحدة. نسيج مكيال يومي من كولاجين متعدد الأنواع مع بيوتين وفيتامين C وهيالورونيك — يذوب في الماء ويكمل روتينك من الداخل. النتيجة تختلف حسب الجسم والالتزام؛ الغلاف المعتمد هو المرجع.',
+    },
+    captionUnderHeroImage: 'مكمّل غذائي لتماسك النسيج من الداخل؛ النتيجة تختلف — راجعي الغلاف والجرعة المعتمدة.',
     copyAfterHeroPrice: 'اختاري عبوة أو عرض شهرين/ثلاثة من العروض تحت.',
     persuasionBlock: {
       eyebrowAr: 'المشكل الحقيقي',
