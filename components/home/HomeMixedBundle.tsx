@@ -65,7 +65,7 @@ export default function HomeMixedBundle() {
             عبوة من رونق C + شهر هادئ + نسيج
           </h2>
           <p className="mt-4 max-w-xl text-sm leading-7 text-white/80 sm:text-base">
-            ثلاثة منتجات مختلفة في طلب واحد: بيوتين للبشرة، توازن هرموني، وكولاجين للتماسك من الداخل.
+            ثلاثة منتجات مختلفة في طلب واحد: بيوتين، توازن هرموني، وكولاجين للتجاعيد والشعر والبشرة والأظافر من الداخل.
           </p>
           <ul className="mt-4 flex flex-col gap-2 text-sm font-semibold text-white/90">
             {products.map((p) => (
