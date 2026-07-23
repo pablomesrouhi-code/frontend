@@ -12,6 +12,7 @@ import PdpReviewsSection from '@/components/product/PdpReviewsSection'
 import PowderPlaceholder from '@/components/product/PowderPlaceholder'
 import PdpHeroStatPills from '@/components/product/pdp/PdpHeroStatPills'
 import { getPdpAddCta, getPdpComplianceNote } from '@/lib/pdp-copy'
+import { getProductSolidButtonStyle } from '@/lib/product-accent'
 
 export async function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }))
@@ -626,10 +627,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <a
               href="#pdp-buy-anchor"
               className="inline-flex min-h-[48px] min-w-[min(100%,240px)] items-center justify-center rounded-2xl px-8 py-3.5 text-base font-black text-white shadow-lg transition-[transform,filter] hover:brightness-105 active:translate-y-[1px]"
-              style={{
-                background: `linear-gradient(145deg, ${product.accentColor} 0%, color-mix(in srgb, ${product.accentColor} 82%, black) 100%)`,
-                boxShadow: `0 14px 40px -14px ${product.accentColor}88`,
-              }}
+              style={getProductSolidButtonStyle()}
             >
               رجوع إلى العرض والطلب (↑)
             </a>

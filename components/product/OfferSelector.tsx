@@ -5,6 +5,7 @@ import { PDP_OFFER_HEADING, PDP_OFFER_TAGLINE, formatOfferSavings } from '@/lib/
 import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import StarRating from '@/components/ui/StarRating'
 import {
+  STORE_BUTTON_COLOR,
   getProductOfferActiveStyle,
   getProductOfferInactiveStyle,
   shadeTowardBlack,
@@ -49,7 +50,7 @@ type Props = {
 export default function OfferSelector({
   selected,
   onChange,
-  accentColor = '#b8485c',
+  accentColor = STORE_BUTTON_COLOR,
   format,
   rating,
   reviewCount,

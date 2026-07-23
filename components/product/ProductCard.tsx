@@ -71,7 +71,6 @@ function BadgeRow({ product, hideNewBadge }: { product: Product; hideNewBadge?: 
 }
 
 function CtaRow({ product }: { product: Product }) {
-  const accent = product.accentColor
   const soldOut = product.availability === 'sold_out'
 
   return (
@@ -80,7 +79,7 @@ function CtaRow({ product }: { product: Product }) {
       className={`group/btn mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold text-white transition-[transform,filter,box-shadow] duration-200 ease-out motion-reduce:transition-none ${
         soldOut ? 'bg-charcoal/75' : 'hover:brightness-105 active:scale-[0.99] motion-reduce:active:scale-100'
       }`}
-      style={soldOut ? undefined : getProductSolidButtonStyle(accent)}
+      style={soldOut ? undefined : getProductSolidButtonStyle()}
       onClick={() => {
         if (soldOut) return
         trackAddToWishlist({

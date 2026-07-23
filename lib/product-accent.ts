@@ -1,4 +1,7 @@
-/** ألوان وأزرار موحّدة لكل منتج — PDP، البطاقات، واختيار العرض. */
+/** لون أزرار الطلب موحّد لكل المنتجات (مو لون كل SKU). */
+
+/** ورد المتجر — نفس لون باك الصفحة الرئيسية وأزرار السلة. */
+export const STORE_BUTTON_COLOR = '#b8485c'
 
 export function shadeTowardBlack(hex: string, t: number) {
   const h = hex.replace('#', '')
@@ -11,7 +14,9 @@ export function shadeTowardBlack(hex: string, t: number) {
   return `#${[mix(r), mix(g), mix(b)].map((x) => x.toString(16).padStart(2, '0')).join('')}`
 }
 
-export function getProductSolidButtonStyle(accent: string) {
+/** زر إضافة للسلة / CTA — لون واحد لكل المنتجات. */
+export function getProductSolidButtonStyle(_accent?: string) {
+  const accent = STORE_BUTTON_COLOR
   const accentDeep = shadeTowardBlack(accent, 0.28)
   const accentDeeper = shadeTowardBlack(accent, 0.12)
   return {
@@ -21,14 +26,16 @@ export function getProductSolidButtonStyle(accent: string) {
   } as const
 }
 
-export function getProductOfferInactiveStyle(accent: string) {
+export function getProductOfferInactiveStyle(_accent?: string) {
+  const accent = STORE_BUTTON_COLOR
   return {
     borderColor: `${accent}33`,
     background: '#ffffff',
   } as const
 }
 
-export function getProductOfferActiveStyle(accent: string) {
+export function getProductOfferActiveStyle(_accent?: string) {
+  const accent = STORE_BUTTON_COLOR
   return {
     borderColor: accent,
     background: `linear-gradient(135deg, color-mix(in srgb, ${accent} 16%, white) 0%, color-mix(in srgb, ${accent} 8%, white) 100%)`,

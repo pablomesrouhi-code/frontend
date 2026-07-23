@@ -1,6 +1,7 @@
 import type { Product, ProductReview } from '@/lib/products'
 import { getPdpSectionHeadlines } from '@/lib/pdp-section-headlines'
 import { getTestimonialMeta } from '@/lib/pdp-testimonial-meta'
+import { getProductSolidButtonStyle } from '@/lib/product-accent'
 
 function reviewInitials(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean)
@@ -184,7 +185,7 @@ export default function PdpReviewsSection({ product }: Props) {
             <a
               href="#pdp-buy-anchor"
               className="mt-4 inline-flex rounded-xl px-6 py-3 text-sm font-extrabold text-white shadow-sm"
-              style={{ background: accent }}
+              style={getProductSolidButtonStyle()}
             >
               اختاري العرض واطلبي الآن ↑
             </a>
