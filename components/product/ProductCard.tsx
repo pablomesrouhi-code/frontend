@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Product, getPriceForQty, formatSarAmount, getFormatLabelAr, isPowderProduct } from '@/lib/products'
 import { useStorePricing } from '@/components/pricing/StorePricingProvider'
-import { getProductSolidButtonStyle } from '@/lib/product-accent'
+import { STORE_BUTTON_COLOR, getProductSolidButtonStyle } from '@/lib/product-accent'
 import { trackAddToWishlist } from '@/lib/tracking/client'
 import ProductSoldBadge from '@/components/product/ProductSoldBadge'
 import PowderPlaceholder from '@/components/product/PowderPlaceholder'
@@ -16,22 +16,27 @@ type Props = {
   useHomeCardImage?: boolean
   /** بانر «جديد» فوق الصورة */
   showNewImageBanner?: boolean
+  /**
+   * `store` = أزرار وعناوين بلون المتجر الموحّد (الهوم).
+   * `product` = ألوان كل منتج (صفحات المنتج / الكتالوج).
+   */
+  tone?: 'product' | 'store'
 }
 
-function NewImageBanner({ product }: { product: Product }) {
+function NewImageBanner({ product, accent }: { product: Product; accent: string }) {
   if (!product.isNew) return null
   const label = product.isBestSeller ? (product.featuredBadgeAr ?? 'الأكثر مبيعاً') : 'جديد'
   return (
     <div
       className="absolute inset-x-0 top-0 z-20 flex items-center justify-center py-1.5 shadow-sm sm:py-2"
-      style={{ background: `linear-gradient(90deg, ${product.accentColor}ee, ${product.accentColor})` }}
+      style={{ background: `linear-gradient(90deg, ${accent}ee, ${accent})` }}
     >
       <span className="text-[10px] font-black tracking-[0.12em] text-white sm:text-[11px]">🇸🇦 {label}</span>
     </div>
   )
 }
 
-function PriceBlock({ product }: { product: Product }) {
+function PriceBlock({ product, accent }: { product: Product; accent: string }) {
   useStorePricing()
   const priceOne = getPriceForQty(1)
   const priceThree = getPriceForQty(3)
@@ -39,30 +44,30 @@ function PriceBlock({ product }: { product: Product }) {
   return (
     <div className="text-start">
       <p className="text-[11px] font-bold uppercase tracking-wide text-muted">سعر القطعة</p>
-      <p className="text-3xl font-black tabular-nums sm:text-4xl" style={{ color: product.accentColor }}>
+      <p className="text-3xl font-black tabular-nums sm:text-4xl" style={{ color: accent }}>
         <span className="sar-price">{formatSarAmount(priceOne)}</span>
       </p>
-      <p className="mt-1 text-xs leading-snug" style={{ color: `${product.accentColor}bb` }}>
-        3 قطع بـ <span className="font-bold" style={{ color: product.accentColor }}><span className="sar-price">{formatSarAmount(priceThree)}</span></span> من صفحة المنتج
+      <p className="mt-1 text-xs leading-snug" style={{ color: `${accent}bb` }}>
+        3 قطع بـ <span className="font-bold" style={{ color: accent }}><span className="sar-price">{formatSarAmount(priceThree)}</span></span> من صفحة المنتج
       </p>
     </div>
   )
 }
 
-function BadgeRow({ product, hideNewBadge }: { product: Product; hideNewBadge?: boolean }) {
+function BadgeRow({ product, accent, hideNewBadge }: { product: Product; accent: string; hideNewBadge?: boolean }) {
   return (
     <div className="flex flex-wrap items-center justify-end gap-2">
       {product.isNew && !hideNewBadge && (
         <span
           className="rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white sm:px-3 sm:py-1.5 sm:text-xs"
-          style={{ background: product.accentColor }}
+          style={{ background: accent }}
         >
           جديد
         </span>
       )}
       <span
         className="rounded-full px-3 py-1.5 text-sm font-bold tracking-wide text-white"
-        style={{ background: product.accentColor }}
+        style={{ background: accent }}
       >
         {getFormatLabelAr(product)} · {product.badgeAr}
       </span>
@@ -70,7 +75,7 @@ function BadgeRow({ product, hideNewBadge }: { product: Product; hideNewBadge?: 
   )
 }
 
-function CtaRow({ product }: { product: Product }) {
+function CtaRow({ product, accent }: { product: Product; accent: string }) {
   const soldOut = product.availability === 'sold_out'
 
   return (
@@ -79,7 +84,7 @@ function CtaRow({ product }: { product: Product }) {
       className={`group/btn mt-auto flex min-h-[3rem] w-full touch-manipulation items-center justify-between rounded-2xl px-5 py-3.5 text-base font-bold text-white transition-[transform,filter,box-shadow] duration-200 ease-out motion-reduce:transition-none ${
         soldOut ? 'bg-charcoal/75' : 'hover:brightness-105 active:scale-[0.99] motion-reduce:active:scale-100'
       }`}
-      style={soldOut ? undefined : getProductSolidButtonStyle()}
+      style={soldOut ? undefined : getProductSolidButtonStyle(accent)}
       onClick={() => {
         if (soldOut) return
         trackAddToWishlist({
@@ -95,14 +100,21 @@ function CtaRow({ product }: { product: Product }) {
   )
 }
 
-export default function ProductCard({ product, layout = 'grid', useHomeCardImage = false, showNewImageBanner = false }: Props) {
+export default function ProductCard({
+  product,
+  layout = 'grid',
+  useHomeCardImage = false,
+  showNewImageBanner = false,
+  tone = 'product',
+}: Props) {
+  const accent = tone === 'store' ? STORE_BUTTON_COLOR : product.accentColor
   const isPowder = isPowderProduct(product)
   const cardImage = useHomeCardImage && product.homeCardImage ? product.homeCardImage : product.coverImage
   const showCardPhoto = !isPowder || Boolean(useHomeCardImage && product.homeCardImage)
   const imageBanner = showNewImageBanner && product.isNew
   const cardImageNode = (
     <>
-      {imageBanner ? <NewImageBanner product={product} /> : null}
+      {imageBanner ? <NewImageBanner product={product} accent={accent} /> : null}
       <ProductSoldBadge product={product} hideFeatured={imageBanner} />
       <Image
         src={cardImage}
@@ -129,20 +141,20 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
 
         <div
           className="h-[3px] w-full shrink-0"
-          style={{ background: `linear-gradient(90deg, transparent, ${product.accentColor}66, transparent)` }}
+          style={{ background: `linear-gradient(90deg, transparent, ${accent}66, transparent)` }}
           aria-hidden
         />
 
         <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:p-5">
-          <BadgeRow product={product} hideNewBadge={imageBanner} />
+          <BadgeRow product={product} accent={accent} hideNewBadge={imageBanner} />
 
-          <h3 className="break-words text-[1.25rem] font-bold leading-snug tracking-tight sm:text-2xl" style={{ color: product.accentColor }}>
+          <h3 className="break-words text-[1.25rem] font-bold leading-snug tracking-tight sm:text-2xl" style={{ color: accent }}>
             {product.nameAr}
           </h3>
 
           <p className="line-clamp-3 break-words text-sm leading-relaxed text-muted sm:text-base">{product.subtitleAr}</p>
 
-          <CtaRow product={product} />
+          <CtaRow product={product} accent={accent} />
         </div>
       </article>
     )
@@ -165,29 +177,29 @@ export default function ProductCard({ product, layout = 'grid', useHomeCardImage
 
       <div
         className="h-[3px] w-full shrink-0 md:hidden"
-        style={{ background: `linear-gradient(90deg, transparent, ${product.accentColor}66, transparent)` }}
+        style={{ background: `linear-gradient(90deg, transparent, ${accent}66, transparent)` }}
         aria-hidden
       />
       <div
         className="hidden w-[3px] shrink-0 self-stretch md:block"
-        style={{ background: `linear-gradient(180deg, transparent, ${product.accentColor}55, transparent)` }}
+        style={{ background: `linear-gradient(180deg, transparent, ${accent}55, transparent)` }}
         aria-hidden
       />
 
       <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 p-5 sm:gap-4 sm:p-6 md:py-7 md:ps-6 md:pe-7">
-        <BadgeRow product={product} hideNewBadge={imageBanner} />
+        <BadgeRow product={product} accent={accent} hideNewBadge={imageBanner} />
 
-        <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight sm:text-2xl lg:text-[1.65rem]" style={{ color: product.accentColor }}>
+        <h3 className="break-words text-[1.35rem] font-bold leading-snug tracking-tight sm:text-2xl lg:text-[1.65rem]" style={{ color: accent }}>
           {product.nameAr}
         </h3>
 
         <div className="flex flex-wrap items-end justify-between gap-3 border-b border-border/80 pb-4">
-          <PriceBlock product={product} />
+          <PriceBlock product={product} accent={accent} />
         </div>
 
         <p className="line-clamp-3 break-words text-sm leading-relaxed text-muted sm:text-[15px]">{product.subtitleAr}</p>
 
-        <CtaRow product={product} />
+        <CtaRow product={product} accent={accent} />
       </div>
     </article>
   )

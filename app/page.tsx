@@ -314,7 +314,7 @@ export default function HomePage() {
           {/* كمبيوتر: 3 فوق و3 تحت — المتوفر أولاً ثم النافد */}
           <div className="grid min-w-0 grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
             {PRODUCTS.map((p) => (
-              <ProductCard key={p.id} product={p} useHomeCardImage showNewImageBanner />
+              <ProductCard key={p.id} product={p} useHomeCardImage showNewImageBanner tone="store" />
             ))}
           </div>
 

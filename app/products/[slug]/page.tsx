@@ -627,7 +627,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <a
               href="#pdp-buy-anchor"
               className="inline-flex min-h-[48px] min-w-[min(100%,240px)] items-center justify-center rounded-2xl px-8 py-3.5 text-base font-black text-white shadow-lg transition-[transform,filter] hover:brightness-105 active:translate-y-[1px]"
-              style={getProductSolidButtonStyle()}
+              style={getProductSolidButtonStyle(product.accentColor)}
             >
               رجوع إلى العرض والطلب (↑)
             </a>

@@ -185,7 +185,7 @@ export default function PdpReviewsSection({ product }: Props) {
             <a
               href="#pdp-buy-anchor"
               className="mt-4 inline-flex rounded-xl px-6 py-3 text-sm font-extrabold text-white shadow-sm"
-              style={getProductSolidButtonStyle()}
+              style={getProductSolidButtonStyle(accent)}
             >
               اختاري العرض واطلبي الآن ↑
             </a>
