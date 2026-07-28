@@ -803,7 +803,7 @@ const ALL_PRODUCTS: Product[] = [
     id: 'shahr-hadi',
     slug: 'shahr-hadi-pms-powder',
     availability: 'in_stock',
-    sku: 'CLCYPWFH',
+    sku: 'CLCYPWFHH',
     format: 'powder_pouch',
     isNew: true,
     nameAr: 'شهر هادئ',
