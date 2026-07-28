@@ -10,6 +10,7 @@ import {
   setTrackingUser,
   trackLead,
   trackPurchase,
+  whenFbqReady,
 } from '@/lib/tracking/client'
 import { isRiyadhCallWindow } from '@/lib/riyadh-hours'
 
@@ -167,9 +168,12 @@ export default function ThankYouPage() {
     if (!order) return
     if (!order.purchaseEventId || !order.leadEventId) return
 
-    const firedKey = `nabtalabo_pixels_fired`
+    const firedKey = 'nabtalabo_pixels_fired'
     const firedFor = sessionStorage.getItem(firedKey)
     if (firedFor === order.purchaseEventId) return
+
+    if (pixelsFired.current) return
+    pixelsFired.current = true
 
     const contentIds = order.items.map((i) => i.productId)
     if (order.upsellAccepted && order.upsellProduct) {
@@ -184,16 +188,23 @@ export default function ThankYouPage() {
 
     setTrackingUser({ phone: order.phone })
 
-    if (pixelsFired.current) return
-    pixelsFired.current = true
-    sessionStorage.setItem(firedKey, order.purchaseEventId)
-
-    // Lead + Purchase fire only here — never on checkout form open.
+    // Lead + Purchase fire only on thank-you — never on checkout form open.
+    // TikTok/Snap fire immediately; Meta waits for fbq via whenFbqReady inside track*.
     trackPurchase(commerce, {
       eventId: order.purchaseEventId,
       orderNumber: order.orderNumber,
     })
     trackLead(commerce, { eventId: order.leadEventId })
+
+    // Mark fired only once Meta stub/fbq exists — if pixel never loads, refresh can retry.
+    return whenFbqReady(() => {
+      if (typeof window.fbq !== 'function') return
+      try {
+        sessionStorage.setItem(firedKey, order.purchaseEventId!)
+      } catch {
+        /* ignore */
+      }
+    })
   }, [order])
 
   useEffect(() => {

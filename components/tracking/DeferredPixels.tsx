@@ -21,6 +21,7 @@ export default function DeferredPixels() {
   if (!pixelsEnabled()) return null
 
   const raw = process.env.NEXT_PUBLIC_PIXEL_SCRIPT_STRATEGY
+  // Default afterInteractive — lazyOnload often drops thank-you Purchase/Lead before fbevents.js loads.
   const loadStrategy: 'lazyOnload' | 'afterInteractive' =
     raw === 'lazyOnload' ? 'lazyOnload' : 'afterInteractive'
 

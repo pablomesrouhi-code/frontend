@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,7 +9,7 @@ import { getPublicApiBase } from '@/lib/api'
 import { getBestUpsell, formatSarAmount, getUpsellPriceSar } from '@/lib/products'
 import { CHECKOUT_UI_REV } from '@/lib/checkout-rev'
 import UpsellModal from './UpsellModal'
-import { newTrackingEventId, setTrackingUser } from '@/lib/tracking/client'
+import { newTrackingEventId, setTrackingUser, trackInitiateCheckout } from '@/lib/tracking/client'
 
 const TEST_PHONES = ['055000000']
 
@@ -98,6 +98,18 @@ export default function CheckoutPopup({ onClose }: Props) {
   })
 
   const upsell = getBestUpsell(items.map((i) => i.productId))
+
+  // Funnel: InitiateCheckout when the COD form opens (not Lead — Lead is thank-you only).
+  useEffect(() => {
+    if (items.length === 0) return
+    trackInitiateCheckout({
+      content_ids: items.map((i) => i.productId),
+      value: total(),
+      currency: 'SAR',
+      num_items: items.reduce((n, i) => n + i.offerQty, 0),
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- fire once on mount
+  }, [])
 
   const finalizeOrder = useCallback(
     async (data: FormValues, upsellAccepted: boolean) => {
