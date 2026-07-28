@@ -203,7 +203,7 @@ export default function HomePage() {
                       fill
                       priority
                       sizes="(max-width: 768px) 90vw, 36rem"
-                      className="object-cover object-center"
+                      className="object-contain object-center"
                     />
                     <div
                       aria-hidden
