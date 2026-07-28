@@ -817,7 +817,7 @@ const ALL_PRODUCTS: Product[] = [
     badgeAr: 'مسحوق الدورة الهادئة',
     accentColor: '#8E6C8E',
     bgColor: '#F0E9F0',
-    coverImage: '/products/shahr-hadi-product.png',
+    coverImage: '/products/shahr-hadi-powder.png',
     coverWidth: 1024,
     coverHeight: 1024,
     homeCardImage: '/products/home-shahr-hadi.png',
