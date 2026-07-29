@@ -1113,9 +1113,170 @@ const ALL_PRODUCTS: Product[] = [
       { q: 'هل الدفع عند الاستلام؟', a: 'نعم — COD كاش عند الباب لكل طلبات نبتة لابو.' },
     ],
   },
+  {
+    id: 'vitaflow',
+    slug: 'vitaflow-caramel-energy-powder',
+    availability: 'in_stock',
+    sku: 'VTFLCW',
+    format: 'powder_pouch',
+    isNew: true,
+    nameAr: 'فيتا فلو',
+    nameEn: 'VitaFlow Caramel Energy Powder',
+    subtitleAr:
+      'مسحوق بنكهة الكراميل: دعم الطاقة والجهد اليومي — لمّا التعب يسرق يومك قبل ما يخلص.',
+    pdpMagnetLineAr: 'تعب الصباح؟ يوم طويل؟ مكيال واحد يكمّل طاقتك ضمن روتين واضح.',
+    heroHeadlineAr: 'تعبانة والجهد يخلص بسرعة؟ فيتا فلو لزاوية الطاقة — مو قهوة زيادة.',
+    heroSubAr:
+      'فيتا فلو مسحوق بنكهة الكراميل: مكيال يومي في الماء أو القهوة لدعم الطاقة والجهد ضمن يوم متوازن. مكمّل غذائي — مو منبّه وصفة ولا وعد طاقة سحرية فورية. الجرعة على الغلاف المعتمد.',
+    badgeAr: 'طاقة · جهد · يوم أوضح',
+    accentColor: '#B8784A',
+    bgColor: '#F7F0E8',
+    coverImage: '/products/vitaflow-powder.png',
+    coverWidth: 1024,
+    coverHeight: 1024,
+    homeCardImage: '/products/vitaflow-powder.png',
+    pdpHeroImage: {
+      src: '/products/vitaflow-powder-hero.png',
+      width: 1024,
+      height: 1024,
+      alt: 'فيتا فلو — قبل وبعد: من تعب وإرهاق إلى طاقة أوضح مع عبوة المسحوق بنكهة الكراميل',
+    },
+    painSectionImage: {
+      src: '/products/vitaflow-powder-pain.png',
+      width: 1024,
+      height: 1024,
+      alt: 'امرأة متعبة جالسة أمام قهوتها — إحساس الإرهاق وفقدان الجهد اليومي',
+    },
+    ingredientsSectionImage: {
+      src: '/products/vitaflow-powder-ingredients.png',
+      width: 1024,
+      height: 1024,
+      alt: 'عبوة فيتا فلو مع مكيال وكوب كراميل — مسحوق طاقة يومي',
+    },
+    extraStory: {
+      src: '/products/vitaflow-powder-lifestyle.png',
+      width: 1024,
+      height: 1024,
+      alt: 'امرأة نشيطة مع فيتا فلو في المطبخ — روتين طاقة صباحي',
+      titleAr: 'اليوم الطويل يحتاج روتين طاقة يثبت',
+      bodyAr:
+        'مو كل تعب ينحل بفنجان قهوة إضافي. فيتا فلو مكيال يومي بنكهة الكراميل يذوب في الماء أو قهوتك ويكمل روتين الجهد من الداخل. النتيجة تختلف حسب الجسم والالتزام؛ الغلاف المعتمد هو المرجع.',
+    },
+    captionUnderHeroImage: 'مكيال يومي لدعم الطاقة والجهد — مو وعد سحر. الجرعة على الغلاف.',
+    copyAfterHeroPrice: 'اختاري عبوة أو عرض شهرين/ثلاثة — السعر كامل قبل التأكيد.',
+    persuasionBlock: {
+      eyebrowAr: 'المشكل الحقيقي',
+      titleAr: 'الجسم «فاضي»… واليوم لسه طويل',
+      bodyAr:
+        'تصحّين متعبة، تخلّصين الشغل بنص الطاقة، والمساء ما عندك جهد لشي؟ أحياناً المشكل مو كسل — نقص روتين يدعم الطاقة اليومية. فيتا فلو: مسحوق كراميل بمكيال واحد يومياً — زاوية طاقة وجهد، بدون ادّعاء طبي.',
+      bullets: [
+        'الهدف: دعم الطاقة والجهد ضمن يوم متوازن — مو منبّه وصفة.',
+        'نكهة كراميل تسهّل الالتزام اليومي.',
+        'مكيال في ماء أو قهوة — بسيط وواضح.',
+        'يكمّل نوم وأكل متوازن — مو بديل عن الراحة.',
+        'الاستمرار أهم من توقع فرق ليلة واحدة.',
+      ],
+      sectionImage: {
+        src: '/products/vitaflow-powder-mix.png',
+        width: 1024,
+        height: 1024,
+        alt: 'خلط مكيال فيتا فلو في كوب — روتين طاقة يومي',
+      },
+    },
+    closingPersuasion: {
+      eyebrowAr: 'قرار واضح',
+      titleAr: 'إذا يومك يطيح من التعب — هذي زاويتك',
+      bodyAr:
+        'فيتا فلو لزاوية الطاقة والجهد اليومي. ليل ماج للاسترخاء المسائي. منتجان مختلفان — خذي اللي يمسّ احتياجك، أو اجمعيهما لاحقاً.',
+      bullets: [
+        'فيتا فلو صباحاً لو المشكل تعب وجهد ينفد بسرعة.',
+        'ليل ماج مساءً لو تبين روتين هدوء قبل النوم.',
+        'حوامل ومرضعات وأمراض مزمنة: استشارة قبل أي مكمّل.',
+      ],
+    },
+    afterReviewsBanner: {
+      titleAr: 'طاقة بالنهار… وهدوء بالليل',
+      bodyAr: 'كثير يبدأن بفيتا فلو ثم يضيفن ليل ماج — شوفي «كمّلي السلة» تحت.',
+    },
+    ingredients: ['تركيبة طاقة يومية', 'نكهة كراميل', 'مكونات طبيعية حسب الغلاف'],
+    benefits: [
+      'يدعم إحساس الطاقة والجهد ضمن يوم طويل',
+      'نكهة كراميل تسهّل الالتزام بمكيال يومي',
+      'روتين بسيط: يذوب في الماء أو القهوة',
+      'يكمّل نمط نوم وأكل متوازن — مو بديل طبي',
+      'عبوة قابلة لإعادة الإغلاق مع مكيال واضح',
+    ],
+    howToUse:
+      'مكيال واحد يومياً حسب الغلاف المعتمد — ذوّبيه في ماء أو قهوة أو مشروب فاتر وحرّكي جيداً. لا تتجاوزي الجرعة المكتوبة على العبوة.',
+    painCopy:
+      'تعرفين الإحساس؟ تصحّين والجسم ثقيل، اليوم يمشي وأنتِ بنصّ الطاقة، والليل يجي وأنتِ منهكة بدون ما سويتي «شيء كبير». أحياناً المشكل مو كسل ولا قلة نوم فقط — نقص روتين يدعم الجهد اليومي. فيتا فلو مسحوق بنكهة الكراميل بمكيال واحد يومياً — زاوية طاقة أوضح ضمن يومك. مكمّل غذائي؛ مو منبّه وصفة ولا وعد سحر.',
+    productInfoSheets: [
+      {
+        titleAr: 'المكونات',
+        bodyAr:
+          'مسحوق بنكهة الكراميل لدعم الطاقة اليومية ضمن روتين متوازن. القائمة الكاملة والجرعة والمصدر على الغلاف المعتمد — هذه الصفحة ملخص تسويقي فقط.',
+      },
+      {
+        titleAr: 'فترة ظهور النتيجة',
+        bodyAr:
+          'تختلف من شخص لآخر. كثير يلاحظن فرق في إحساس الجهد مع الالتزام اليومي المنتظم مع نوم وأكل متوازن. ليست نتيجة ليلة واحدة.',
+      },
+      {
+        titleAr: 'لمن؟',
+        bodyAr:
+          'لمن تحسّ بتعب يومي أو نفاد جهد سريع وتبغى روتين مسحوق بسيط بنكهة واضحة. مو بديل متابعة طبية للإرهاق المزمن.',
+      },
+      {
+        titleAr: 'موانع الاستعمال',
+        bodyAr:
+          'حوامل ومرضعات دون استشارة. حساسية لأي مكوّن على الغلاف. أدوية مزمنة: استشيري مختصاً. لا تتجاوزي جرعة الغلاف. ليس دواءً ولا يعالج أمراضاً.',
+      },
+    ],
+    crossSells: ['laylmag', 'rawnaq-c'],
+    rating: 4.8,
+    reviewCount: 9,
+    soldCount: 0,
+    isBestSeller: false,
+    reviews: [
+      {
+        name: 'نورة س.',
+        text: 'كنت أخلّص اليوم بنص طاقة. بعد أسابيع على المكيال حسّيت يومي أوضح — مو سحر، بس روتين يفرق.',
+        rating: 5,
+      },
+      {
+        name: 'هدى ع.',
+        text: 'نكهة الكراميل سهّلت الالتزام. الصباح صار أخف شوي بعد ما ثبّت الروتين.',
+        rating: 5,
+      },
+      {
+        name: 'لينا م.',
+        text: 'يختلط بسهولة مع القهوة. ما توقعت معجزة — توقعت عادة يومية، وهذا اللي صار.',
+        rating: 4,
+      },
+    ],
+    faqs: [
+      {
+        q: 'هل هو بديل القهوة أو منبّه؟',
+        a: 'لا. مكمّل غذائي ضمن روتين يومي — مو دواء منبّه ولا بديل قهوة. تقدرين تخلطينه مع مشروبك حسب الغلاف.',
+      },
+      {
+        q: 'كيف أستخدمه؟',
+        a: 'مكيال واحد يومياً في ماء أو قهوة أو مشروب فاتر حسب تعليمات الغلاف المعتمد.',
+      },
+      {
+        q: 'متى ألاحظ فرقاً؟',
+        a: 'تختلف التجربة؛ كثير يلاحظن فرق إحساس الجهد مع الالتزام اليومي المنتظم. ليست نتيجة فورية مضمونة.',
+      },
+      {
+        q: 'هل يناسب الرياضة؟',
+        a: 'يمكن دمجه ضمن روتين يومي نشط حسب تعليمات الغلاف. مو مكمل أداء رياضي طبي.',
+      },
+      { q: 'هل الدفع عند الاستلام؟', a: 'نعم — COD كاش عند الباب لكل طلبات نبتة لابو.' },
+    ],
+  },
 ]
 
-const STOREFRONT_PRODUCT_IDS = new Set(['rawnaq-c', 'laylmag', 'wudouh', 'shahr-hadi', 'naseej'])
+const STOREFRONT_PRODUCT_IDS = new Set(['rawnaq-c', 'laylmag', 'wudouh', 'shahr-hadi', 'naseej', 'vitaflow'])
 
 /** المتجر الحالي — المتوفر أولاً (صف 3 على الكمبيوتر) ثم النافد تحته. */
 export const PRODUCTS: Product[] = ALL_PRODUCTS
@@ -1158,10 +1319,13 @@ export function getBestUpsell(cartProductIds: string[]): Product | null {
   // رونق C ↔ نسيج (علكة بيوتين ↔ مسحوق كولاجين للتماسك) — ثم شهر هادئ.
   if (cartProductIds.includes('rawnaq-c') && missing.includes('naseej')) return getProductById('naseej') ?? null
   if (cartProductIds.includes('naseej') && missing.includes('rawnaq-c')) return getProductById('rawnaq-c') ?? null
+  if (cartProductIds.includes('vitaflow') && missing.includes('laylmag')) return getProductById('laylmag') ?? null
+  if (cartProductIds.includes('laylmag') && missing.includes('vitaflow')) return getProductById('vitaflow') ?? null
   if (cartProductIds.includes('rawnaq-c') && missing.includes('shahr-hadi')) return getProductById('shahr-hadi') ?? null
   if (cartProductIds.includes('shahr-hadi') && missing.includes('rawnaq-c')) return getProductById('rawnaq-c') ?? null
   if (cartProductIds.includes('naseej') && missing.includes('shahr-hadi')) return getProductById('shahr-hadi') ?? null
   if (cartProductIds.includes('shahr-hadi') && missing.includes('naseej')) return getProductById('naseej') ?? null
+  if (cartProductIds.includes('vitaflow') && missing.includes('rawnaq-c')) return getProductById('rawnaq-c') ?? null
   return getProductById(missing[0]) ?? null
 }
 

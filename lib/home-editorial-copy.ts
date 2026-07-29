@@ -24,7 +24,8 @@ export const PRODUCT_GOAL_LABEL: Record<string, string> = {
   'quwwat-sha3r': 'الشعر',
   wudouh: 'البشرة النقية',
   'shahr-hadi': 'أيام الدورة',
-  naseej: 'تجاعيد · شعر · بشرة · أظافر',
+  naseej: 'قوام من الداخل',
+  vitaflow: 'طاقة وجهد',
 }
 
 export const HOME_PILLARS = [

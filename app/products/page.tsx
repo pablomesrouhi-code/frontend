@@ -8,7 +8,7 @@ import HomeMixedBundle from '@/components/home/HomeMixedBundle'
 export const metadata = {
   title: 'المنتجات | نبتة لابو',
   description:
-    'أربعة منتجات مكمّل غذائي من نبتة لابو — علكة ومسحوق: بيوتين، مغنيسيوم، غلوتاثيون وكولاجين، والتوازن الهرموني. SFDA · حلال · COD.',
+    'منتجات مكمّل غذائي من نبتة لابو — علكة ومسحوق: جمال، طاقة، نوم، وتوازن. SFDA · حلال · COD.',
 }
 
 const STORE_REVIEW_COUNT_FALLBACK = 850
@@ -23,7 +23,7 @@ export default function CollectionPage() {
           <span className="mb-4 inline-block rounded-full border border-[#cce4e7]/90 bg-[#eaf3f4] px-4 py-1.5 text-sm font-semibold text-[#146b70] shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] ring-1 ring-[#146b70]/[0.06]">
             مكمّل غذائي · علكة ومسحوق
           </span>
-          <h1 className="text-4xl sm:text-5xl font-bold text-[#1C1C1C] mb-2 leading-tight">أربعة منتجات — علكة ومسحوق</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold text-[#1C1C1C] mb-2 leading-tight">منتجات نبتة لابو — علكة ومسحوق</h1>
           <p className="text-[#146b70] font-semibold text-sm sm:text-base mb-3 max-w-2xl">
             روتين واحد متكامل — وحالة المخزون واضحة في زر كل منتج.
           </p>

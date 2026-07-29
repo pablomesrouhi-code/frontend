@@ -30,7 +30,7 @@ const STAT_NUMBERS = [
 ] as const
 
 const STEPS = [
-  { n: '01', icon: '✨', title: 'اختاري اللي يناسبك', desc: 'علكة يومية أو عبوة مسحوق مع مكيال — أربعة منتجات، كل واحد له هدف واضح.' },
+  { n: '01', icon: '✨', title: 'اختاري اللي يناسبك', desc: 'علكة يومية أو عبوة مسحوق مع مكيال — منتجات واضحة، كل واحد له هدف.' },
   { n: '02', icon: '💎', title: 'على قد ما تستخدمين', desc: 'قطعة، اثنتين، أو ثلاث حسب وتيرتك؛ السعر يتفصّل معك بدون ضغط.' },
   { n: '03', icon: '☎️', title: 'تأكيد بسيط وبراحتك', desc: 'اسمك ورقم جوال سعودي يكفيان؛ ما نطلب بطاقة، ونتواصل للتأكيد.' },
   { n: '04', icon: '📦', title: 'لمّا يوصلك الطلب', desc: 'نوصل لمناطق المملكة، نخبرك قبل التوصيل، وتدفعين كاش عند الاستلام.' },
@@ -122,7 +122,7 @@ export default function HomePage() {
               </h1>
 
               <p className="mb-6 max-w-md text-base leading-relaxed sm:text-lg" style={{ color: BRAND.muted }}>
-                أربعة منتجات مرخّصة — علكة يومية وعبوات مسحوق مع مكاييل. اسم + جوال 05 · تأكيد هاتفي · دفع عند الباب · 2–4 أيام.
+                منتجات مرخّصة — علكة يومية وعبوات مسحوق مع مكاييل. اسم + جوال 05 · تأكيد هاتفي · دفع عند الباب · 2–4 أيام.
               </p>
 
               <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
@@ -690,7 +690,7 @@ export default function HomePage() {
           </div>
           <h2 className="mb-4 text-3xl font-black text-white sm:text-4xl">جاهزة لروتين نبتة لابو؟</h2>
           <p className="mx-auto mb-8 max-w-xl text-base leading-relaxed text-white/85">
-            علكة ومسحوق — أربعة منتجات تكمل بعضها. اختاري الأقرب ليومك، أكّدي على 05، وادفعي عند الاستلام.
+            علكة ومسحوق — منتجات تكمل بعضها. اختاري الأقرب ليومك، أكّدي على 05، وادفعي عند الاستلام.
           </p>
           <Link
             href="#products"
