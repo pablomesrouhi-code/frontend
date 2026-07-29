@@ -199,7 +199,7 @@ export default function HomePage() {
                   <div className="relative aspect-square">
                     <Image
                       src="/hero-store-trio-v2.jpg"
-                      alt="أربعة منتجات نبتة لابو — بيوتين، توازن هرموني، مغنيسيوم، وغلوتاثيون كولاجين"
+                      alt="منتجات نبتة لابو — مساحيق وفيتا فلو وعلكة البيوتين"
                       fill
                       priority
                       sizes="(max-width: 768px) 90vw, 36rem"
