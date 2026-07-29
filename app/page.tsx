@@ -266,7 +266,7 @@ export default function HomePage() {
               style={{ background: `linear-gradient(90deg, ${BRAND.rose}, ${BRAND.peach})` }}
             />
             <p className="mt-3 max-w-2xl text-sm leading-relaxed sm:text-base" style={{ color: BRAND.muted }}>
-              ثلاثة منتجات متوفرة الآن — رونق C، شهر هادئ، ونسيج — والباقي يعود قريباً.
+              ثلاثة مساحيق متوفرة الآن — شهر هادئ، نسيج، وفيتا فلو — والباقي يعود قريباً.
             </p>
           </div>
 
@@ -275,13 +275,13 @@ export default function HomePage() {
               {
                 icon: '🔥',
                 title: 'الأكثر طلباً الآن',
-                text: 'رونق C · شهر هادئ · نسيج متوفرون للطلب',
+                text: 'شهر هادئ · نسيج · فيتا فلو متوفرون للطلب',
                 color: BRAND.rose,
               },
               {
                 icon: '✨',
                 title: 'باك الثلاثة',
-                text: 'عبوة من كل منتج بـ349 ريال',
+                text: 'عبوة من كل مسحوق بـ349 ريال',
                 color: BRAND.teal,
               },
               {

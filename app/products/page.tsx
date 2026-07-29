@@ -56,8 +56,8 @@ export default function CollectionPage() {
           <ProductsSoldProofBar />
           <div className="mb-6 text-start">
             <p className="mb-1 text-xs font-bold uppercase tracking-[0.18em] text-[#146b70]">منتجات نبتة لابو</p>
-            <h2 className="text-xl font-bold text-[#1C1C1C] sm:text-2xl">ثلاثة متوفرة الآن — تكمل بعضها</h2>
-            <p className="mt-1 text-sm text-[#5c5656]">اضغطي على أي منتج للتفاصيل — وحالة المخزون مكتوبة في الزر.</p>
+            <h2 className="text-xl font-bold text-[#1C1C1C] sm:text-2xl">باك الثلاثة مساحيق + المنتجات الأخرى</h2>
+            <p className="mt-1 text-sm text-[#5c5656]">شهر هادئ · نسيج · فيتا فلو في باك واحد — أو اطلبي كل منتج لوحده.</p>
           </div>
           <div className="grid min-w-0 w-full grid-cols-1 items-stretch gap-6 md:gap-8">
             {PRODUCTS.map((p) => (

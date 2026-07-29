@@ -6,8 +6,8 @@ import PowderPlaceholder from '@/components/product/PowderPlaceholder'
 import { formatSarAmount, getPriceForQty, getProductById, type Product } from '@/lib/products'
 import { useCartStore } from '@/stores/cart-store'
 
-/** باك الثلاثة المتوفرة: علبة من كل منتج */
-const TRIO_IDS = ['rawnaq-c', 'shahr-hadi', 'naseej'] as const
+/** باك الثلاثة المتوفرة: عبوة مسحوق من كل منتج */
+const TRIO_IDS = ['shahr-hadi', 'naseej', 'vitaflow'] as const
 
 function BundleProductVisual({ product }: { product: Product }) {
   const src = product.homeCardImage ?? product.coverImage
@@ -62,10 +62,10 @@ export default function HomeMixedBundle() {
             باك الثلاثة · الأكثر توفيراً
           </span>
           <h2 className="mt-4 text-3xl font-black leading-tight sm:text-4xl">
-            عبوة من رونق C + شهر هادئ + نسيج
+            عبوة من شهر هادئ + نسيج + فيتا فلو
           </h2>
           <p className="mt-4 max-w-xl text-sm leading-7 text-white/80 sm:text-base">
-            ثلاثة منتجات مختلفة في طلب واحد: بيوتين، توازن هرموني، وكولاجين للتجاعيد والشعر والبشرة والأظافر من الداخل.
+            ثلاثة مساحيق في طلب واحد: توازن هرموني، كولاجين للشعر والبشرة، وطاقة يومية بنكهة الكراميل.
           </p>
           <ul className="mt-4 flex flex-col gap-2 text-sm font-semibold text-white/90">
             {products.map((p) => (

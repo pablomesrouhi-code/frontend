@@ -15,7 +15,7 @@ export default function HomeBundleNudge() {
               جربي الثلاثة معاً — روتين كامل
             </p>
             <p className="mt-1 text-sm text-white/80">
-              رونق C + خفّة بيوتك + ليل ماج · من الصباح للمساء
+              شهر هادئ + نسيج + فيتا فلو · روتين مسحوق متكامل
             </p>
             <p className="mt-2 text-xs font-semibold text-white/70">
               <span dir="ltr" className="tabular-nums text-white">
