@@ -4,6 +4,7 @@ import { getPdpSectionHeadlines } from '@/lib/pdp-section-headlines'
 import { getPdpHeroStats } from '@/lib/pdp-hero-stats'
 import StarRating from '@/components/ui/StarRating'
 import ProductPageClient from './ProductPageClient'
+import PdpPackFinale from '@/components/product/PdpPackFinale'
 import ProductCard from '@/components/product/ProductCard'
 import ProductPageImageSlot from '@/components/product/ProductPageImageSlot'
 import PdpSquareImage from '@/components/product/PdpSquareImage'
@@ -12,7 +13,6 @@ import PdpReviewsSection from '@/components/product/PdpReviewsSection'
 import PowderPlaceholder from '@/components/product/PowderPlaceholder'
 import PdpHeroStatPills from '@/components/product/pdp/PdpHeroStatPills'
 import { getPdpAddCta, getPdpComplianceNote } from '@/lib/pdp-copy'
-import { getProductSolidButtonStyle } from '@/lib/product-accent'
 
 export async function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }))
@@ -76,7 +76,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const routineH = sh.routine ?? {}
   const infoH = sh.infoSheets ?? {}
   const faqH = sh.faq ?? {}
-  const closeH = sh.closingOffer ?? {}
 
   return (
     <div className="bg-[#FFFFFF] min-w-0 overflow-x-hidden pb-[calc(3.75rem+env(safe-area-inset-bottom,0px))]">
@@ -606,40 +605,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </section>
       )}
 
-      <section
-        id="pdp-return-to-offer"
-        className="scroll-mt-[calc(4.75rem+env(safe-area-inset-top))] border-y border-border py-12 sm:py-14 md:py-16"
-        style={{ background: `linear-gradient(to bottom left, ${product.bgColor}88, #fff, ${accent}0a)` }}
-      >
-        <div className="mx-auto flex max-w-3xl flex-col items-center px-4 text-center sm:px-6">
-          <p className="mb-3 text-xs font-black uppercase tracking-[0.26em]" style={{ color: product.accentColor }}>
-            {closeH.eyebrowAr ?? 'جاهزة من القرار؟'}
-          </p>
-          <h2 className="text-2xl font-black leading-snug text-charcoal sm:text-3xl">
-            {closeH.titleAr ?? 'طلعي لفوق؛ نفس العربات والخصم موجودين في خانة الأسعار فوق الصفحة'}
-          </h2>
-          <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-charcoal sm:text-lg">
-            اختاري الخانة المناسبة (قطعة واحدة أو عرض القطعتين أو الثلاث)، «أضيفي للسلة» يفتح لك تأكيد الطلب.{' '}
-            <strong className="font-semibold text-charcoal">ودفع كاش وقت التسليم</strong>
-            إن كان هذا اللي مخليكِ مرتاحة أكثر قبل ما تكمّلي.
-          </p>
-          <div className="mt-8 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:justify-center">
-            <a
-              href="#pdp-buy-anchor"
-              className="inline-flex min-h-[48px] min-w-[min(100%,240px)] items-center justify-center rounded-2xl px-8 py-3.5 text-base font-black text-white shadow-lg transition-[transform,filter] hover:brightness-105 active:translate-y-[1px]"
-              style={getProductSolidButtonStyle(product.accentColor)}
-            >
-              رجوع إلى العرض والطلب (↑)
-            </a>
-            <a
-              href="#pdp-reviews"
-              className="inline-flex min-h-[48px] items-center justify-center rounded-2xl border-2 border-border bg-white px-7 py-3.5 text-base font-bold text-charcoal shadow-sm ring-1 ring-black/[0.04] transition hover:bg-peach-soft/30"
-            >
-              ارجعي لآراء العميلات
-            </a>
-          </div>
-        </div>
-      </section>
+      <PdpPackFinale product={product} addToCartLabel={getPdpAddCta(product.id)} />
 
       <PdpDeliveryPaymentSection accentColor={product.accentColor} bgColor={product.bgColor} />
 

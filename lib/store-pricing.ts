@@ -32,26 +32,43 @@ export function getOffers(format: ProductOfferFormat = 'gummy') {
   const unit = isPowder ? 'عبوة' : 'علبة'
   const unitDual = isPowder ? 'عبوتان' : 'علبتان'
   const units3 = isPowder ? '3 عبوات' : '3 علب'
+  const p1 = getPriceForQty(1)
+  const p2 = getPriceForQty(2)
+  const p3 = getPriceForQty(3)
+  const save2 = p1 * 2 - p2
+  const save3 = p1 * 3 - p3
   return [
     {
       qty: 1 as const,
       label: `${unit} واحدة`,
-      sublabel: isPouch ? 'عبوة مسحوق مع مكيال · الجرعة حسب الغلاف' : isPowder ? '30 مكيال · شهر كامل' : '60 علكة · شهر كامل',
-      price: getPriceForQty(1),
+      sublabel: isPouch
+        ? 'عبوة مسحوق مع مكيال · للتجربة الأولى'
+        : isPowder
+          ? '30 مكيال · شهر كامل للتجربة'
+          : '60 علكة · شهر كامل للتجربة',
+      price: p1,
       badge: null as string | null,
     },
     {
       qty: 2 as const,
       label: `${unitDual} · ثبّتي النتيجة`,
-      sublabel: isPouch ? 'عبوتان مسحوق · روتين أطول' : isPowder ? '60 مكيال · شهر + تثبيت' : '120 علكة · شهر النتيجة + تثبيت',
-      price: getPriceForQty(2),
-      badge: 'الأكثر اختياراً',
+      sublabel: isPouch
+        ? `عبوتان مسحوق · وفّري ${save2} ر.س`
+        : isPowder
+          ? `60 مكيال · وفّري ${save2} ر.س عن قطعتين بسعر كامل`
+          : `120 علكة · وفّري ${save2} ر.س عن علبتين بسعر كامل`,
+      price: p2,
+      badge: 'شائع',
     },
     {
       qty: 3 as const,
-      label: `${units3} · النتيجة الكاملة`,
-      sublabel: isPouch ? '3 عبوات مسحوق · أفضل توفير' : isPowder ? '90 مكيال · نتيجة + تثبيت + هدية' : '180 علكة · نتيجة + تثبيت + هدية',
-      price: getPriceForQty(3),
+      label: `${units3} · أقصى توفير`,
+      sublabel: isPouch
+        ? `3 عبوات · وفّري ${save3} ر.س · أرخص سعر للوحدة`
+        : isPowder
+          ? `90 مكيال · وفّري ${save3} ر.س · أرخص سعر للوحدة`
+          : `180 علكة · وفّري ${save3} ر.س · أرخص سعر للوحدة`,
+      price: p3,
       badge: 'الأكثر توفيراً',
     },
   ]
