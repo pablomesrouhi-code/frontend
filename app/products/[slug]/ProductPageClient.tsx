@@ -34,7 +34,7 @@ export default function ProductPageClient({
   addToCartLabel?: string
 }) {
   useStorePricing()
-  const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(3)
+  const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(2)
   const [stickyCtaVisible, setStickyCtaVisible] = useState(false)
   const priceBlockRef = useRef<HTMLDivElement>(null)
   const { addItem, openCart } = useCartStore()
