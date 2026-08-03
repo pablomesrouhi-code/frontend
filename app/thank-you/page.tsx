@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { PRODUCTS, type Product, formatSarAmount, getPriceForQty, isProductAvailable } from '@/lib/products'
 import { getPublicApiBase } from '@/lib/api'
 import { ensureSheetDelivery } from '@/lib/sheet-ensure'
+import { ensureCodNetworkDelivery } from '@/lib/cod-ensure'
 import { ensureLeadCapi } from '@/lib/lead-capi-ensure'
 import {
   setTrackingUser,
@@ -112,6 +113,7 @@ export default function ThankYouPage() {
   const [copied, setCopied] = useState(false)
   const pixelsFired = useRef(false)
   const sheetEnsured = useRef(false)
+  const codEnsured = useRef(false)
   const leadCapiEnsured = useRef(false)
 
   useEffect(() => {
@@ -223,6 +225,15 @@ export default function ThankYouPage() {
 
     const base = getPublicApiBase()
     void ensureSheetDelivery(base, order.orderId, order.leadEventId)
+  }, [order])
+
+  useEffect(() => {
+    if (!order?.orderId || !order.leadEventId) return
+    if (codEnsured.current) return
+    codEnsured.current = true
+
+    const base = getPublicApiBase()
+    void ensureCodNetworkDelivery(base, order.orderId, order.leadEventId)
   }, [order])
 
   if (!hydrated) {
