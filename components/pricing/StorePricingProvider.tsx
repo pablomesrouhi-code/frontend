@@ -17,6 +17,7 @@ export function StorePricingProvider({ children }: { children: ReactNode }) {
   const [pricing, setPricing] = useState<StorePricing>(DEFAULT_PRICING)
 
   useEffect(() => {
+    // sessionStorage hit skips network on repeat navigations in the same tab
     void loadStorePricing().then(setPricing)
   }, [])
 
