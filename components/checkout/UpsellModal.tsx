@@ -1,14 +1,12 @@
 'use client'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import type { CartProduct } from '@/lib/cart-catalog'
-import { formatSarAmount } from '@/lib/money'
-import { getPriceForQty, getUpsellPriceSar } from '@/lib/store-pricing'
+import { formatSarAmount, getPriceForQty, getUpsellPriceSar, type Product } from '@/lib/products'
 import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import { CHECKOUT_UI_REV } from '@/lib/checkout-rev'
 
 type Props = {
-  product: CartProduct
+  product: Product
   placingOrder?: boolean
   /** Shown on upsell step when API/network fails (otherwise user sees a “dead” screen). */
   checkoutError?: string | null

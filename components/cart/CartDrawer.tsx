@@ -3,21 +3,14 @@ import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useCartStore } from '@/stores/cart-store'
-import {
-  CART_CATALOG,
-  getCartProductById,
-  isCartProductAvailable,
-  type CartProduct,
-} from '@/lib/cart-catalog'
-import { formatSarAmount } from '@/lib/money'
-import { getPriceForQty } from '@/lib/store-pricing'
+import { PRODUCTS, getProductById, formatSarAmount, getPriceForQty, isProductAvailable } from '@/lib/products'
 import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 
 const CheckoutPopup = dynamic(() => import('@/components/checkout/CheckoutPopup'), { ssr: false })
 
 function cartThumb(
-  product: CartProduct | undefined,
+  product: ReturnType<typeof getProductById>,
   size: 'sm' | 'md',
   accentColor: string,
   bgColor: string
@@ -51,12 +44,12 @@ export default function CartDrawer() {
   const cartIds = items.map((i) => i.productId)
   const totalQty = items.reduce((sum, item) => sum + item.offerQty, 0)
   const crossSells = totalQty < 3
-    ? CART_CATALOG.filter((p) => isCartProductAvailable(p) && !cartIds.includes(p.id))
+    ? PRODUCTS.filter((p) => isProductAvailable(p) && !cartIds.includes(p.id))
     : []
 
   useEffect(() => {
     items.forEach((item) => {
-      if (!isCartProductAvailable(getCartProductById(item.productId))) removeItem(item.productId)
+      if (!isProductAvailable(getProductById(item.productId))) removeItem(item.productId)
     })
   }, [items, removeItem])
 
@@ -64,12 +57,6 @@ export default function CartDrawer() {
     if (isOpen) document.body.style.overflow = 'hidden'
     else document.body.style.overflow = ''
     return () => { document.body.style.overflow = '' }
-  }, [isOpen])
-
-  // Warm checkout chunk while user reviews the cart
-  useEffect(() => {
-    if (!isOpen) return
-    void import('@/components/checkout/CheckoutPopup')
   }, [isOpen])
 
   if (!isOpen && !showCheckout) return null
@@ -116,7 +103,7 @@ export default function CartDrawer() {
                 {/* Cart Items */}
                 {items.map((item) => (
                   <div key={item.productId} className="flex gap-3 rounded-2xl border border-border/90 bg-white p-4 shadow-sm">
-                    {cartThumb(getCartProductById(item.productId), 'md', item.accentColor, item.bgColor)}
+                    {cartThumb(getProductById(item.productId), 'md', item.accentColor, item.bgColor)}
                     <div className="flex-1 min-w-0">
                       <p className="font-bold text-[#1C1C1C] text-sm">{item.nameAr}</p>
                       <p className="text-xs text-[#5c5656] mt-0.5">
@@ -146,7 +133,7 @@ export default function CartDrawer() {
                     <div className="flex flex-col gap-2">
                       {crossSells.map((p) => (
                         <div key={p.id} className="flex items-center gap-3 rounded-xl border border-border/80 bg-peach-soft/30 p-3 shadow-sm">
-                          {cartThumb(p, 'sm', p.accentColor, p.bgColor)}
+                          {cartThumb(getProductById(p.id), 'sm', p.accentColor, p.bgColor)}
                           <div className="flex-1 min-w-0">
                             <p className="font-semibold text-sm text-[#1C1C1C]">{p.nameAr}</p>
                             <p className="text-xs text-[#5c5656] truncate">{p.subtitleAr}</p>

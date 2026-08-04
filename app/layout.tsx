@@ -13,9 +13,8 @@ import DeferredPixels from '@/components/tracking/DeferredPixels'
 import RouteChangePageViews from '@/components/tracking/RouteChangePageViews'
 import { BRAND_CONTACT_EMAIL } from '@/lib/brand'
 const plexArabic = IBM_Plex_Sans_Arabic({
-  // Arabic subset covers UI copy + Western digits; dropping latin saves a font request.
-  subsets: ['arabic'],
-  weight: ['400', '700'],
+  subsets: ['arabic', 'latin'],
+  weight: ['400', '600', '700'],
   display: 'swap',
   adjustFontFallback: true,
   variable: '--font-plex-arabic',

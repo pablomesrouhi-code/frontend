@@ -1,7 +1,4 @@
 import { getPriceForQty as getPriceForQtyFromStore, getOffers, getUpsellPriceSar } from '@/lib/store-pricing'
-import { formatSarAmount, formatSarCompact, formatSarRiial } from '@/lib/money'
-
-export { formatSarAmount, formatSarCompact, formatSarRiial }
 
 export type ProductReview = {
   name: string
@@ -1330,6 +1327,21 @@ export function getBestUpsell(cartProductIds: string[]): Product | null {
   if (cartProductIds.includes('shahr-hadi') && missing.includes('naseej')) return getProductById('naseej') ?? null
   if (cartProductIds.includes('vitaflow') && missing.includes('rawnaq-c')) return getProductById('rawnaq-c') ?? null
   return getProductById(missing[0]) ?? null
+}
+
+/** عرض موحّد: الرقم ملاصق لـ «ريال سعودي» بدون رموز اتجاه خفية (تظهر أحياناً كفراغ غريب). */
+export function formatSarAmount(amount: number): string {
+  return `${amount}ريال سعودي`
+}
+
+/** عرض مختصر للهيرو والعروض — مثل «199 ر.س» */
+export function formatSarCompact(amount: number): string {
+  return `${amount} ر.س`
+}
+
+/** عرض زر الطلب — مثل «279 ريال» */
+export function formatSarRiial(amount: number): string {
+  return `${amount} ريال`
 }
 
 /** «+3,200» — أرقام LTR داخل واجهة RTL */

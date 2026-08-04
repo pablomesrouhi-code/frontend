@@ -1,19 +1,15 @@
 'use client'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCartStore } from '@/stores/cart-store'
 import { getPublicApiBase } from '@/lib/api'
-import { getBestUpsell } from '@/lib/cart-catalog'
-import { formatSarAmount } from '@/lib/money'
-import { getUpsellPriceSar } from '@/lib/store-pricing'
+import { getBestUpsell, formatSarAmount, getUpsellPriceSar } from '@/lib/products'
 import { CHECKOUT_UI_REV } from '@/lib/checkout-rev'
+import UpsellModal from './UpsellModal'
 import { newTrackingEventId, setTrackingUser, trackInitiateCheckout } from '@/lib/tracking/client'
-
-const UpsellModal = dynamic(() => import('./UpsellModal'), { ssr: false })
 
 const TEST_PHONES = ['055000000']
 
