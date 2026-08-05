@@ -42,7 +42,7 @@ function ReviewAvatar({
           width={88}
           height={88}
           sizes="44px"
-          className="h-full w-full object-cover object-[center_20%]"
+          className="h-full w-full object-cover object-center"
         />
       </div>
     )
