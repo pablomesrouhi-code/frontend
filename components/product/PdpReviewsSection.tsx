@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { Product, ProductReview } from '@/lib/products'
 import { getPdpSectionHeadlines } from '@/lib/pdp-section-headlines'
 import { getTestimonialMeta } from '@/lib/pdp-testimonial-meta'
@@ -22,6 +23,41 @@ function Stars({ rating, accentColor }: { rating: number; accentColor: string })
   )
 }
 
+/** Small circular buyer photo — like major DTC/review UIs (not a large lifestyle tile). */
+function ReviewAvatar({
+  name,
+  src,
+  accentColor,
+}: {
+  name: string
+  src?: string | null
+  accentColor: string
+}) {
+  if (src) {
+    return (
+      <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full ring-2 ring-white shadow-sm sm:h-11 sm:w-11">
+        <Image
+          src={src}
+          alt=""
+          width={88}
+          height={88}
+          sizes="44px"
+          className="h-full w-full object-cover object-[center_20%]"
+        />
+      </div>
+    )
+  }
+  return (
+    <div
+      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xs font-black text-white sm:h-11 sm:w-11 sm:text-sm"
+      style={{ background: accentColor }}
+      aria-hidden
+    >
+      {reviewInitials(name)}
+    </div>
+  )
+}
+
 function ReviewCard({
   review,
   accentColor,
@@ -38,24 +74,37 @@ function ReviewCard({
   const meta = getTestimonialMeta(productId, index)
   const displayName = meta?.displayName ?? review.name
   const subtitle = [meta?.age ? `${meta.age} سنة` : null, meta?.cityAr].filter(Boolean).join(' · ')
+  const avatarSrc = review.image?.src ?? meta?.avatarSrc ?? null
 
   return (
-    <article
-      className="relative flex min-w-0 flex-col overflow-hidden rounded-2xl border border-border bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md sm:p-6"
-    >
+    <article className="relative flex min-w-0 flex-col overflow-hidden rounded-2xl border border-border bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md sm:p-6">
       <span
         aria-hidden
         className="absolute inset-x-0 top-0 h-1"
         style={{ background: `linear-gradient(90deg, ${accentColor}, ${accentColor}55)` }}
       />
-      <div className="mb-3 flex items-center justify-between gap-2">
-        <Stars rating={review.rating} accentColor={accentColor} />
+
+      {/* Identity row — photo circle + name (famous-store review pattern) */}
+      <figcaption className="mb-3 flex items-center gap-3">
+        <ReviewAvatar name={displayName} src={avatarSrc} accentColor={accentColor} />
+        <div className="min-w-0 flex-1 text-start">
+          <p className="truncate text-sm font-bold text-charcoal">{displayName}</p>
+          {subtitle ? (
+            <p className="truncate text-[11px] text-muted">{subtitle}</p>
+          ) : (
+            <p className="text-[11px] text-muted">مشترية مؤكدة</p>
+          )}
+        </div>
         <span
-          className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-bold"
+          className="inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold"
           style={{ color: '#146b70', background: '#146b7014' }}
         >
-          ✓ مشترية موثّقة
+          ✓ موثّقة
         </span>
+      </figcaption>
+
+      <div className="mb-2">
+        <Stars rating={review.rating} accentColor={accentColor} />
       </div>
 
       <blockquote
@@ -63,20 +112,6 @@ function ReviewCard({
       >
         {review.text}
       </blockquote>
-
-      <figcaption className="mt-5 flex items-center gap-3 border-t border-border/70 pt-4">
-        <div
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-black text-white"
-          style={{ background: accentColor }}
-          aria-hidden
-        >
-          {reviewInitials(displayName)}
-        </div>
-        <div className="min-w-0 flex-1 text-start">
-          <p className="text-sm font-bold text-charcoal">{displayName}</p>
-          {subtitle && <p className="text-[11px] text-muted">{subtitle} · مشترية مؤكدة</p>}
-        </div>
-      </figcaption>
     </article>
   )
 }
@@ -99,7 +134,6 @@ export default function PdpReviewsSection({ product }: Props) {
       }}
     >
       <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
-        {/* Header — verified record */}
         <div className="mb-9 text-center">
           <p className="mb-2 text-[10px] font-black uppercase tracking-[0.24em] text-muted">
             {reviewsH.eyebrowAr ?? 'السجلّ الموثّق · VERIFIED'}
@@ -114,7 +148,6 @@ export default function PdpReviewsSection({ product }: Props) {
           />
         </div>
 
-        {/* Rating summary */}
         <div className="mx-auto mb-6 flex max-w-md items-center justify-center gap-5 rounded-2xl border border-border bg-white p-4 shadow-sm sm:p-5">
           <div className="text-center">
             <p className="text-4xl font-black leading-none tabular-nums sm:text-5xl" style={{ color: accent }}>
@@ -125,14 +158,11 @@ export default function PdpReviewsSection({ product }: Props) {
             </div>
           </div>
           <div className="border-s border-border ps-5 text-start">
-            <p className="text-base font-black text-charcoal sm:text-lg">
-              من {countLabel}+ تقييم
-            </p>
+            <p className="text-base font-black text-charcoal sm:text-lg">من {countLabel}+ تقييم</p>
             <p className="text-xs text-muted">مشتريات مؤكدة · كل مناطق السعودية 🇸🇦</p>
           </div>
         </div>
 
-        {/* Trust chips */}
         <div className="mb-9 flex flex-wrap items-center justify-center gap-2">
           {['موثّقة برقم الطلب', 'مؤكّدة بالهاتف', 'بدون فلترة'].map((chip) => (
             <span
@@ -145,7 +175,6 @@ export default function PdpReviewsSection({ product }: Props) {
           ))}
         </div>
 
-        {/* Reviews grid */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {product.reviews.slice(0, 3).map((r, idx) => (
             <ReviewCard
