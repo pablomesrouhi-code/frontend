@@ -59,6 +59,12 @@ export default function CartDrawer() {
     return () => { document.body.style.overflow = '' }
   }, [isOpen])
 
+  // Warm checkout JS while the shopper reviews the cart (no first-click stall).
+  useEffect(() => {
+    if (!isOpen) return
+    void import('@/components/checkout/CheckoutPopup')
+  }, [isOpen])
+
   if (!isOpen && !showCheckout) return null
 
   return (

@@ -6,8 +6,9 @@ import Image from 'next/image'
 import { BRAND_LOGO_SRC } from '@/lib/brand'
 
 const SESSION_KEY = 'nbta-brand-intro-seen'
-const PLAY_MS = 1750
-const EXIT_MS = 450
+/** Keep snappy — electronics-brand feel: brief brand beat, then store is interactive. */
+const PLAY_MS = 700
+const EXIT_MS = 220
 
 /** Once per browser session on first storefront visit — short brand intro. */
 export default function BrandIntroSplash() {
@@ -90,7 +91,7 @@ export default function BrandIntroSplash() {
             width={120}
             height={120}
             priority
-            unoptimized
+            sizes="120px"
             className="nbta-brand-splash__logo"
           />
           <span className="nbta-brand-splash__ring" />

@@ -57,11 +57,43 @@ export function getOffers(format: ProductOfferFormat = 'gummy') {
   ]
 }
 
+const PRICING_CACHE_KEY = 'nbta-store-pricing-v1'
+const PRICING_CACHE_TTL_MS = 10 * 60 * 1000
+
+function readCachedPricing(): StorePricing | null {
+  if (typeof window === 'undefined') return null
+  try {
+    const raw = sessionStorage.getItem(PRICING_CACHE_KEY)
+    if (!raw) return null
+    const parsed = JSON.parse(raw) as { at?: number; pricing?: StorePricing }
+    if (!parsed?.pricing || typeof parsed.at !== 'number') return null
+    if (Date.now() - parsed.at > PRICING_CACHE_TTL_MS) return null
+    return parsed.pricing
+  } catch {
+    return null
+  }
+}
+
+function writeCachedPricing(pricing: StorePricing): void {
+  if (typeof window === 'undefined') return
+  try {
+    sessionStorage.setItem(PRICING_CACHE_KEY, JSON.stringify({ at: Date.now(), pricing }))
+  } catch {
+    /* ignore */
+  }
+}
+
 export async function loadStorePricing(): Promise<StorePricing> {
+  const cached = readCachedPricing()
+  if (cached) {
+    active = cached
+    return active
+  }
+
   const base = getPublicApiBase()
   try {
     const res = await fetch(`${base.replace(/\/$/, '')}/api/pricing`, {
-      cache: 'no-store',
+      cache: 'default',
       credentials: 'omit',
     })
     if (!res.ok) return active
@@ -78,6 +110,7 @@ export async function loadStorePricing(): Promise<StorePricing> {
       },
       upsell_sar: Number(j.upsell_sar) || DEFAULT_PRICING.upsell_sar,
     }
+    writeCachedPricing(active)
   } catch {
     /* keep defaults */
   }

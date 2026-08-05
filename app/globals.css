@@ -25,6 +25,11 @@
 
 * { box-sizing: border-box; }
 
+/* Font loads 400+700 only — map Tailwind semibold onto 700. */
+.font-semibold {
+  font-weight: 700;
+}
+
 @keyframes faq-open {
   from { opacity: 0; transform: translateY(-4px); }
   to   { opacity: 1; transform: translateY(0); }
