@@ -45,7 +45,7 @@ export default function ProductPageClient({
   useEffect(() => {
     trackViewContent({
       content_ids: [product.id],
-      value: getPriceForQty(1),
+      value: getPriceForQty(1, product.id),
       currency: 'SAR',
     })
   }, [product.id])
@@ -74,7 +74,7 @@ export default function ProductPageClient({
     addItem({
       productId: product.id,
       offerQty: selectedQty,
-      price: getPriceForQty(selectedQty),
+      price: getPriceForQty(selectedQty, product.id),
       nameAr: product.nameAr,
       accentColor: product.accentColor,
       bgColor: product.bgColor,
@@ -82,7 +82,7 @@ export default function ProductPageClient({
     openCart()
     trackAddToCart({
       content_ids: [product.id],
-      value: getPriceForQty(selectedQty),
+      value: getPriceForQty(selectedQty, product.id),
       currency: 'SAR',
       num_items: selectedQty,
     })
@@ -102,16 +102,21 @@ export default function ProductPageClient({
             onChange={setSelectedQty}
             accentColor={accent}
             format={product.format}
+            productId={product.id}
             rating={product.rating}
             reviewCount={product.reviewCount}
           />
         </div>
 
+        <p className="mt-3 text-center text-[11px] font-semibold leading-relaxed text-muted sm:text-xs">
+          دفع عند الاستلام · تأكيد هاتفي قبل الشحن · بدون بطاقة
+        </p>
+
         <button
           onClick={handleAdd}
           disabled={soldOut}
           type="button"
-          className="group relative mt-4 w-full overflow-hidden rounded-2xl px-4 py-4 text-sm font-extrabold text-white transition enabled:hover:brightness-105 enabled:active:translate-y-[1px] disabled:cursor-not-allowed disabled:bg-charcoal/70 sm:py-[1.1rem] sm:text-base md:text-lg"
+          className="group relative mt-3 w-full overflow-hidden rounded-2xl px-4 py-4 text-sm font-extrabold text-white transition enabled:hover:brightness-105 enabled:active:translate-y-[1px] disabled:cursor-not-allowed disabled:bg-charcoal/70 sm:py-[1.1rem] sm:text-base md:text-lg"
           style={soldOut ? undefined : getProductSolidButtonStyle(accent)}
         >
           <span className="relative z-[1] flex items-center justify-center gap-3 flex-row-reverse">
@@ -123,7 +128,7 @@ export default function ProductPageClient({
                 <>
                   {addToCartLabel} ·{' '}
                   <span className="sar-price sar-price-dark tabular-nums">
-                    {formatSarRiial(getPriceForQty(selectedQty))}
+                    {formatSarRiial(getPriceForQty(selectedQty, product.id))}
                   </span>
                 </>
               )}
@@ -132,7 +137,9 @@ export default function ProductPageClient({
         </button>
 
         <p className="mt-2 text-center text-[11px] font-semibold text-muted sm:text-xs">
-          {soldOut ? 'سيعود قريباً — هذا المنتج غير قابل للطلب الآن' : 'الدفع عند الاستلام · بدون دفع أونلاين'}
+          {soldOut
+            ? 'سيعود قريباً — هذا المنتج غير قابل للطلب الآن'
+            : 'الدفع عند الاستلام · تأكيد خلال ساعات العمل · بدون بطاقة'}
         </p>
 
         <p className="mt-3 text-center text-[11px] leading-relaxed text-muted">
@@ -151,7 +158,7 @@ export default function ProductPageClient({
         accentColor={accent}
         accentDeep={accentDeep}
         label={addToCartLabel}
-        formattedPrice={formatSarRiial(getPriceForQty(selectedQty))}
+        formattedPrice={formatSarRiial(getPriceForQty(selectedQty, product.id))}
         onClick={scrollToPrice}
       />
     </>

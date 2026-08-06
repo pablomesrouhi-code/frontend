@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { PRODUCTS, STORE_REVIEW_HEADLINE, STORE_SOLD_HEADLINE, formatSoldCount } from '@/lib/products'
 import ProductCard from '@/components/product/ProductCard'
+import HomeDuoBundle from '@/components/home/HomeDuoBundle'
 import HomeMixedBundle from '@/components/home/HomeMixedBundle'
 
 // ───────── Brand palette (refined warm) ─────────
@@ -671,7 +672,10 @@ export default function HomePage() {
       {/* ═══ PACK — أسفل الصفحة بنفس ألوان المتجر ═══ */}
       <section className="border-t border-[#E7DDD3] bg-[#faf9f8] py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <HomeMixedBundle />
+          <HomeDuoBundle />
+          <div className="mt-8 sm:mt-10">
+            <HomeMixedBundle />
+          </div>
         </div>
       </section>
 

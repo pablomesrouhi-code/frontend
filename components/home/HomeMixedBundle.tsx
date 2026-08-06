@@ -3,10 +3,10 @@
 import Image from 'next/image'
 import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import PowderPlaceholder from '@/components/product/PowderPlaceholder'
-import { formatSarAmount, getPriceForQty, getProductById, type Product } from '@/lib/products'
+import { formatSarAmount, getComboPrice, getProductById, type Product } from '@/lib/products'
 import { useCartStore } from '@/stores/cart-store'
 
-/** باك الثلاثة المتوفرة: عبوة مسحوق من كل منتج */
+/** باك الثلاثة المتوفرة: عبوة مسحوق من كل منتج (سعر كومبو ثابت) */
 const TRIO_IDS = ['shahr-hadi', 'naseej', 'vitaflow'] as const
 
 function BundleProductVisual({ product }: { product: Product }) {
@@ -32,7 +32,7 @@ export default function HomeMixedBundle() {
   useStorePricing()
   const { addItem, clearCart, openCart } = useCartStore()
   const products = TRIO_IDS.map((id) => getProductById(id)).filter(Boolean) as Product[]
-  const bundlePrice = getPriceForQty(3)
+  const bundlePrice = getComboPrice('powder_trio')
 
   if (products.length < 3) return null
 

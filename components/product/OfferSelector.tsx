@@ -11,10 +11,15 @@ import {
   shadeTowardBlack,
 } from '@/lib/product-accent'
 
-function savingsForQty(qty: 1 | 2 | 3, unitCompare: number, format: Product['format']): number | null {
+function savingsForQty(
+  qty: 1 | 2 | 3,
+  unitCompare: number,
+  format: Product['format'],
+  productId?: string,
+): number | null {
   if (qty === 1) return null
   const full = unitCompare * qty
-  const offer = getOffers(format ?? 'gummy').find((o) => o.qty === qty)?.price
+  const offer = getOffers(format ?? 'gummy', productId).find((o) => o.qty === qty)?.price
   if (offer == null) return null
   const s = full - offer
   return s > 0 ? s : null
@@ -43,6 +48,7 @@ type Props = {
   onChange: (qty: 1 | 2 | 3) => void
   accentColor?: string
   format?: Product['format']
+  productId?: string
   rating?: number
   reviewCount?: number
 }
@@ -52,11 +58,12 @@ export default function OfferSelector({
   onChange,
   accentColor = STORE_BUTTON_COLOR,
   format,
+  productId,
   rating,
   reviewCount,
 }: Props) {
   useStorePricing()
-  const offers = getOffers(format ?? 'gummy')
+  const offers = getOffers(format ?? 'gummy', productId)
   const priceActive = shadeTowardBlack(accentColor, 0.18)
 
   return (
@@ -73,7 +80,7 @@ export default function OfferSelector({
       <div className="flex min-w-0 flex-col gap-2.5 sm:gap-3" role="radiogroup" aria-label={PDP_OFFER_HEADING}>
         {offers.map((offer) => {
           const active = selected === offer.qty
-          const save = savingsForQty(offer.qty, getPriceForQty(1), format)
+          const save = savingsForQty(offer.qty, getPriceForQty(1, productId), format, productId)
           return (
             <button
               type="button"

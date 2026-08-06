@@ -38,8 +38,8 @@ function NewImageBanner({ product, accent }: { product: Product; accent: string 
 
 function PriceBlock({ product, accent }: { product: Product; accent: string }) {
   useStorePricing()
-  const priceOne = getPriceForQty(1)
-  const priceThree = getPriceForQty(3)
+  const priceOne = getPriceForQty(1, product.id)
+  const priceThree = getPriceForQty(3, product.id)
 
   return (
     <div className="text-start">
@@ -89,12 +89,12 @@ function CtaRow({ product, accent }: { product: Product; accent: string }) {
         if (soldOut) return
         trackAddToWishlist({
           content_ids: [product.id],
-          value: getPriceForQty(1),
+          value: getPriceForQty(1, product.id),
           currency: 'SAR',
         })
       }}
     >
-      <span>{soldOut ? 'نفدت الكمية · عرض التفاصيل' : 'اكتشفي المنتج'}</span>
+      <span>{soldOut ? 'نفدت الكمية · عرض التفاصيل' : 'اطلبي من هنا'}</span>
       <span className="transition-transform group-hover/btn:-translate-x-1">←</span>
     </Link>
   )

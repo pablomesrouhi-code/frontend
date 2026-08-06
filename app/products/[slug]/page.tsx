@@ -36,7 +36,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const isPowder = isPowderProduct(product)
   const unitLabel = isPowder ? 'عبوة' : 'علبة'
   const heroStats = getPdpHeroStats(product)
-  const startPrice = formatSarCompact(getPriceForQty(1))
+  const startPrice = formatSarCompact(getPriceForQty(1, product.id))
 
   const crossSellProducts = product.crossSells
     .map((id) => getProductById(id))

@@ -145,7 +145,7 @@ export default function UpsellModal({
               'جاري الإرسال...'
             ) : (
               <>
-                أضيفيه لطلبي بـ <span className="sar-price sar-price-dark tabular-nums">{formatSarAmount(99)}</span>
+                أضيفيه لطلبي بـ <span className="sar-price sar-price-dark tabular-nums">{formatSarAmount(upsellPrice)}</span>
               </>
             )}
           </button>
