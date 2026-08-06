@@ -417,7 +417,7 @@ const ALL_PRODUCTS: Product[] = [
     coverImage: '/products/laylmag-powder.png',
     coverWidth: 1024,
     coverHeight: 1024,
-    homeCardImage: '/products/home-laylmag.jpg',
+    homeCardImage: '/products/home-laylmag-card.jpg',
     painSectionImage: {
       src: '/products/laylmag-pain.jpg',
       width: 768,
