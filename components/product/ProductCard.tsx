@@ -109,8 +109,11 @@ export default function ProductCard({
 }: Props) {
   const accent = tone === 'store' ? STORE_BUTTON_COLOR : product.accentColor
   const isPowder = isPowderProduct(product)
-  const cardImage = useHomeCardImage && product.homeCardImage ? product.homeCardImage : product.coverImage
-  const showCardPhoto = !isPowder || Boolean(useHomeCardImage && product.homeCardImage)
+  const cardImage =
+    useHomeCardImage && product.homeCardImage ? product.homeCardImage : product.coverImage
+  // Powder cards used to show a placeholder; once a packshot exists, always show it.
+  const showCardPhoto =
+    !isPowder || Boolean(product.homeCardImage) || Boolean(useHomeCardImage && product.coverImage)
   const imageBanner = showNewImageBanner && product.isNew
   const cardImageNode = (
     <>
@@ -121,7 +124,7 @@ export default function ProductCard({
         alt={product.nameAr}
         fill
         sizes={layout === 'grid' ? '(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 25vw' : '(max-width: 767px) 100vw, (max-width: 1200px) 45vw, 320px'}
-        className="object-cover object-center"
+        className={isPowder ? 'object-contain object-center p-3 sm:p-4' : 'object-cover object-center'}
       />
     </>
   )
