@@ -14,7 +14,7 @@ export type StorePricing = {
 
 export const DEFAULT_PRICING: StorePricing = {
   bundles: { '1': 199, '2': 279, '3': 349 },
-  upsell_sar: 89,
+  upsell_sar: 99,
   productBundles: {
     naseej: { '1': 189, '2': 219, '3': 279 },
     vitaflow: { '1': 189, '2': 219, '3': 279 },
@@ -98,7 +98,7 @@ export function getOffers(format: ProductOfferFormat = 'gummy', productId?: stri
   ]
 }
 
-const PRICING_CACHE_KEY = 'nbta-store-pricing-v2'
+const PRICING_CACHE_KEY = 'nbta-store-pricing-v3'
 const PRICING_CACHE_TTL_MS = 10 * 60 * 1000
 
 function readCachedPricing(): StorePricing | null {
