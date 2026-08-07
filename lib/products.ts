@@ -827,10 +827,10 @@ const ALL_PRODUCTS: Product[] = [
     coverHeight: 1024,
     homeCardImage: '/products/home-shahr-hadi.png',
     pdpHeroImage: {
-      src: '/products/shahr-hadi-hero.png',
+      src: '/products/shahr-hadi-hero-v2.png',
       width: 1024,
       height: 1024,
-      alt: 'مثال توضيحي قبل وبعد — شهر هادئ مسحوق دعم الدورة',
+      alt: 'مثال توضيحي قبل وبعد — شهر هادئ (Hormonal Balance) مسحوق دعم الدورة',
     },
     painSectionImage: {
       src: '/products/shahr-hadi-pain.png',
