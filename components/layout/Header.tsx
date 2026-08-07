@@ -30,6 +30,8 @@ export default function Header() {
   const [msgIndex, setMsgIndex] = useState(0)
   const [visible, setVisible] = useState(true)
   const [menuOpen, setMenuOpen] = useState(false)
+  /** بانر تحت اللوغو: يظهر فوق الصفحة / عند السكرول لفوق، ويختفي عند النزول */
+  const [bannerShown, setBannerShown] = useState(true)
 
   useEffect(() => {
     setMenuOpen(false)
@@ -50,6 +52,32 @@ export default function Header() {
       document.body.style.overflow = ''
     }
   }, [menuOpen])
+
+  useEffect(() => {
+    let lastY = window.scrollY
+    let ticking = false
+
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      window.requestAnimationFrame(() => {
+        const y = window.scrollY
+        const delta = y - lastY
+        if (y < 24) {
+          setBannerShown(true)
+        } else if (delta > 6) {
+          setBannerShown(false)
+        } else if (delta < -6) {
+          setBannerShown(true)
+        }
+        lastY = y
+        ticking = false
+      })
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -192,15 +220,19 @@ export default function Header() {
         </div>
       ) : null}
 
-      {/* Announcement banner — below header, text + dots only */}
+      {/* Announcement banner — hide on scroll down, show on scroll up */}
       <div
-        className="overflow-hidden px-4 py-2"
+        className="overflow-hidden transition-[max-height,opacity,border-color] duration-300 ease-out"
         style={{
+          maxHeight: bannerShown ? 56 : 0,
+          opacity: bannerShown ? 1 : 0,
           background: BANNER_GRADIENT,
-          borderBottom: '1px solid rgba(0,0,0,0.06)',
+          borderBottom: bannerShown ? '1px solid rgba(0,0,0,0.06)' : '1px solid transparent',
+          pointerEvents: bannerShown ? 'auto' : 'none',
         }}
+        aria-hidden={!bannerShown}
       >
-        <div className="flex items-center justify-center gap-2 sm:gap-3">
+        <div className="flex items-center justify-center gap-2 px-4 py-2 sm:gap-3">
           <div
             className="flex min-w-0 items-center gap-1.5 transition-opacity duration-500 sm:gap-2"
             style={{ opacity: visible ? 1 : 0 }}
