@@ -12,7 +12,7 @@ import PdpReviewsSection from '@/components/product/PdpReviewsSection'
 import PowderPlaceholder from '@/components/product/PowderPlaceholder'
 import PdpHeroStatPills from '@/components/product/pdp/PdpHeroStatPills'
 import { getPdpAddCta, getPdpComplianceNote } from '@/lib/pdp-copy'
-import { getProductSolidButtonStyle } from '@/lib/product-accent'
+import { STORE_BUTTON_COLOR, getProductSolidButtonStyle } from '@/lib/product-accent'
 
 export async function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }))
@@ -43,7 +43,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     .filter(Boolean) as typeof PRODUCTS
 
   const complianceNote = getPdpComplianceNote(product.format)
-  const accent = product.accentColor
+  const accent = STORE_BUTTON_COLOR
 
   const pdpHeroSrc = product.pdpHeroImage?.src ?? product.coverImage
   const pdpHeroAlt = product.pdpHeroImage?.alt ?? product.nameAr
@@ -84,17 +84,17 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <section
         className="relative min-w-0 overflow-hidden border-b border-white/50 py-5 sm:py-7 md:py-10"
         style={{
-          background: `linear-gradient(168deg, #ffffff 0%, color-mix(in srgb, ${product.bgColor} 72%, #fff) 38%, color-mix(in srgb, ${product.accentColor} 9%, #fff) 100%)`,
+          background: `linear-gradient(168deg, #ffffff 0%, color-mix(in srgb, ${product.bgColor} 72%, #fff) 38%, color-mix(in srgb, ${accent} 9%, #fff) 100%)`,
         }}
       >
         <div
           className="pointer-events-none absolute -top-28 -end-20 h-72 w-72 rounded-full opacity-[0.18] blur-3xl sm:h-96 sm:w-96"
-          style={{ background: product.accentColor }}
+          style={{ background: accent }}
           aria-hidden
         />
         <div
           className="pointer-events-none absolute -bottom-24 -start-16 h-64 w-64 rounded-full opacity-[0.12] blur-3xl"
-          style={{ background: product.accentColor }}
+          style={{ background: accent }}
           aria-hidden
         />
         <div className="relative z-[1] mx-auto max-w-6xl min-w-0 px-4 sm:px-6">
@@ -103,7 +103,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <div className="order-1 min-w-0 md:order-2 md:pt-0">
               <div
                 className="mx-auto w-full max-w-md rounded-2xl border-2 bg-white/95 p-1.5 shadow-lg backdrop-blur-sm sm:max-w-lg sm:rounded-3xl sm:p-2 md:mx-0 md:max-w-none"
-                style={{ borderColor: `color-mix(in srgb, ${product.accentColor} 30%, #e8e0de)` }}
+                style={{ borderColor: `color-mix(in srgb, ${accent} 30%, #e8e0de)` }}
               >
                 {isPowder && !powderHeroPhoto ? (
                   <div className="relative aspect-square min-h-[300px]">
@@ -136,7 +136,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
               <h1
                 id="pdp-hook"
-                className="scroll-mt-[calc(5.5rem+env(safe-area-inset-top))] mb-3 text-2xl font-black leading-tight text-charcoal sm:text-3xl sm:leading-[1.12] md:text-[2rem]"
+                className="scroll-mt-[calc(5.5rem+env(safe-area-inset-top))] mb-3 text-[1.75rem] font-black leading-[1.12] tracking-tight text-charcoal sm:text-4xl sm:leading-[1.1] md:text-[2.55rem] md:leading-[1.08]"
               >
                 {product.heroHeadlineAr}
               </h1>
@@ -287,7 +287,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                     <li key={b} className="flex items-start gap-3 rounded-2xl bg-white px-4 py-3 ring-1 ring-border/70">
                       <span
                         className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-black text-white"
-                        style={{ background: product.accentColor }}
+                        style={{ background: accent }}
                       >
                         ✓
                       </span>
@@ -317,7 +317,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   <ProductPageImageSlot
                     width={product.coverWidth}
                     height={product.coverHeight}
-                    accentColor={product.accentColor}
+                    accentColor={accent}
                     labelAr="مساحة صورة — قسم «لماذا تحتاجينه؟»"
                   />
                 )}
@@ -343,7 +343,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               >
                 <div
                   className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-black text-white"
-                  style={{ background: product.accentColor }}
+                  style={{ background: accent }}
                 >
                   ✓
                 </div>
@@ -419,7 +419,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                         key={line}
                         className="flex items-start gap-3 text-charcoal text-sm sm:text-base leading-relaxed min-w-0"
                       >
-                        <span className="shrink-0 w-6 h-6 rounded-full text-white flex items-center justify-center text-xs font-bold mt-0.5" style={{ background: product.accentColor }}>✓</span>
+                        <span className="shrink-0 w-6 h-6 rounded-full text-white flex items-center justify-center text-xs font-bold mt-0.5" style={{ background: accent }}>✓</span>
                         <span className="min-w-0 flex-1 break-words">{line}</span>
                       </li>
                     ))}
@@ -453,7 +453,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <ProductPageImageSlot
                   width={product.coverWidth}
                   height={product.coverHeight}
-                  accentColor={product.accentColor}
+                  accentColor={accent}
                   labelAr="مساحة صورة — المكوّنات / تفاصيل العبوة"
                 />
               )}
@@ -572,7 +572,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                       key={line}
                       className="flex items-start gap-3 text-charcoal text-sm sm:text-base leading-relaxed min-w-0"
                     >
-                      <span className="shrink-0 w-6 h-6 rounded-full text-white flex items-center justify-center text-xs font-bold mt-0.5" style={{ background: product.accentColor }}>★</span>
+                      <span className="shrink-0 w-6 h-6 rounded-full text-white flex items-center justify-center text-xs font-bold mt-0.5" style={{ background: accent }}>★</span>
                       <span className="min-w-0 flex-1 break-words">{line}</span>
                     </li>
                   ))}
@@ -612,7 +612,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         style={{ background: `linear-gradient(to bottom left, ${product.bgColor}88, #fff, ${accent}0a)` }}
       >
         <div className="mx-auto flex max-w-3xl flex-col items-center px-4 text-center sm:px-6">
-          <p className="mb-3 text-xs font-black uppercase tracking-[0.26em]" style={{ color: product.accentColor }}>
+          <p className="mb-3 text-xs font-black uppercase tracking-[0.26em]" style={{ color: accent }}>
             {closeH.eyebrowAr ?? 'جاهزة من القرار؟'}
           </p>
           <h2 className="text-2xl font-black leading-snug text-charcoal sm:text-3xl">
@@ -627,7 +627,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <a
               href="#pdp-buy-anchor"
               className="inline-flex min-h-[48px] min-w-[min(100%,240px)] items-center justify-center rounded-2xl px-8 py-3.5 text-base font-black text-white shadow-lg transition-[transform,filter] hover:brightness-105 active:translate-y-[1px]"
-              style={getProductSolidButtonStyle(product.accentColor)}
+              style={getProductSolidButtonStyle(accent)}
             >
               رجوع إلى العرض والطلب (↑)
             </a>
@@ -641,12 +641,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      <PdpDeliveryPaymentSection accentColor={product.accentColor} bgColor={product.bgColor} />
+      <PdpDeliveryPaymentSection accentColor={accent} bgColor={product.bgColor} />
 
       {/* FAQ */}
       <section className="py-10 sm:py-12 md:py-14 bg-white">
         <div className="max-w-3xl mx-auto px-3 sm:px-6 min-w-0">
-          <p className="mb-2 text-center text-xs font-black uppercase tracking-[0.22em]" style={{ color: product.accentColor }}>
+          <p className="mb-2 text-center text-xs font-black uppercase tracking-[0.22em]" style={{ color: accent }}>
             {faqH.eyebrowAr ?? 'نحطّكم في الصورة قبل الدفع عند الباب'}
           </p>
           <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-charcoal mb-2 text-center break-words">
@@ -661,7 +661,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <details key={faq.q} className="bg-[#FFFFFF] rounded-2xl overflow-hidden group min-w-0 border border-[#dfd6d4]">
                 <summary className="px-4 sm:px-6 py-4 min-h-[3.25rem] font-semibold text-[#1C1C1C] text-sm sm:text-base cursor-pointer list-none flex items-center justify-between gap-3 active:bg-[#f5f0ef] hover:bg-[#eae2df] transition min-w-0 touch-manipulation">
                   <span className="text-start flex-1 min-w-0 break-words leading-snug">{faq.q}</span>
-                  <span className="shrink-0 group-open:rotate-180 transition-transform duration-200 text-xs sm:text-sm" style={{ color: product.accentColor }}>▼</span>
+                  <span className="shrink-0 group-open:rotate-180 transition-transform duration-200 text-xs sm:text-sm" style={{ color: accent }}>▼</span>
                 </summary>
                 <div className="px-4 sm:px-6 pb-4 pt-1 text-sm text-charcoal leading-relaxed break-words text-start border-t border-[#dfd6d4]">{faq.a}</div>
               </details>

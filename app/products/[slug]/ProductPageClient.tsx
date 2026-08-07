@@ -6,7 +6,7 @@ import { useCartStore } from '@/stores/cart-store'
 import OfferSelector from '@/components/product/OfferSelector'
 import PdpStickyRoutineCta from '@/components/product/PdpStickyRoutineCta'
 import { trackAddToCart, trackViewContent } from '@/lib/tracking/client'
-import { getProductSolidButtonStyle, shadeTowardBlack } from '@/lib/product-accent'
+import { STORE_BUTTON_COLOR, getProductSolidButtonStyle, shadeTowardBlack } from '@/lib/product-accent'
 
 function CartIcon({ className }: { className?: string }) {
   return (
@@ -34,11 +34,11 @@ export default function ProductPageClient({
   addToCartLabel?: string
 }) {
   useStorePricing()
-  const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(2)
+  const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(1)
   const [stickyCtaVisible, setStickyCtaVisible] = useState(false)
   const priceBlockRef = useRef<HTMLDivElement>(null)
   const { addItem, openCart } = useCartStore()
-  const accent = product.accentColor
+  const accent = STORE_BUTTON_COLOR
   const accentDeep = shadeTowardBlack(accent, 0.28)
   const soldOut = product.availability === 'sold_out'
 

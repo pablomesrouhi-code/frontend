@@ -1,7 +1,7 @@
 /** ألوان الأزرار: على PDP حسب لون المنتج؛ على الهوم لون المتجر الموحّد. */
 
 /** Stamp — bump to trigger EasyPanel frontend rebuild. */
-export const FRONTEND_DEPLOY_STAMP = '2026-07-25-home-colors-v2'
+export const FRONTEND_DEPLOY_STAMP = '2026-08-07-pdp-brand-emotion-v1'
 
 /** ورد المتجر — أزرار وعناوين الصفحة الرئيسية. */
 export const STORE_BUTTON_COLOR = '#b8485c'

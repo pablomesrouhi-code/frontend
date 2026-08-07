@@ -2,7 +2,7 @@ import Image from 'next/image'
 import type { Product, ProductReview } from '@/lib/products'
 import { getPdpSectionHeadlines } from '@/lib/pdp-section-headlines'
 import { getTestimonialMeta } from '@/lib/pdp-testimonial-meta'
-import { getProductSolidButtonStyle } from '@/lib/product-accent'
+import { STORE_BUTTON_COLOR, getProductSolidButtonStyle } from '@/lib/product-accent'
 
 function reviewInitials(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean)
@@ -121,7 +121,7 @@ type Props = {
 }
 
 export default function PdpReviewsSection({ product }: Props) {
-  const accent = product.accentColor
+  const accent = STORE_BUTTON_COLOR
   const reviewsH = getPdpSectionHeadlines(product.id).reviews ?? {}
   const countLabel = product.reviewCount.toLocaleString('en-US')
 

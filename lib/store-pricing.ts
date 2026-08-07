@@ -69,7 +69,7 @@ export function getOffers(format: ProductOfferFormat = 'gummy', productId?: stri
           ? '30 مكيال · شهر كامل'
           : '60 علكة · شهر كامل',
       price: p1,
-      badge: null as string | null,
+      badge: 'الأكثر اختياراً' as string | null,
     },
     {
       qty: 2 as const,
@@ -80,7 +80,7 @@ export function getOffers(format: ProductOfferFormat = 'gummy', productId?: stri
           ? '60 مكيال · شهر + تثبيت'
           : '120 علكة · شهر النتيجة + تثبيت',
       price: p2,
-      badge: 'الأكثر اختياراً',
+      badge: null,
       saveVs: p1 * 2 - p2,
     },
     {
