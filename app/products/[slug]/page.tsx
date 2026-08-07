@@ -183,12 +183,18 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <p className="mb-1 text-lg font-black text-charcoal sm:text-xl">{product.nameAr}</p>
               <p className="mb-4 text-xs leading-relaxed text-muted sm:text-sm">{product.subtitleAr}</p>
 
-              <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-muted">خلاصة تركيبية</p>
+              <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.16em]" style={{ color: accent }}>
+                خلاصة تركيبية
+              </p>
               <div className="mb-4 flex flex-wrap items-center justify-end gap-1.5 sm:gap-2">
                 {product.ingredients.slice(0, 3).map((ing) => (
                   <span
                     key={ing}
-                    className="max-w-full break-words rounded-full border border-border bg-white/90 px-2.5 py-0.5 text-xs text-charcoal shadow-sm sm:px-3 sm:py-1 sm:text-sm"
+                    className="max-w-full break-words rounded-full px-3 py-1 text-xs font-bold text-white shadow-sm sm:px-3.5 sm:py-1.5 sm:text-sm"
+                    style={{
+                      background: `linear-gradient(135deg, ${accent} 0%, color-mix(in srgb, ${accent} 70%, #1a1012) 100%)`,
+                      boxShadow: `0 4px 14px -4px ${accent}66`,
+                    }}
                   >
                     {ing}
                   </span>
@@ -196,8 +202,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 {product.ingredients.length > 3 && (
                   <a
                     href="#pdp-ingredients"
-                    className="rounded-full border border-dashed px-3 py-1 text-xs font-bold"
-                    style={{ borderColor: `${accent}55`, background: `${accent}0d`, color: accent }}
+                    className="rounded-full border-2 px-3 py-1 text-xs font-black"
+                    style={{ borderColor: accent, background: `${accent}12`, color: accent }}
                   >
                     + المكوّنات كاملة
                   </a>
@@ -432,7 +438,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       )}
 
       {/* Ingredients deep dive - alternating */}
-      <section id="pdp-ingredients" className="scroll-mt-28 bg-white py-10 sm:py-12 md:py-16">
+      <section
+        id="pdp-ingredients"
+        className="scroll-mt-28 py-10 sm:py-12 md:py-16"
+        style={{
+          background: `linear-gradient(180deg, color-mix(in srgb, ${accent} 7%, #fff) 0%, #fff 42%, color-mix(in srgb, ${product.bgColor} 35%, #fff) 100%)`,
+        }}
+      >
         <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
           <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-12">
             <div className="order-2 min-w-0 lg:order-1 lg:col-span-7">
@@ -459,49 +471,78 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               )}
             </div>
             <div className="order-1 min-w-0 max-w-full break-words text-start lg:order-2 lg:col-span-5">
-              <p className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-muted">{ingH.eyebrowAr ?? 'شفافية'}</p>
-              <h2 className="mb-2 text-xl font-black text-charcoal sm:text-2xl md:text-3xl">
+              <p className="mb-2 text-xs font-black uppercase tracking-[0.22em]" style={{ color: accent }}>
+                {ingH.eyebrowAr ?? 'شفافية'}
+              </p>
+              <h2 className="mb-2 text-2xl font-black leading-snug text-charcoal sm:text-3xl md:text-[2.1rem]">
                 {ingH.titleAr ?? 'المكوّنات وبأسلوب واضح'}
               </h2>
-              <p className="mb-6 text-sm leading-relaxed text-charcoal">
+              <p className="mb-6 text-sm leading-relaxed text-charcoal sm:text-[15px]">
                 {ingH.subtitleAr ??
                   'كل شي أساسي موجود على الغلاف المعتمد لمنتجكم؛ هنا خلّينا تعريف مختصر يساعدك تفهمين الفورمولا بدون لفّ. هذا المنتج بتصنيف مكمّل غذائي — مش دواء ومش توصيف طبي.'}
               </p>
-              <div className="flex flex-col gap-3 sm:gap-4">
-                {product.ingredients.map((ing) => (
-                  <div
-                    key={ing}
-                    className="min-w-0 rounded-2xl border border-border bg-[#fdfcfc] px-5 py-4 shadow-[0_1px_8px_rgba(28,28,28,0.04)] md:border-charcoal/[0.06]"
-                  >
-                    <p className="text-base font-black text-charcoal">{ing}</p>
-                    <p className="mt-2 border-t border-border/80 pt-2 text-sm leading-relaxed text-charcoal">
+              <div className="flex flex-col gap-3 sm:gap-3.5">
+                {product.ingredients.map((ing, idx) => {
+                  const blurb =
+                    (
                       {
-                        ({
-                          'بيوتين': 'فيتامين B7 يدعم صحة الشعر والأظافر والبشرة ضمن مكمّل غذائي — حسب الفورمولا على الغلاف.',
-                          'زنك': 'معدن يدعم وظائف طبيعية مرتبطة بالشعر والبشرة والأظافر والمناعة.',
-                          'فيتامين D': 'يدعم الصحة العامة وامتصاص الكالسيوم؛ ضمن الفورمولا حسب غلاف عبوّتكم.',
-                          'فيتامين D3': 'شكل نشط من فيتامين D يدعم الصحة العامة والتوازن الهرموني مع تغذية متوازنة.',
-                          'بروبيوتيك': 'بكتيريا نافعة تدعم التوازن الطبيعي للجهاز الهضمي.',
-                          'ألياف': 'تدعم حركة الهضم الطبيعية وإحساس الخفة بعد الوجبات.',
-                          'مغنيسيوم': 'معدن يدعم مسارات الاسترخاء والجهاز العصبي مع تناول مناسب حسب الغلاف.',
-                          'L-Theanine': 'حمض أميني طبيعي من مصادر معروفة — يُستخدم لدعم الاسترخاء دون نعاس ثقيل.',
-                          'كولاجين بحري': 'بروتين مستخلص من السمك يدعم بنية الشعر والبشرة من الداخل — يُذاب في الماء.',
-                          'حديد': 'معدن أساسي ترتبط قلّته بتساقط الشعر عند النساء — يدعم نقل الأكسجين لبصيلات الشعر.',
-                          'فيتامين C': 'مضاد أكسدة يدعم بناء الكولاجين وامتصاص الحديد وإشراق البشرة.',
-                          'حمض الفوليك': 'فيتامين B9 ضروري لتجديد الخلايا وصحة بصيلات الشعر.',
-                          'غلوتاثيون': 'مضاد أكسدة قوي مرتبط بإضاءة البشرة وتقليل التصبّغ.',
-                          'NAC': 'N-أستيل سيستين، سلف الغلوتاثيون — يدعم مستوياته في الجسم.',
-                          'كركم': 'مستخلص نباتي ذو خصائص مضادة للالتهاب — يكمّل تركيبة البشرة من الداخل.',
-                          'مايو-إينوسيتول': 'مادة طبيعية مرتبطة بدعم التوازن الهرموني الأنثوي.',
-                          'فيتكس': 'مستخلص توت العفاريت — عشبة تقليدية مرتبطة بتخفيف أعراض PMS.',
-                          'فيتامين B6': 'يساعد في تنظيم الهرمونات وتقليل تقلبات المزاج المرتبطة بالدورة.',
-                          'كالسيوم': 'معدن أساسي لصحة العظام والعضلات — يكمّل صحة المرأة مع D3 والمغنيسيوم.',
-                          'زنجبيل': 'مستخلص نباتي مضاد للالتهاب — يخفف تقلصات البطن.',
-                        } as Record<string, string>)[ing] ?? 'مكوّن أساسي ضمن الفورمولا — التفاصيل الكاملة على الغلاف المعتمد.'
-                      }
-                    </p>
-                  </div>
-                ))}
+                        بيوتين: 'فيتامين B7 يدعم صحة الشعر والأظافر والبشرة ضمن مكمّل غذائي — حسب الفورمولا على الغلاف.',
+                        زنك: 'معدن يدعم وظائف طبيعية مرتبطة بالشعر والبشرة والأظافر والمناعة.',
+                        'فيتامين D': 'يدعم الصحة العامة وامتصاص الكالسيوم؛ ضمن الفورمولا حسب غلاف عبوّتكم.',
+                        'فيتامين D3': 'شكل نشط من فيتامين D يدعم الصحة العامة والتوازن الهرموني مع تغذية متوازنة.',
+                        بروبيوتيك: 'بكتيريا نافعة تدعم التوازن الطبيعي للجهاز الهضمي.',
+                        ألياف: 'تدعم حركة الهضم الطبيعية وإحساس الخفة بعد الوجبات.',
+                        مغنيسيوم: 'معدن يدعم مسارات الاسترخاء والجهاز العصبي مع تناول مناسب حسب الغلاف.',
+                        'L-Theanine': 'حمض أميني طبيعي من مصادر معروفة — يُستخدم لدعم الاسترخاء دون نعاس ثقيل.',
+                        'كولاجين بحري': 'بروتين مستخلص من السمك يدعم بنية الشعر والبشرة من الداخل — يُذاب في الماء.',
+                        حديد: 'معدن أساسي ترتبط قلّته بتساقط الشعر عند النساء — يدعم نقل الأكسجين لبصيلات الشعر.',
+                        'فيتامين C': 'مضاد أكسدة يدعم بناء الكولاجين وامتصاص الحديد وإشراق البشرة.',
+                        'حمض الفوليك': 'فيتامين B9 ضروري لتجديد الخلايا وصحة بصيلات الشعر.',
+                        غلوتاثيون: 'مضاد أكسدة قوي مرتبط بإضاءة البشرة وتقليل التصبّغ.',
+                        NAC: 'N-أستيل سيستين، سلف الغلوتاثيون — يدعم مستوياته في الجسم.',
+                        كركم: 'مستخلص نباتي ذو خصائص مضادة للالتهاب — يكمّل تركيبة البشرة من الداخل.',
+                        'مايو-إينوسيتول': 'مادة طبيعية مرتبطة بدعم التوازن الهرموني الأنثوي.',
+                        فيتكس: 'مستخلص توت العفاريت — عشبة تقليدية مرتبطة بتخفيف أعراض PMS.',
+                        'فيتامين B6': 'يساعد في تنظيم الهرمونات وتقليل تقلبات المزاج المرتبطة بالدورة.',
+                        كالسيوم: 'معدن أساسي لصحة العظام والعضلات — يكمّل صحة المرأة مع D3 والمغنيسيوم.',
+                        زنجبيل: 'مستخلص نباتي مضاد للالتهاب — يخفف تقلصات البطن.',
+                      } as Record<string, string>
+                    )[ing] ?? 'مكوّن أساسي ضمن الفورمولا — التفاصيل الكاملة على الغلاف المعتمد.'
+                  return (
+                    <div
+                      key={ing}
+                      className="relative min-w-0 overflow-hidden rounded-2xl border-2 bg-white px-4 py-4 shadow-sm sm:px-5 sm:py-5"
+                      style={{
+                        borderColor: `${accent}28`,
+                        background: `linear-gradient(135deg, color-mix(in srgb, ${accent} 9%, #fff) 0%, #fff 55%)`,
+                        boxShadow: `0 8px 28px -16px ${accent}55`,
+                      }}
+                    >
+                      <div
+                        className="absolute inset-y-0 start-0 w-1.5"
+                        style={{ background: `linear-gradient(180deg, ${accent}, color-mix(in srgb, ${accent} 45%, #1a1012))` }}
+                        aria-hidden
+                      />
+                      <div className="flex items-start gap-3 pe-1 ps-2">
+                        <span
+                          className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-black text-white"
+                          style={{
+                            background: accent,
+                            boxShadow: `0 4px 12px -2px ${accent}77`,
+                          }}
+                        >
+                          {idx + 1}
+                        </span>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-lg font-black leading-snug sm:text-xl" style={{ color: accent }}>
+                            {ing}
+                          </p>
+                          <p className="mt-1.5 text-sm leading-relaxed text-charcoal sm:text-[15px]">{blurb}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
             </div>
           </div>
