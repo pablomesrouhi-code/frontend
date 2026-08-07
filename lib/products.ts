@@ -116,10 +116,10 @@ const ALL_PRODUCTS: Product[] = [
     coverHeight: 1024,
     homeCardImage: '/products/home-rawnaq-c.png',
     pdpHeroImage: {
-      src: '/products/rawnaq-c-hero.jpg',
+      src: '/products/rawnaq-c-hero-v2.png',
       width: 1024,
       height: 1024,
-      alt: 'مثال توضيحي قبل وبعد — رونق C',
+      alt: 'مثال توضيحي قبل وبعد — رونق C علكات البيوتين',
     },
     ingredientsSectionImage: {
       src: '/products/rawnaq-c-ingredients.jpg',
