@@ -10,9 +10,8 @@ function sanitizeId(raw: string | undefined): string | null {
 }
 
 /**
- * Snap must start in <head> (beforeInteractive) — Ads Manager flags
- * "browser navigation → pixel js start" when scevent.min.js is deferred (~10s).
- * Meta/TikTok stay afterInteractive so the store still paints quickly.
+ * Meta + Snap load early in <head> (official snippets) so Ads diagnostics
+ * don't flag slow "pixel js start". TikTok stays afterInteractive.
  */
 export default function DeferredPixels() {
   const metaId = getMetaPixelId()
@@ -21,12 +20,33 @@ export default function DeferredPixels() {
 
   if (!pixelsEnabled()) return null
 
-  const raw = process.env.NEXT_PUBLIC_PIXEL_SCRIPT_STRATEGY
-  const loadStrategy: 'lazyOnload' | 'afterInteractive' =
-    raw === 'lazyOnload' ? 'lazyOnload' : 'afterInteractive'
-
   return (
     <>
+      {metaId ? (
+        <>
+          <noscript>
+            <img
+              height="1"
+              width="1"
+              style={{ display: 'none' }}
+              src={`https://www.facebook.com/tr?id=${metaId}&ev=PageView&noscript=1`}
+              alt=""
+            />
+          </noscript>
+          <Script id="nabtalabo-meta-pixel" strategy="beforeInteractive">
+            {`
+              !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+              n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+              document,'script','https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '${metaId}');
+              fbq('track', 'PageView');
+            `}
+          </Script>
+        </>
+      ) : null}
+
       {snapId ? (
         <Script id="nabtalabo-snap-pixel" strategy="beforeInteractive">
           {`
@@ -40,38 +60,6 @@ export default function DeferredPixels() {
             snaptr('track','PAGE_VIEW');
           `}
         </Script>
-      ) : null}
-
-      {metaId ? (
-        <>
-          <noscript>
-            <img
-              height="1"
-              width="1"
-              style={{ display: 'none' }}
-              src={`https://www.facebook.com/tr?id=${metaId}&ev=PageView&noscript=1`}
-              alt=""
-            />
-          </noscript>
-          <Script id="nabtalabo-meta-pixel-stub" strategy="afterInteractive">
-            {`
-              !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-              n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];}(window,document,'script');
-              fbq('init', '${metaId}');
-              fbq('track', 'PageView');
-            `}
-          </Script>
-          <Script id="nabtalabo-meta-pixel-load" strategy={loadStrategy}>
-            {`
-              (function(d,s,u,i){
-                if(d.getElementById(i))return;
-                var t=d.createElement(s);t.id=i;t.async=true;t.src=u;
-                var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(t,f);
-              })(document,'script','https://connect.facebook.net/en_US/fbevents.js','nabtalabo-meta-events');
-            `}
-          </Script>
-        </>
       ) : null}
 
       {tiktokId ? (
