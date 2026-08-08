@@ -16,7 +16,7 @@ export const DEFAULT_PRICING: StorePricing = {
   bundles: { '1': 199, '2': 279, '3': 349 },
   upsell_sar: 99,
   productBundles: {
-    'shahr-hadi': { '1': 189, '2': 269, '3': 339 },
+    'shahr-hadi': { '1': 199, '2': 279, '3': 349 },
     naseej: { '1': 189, '2': 219, '3': 279 },
     vitaflow: { '1': 189, '2': 219, '3': 279 },
   },
@@ -99,7 +99,7 @@ export function getOffers(format: ProductOfferFormat = 'gummy', productId?: stri
   ]
 }
 
-const PRICING_CACHE_KEY = 'nbta-store-pricing-v5'
+const PRICING_CACHE_KEY = 'nbta-store-pricing-v6'
 const PRICING_CACHE_TTL_MS = 10 * 60 * 1000
 
 function readCachedPricing(): StorePricing | null {
