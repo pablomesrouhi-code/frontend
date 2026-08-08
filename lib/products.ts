@@ -116,10 +116,10 @@ const ALL_PRODUCTS: Product[] = [
     coverHeight: 1024,
     homeCardImage: '/products/home-rawnaq-c.png',
     pdpHeroImage: {
-      src: '/products/rawnaq-c-hero-v2.png',
+      src: '/products/rawnaq-c-hero.jpg',
       width: 1024,
       height: 1024,
-      alt: 'مثال توضيحي قبل وبعد — رونق C علكات البيوتين',
+      alt: 'مثال توضيحي قبل وبعد — رونق C',
     },
     ingredientsSectionImage: {
       src: '/products/rawnaq-c-ingredients.jpg',
@@ -212,7 +212,7 @@ const ALL_PRODUCTS: Product[] = [
     soldCount: 6800,
     isBestSeller: true,
     featuredBadgeAr: 'الأكثر مبيعاً',
-        reviews: [
+    reviews: [
       {
         name: 'سارة م.',
         text: 'بعد 6 أسابيع على رونق C وصلت نتيجة — خطوط الوجه أخف وبشرتي أنعم، وشعري أقل تكسّr.',
@@ -357,7 +357,7 @@ const ALL_PRODUCTS: Product[] = [
     rating: 4.7,
     reviewCount: 91,
     soldCount: 4200,
-        reviews: [
+    reviews: [
       { name: 'نور س.', text: 'بعد 3 أسابيع وصلت نتيجة — انتفاخ بعد الغداء خف بشكل ملحوظ.', rating: 5 },
       { name: 'هدى ف.', text: 'شغلي برّا البيت؛ خفّة بيوتك بعد الأكل وصلتني لنتيجة: معدتي أهدأ بعد الوجبات الثقيلة.', rating: 5 },
       { name: 'لينا ر.', text: 'شهر كامل التزام يومي — وصلت نتيجة: غازات أقل وإحساس أخف بعد العشا.', rating: 5 },
@@ -478,7 +478,7 @@ const ALL_PRODUCTS: Product[] = [
     rating: 4.9,
     reviewCount: 128,
     soldCount: 5400,
-        reviews: [
+    reviews: [
       { name: 'عبير م.', text: 'بعد 4 أسابيع وصلت نتيجة — أنام أسرع وصباحي أوضح من قبل.', rating: 5 },
       { name: 'ديما ح.', text: 'كنت أقلب ساعات؛ شهر التزام ووصلت نتيجة: ذهني يهدأ قبل النوم بدون منوم.', rating: 5 },
       { name: 'شيماء ع.', text: 'ليل ماج + تقليل الشاشة — وصلت نتيجة بعد 6 أسابيع: نوم أنظف وأقل تعب.', rating: 5 },
@@ -827,10 +827,10 @@ const ALL_PRODUCTS: Product[] = [
     coverHeight: 1024,
     homeCardImage: '/products/home-shahr-hadi.png',
     pdpHeroImage: {
-      src: '/products/shahr-hadi-hero-v2.png',
+      src: '/products/shahr-hadi-hero.png',
       width: 1024,
       height: 1024,
-      alt: 'مثال توضيحي قبل وبعد — شهر هادئ (Hormonal Balance) مسحوق دعم الدورة',
+      alt: 'مثال توضيحي قبل وبعد — شهر هادئ مسحوق دعم الدورة',
     },
     painSectionImage: {
       src: '/products/shahr-hadi-pain.png',
