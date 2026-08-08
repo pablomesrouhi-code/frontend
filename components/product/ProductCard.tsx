@@ -124,7 +124,7 @@ export default function ProductCard({
         alt={product.nameAr}
         fill
         sizes={layout === 'grid' ? '(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 25vw' : '(max-width: 767px) 100vw, (max-width: 1200px) 45vw, 320px'}
-        className={isPowder ? 'object-contain object-center p-3 sm:p-4' : 'object-cover object-center'}
+        className="object-cover object-center"
       />
     </>
   )
