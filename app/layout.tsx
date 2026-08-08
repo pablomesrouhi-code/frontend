@@ -7,7 +7,6 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import PreFooterBanners from '@/components/layout/PreFooterBanners'
 import ClientCartDrawer from '@/components/layout/ClientCartDrawer'
-import BrandIntroSplash from '@/components/brand/BrandIntroSplash'
 import { StorePricingProvider } from '@/components/pricing/StorePricingProvider'
 import DeferredPixels from '@/components/tracking/DeferredPixels'
 import RouteChangePageViews from '@/components/tracking/RouteChangePageViews'
@@ -107,12 +106,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_JSON_LD) }}
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var p=location.pathname;if(p==='/thank-you'||p.indexOf('/thank-you/')===0)return;if(sessionStorage.getItem('nbta-brand-intro-seen')==='1')return;if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('nbta-splash-active');document.body.classList.add('nbta-intro-lock');}}catch(e){}})();`,
-          }}
-        />
-        <BrandIntroSplash />
         <StorePricingProvider>
           <Header />
           <main className="min-h-screen min-w-0 isolate pb-[env(safe-area-inset-bottom,0px)]">{children}</main>

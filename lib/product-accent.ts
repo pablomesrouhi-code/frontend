@@ -1,7 +1,7 @@
 /** ألوان الأزرار: على PDP حسب لون المنتج؛ على الهوم لون المتجر الموحّد. */
 
 /** Stamp — bump to trigger EasyPanel frontend rebuild. */
-export const FRONTEND_DEPLOY_STAMP = '2026-08-08-shahr-hadi-price-179'
+export const FRONTEND_DEPLOY_STAMP = '2026-08-08-fast-store-banner-v1'
 
 /** ورد المتجر — أزرار وعناوين الصفحة الرئيسية. */
 export const STORE_BUTTON_COLOR = '#b8485c'

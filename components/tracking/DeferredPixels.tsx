@@ -10,8 +10,8 @@ function sanitizeId(raw: string | undefined): string | null {
 }
 
 /**
- * beforeInteractive scripts are injected into <head> by Next.js (required for Pixel Helper).
- * TikTok uses one official block (stub + load + page) so ttq.track queues immediately.
+ * Load pixels after first paint so the storefront opens faster on ad landings.
+ * Stubs still queue events until the vendor scripts arrive.
  */
 export default function DeferredPixels() {
   const metaId = getMetaPixelId()
@@ -21,7 +21,6 @@ export default function DeferredPixels() {
   if (!pixelsEnabled()) return null
 
   const raw = process.env.NEXT_PUBLIC_PIXEL_SCRIPT_STRATEGY
-  // Default afterInteractive — lazyOnload often drops thank-you Purchase/Lead before fbevents.js loads.
   const loadStrategy: 'lazyOnload' | 'afterInteractive' =
     raw === 'lazyOnload' ? 'lazyOnload' : 'afterInteractive'
 
@@ -38,7 +37,7 @@ export default function DeferredPixels() {
               alt=""
             />
           </noscript>
-          <Script id="nabtalabo-meta-pixel-stub" strategy="beforeInteractive">
+          <Script id="nabtalabo-meta-pixel-stub" strategy="afterInteractive">
             {`
               !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
               n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -60,7 +59,7 @@ export default function DeferredPixels() {
       ) : null}
 
       {tiktokId ? (
-        <Script id="nabtalabo-tiktok-pixel" strategy="beforeInteractive">
+        <Script id="nabtalabo-tiktok-pixel" strategy="afterInteractive">
           {`
             !function (w, d, t) {
               w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
@@ -81,7 +80,7 @@ export default function DeferredPixels() {
 
       {snapId ? (
         <>
-          <Script id="nabtalabo-snap-pixel-stub" strategy="beforeInteractive">
+          <Script id="nabtalabo-snap-pixel-stub" strategy="afterInteractive">
             {`
               (function(e,t,n){if(e.snaptr)return;var a=e.snaptr=function(){
               a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments)};

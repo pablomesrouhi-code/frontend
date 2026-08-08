@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -28,10 +28,10 @@ export default function Header() {
   const { items, openCart } = useCartStore()
   const count = items.length
   const [msgIndex, setMsgIndex] = useState(0)
-  const [visible, setVisible] = useState(true)
   const [menuOpen, setMenuOpen] = useState(false)
-  /** بانر تحت اللوغو: يظهر فوق الصفحة / عند السكرول لفوق، ويختفي عند النزول */
   const [bannerShown, setBannerShown] = useState(true)
+  const bannerShownRef = useRef(true)
+  const lastYRef = useRef(0)
 
   useEffect(() => {
     setMenuOpen(false)
@@ -54,23 +54,25 @@ export default function Header() {
   }, [menuOpen])
 
   useEffect(() => {
-    let lastY = window.scrollY
+    lastYRef.current = window.scrollY
     let ticking = false
+
+    const apply = (next: boolean) => {
+      if (bannerShownRef.current === next) return
+      bannerShownRef.current = next
+      setBannerShown(next)
+    }
 
     const onScroll = () => {
       if (ticking) return
       ticking = true
       window.requestAnimationFrame(() => {
         const y = window.scrollY
-        const delta = y - lastY
-        if (y < 24) {
-          setBannerShown(true)
-        } else if (delta > 6) {
-          setBannerShown(false)
-        } else if (delta < -6) {
-          setBannerShown(true)
-        }
-        lastY = y
+        const delta = y - lastYRef.current
+        if (y < 16) apply(true)
+        else if (delta > 8) apply(false)
+        else if (delta < -8) apply(true)
+        lastYRef.current = y
         ticking = false
       })
     }
@@ -81,22 +83,17 @@ export default function Header() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setVisible(false)
-      setTimeout(() => {
-        setMsgIndex((i) => (i + 1) % BANNER_MESSAGES.length)
-        setVisible(true)
-      }, 500)
-    }, 3000)
+      setMsgIndex((i) => (i + 1) % BANNER_MESSAGES.length)
+    }, 4000)
     return () => clearInterval(interval)
   }, [])
 
   const msg = BANNER_MESSAGES[msgIndex]
 
   return (
-    <div className="sticky top-0 z-30 isolate pt-[max(0px,env(safe-area-inset-top))] [transform:translate3d(0,0,0)]">
-      <header className="border-b border-border bg-white/95 shadow-[0_1px_0_rgba(28,28,28,0.05),0_8px_32px_-28px_rgba(26,25,21,0.06)] ring-1 ring-black/[0.02] supports-[backdrop-filter]:bg-white/[0.93] supports-[backdrop-filter]:backdrop-blur-sm">
+    <div className="sticky top-0 z-30 isolate pt-[max(0px,env(safe-area-inset-top))]">
+      <header className="border-b border-border bg-white shadow-[0_1px_0_rgba(28,28,28,0.05)]">
         <div className="mx-auto flex min-h-16 max-w-6xl w-full items-center justify-between gap-2 px-4 py-2 sm:px-6 sm:py-2.5">
-          {/* اللوجو — يمين الشاشة في العربية */}
           <Link
             href="/"
             className="group flex min-w-0 max-w-[min(52vw,calc(100vw-9.5rem))] shrink items-center gap-2 overflow-hidden py-0.5 sm:max-w-[min(100%,calc(100vw-9rem))] sm:gap-2.5 md:max-w-[min(100%,calc(100vw-10rem))] md:shrink-0"
@@ -108,6 +105,7 @@ export default function Header() {
               width={320}
               height={140}
               sizes="(max-width: 640px) 38vw, 180px"
+              priority
               className="h-9 w-auto max-w-[min(128px,32vw)] shrink-0 object-contain object-start sm:h-10 sm:max-w-[min(160px,36vw)]"
             />
             <span className="hidden h-9 w-px shrink-0 bg-border/75 sm:block" aria-hidden />
@@ -133,19 +131,18 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="rounded-xl px-4 py-2 text-sm font-medium text-muted transition-[color,background-color] duration-200 ease-out hover:bg-peach-tint/90 hover:text-primary"
+                className="rounded-xl px-4 py-2 text-sm font-medium text-muted transition-colors duration-150 hover:bg-peach-tint/90 hover:text-primary"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          {/* السلة والقائمة — يسار الشاشة في العربية */}
           <div className="flex shrink-0 items-center gap-2">
             <button
               type="button"
               onClick={openCart}
-              className="relative flex touch-manipulation items-center gap-2 rounded-full border-[1.5px] border-border px-3 py-2 transition-[color,background-color,border-color,transform,box-shadow] duration-200 ease-out hover:border-primary hover:shadow-[0_4px_14px_-6px_rgba(184,72,92,0.12)] active:scale-[0.98]"
+              className="relative flex touch-manipulation items-center gap-2 rounded-full border-[1.5px] border-border px-3 py-2 transition-colors duration-150 hover:border-primary active:scale-[0.98]"
               aria-label="السلة"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
@@ -161,7 +158,7 @@ export default function Header() {
             </button>
             <button
               type="button"
-              className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-xl border border-border p-2.5 text-muted transition-[color,border-color,background-color] duration-200 ease-out hover:border-primary/80 hover:bg-peach-tint/40 hover:text-charcoal md:hidden"
+              className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-xl border border-border p-2.5 text-muted transition-colors duration-150 hover:border-primary/80 hover:bg-peach-tint/40 hover:text-charcoal md:hidden"
               onClick={() => setMenuOpen(true)}
               aria-expanded={menuOpen}
               aria-controls="mobile-nav-menu"
@@ -175,7 +172,6 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile full-screen nav */}
       {menuOpen ? (
         <div
           className="fixed inset-0 z-50 flex h-[100dvh] max-h-[100dvh] flex-col overflow-hidden bg-white md:hidden"
@@ -205,7 +201,7 @@ export default function Header() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className={`flex min-h-[48px] items-center justify-start rounded-xl px-3 py-4 text-start text-base font-medium transition-[color,background-color] duration-200 ease-out ${
+                      className={`flex min-h-[48px] items-center justify-start rounded-xl px-3 py-4 text-start text-base font-medium ${
                         active ? 'bg-peach-tint text-primary' : 'text-muted'
                       }`}
                       onClick={() => setMenuOpen(false)}
@@ -220,43 +216,38 @@ export default function Header() {
         </div>
       ) : null}
 
-      {/* Announcement banner — hide on scroll down, show on scroll up */}
-      <div
-        className="overflow-hidden transition-[max-height,opacity,border-color] duration-300 ease-out"
-        style={{
-          maxHeight: bannerShown ? 56 : 0,
-          opacity: bannerShown ? 1 : 0,
-          background: BANNER_GRADIENT,
-          borderBottom: bannerShown ? '1px solid rgba(0,0,0,0.06)' : '1px solid transparent',
-          pointerEvents: bannerShown ? 'auto' : 'none',
-        }}
-        aria-hidden={!bannerShown}
-      >
-        <div className="flex items-center justify-center gap-2 px-4 py-2 sm:gap-3">
-          <div
-            className="flex min-w-0 items-center gap-1.5 transition-opacity duration-500 sm:gap-2"
-            style={{ opacity: visible ? 1 : 0 }}
-          >
-            <span className="shrink-0 text-xs">{msg.icon}</span>
-            <span className="text-center text-[11px] font-semibold leading-snug tracking-wide text-white drop-shadow-sm sm:text-xs">
-              {msg.text}
-            </span>
-          </div>
-          <div className="flex shrink-0 items-center gap-1">
-            {BANNER_MESSAGES.map((_, i) => (
-              <div
-                key={i}
-                className="rounded-full transition-all duration-500"
-                style={{
-                  width: i === msgIndex ? '14px' : '4px',
-                  height: '4px',
-                  background: i === msgIndex ? '#FFFFFF' : 'rgba(255,255,255,0.45)',
-                }}
-              />
-            ))}
+      {/* Instant show/hide — no max-height animation (was causing scroll lag) */}
+      {bannerShown ? (
+        <div
+          className="px-4 py-2"
+          style={{
+            background: BANNER_GRADIENT,
+            borderBottom: '1px solid rgba(0,0,0,0.06)',
+          }}
+        >
+          <div className="flex items-center justify-center gap-2 sm:gap-3">
+            <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
+              <span className="shrink-0 text-xs">{msg.icon}</span>
+              <span className="text-center text-[11px] font-semibold leading-snug tracking-wide text-white sm:text-xs">
+                {msg.text}
+              </span>
+            </div>
+            <div className="flex shrink-0 items-center gap-1">
+              {BANNER_MESSAGES.map((_, i) => (
+                <div
+                  key={i}
+                  className="rounded-full"
+                  style={{
+                    width: i === msgIndex ? '14px' : '4px',
+                    height: '4px',
+                    background: i === msgIndex ? '#FFFFFF' : 'rgba(255,255,255,0.45)',
+                  }}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      ) : null}
     </div>
   )
 }
