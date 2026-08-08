@@ -10,8 +10,9 @@ function sanitizeId(raw: string | undefined): string | null {
 }
 
 /**
- * Load pixels after first paint so the storefront opens faster on ad landings.
- * Stubs still queue events until the vendor scripts arrive.
+ * Snap must start in <head> (beforeInteractive) — Ads Manager flags
+ * "browser navigation → pixel js start" when scevent.min.js is deferred (~10s).
+ * Meta/TikTok stay afterInteractive so the store still paints quickly.
  */
 export default function DeferredPixels() {
   const metaId = getMetaPixelId()
@@ -26,6 +27,21 @@ export default function DeferredPixels() {
 
   return (
     <>
+      {snapId ? (
+        <Script id="nabtalabo-snap-pixel" strategy="beforeInteractive">
+          {`
+            (function(e,t,n){if(e.snaptr)return;var a=e.snaptr=function(){
+            a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments)};
+            a.queue=[];var s='script';r=t.createElement(s);r.async=!0;
+            r.src=n;var u=t.getElementsByTagName(s)[0];
+            u.parentNode.insertBefore(r,u);})(window,document,
+            'https://sc-static.net/scevent.min.js');
+            snaptr('init','${snapId}');
+            snaptr('track','PAGE_VIEW');
+          `}
+        </Script>
+      ) : null}
+
       {metaId ? (
         <>
           <noscript>
@@ -76,29 +92,6 @@ export default function DeferredPixels() {
             }(window, document, 'ttq');
           `}
         </Script>
-      ) : null}
-
-      {snapId ? (
-        <>
-          <Script id="nabtalabo-snap-pixel-stub" strategy="afterInteractive">
-            {`
-              (function(e,t,n){if(e.snaptr)return;var a=e.snaptr=function(){
-              a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments)};
-              a.queue=[];})(window,document);
-              snaptr('init','${snapId}');
-            `}
-          </Script>
-          <Script id="nabtalabo-snap-pixel-load" strategy={loadStrategy}>
-            {`
-              (function(d,s,u,i){
-                if(d.getElementById(i))return;
-                var r=d.createElement(s);r.id=i;r.async=true;r.src=u;
-                var u0=d.getElementsByTagName(s)[0];u0.parentNode.insertBefore(r,u0);
-              })(document,'script','https://sc-static.net/scevent.min.js','nabtalabo-snap-events');
-              snaptr('track','PAGE_VIEW');
-            `}
-          </Script>
-        </>
       ) : null}
     </>
   )
