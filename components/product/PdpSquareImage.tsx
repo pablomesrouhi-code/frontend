@@ -11,7 +11,7 @@ type Props = {
   className?: string
 }
 
-/** صورة صفحة المنتج — أبعاد حقيقية + `object-contain` بدون `fill` ولا قصّ. */
+/** صورة صفحة المنتج — كاملة بدون قصّ (كما كانت). */
 export default function PdpSquareImage({
   src,
   alt,
