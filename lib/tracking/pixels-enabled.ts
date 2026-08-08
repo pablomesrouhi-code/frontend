@@ -1,7 +1,7 @@
 const SAFE_PIXEL_ID = /^[A-Za-z0-9_-]{4,64}$/
 
 /** Live Meta Pixel — fallback if EasyPanel build arg/runtime env is missing. */
-const FALLBACK_META_PIXEL_ID = '24566837436275478'
+const FALLBACK_META_PIXEL_ID = '922251466938401'
 
 function sanitizeId(raw: string | undefined): string | null {
   const v = raw?.trim()
