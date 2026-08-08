@@ -50,6 +50,8 @@ function metaCommerceParams(params: CommerceParams, extra?: Record<string, unkno
 type TrackOptions = {
   eventId?: string
   orderNumber?: string
+  /** When true, TikTok/Snap still fire; Meta browser pixel is skipped (server gate). */
+  skipMeta?: boolean
 }
 
 function snapPixelId(): string | null {
@@ -347,6 +349,7 @@ export function trackLead(params: CommerceParams, options: TrackOptions): void {
   trackTikTok('SubmitForm', tiktokCommercePayload(params), { eventId: `${eventId}-form` })
   trackSnap('SIGN_UP', { ...snapItemPayload(params), sign_up_method: 'checkout' }, { clientDedupId: eventId })
 
+  if (options.skipMeta) return
   whenFbqReady(() => {
     trackMeta('Lead', metaParams, { eventID: eventId })
   })
@@ -375,7 +378,23 @@ export function trackPurchase(params: CommerceParams, options: TrackOptions): vo
     { clientDedupId: eventId },
   )
 
+  if (options.skipMeta) return
   whenFbqReady(() => {
     trackMeta('Purchase', metaParams, { eventID: eventId })
+  })
+}
+
+/** Meta-only Lead/Purchase after /api/orders/verify-tracking says meta_ok. */
+export function trackMetaLeadPurchase(
+  params: CommerceParams,
+  options: { leadEventId: string; purchaseEventId: string; orderNumber?: string },
+): void {
+  const metaParams = metaCommerceParams(params)
+  const purchaseExtra = options.orderNumber ? { order_id: options.orderNumber } : undefined
+  whenFbqReady(() => {
+    trackMeta('Lead', metaParams, { eventID: options.leadEventId })
+    trackMeta('Purchase', metaCommerceParams(params, purchaseExtra), {
+      eventID: options.purchaseEventId,
+    })
   })
 }

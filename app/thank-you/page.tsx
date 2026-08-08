@@ -7,9 +7,11 @@ import { getPublicApiBase } from '@/lib/api'
 import { ensureSheetDelivery } from '@/lib/sheet-ensure'
 import { ensureCodNetworkDelivery } from '@/lib/cod-ensure'
 import { ensureLeadCapi } from '@/lib/lead-capi-ensure'
+import { verifyOrderTracking } from '@/lib/order-verify'
 import {
   setTrackingUser,
   trackLead,
+  trackMetaLeadPurchase,
   trackPurchase,
   whenFbqReady,
 } from '@/lib/tracking/client'
@@ -167,7 +169,7 @@ export default function ThankYouPage() {
   }, [order, orderedIds])
 
   useEffect(() => {
-    if (!order) return
+    if (!order?.orderId) return
     if (!order.purchaseEventId || !order.leadEventId) return
 
     const firedKey = 'nabtalabo_pixels_fired'
@@ -190,32 +192,47 @@ export default function ThankYouPage() {
 
     setTrackingUser({ phone: order.phone })
 
-    // Lead + Purchase fire only on thank-you — never on checkout form open.
-    // TikTok/Snap fire immediately; Meta waits for fbq via whenFbqReady inside track*.
+    // TikTok/Snap: thank-you. Meta: only after verify-tracking (order passed MaxMind).
     trackPurchase(commerce, {
       eventId: order.purchaseEventId,
       orderNumber: order.orderNumber,
+      skipMeta: true,
     })
-    trackLead(commerce, { eventId: order.leadEventId })
+    trackLead(commerce, { eventId: order.leadEventId, skipMeta: true })
 
-    // Mark fired only once Meta stub/fbq exists — if pixel never loads, refresh can retry.
-    return whenFbqReady(() => {
-      if (typeof window.fbq !== 'function') return
-      try {
-        sessionStorage.setItem(firedKey, order.purchaseEventId!)
-      } catch {
-        /* ignore */
-      }
-    })
-  }, [order])
-
-  useEffect(() => {
-    if (!order?.orderId || !order.leadEventId) return
-    if (leadCapiEnsured.current) return
-    leadCapiEnsured.current = true
-
+    let cancelled = false
     const base = getPublicApiBase()
-    void ensureLeadCapi(base, order.orderId, order.leadEventId)
+    void (async () => {
+      const verified = await verifyOrderTracking(base, order.orderId!, order.leadEventId!)
+      if (cancelled || !verified.meta_ok) {
+        if (!verified.meta_ok) {
+          // eslint-disable-next-line no-console
+          console.info('[nabtalabo] Meta Lead/Purchase skipped', verified.reason)
+        }
+        return
+      }
+      trackMetaLeadPurchase(commerce, {
+        leadEventId: order.leadEventId!,
+        purchaseEventId: order.purchaseEventId!,
+        orderNumber: order.orderNumber,
+      })
+      if (!leadCapiEnsured.current) {
+        leadCapiEnsured.current = true
+        void ensureLeadCapi(base, order.orderId!, order.leadEventId!)
+      }
+      whenFbqReady(() => {
+        if (typeof window.fbq !== 'function') return
+        try {
+          sessionStorage.setItem(firedKey, order.purchaseEventId!)
+        } catch {
+          /* ignore */
+        }
+      })
+    })()
+
+    return () => {
+      cancelled = true
+    }
   }, [order])
 
   useEffect(() => {
