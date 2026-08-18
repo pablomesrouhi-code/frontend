@@ -3,10 +3,7 @@ import { Suspense } from 'react'
 import { IBM_Plex_Sans_Arabic } from 'next/font/google'
 import './globals.css'
 import AnalyticsBeacon from '@/components/analytics/AnalyticsBeacon'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
-import PreFooterBanners from '@/components/layout/PreFooterBanners'
-import ClientCartDrawer from '@/components/layout/ClientCartDrawer'
+import SiteChrome from '@/components/layout/SiteChrome'
 import { StorePricingProvider } from '@/components/pricing/StorePricingProvider'
 import DeferredPixels from '@/components/tracking/DeferredPixels'
 import RouteChangePageViews from '@/components/tracking/RouteChangePageViews'
@@ -107,11 +104,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_JSON_LD) }}
         />
         <StorePricingProvider>
-          <Header />
-          <main className="min-h-screen min-w-0 isolate pb-[env(safe-area-inset-bottom,0px)]">{children}</main>
-          <PreFooterBanners />
-          <Footer />
-          <ClientCartDrawer />
+          <SiteChrome>{children}</SiteChrome>
         </StorePricingProvider>
         <DeferredPixels />
         <Suspense fallback={null}>
