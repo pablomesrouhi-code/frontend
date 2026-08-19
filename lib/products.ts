@@ -827,13 +827,13 @@ const ALL_PRODUCTS: Product[] = [
     coverHeight: 1024,
     homeCardImage: '/products/home-shahr-hadi.png',
     pdpHeroImage: {
-      src: '/products/shahr-hadi-hero-v6.png',
+      src: '/products/shahr-hadi-hero-v7.png',
       width: 1024,
       height: 1024,
-      alt: 'مثال توضيحي قبل وبعد — شهر هادئ (Hormonal Balance) مسحوق دعم الدورة',
+      alt: 'شهر هادئ — عبوة Hormonal Balance كاملة مع مكيال يومي',
     },
     painSectionImage: {
-      src: '/products/shahr-hadi-pain-v6.png',
+      src: '/products/shahr-hadi-pain-v7.png',
       width: 1024,
       height: 1024,
       alt: 'أيام الدورة الصعبة — الإحساس اليومي عند كثير من النساء',
@@ -845,15 +845,15 @@ const ALL_PRODUCTS: Product[] = [
       alt: 'شهر هادئ — عبوة مسحوق دعم التوازن الهرموني مع مكيال يومي',
     },
     extraStory: {
-      src: '/products/shahr-hadi-drink-v6.png',
+      src: '/products/shahr-hadi-drink-v7.png',
       width: 1024,
       height: 1024,
-      alt: 'كوب يومي من شهر هادئ — مثال توضيحي؛ النتيجة تختلف بين الأشخاص والالتزام.',
+      alt: 'كوب يومي من شهر هادئ — العبوة كاملة على الطاولة؛ النتيجة تختلف بين الأشخاص والالتزام.',
       titleAr: 'من أيام ثقيلة إلى شهر تتحكمين فيه',
       bodyAr:
         'الفرق ما يجي من مكيال ليلة واحدة — يجي من روتين يومي يثبت مع الدورات. شهر هادئ (مايو-إينوسيتول + فيتكس + مغنيسيوم + B6) يكمّل نمطاً صحياً متوازناً. النتيجة تختلف حسب الجسم والالتزام — مو وعد طبي.',
     },
-    captionUnderHeroImage: 'مثال توضيحي قبل وبعد؛ النتيجة تختلف حسب الجسم والالتزام والروتين.',
+    captionUnderHeroImage: 'العبوة كاملة كما هي — النتيجة تختلف حسب الجسم والالتزام والروتين.',
     copyAfterHeroPrice: 'قطعة للشهر الأول، أو عرض ثلاث قطع للالتزام الكامل — الخيار تحت.',
     persuasionBlock: {
       eyebrowAr: 'لكل شهر أيامه الصعبة',
@@ -861,7 +861,7 @@ const ALL_PRODUCTS: Product[] = [
       bodyAr:
         'تقلّبات مزاج، ألم بطن، انتفاخ، إرهاق قبل الدورة… وتقولين لنفسك «هذا طبيعي»؟ الجسم يرسل إشارة — الهرمونات تحتاج توازنًا لا «صبرًا». شهر هادئ: مايو-إينوسيتول + فيتكس + مغنيسيوم + B6 في مكيال يومي — مكمّل يدعم التوازن الهرموني الطبيعي. مو علاج طبي، لكنه الخطوة الصغيرة الذكية قبل الشهر القادم.',
       sectionImage: {
-        src: '/products/shahr-hadi-relaxed-v6.png',
+        src: '/products/shahr-hadi-relaxed-v7.png',
         width: 1024,
         height: 1024,
         alt: 'عميلة مرتاحة مع عبوة شهر هادئ — مثال توضيحي',
