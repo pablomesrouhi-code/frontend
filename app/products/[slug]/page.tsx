@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { PRODUCTS, getProductBySlug, getProductById, getPriceForQty, formatSarCompact, getFormatLabelAr, isPowderProduct } from '@/lib/products'
+import ShahrHadiProductPage from '@/components/product/ShahrHadiProductPage'
 import { getPdpSectionHeadlines } from '@/lib/pdp-section-headlines'
 import { getPdpHeroStats } from '@/lib/pdp-hero-stats'
 import StarRating from '@/components/ui/StarRating'
@@ -32,6 +33,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const { slug } = await params
   const product = getProductBySlug(slug)
   if (!product) notFound()
+
+  if (product.id === 'shahr-hadi') {
+    return <ShahrHadiProductPage />
+  }
 
   const isPowder = isPowderProduct(product)
   const unitLabel = isPowder ? 'عبوة' : 'علبة'
