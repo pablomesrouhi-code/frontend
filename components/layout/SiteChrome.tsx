@@ -8,8 +8,7 @@ import ClientCartDrawer from '@/components/layout/ClientCartDrawer'
 
 export default function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() ?? ''
-  const isLanding =
-    pathname.startsWith('/lp/') || pathname === '/products/shahr-hadi-pms-powder'
+  const isLanding = pathname.startsWith('/lp/')
 
   if (isLanding) {
     return (

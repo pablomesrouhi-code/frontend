@@ -1,30 +1,15 @@
 'use client'
+import dynamic from 'next/dynamic'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Product, getPriceForQty, formatSarRiial } from '@/lib/products'
 import { useStorePricing } from '@/components/pricing/StorePricingProvider'
-import { useCartStore } from '@/stores/cart-store'
 import OfferSelector from '@/components/product/OfferSelector'
 import PdpStickyRoutineCta from '@/components/product/PdpStickyRoutineCta'
 import { trackAddToCart, trackViewContent } from '@/lib/tracking/client'
 import { STORE_BUTTON_COLOR, getProductSolidButtonStyle, shadeTowardBlack } from '@/lib/product-accent'
+import { PDP_OPEN_CHECKOUT_EVENT } from '@/lib/pdp-checkout-event'
 
-function CartIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M7 7h14l-1.5 9h-11L7 7zm0 0L5.5 3H2"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M10 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"
-        fill="currentColor"
-      />
-    </svg>
-  )
-}
+const PdpCodCheckout = dynamic(() => import('@/components/product/PdpCodCheckout'), { ssr: false })
 
 export default function ProductPageClient({
   product,
@@ -35,9 +20,9 @@ export default function ProductPageClient({
 }) {
   useStorePricing()
   const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(1)
+  const [showCheckout, setShowCheckout] = useState(false)
   const [stickyCtaVisible, setStickyCtaVisible] = useState(false)
   const priceBlockRef = useRef<HTMLDivElement>(null)
-  const { addItem, openCart } = useCartStore()
   const accent = STORE_BUTTON_COLOR
   const accentDeep = shadeTowardBlack(accent, 0.28)
   const soldOut = product.availability === 'sold_out'
@@ -49,6 +34,16 @@ export default function ProductPageClient({
       currency: 'SAR',
     })
   }, [product.id])
+
+  useEffect(() => {
+    const onOpen = (e: Event) => {
+      const qty = (e as CustomEvent<{ qty?: 1 | 2 | 3 }>).detail?.qty
+      if (qty === 1 || qty === 2 || qty === 3) setSelectedQty(qty)
+      if (!soldOut) setShowCheckout(true)
+    }
+    window.addEventListener(PDP_OPEN_CHECKOUT_EVENT, onOpen)
+    return () => window.removeEventListener(PDP_OPEN_CHECKOUT_EVENT, onOpen)
+  }, [soldOut])
 
   useEffect(() => {
     const el = priceBlockRef.current
@@ -65,37 +60,32 @@ export default function ProductPageClient({
     return () => io.disconnect()
   }, [])
 
-  const scrollToPrice = useCallback(() => {
-    document.getElementById('pdp-buy-anchor')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-  }, [])
-
-  function handleAdd() {
+  const openCheckout = useCallback(() => {
     if (soldOut) return
-    addItem({
-      productId: product.id,
-      offerQty: selectedQty,
-      price: getPriceForQty(selectedQty, product.id),
-      nameAr: product.nameAr,
-      accentColor: product.accentColor,
-      bgColor: product.bgColor,
-    })
-    openCart()
     trackAddToCart({
       content_ids: [product.id],
       value: getPriceForQty(selectedQty, product.id),
       currency: 'SAR',
       num_items: selectedQty,
     })
-  }
+    setShowCheckout(true)
+  }, [soldOut, product.id, selectedQty])
 
   return (
     <>
       <div
         ref={priceBlockRef}
         dir="rtl"
-        className="relative min-w-0 max-w-full overflow-hidden rounded-2xl border bg-white p-4 text-right shadow-sm sm:rounded-3xl sm:p-5"
-        style={{ borderColor: `${accent}33` }}
+        className="relative min-w-0 max-w-full overflow-hidden rounded-2xl border-4 p-4 text-right shadow-[0_16px_48px_-18px_rgba(184,72,92,0.45)] sm:rounded-3xl sm:p-5"
+        style={{
+          borderColor: accent,
+          background: `linear-gradient(180deg, color-mix(in srgb, ${accent} 14%, #fff) 0%, #fff 42%)`,
+          boxShadow: `0 0 0 6px color-mix(in srgb, ${accent} 22%, transparent)`,
+        }}
       >
+        <p className="mb-3 text-center text-[11px] font-black tracking-wide sm:text-xs" style={{ color: accent }}>
+          اطلبي هنا · اسم + جوال فقط · COD
+        </p>
         <div className={soldOut ? 'pointer-events-none opacity-50' : undefined} aria-disabled={soldOut}>
           <OfferSelector
             selected={selectedQty}
@@ -103,8 +93,6 @@ export default function ProductPageClient({
             accentColor={accent}
             format={product.format}
             productId={product.id}
-            rating={product.rating}
-            reviewCount={product.reviewCount}
           />
         </div>
 
@@ -113,43 +101,30 @@ export default function ProductPageClient({
         </p>
 
         <button
-          onClick={handleAdd}
+          onClick={openCheckout}
           disabled={soldOut}
           type="button"
           className="group relative mt-3 w-full overflow-hidden rounded-2xl px-4 py-4 text-sm font-extrabold text-white transition enabled:hover:brightness-105 enabled:active:translate-y-[1px] disabled:cursor-not-allowed disabled:bg-charcoal/70 sm:py-[1.1rem] sm:text-base md:text-lg"
           style={soldOut ? undefined : getProductSolidButtonStyle(accent)}
         >
-          <span className="relative z-[1] flex items-center justify-center gap-3 flex-row-reverse">
-            <CartIcon className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" />
-            <span>
-              {soldOut ? (
-                'نفدت الكمية حالياً'
-              ) : (
-                <>
-                  {addToCartLabel} ·{' '}
-                  <span className="sar-price sar-price-dark tabular-nums">
-                    {formatSarRiial(getPriceForQty(selectedQty, product.id))}
-                  </span>
-                </>
-              )}
-            </span>
+          <span>
+            {soldOut ? (
+              'نفدت الكمية حالياً'
+            ) : (
+              <>
+                {addToCartLabel} ·{' '}
+                <span className="sar-price sar-price-dark tabular-nums">
+                  {formatSarRiial(getPriceForQty(selectedQty, product.id))}
+                </span>
+              </>
+            )}
           </span>
         </button>
 
         <p className="mt-2 text-center text-[11px] font-semibold text-muted sm:text-xs">
           {soldOut
             ? 'سيعود قريباً — هذا المنتج غير قابل للطلب الآن'
-            : 'الدفع عند الاستلام · تأكيد خلال ساعات العمل · بدون بطاقة'}
-        </p>
-
-        <p className="mt-3 text-center text-[11px] leading-relaxed text-muted">
-          <a
-            href="/returns-refunds"
-            className="font-semibold underline underline-offset-2"
-            style={{ color: accent }}
-          >
-            تفاصيل الضمان والاسترجاع
-          </a>
+            : 'بعد الزر: اسم + جوال → تأكيد الطلب'}
         </p>
       </div>
 
@@ -159,8 +134,12 @@ export default function ProductPageClient({
         accentDeep={accentDeep}
         label={addToCartLabel}
         formattedPrice={formatSarRiial(getPriceForQty(selectedQty, product.id))}
-        onClick={scrollToPrice}
+        onClick={openCheckout}
       />
+
+      {showCheckout && (
+        <PdpCodCheckout product={product} qty={selectedQty} onClose={() => setShowCheckout(false)} />
+      )}
     </>
   )
 }

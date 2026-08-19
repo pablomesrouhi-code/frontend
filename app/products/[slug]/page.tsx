@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
-import { PRODUCTS, getProductBySlug, getProductById, getPriceForQty, formatSarCompact, getFormatLabelAr, isPowderProduct } from '@/lib/products'
-import ShahrHadiProductPage from '@/components/product/ShahrHadiProductPage'
+import { PRODUCTS, getProductBySlug, getProductById, getFormatLabelAr, isPowderProduct } from '@/lib/products'
 import { getPdpSectionHeadlines } from '@/lib/pdp-section-headlines'
 import { getPdpHeroStats } from '@/lib/pdp-hero-stats'
 import StarRating from '@/components/ui/StarRating'
@@ -12,8 +11,10 @@ import PdpDeliveryPaymentSection from '@/components/product/PdpDeliveryPaymentSe
 import PdpReviewsSection from '@/components/product/PdpReviewsSection'
 import PowderPlaceholder from '@/components/product/PowderPlaceholder'
 import PdpHeroStatPills from '@/components/product/pdp/PdpHeroStatPills'
+import PdpBottomOfferCta from '@/components/product/PdpBottomOfferCta'
+import PdpRoutineNote from '@/components/product/PdpRoutineNote'
 import { getPdpAddCta, getPdpComplianceNote } from '@/lib/pdp-copy'
-import { STORE_BUTTON_COLOR, getProductSolidButtonStyle } from '@/lib/product-accent'
+import { STORE_BUTTON_COLOR } from '@/lib/product-accent'
 
 export async function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }))
@@ -34,14 +35,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const product = getProductBySlug(slug)
   if (!product) notFound()
 
-  if (product.id === 'shahr-hadi') {
-    return <ShahrHadiProductPage />
-  }
-
   const isPowder = isPowderProduct(product)
-  const unitLabel = isPowder ? 'عبوة' : 'علبة'
   const heroStats = getPdpHeroStats(product)
-  const startPrice = formatSarCompact(getPriceForQty(1, product.id))
 
   const crossSellProducts = product.crossSells
     .map((id) => getProductById(id))
@@ -141,12 +136,36 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
               <h1
                 id="pdp-hook"
-                className="scroll-mt-[calc(5.5rem+env(safe-area-inset-top))] mb-3 text-[1.75rem] font-black leading-[1.12] tracking-tight text-charcoal sm:text-4xl sm:leading-[1.1] md:text-[2.55rem] md:leading-[1.08]"
+                className="scroll-mt-[calc(5.5rem+env(safe-area-inset-top))] mb-3 text-[2.05rem] font-black leading-[1.1] tracking-tight text-charcoal sm:text-[2.6rem] sm:leading-[1.08] md:text-[3.05rem] md:leading-[1.06]"
               >
                 {product.heroHeadlineAr}
               </h1>
 
-              <p className="mb-4 text-sm leading-relaxed text-charcoal sm:text-base">{product.heroSubAr}</p>
+              <p className="mb-3 text-base font-semibold leading-relaxed text-charcoal sm:text-lg">{product.heroSubAr}</p>
+              {product.painCopy && (
+                <p className="mb-3 text-sm leading-relaxed text-charcoal/85 sm:text-[15px]">{product.painCopy}</p>
+              )}
+              {product.howToUse && (
+                <p className="mb-3 text-sm leading-relaxed text-muted sm:text-[15px]">
+                  <span className="font-black text-charcoal">طريقة الاستعمال: </span>
+                  {product.howToUse}
+                </p>
+              )}
+              {product.benefits.length > 0 && (
+                <ul className="mb-4 list-none space-y-1.5 text-sm leading-relaxed text-charcoal sm:text-[15px]">
+                  {product.benefits.slice(0, 4).map((line) => (
+                    <li key={line} className="flex gap-2">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: accent }} />
+                      <span>{line}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {product.copyAfterHeroPrice && (
+                <p className="mb-4 text-sm font-semibold leading-relaxed text-charcoal sm:text-[15px]">
+                  {product.copyAfterHeroPrice}
+                </p>
+              )}
 
               <div className="mb-4 flex flex-wrap items-center justify-end gap-2.5">
                 <span
@@ -157,9 +176,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   <span className="text-[11px] font-semibold text-muted">
                     · {product.reviewCount.toLocaleString('en-US')} تقييم موثّق
                   </span>
-                </span>
-                <span className="text-sm font-bold text-charcoal">
-                  من {startPrice} / {unitLabel}
                 </span>
               </div>
 
@@ -216,6 +232,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               </div>
 
               <div id="pdp-buy-anchor" className="scroll-mt-[calc(4.5rem+env(safe-area-inset-top))]">
+                <div className="mb-3">
+                  <PdpRoutineNote productId={product.id} format={product.format} accentColor={accent} />
+                </div>
                 <ProductPageClient
                   product={product}
                   addToCartLabel={getPdpAddCta(product.id)}
@@ -665,25 +684,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             {closeH.titleAr ?? 'طلعي لفوق؛ نفس العربات والخصم موجودين في خانة الأسعار فوق الصفحة'}
           </h2>
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-charcoal sm:text-lg">
-            اختاري الخانة المناسبة (قطعة واحدة أو عرض القطعتين أو الثلاث)، «أضيفي للسلة» يفتح لك تأكيد الطلب.{' '}
-            <strong className="font-semibold text-charcoal">ودفع كاش وقت التسليم</strong>
-            إن كان هذا اللي مخليكِ مرتاحة أكثر قبل ما تكمّلي.
+            اختاري العرض من تحت — يفتح نموذج الاسم والجوال مباشرة، ثم تأكيد الطلب.{' '}
+            <strong className="font-semibold text-charcoal">الدفع كاش عند الباب.</strong>
           </p>
-          <div className="mt-8 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:justify-center">
-            <a
-              href="#pdp-buy-anchor"
-              className="inline-flex min-h-[48px] min-w-[min(100%,240px)] items-center justify-center rounded-2xl px-8 py-3.5 text-base font-black text-white shadow-lg transition-[transform,filter] hover:brightness-105 active:translate-y-[1px]"
-              style={getProductSolidButtonStyle(accent)}
-            >
-              رجوع إلى العرض والطلب (↑)
-            </a>
-            <a
-              href="#pdp-reviews"
-              className="inline-flex min-h-[48px] items-center justify-center rounded-2xl border-2 border-border bg-white px-7 py-3.5 text-base font-bold text-charcoal shadow-sm ring-1 ring-black/[0.04] transition hover:bg-peach-soft/30"
-            >
-              ارجعي لآراء العميلات
-            </a>
-          </div>
+          <PdpBottomOfferCta product={product} />
         </div>
       </section>
 
