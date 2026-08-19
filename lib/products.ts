@@ -827,25 +827,25 @@ const ALL_PRODUCTS: Product[] = [
     coverHeight: 1024,
     homeCardImage: '/products/home-shahr-hadi.png',
     pdpHeroImage: {
-      src: '/products/shahr-hadi-hero-v4.png',
+      src: '/products/shahr-hadi-hero-v5.png',
       width: 1024,
       height: 1024,
       alt: 'مثال توضيحي قبل وبعد — شهر هادئ (Hormonal Balance) مسحوق دعم الدورة',
     },
     painSectionImage: {
-      src: '/products/shahr-hadi-pain-v4.png',
+      src: '/products/shahr-hadi-pain-v5.png',
       width: 1024,
       height: 1024,
       alt: 'أيام الدورة الصعبة — الإحساس اليومي عند كثير من النساء',
     },
     ingredientsSectionImage: {
-      src: '/products/shahr-hadi-powder.png',
+      src: '/products/home-shahr-hadi.png',
       width: 1024,
       height: 1024,
       alt: 'شهر هادئ — عبوة مسحوق دعم التوازن الهرموني مع مكيال يومي',
     },
     extraStory: {
-      src: '/products/shahr-hadi-drink-v4.png',
+      src: '/products/shahr-hadi-drink-v5.png',
       width: 1024,
       height: 1024,
       alt: 'كوب يومي من شهر هادئ — مثال توضيحي؛ النتيجة تختلف بين الأشخاص والالتزام.',
@@ -861,7 +861,7 @@ const ALL_PRODUCTS: Product[] = [
       bodyAr:
         'تقلّبات مزاج، ألم بطن، انتفاخ، إرهاق قبل الدورة… وتقولين لنفسك «هذا طبيعي»؟ الجسم يرسل إشارة — الهرمونات تحتاج توازنًا لا «صبرًا». شهر هادئ: مايو-إينوسيتول + فيتكس + مغنيسيوم + B6 في مكيال يومي — مكمّل يدعم التوازن الهرموني الطبيعي. مو علاج طبي، لكنه الخطوة الصغيرة الذكية قبل الشهر القادم.',
       sectionImage: {
-        src: '/products/shahr-hadi-relaxed-v4.png',
+        src: '/products/shahr-hadi-relaxed-v5.png',
         width: 1024,
         height: 1024,
         alt: 'عميلة مرتاحة مع عبوة شهر هادئ — مثال توضيحي',

@@ -1,7 +1,7 @@
 import sharp from 'sharp'
 import { mkdirSync } from 'fs'
 
-const POWDER = 'public/products/shahr-hadi-powder.png'
+const HOME = 'public/products/home-shahr-hadi.png'
 const ASSETS =
   'C:/Users/hp/.cursor/projects/c-Users-hp-cache-codex-runtimes-codex-primary-runtime-dependencies-python/assets'
 const OUT = 'public/products'
@@ -24,7 +24,7 @@ function knockWhite(data) {
 
 async function pouchCutout() {
   // Center crop of the real pouch only (no strawberries / berries / powder pile).
-  const { data, info } = await sharp(POWDER)
+  const { data, info } = await sharp(HOME)
     .extract({ left: 248, top: 12, width: 528, height: 868 })
     .ensureAlpha()
     .raw()
@@ -124,52 +124,33 @@ async function main() {
   const pouch = await pouchCutout()
   await sharp(pouch).png().toFile(`${ASSETS}/shahr-hadi-pouch-cutout.png`)
 
-  // Clean packshot: original pouch only, no extra fruit.
-  await sharp({
-    create: {
-      width: 1024,
-      height: 1024,
-      channels: 3,
-      background: { r: 255, g: 255, b: 255 },
-    },
-  })
-    .composite([
-      {
-        input: await withShadow(pouch, 400),
-        left: 270,
-        top: 48,
-      },
-    ])
-    .png()
-    .toFile(`${OUT}/shahr-hadi-product-v4.png`)
-
   await place(
-    `${ASSETS}/shahr-hadi-scene-01-split-empty.png`,
-    `${OUT}/shahr-hadi-hero-v4.png`,
+    `${ASSETS}/shahr-hadi-real-01-split.png`,
+    `${OUT}/shahr-hadi-hero-v5.png`,
     pouch,
     { width: 340, left: 342, top: 268 },
   )
 
   await place(
-    `${ASSETS}/shahr-hadi-scene-03-drink-empty.png`,
-    `${OUT}/shahr-hadi-drink-v4.png`,
+    `${ASSETS}/shahr-hadi-real-03-drink.png`,
+    `${OUT}/shahr-hadi-drink-v5.png`,
     pouch,
     { width: 250, left: 620, top: 390 },
   )
 
   await place(
-    `${ASSETS}/shahr-hadi-scene-04-relax-empty.png`,
-    `${OUT}/shahr-hadi-relaxed-v4.png`,
+    `${ASSETS}/shahr-hadi-real-04-relax.png`,
+    `${OUT}/shahr-hadi-relaxed-v5.png`,
     pouch,
     { width: 270, left: 28, top: 400 },
   )
 
-  await sharp(`${ASSETS}/shahr-hadi-scene-02-face.png`)
+  await sharp(`${ASSETS}/shahr-hadi-real-02-face.png`)
     .resize(1024, 1024)
     .png()
-    .toFile(`${OUT}/shahr-hadi-pain-v4.png`)
+    .toFile(`${OUT}/shahr-hadi-pain-v5.png`)
 
-  console.log('done')
+  console.log('done — homepage file untouched')
 }
 
 main().catch((e) => {
