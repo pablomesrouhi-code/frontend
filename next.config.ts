@@ -22,6 +22,11 @@ const nextConfig: NextConfig = {
         destination: "/products/laylmag-magnesium-powder",
         permanent: true,
       },
+      {
+        source: "/products/shahr-hadi-pms-powder",
+        destination: "/lp/shahr-hadi",
+        permanent: false,
+      },
     ];
   },
   images: {
