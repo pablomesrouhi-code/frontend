@@ -100,31 +100,19 @@ const REVIEWS = [
   {
     name: 'فاطمة — الرياض',
     text: 'ألم قبل الدورة كان يوقف يومي؛ دورتين ووصلت نتيجة — أعراض أخف بكثير.',
-    img: '/lp/shahr-hadi/hb-testimonial-01-grey-khimar-hold.png',
+    img: '/lp/shahr-hadi/lead-02-problem-pain.png',
     rating: 5,
   },
   {
     name: 'أمل — جدة',
     text: 'شهرين يومياً: انتفاخ ومزاج أهدأ قبل الدورة. أنصح فيه.',
-    img: '/lp/shahr-hadi/hb-testimonial-02-brown-living-hold.png',
+    img: '/lp/shahr-hadi/lead-03-drinking-product.png',
     rating: 5,
   },
   {
     name: 'نورة — مكة',
     text: '3 دورات — شهر أهدأ بشكل ملحوظ. COD سهل وتوصيل سريع.',
-    img: '/lp/shahr-hadi/hb-testimonial-03-black-hijab-curtains-hold.png',
-    rating: 5,
-  },
-  {
-    name: 'ريم — الدمام',
-    text: 'روتين بسيط — كوب واحد يومياً. حسيت فرق من الدورة الثانية.',
-    img: '/lp/shahr-hadi/hb-testimonial-04-garden-hold.png',
-    rating: 5,
-  },
-  {
-    name: 'لين — الخبر',
-    text: 'طلبت عبوتين — توصيل سريع وتأكيد هاتفي محترم.',
-    img: '/lp/shahr-hadi/hb-testimonial-05-showroom-hold.png',
+    img: '/lp/shahr-hadi/lead-04-relaxed-product.png',
     rating: 5,
   },
 ]
@@ -156,33 +144,43 @@ const FAQS = [
   },
 ]
 
-/** Lifestyle creatives — ketba f tsawira */
-const LIFESTYLE_SCROLL = [
-  '/lp/shahr-hadi/hb-cta-lifestyle-01-routine.png',
-  '/lp/shahr-hadi/hb-cta-lifestyle-02-balance.png',
-  '/lp/shahr-hadi/hb-cta-lifestyle-03-care.png',
-  '/lp/shahr-hadi/hb-cta-lifestyle-04-daily.png',
-  '/lp/shahr-hadi/hb-cta-lifestyle-06-easy.png',
-  '/lp/shahr-hadi/hb-cta-lifestyle-07-start.png',
-  '/lp/shahr-hadi/hb-cta-lifestyle-08-powder.png',
-  '/lp/shahr-hadi/hb-cta-lifestyle-09-try.png',
-  '/lp/shahr-hadi/hb-cta-lifestyle-10-now.png',
-]
-
-const PACKSHOT_SCROLL = [
-  '/lp/shahr-hadi/glass-hero.png',
-  '/lp/shahr-hadi/pour.png',
-  '/lp/shahr-hadi/kitchen-drink.png',
-  '/lp/shahr-hadi/hero-pack.png',
-  '/lp/shahr-hadi/hb-cta-v2-01.png',
-  '/lp/shahr-hadi/hb-cta-v2-05.png',
-  '/lp/shahr-hadi/hb-cta-mix-03.png',
-  '/lp/shahr-hadi/trio-pack.png',
-]
-
-const PAIN_IMAGES = [
-  '/lp/shahr-hadi/period-pain-03-bedroom-sit.png',
-  '/lp/shahr-hadi/period-pain-06-living-sofa.png',
+/** Lead frames — Saudi real · pro product · ketba fo9 tsawira */
+const LEAD_FRAMES = [
+  {
+    src: '/lp/shahr-hadi/lead-01-split-pain-cup.png',
+    alt: 'قبل وبعد — شهر هادئ',
+    headline: 'كل شهر نفس الألم… ونفس التقلّب؟',
+    sub: 'شهر هادئ — مسحوق دعم أيام الدورة · مايو-إينوسيتول + فيتكس',
+    tone: 'hero' as const,
+  },
+  {
+    src: '/lp/shahr-hadi/lead-02-problem-pain.png',
+    alt: 'ألم الدورة — تتعرفين على الإحساس',
+    headline: 'تتعرفين على هذا الإحساس؟',
+    sub: 'ألم · انتفاخ · مزاج — مو لازم تتحملي بصمت',
+    tone: 'pain' as const,
+  },
+  {
+    src: '/lp/shahr-hadi/lead-03-drinking-product.png',
+    alt: 'شرب شهر هادئ — روتين يومي',
+    headline: 'مكيال واحد يومياً — نكهة فراولة آساي',
+    sub: 'كوب واحد · روتين بسيط · بدون حبوب متعددة',
+    tone: 'solution' as const,
+  },
+  {
+    src: '/lp/shahr-hadi/lead-04-relaxed-product.png',
+    alt: 'بعد — مرتاحة مع شهر هادئ',
+    headline: 'شهر أهدأ — إحساس إنكِ مسيطرة',
+    sub: 'COD · توصيل المملكة · تأكيد هاتفي',
+    tone: 'relief' as const,
+  },
+  {
+    src: '/lp/shahr-hadi/lead-05-product-hero-pro.png',
+    alt: 'شهر هادئ — Hormonal Balance',
+    headline: 'شهر هادئ · Hormonal Balance',
+    sub: '30 مكيال · SFDA · دفع عند الاستلام',
+    tone: 'product' as const,
+  },
 ]
 
 function buildCart(
@@ -313,39 +311,61 @@ function TrustStrip({ className = '' }: { className?: string }) {
   )
 }
 
-function LpImage({
-  src,
-  alt,
+function LpLeadFrame({
+  frame,
   priority = false,
   onTap,
   className = '',
 }: {
-  src: string
-  alt: string
+  frame: (typeof LEAD_FRAMES)[number]
   priority?: boolean
   onTap?: () => void
   className?: string
 }) {
-  const img = (
-    <div className={`relative aspect-[2/3] w-full overflow-hidden bg-[#f5f0ee] ${className}`}>
+  const grad =
+    frame.tone === 'pain'
+      ? 'from-[#1a1215]/75 via-[#1a1215]/20 to-transparent'
+      : frame.tone === 'hero'
+        ? 'from-[#1a1815]/70 via-transparent to-[#1a1815]/30'
+        : 'from-[#1a1815]/65 via-transparent to-transparent'
+
+  const inner = (
+    <div className={`relative aspect-[3/4] w-full overflow-hidden bg-[#f5f0ee] ${className}`}>
       <Image
-        src={src}
-        alt={alt}
+        src={frame.src}
+        alt={frame.alt}
         fill
         priority={priority}
         sizes="(max-width: 640px) 100vw, 672px"
         className="object-cover object-center"
       />
+      <div className={`pointer-events-none absolute inset-0 bg-gradient-to-t ${grad}`} />
+      <div className="pointer-events-none absolute inset-x-0 top-0 p-4 pt-5 sm:p-6">
+        <p className="text-xl font-black leading-snug text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)] sm:text-2xl">
+          {frame.headline}
+        </p>
+        <p className="mt-2 max-w-[95%] text-sm font-semibold leading-relaxed text-white/92 drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)]">
+          {frame.sub}
+        </p>
+      </div>
+      {onTap && (
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 p-4 pb-5">
+          <span className="inline-flex rounded-full bg-[#b8485c] px-5 py-2.5 text-sm font-black text-white shadow-lg">
+            اطلبي الآن · COD
+          </span>
+        </div>
+      )}
     </div>
   )
+
   if (onTap) {
     return (
-      <button type="button" onClick={onTap} className="block w-full">
-        {img}
+      <button type="button" onClick={onTap} className="block w-full text-right">
+        {inner}
       </button>
     )
   }
-  return img
+  return inner
 }
 
 export default function ShahrHadiLanding() {
@@ -484,13 +504,10 @@ export default function ShahrHadiLanding() {
         </div>
       </header>
 
-      {/* Hero — lifestyle + ketba f tsawira */}
-      <LpImage
-        src="/lp/shahr-hadi/hb-cta-lifestyle-05-period.png"
-        alt="شهر هادئ — لأيام الدورة"
-        priority
-        onTap={scrollToOrder}
-      />
+      {/* Hero — split pain/cup + product */}
+      <div className="mx-auto w-full max-w-lg sm:max-w-2xl">
+        <LpLeadFrame frame={LEAD_FRAMES[0]!} priority onTap={scrollToOrder} />
+      </div>
 
       <div className="mx-auto max-w-lg px-4 pb-28 sm:max-w-2xl sm:px-6">
         {/* Social proof + price */}
@@ -657,16 +674,15 @@ export default function ShahrHadiLanding() {
           <TrustStrip className="mt-5" />
         </section>
 
-        {/* Lifestyle scroll — interleaved with content */}
-        <LpImage
-          src={LIFESTYLE_SCROLL[0]!}
-          alt="روتينك اليومي"
+        {/* 2 — المشكل واضح */}
+        <LpLeadFrame
+          frame={LEAD_FRAMES[1]!}
           onTap={scrollToOrder}
           className="mt-8 rounded-3xl"
         />
 
         {/* Benefits */}
-        <section className="mt-10">
+        <section className="mt-8">
           <h2 className="text-xl font-black text-charcoal">ليش آلاف السعوديات اختاروا شهر هادئ؟</h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {BENEFITS.map((b) => (
@@ -681,59 +697,21 @@ export default function ShahrHadiLanding() {
           </div>
         </section>
 
-        <LpImage src={LIFESTYLE_SCROLL[1]!} alt="توازن هرموني" onTap={scrollToOrder} className="mt-8 rounded-3xl" />
+        {/* 3 — كتشرب المنتج */}
+        <LpLeadFrame
+          frame={LEAD_FRAMES[2]!}
+          onTap={scrollToOrder}
+          className="mt-8 rounded-3xl"
+        />
 
-        {/* Before / after */}
-        <section className="mt-10 overflow-hidden rounded-3xl border border-border/60 bg-white">
-          <div className="grid sm:grid-cols-2">
-            <div className="relative aspect-square sm:min-h-[280px]">
-              <Image
-                src="/products/shahr-hadi-pain.png"
-                alt="قبل — أيام صعبة"
-                fill
-                className="object-cover"
-                sizes="50vw"
-              />
-              <span className="absolute top-3 right-3 rounded-full bg-black/60 px-3 py-1 text-xs font-black text-white">
-                قبل
-              </span>
-            </div>
-            <div className="relative aspect-square sm:min-h-[280px]">
-              <Image
-                src="/products/shahr-hadi-after.png"
-                alt="بعد — شهر أهدأ"
-                fill
-                className="object-cover"
-                sizes="50vw"
-              />
-              <span
-                className="absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-black text-white"
-                style={{ background: LP_ACCENT }}
-              >
-                بعد
-              </span>
-            </div>
-          </div>
-          <div className="p-5">
-            <h3 className="text-lg font-black text-charcoal">
-              {product.extraStory?.titleAr ?? 'من أيام ثقيلة… لشهر تتحكمين فيه'}
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted">
-              {product.persuasionBlock?.bodyAr?.slice(0, 220)}…
-            </p>
-          </div>
-        </section>
-
-        <LpImage src={LIFESTYLE_SCROLL[2]!} alt="عناية يومية" onTap={scrollToOrder} className="mt-8 rounded-3xl" />
-
-        {/* Ingredients + product */}
-        <section className="mt-10 overflow-hidden rounded-3xl border border-border/60 bg-white">
-          <div className="relative aspect-square w-full max-h-[420px]">
+        {/* Ingredients */}
+        <section className="mt-8 overflow-hidden rounded-3xl border border-border/60 bg-white">
+          <div className="relative aspect-[4/3] w-full">
             <Image
-              src="/products/shahr-hadi-product.png"
+              src="/lp/shahr-hadi/lead-05-product-hero-pro.png"
               alt="شهر هادئ — المكوّنات"
               fill
-              className="object-contain bg-[#faf9f8] p-4"
+              className="object-cover object-center"
               sizes="672px"
             />
           </div>
@@ -753,26 +731,21 @@ export default function ShahrHadiLanding() {
           </div>
         </section>
 
-        <LpImage src={LIFESTYLE_SCROLL[3]!} alt="يومياً" onTap={scrollToOrder} className="mt-8 rounded-3xl" />
+        {/* 4 — مرتاحة + product */}
+        <LpLeadFrame
+          frame={LEAD_FRAMES[3]!}
+          onTap={scrollToOrder}
+          className="mt-8 rounded-3xl"
+        />
 
-        {/* Pain relatability */}
-        <section className="mt-8 flex flex-col gap-1">
-          {PAIN_IMAGES.map((src) => (
-            <LpImage key={src} src={src} alt="أيام الدورة الصعبة" onTap={scrollToOrder} className="rounded-2xl" />
-          ))}
-        </section>
-
-        <LpImage src={LIFESTYLE_SCROLL[4]!} alt="سهل الاستخدام" onTap={scrollToOrder} className="mt-8 rounded-3xl" />
-        <LpImage src={LIFESTYLE_SCROLL[5]!} alt="ابدئي اليوم" onTap={scrollToOrder} className="mt-4 rounded-3xl" />
-
-        {/* Reviews with text */}
-        <section className="mt-10">
+        {/* Reviews */}
+        <section className="mt-8">
           <h2 className="text-xl font-black text-charcoal">تجارب عميلاتنا</h2>
           <div className="mt-4 flex flex-col gap-3">
             {REVIEWS.map((r) => (
               <article key={r.name} className="flex gap-3 rounded-2xl border border-border/60 bg-white p-4 shadow-sm">
                 <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-[#faf9f8]">
-                  <Image src={r.img} alt="" fill className="object-cover" sizes="80px" />
+                  <Image src={r.img} alt="" fill className="object-cover object-top" sizes="80px" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
@@ -788,7 +761,12 @@ export default function ShahrHadiLanding() {
           </div>
         </section>
 
-        <LpImage src={LIFESTYLE_SCROLL[6]!} alt="مسحوق شهر هادئ" onTap={scrollToOrder} className="mt-8 rounded-3xl" />
+        {/* 5 — product pro hero */}
+        <LpLeadFrame
+          frame={LEAD_FRAMES[4]!}
+          onTap={scrollToOrder}
+          className="mt-8 rounded-3xl"
+        />
 
         {/* FAQ */}
         <section className="mt-10">
@@ -808,19 +786,6 @@ export default function ShahrHadiLanding() {
                   <p className="border-t border-border/50 px-4 py-3 text-sm leading-relaxed text-muted">{f.a}</p>
                 )}
               </div>
-            ))}
-          </div>
-        </section>
-
-        <LpImage src={LIFESTYLE_SCROLL[7]!} alt="جرّبي شهر هادئ" onTap={scrollToOrder} className="mt-8 rounded-3xl" />
-        <LpImage src={LIFESTYLE_SCROLL[8]!} alt="اطلبي الآن" onTap={scrollToOrder} className="mt-4 rounded-3xl" />
-
-        {/* Packshots gallery */}
-        <section className="mt-10">
-          <h2 className="mb-3 text-center text-lg font-black text-charcoal">شوفي المنتج عن قرب</h2>
-          <div className="flex flex-col gap-1">
-            {PACKSHOT_SCROLL.map((src) => (
-              <LpImage key={src} src={src} alt="شهر هادئ — Hormonal Balance" onTap={scrollToOrder} />
             ))}
           </div>
         </section>
