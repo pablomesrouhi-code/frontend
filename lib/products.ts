@@ -827,28 +827,28 @@ const ALL_PRODUCTS: Product[] = [
     coverHeight: 1024,
     homeCardImage: '/products/home-shahr-hadi.png',
     pdpHeroImage: {
-      src: '/products/shahr-hadi-lp-01.png',
+      src: '/products/shahr-hadi-hero-v3.png',
       width: 1024,
       height: 1024,
-      alt: 'شهر هادئ — من ألم الدورة إلى راحة وطمأنينة',
+      alt: 'مثال توضيحي قبل وبعد — شهر هادئ (Hormonal Balance) مسحوق دعم الدورة',
     },
     painSectionImage: {
-      src: '/products/shahr-hadi-lp-02.png',
+      src: '/products/shahr-hadi-pain-v3.png',
       width: 1024,
       height: 1024,
-      alt: 'أيام الدورة الصعبة — تشعرين بها بنفسك',
+      alt: 'أيام الدورة الصعبة — الإحساس اليومي عند كثير من النساء',
     },
     ingredientsSectionImage: {
-      src: '/products/shahr-hadi-lp-05.png',
+      src: '/products/shahr-hadi-product-v3.png',
       width: 1024,
       height: 1024,
-      alt: 'شهر هادئ — Hormonal Balance مسحوق SFDA',
+      alt: 'شهر هادئ — عبوة مسحوق دعم التوازن الهرموني مع مكيال يومي',
     },
     extraStory: {
-      src: '/products/shahr-hadi-lp-04.png',
+      src: '/products/shahr-hadi-drink-v3.png',
       width: 1024,
       height: 1024,
-      alt: 'شهر أهدأ وراحة أكثر — مثال توضيحي؛ النتيجة تختلف بين الأشخاص والالتزام.',
+      alt: 'كوب يومي من شهر هادئ — مثال توضيحي؛ النتيجة تختلف بين الأشخاص والالتزام.',
       titleAr: 'من أيام ثقيلة إلى شهر تتحكمين فيه',
       bodyAr:
         'الفرق ما يجي من مكيال ليلة واحدة — يجي من روتين يومي يثبت مع الدورات. شهر هادئ (مايو-إينوسيتول + فيتكس + مغنيسيوم + B6) يكمّل نمطاً صحياً متوازناً. النتيجة تختلف حسب الجسم والالتزام — مو وعد طبي.',
@@ -860,6 +860,12 @@ const ALL_PRODUCTS: Product[] = [
       titleAr: 'التقلّب والألم كل شهر — مو «طبيعي» تتحمّليه بصمت',
       bodyAr:
         'تقلّبات مزاج، ألم بطن، انتفاخ، إرهاق قبل الدورة… وتقولين لنفسك «هذا طبيعي»؟ الجسم يرسل إشارة — الهرمونات تحتاج توازنًا لا «صبرًا». شهر هادئ: مايو-إينوسيتول + فيتكس + مغنيسيوم + B6 في مكيال يومي — مكمّل يدعم التوازن الهرموني الطبيعي. مو علاج طبي، لكنه الخطوة الصغيرة الذكية قبل الشهر القادم.',
+      sectionImage: {
+        src: '/products/shahr-hadi-relaxed-v3.png',
+        width: 1024,
+        height: 1024,
+        alt: 'عميلة مرتاحة مع عبوة شهر هادئ — مثال توضيحي',
+      },
       bullets: [
         'مايو-إينوسيتول — مرتبط بدعم توازن الإنسولين والهرمونات الأنثوية.',
         'فيتكس (توت العفاريت) — عشبة تقليدية مرتبطة بتخفيف أعراض PMS.',
