@@ -34,11 +34,11 @@ const LP_ACCENT = STORE_BUTTON_COLOR
 const LP_SOFT = '#F0E9F0'
 
 const LP_IMAGES = {
-  hero: '/products/shahr-hadi-lp-01.png',
-  pain: '/products/shahr-hadi-lp-02.png',
-  drink: '/products/shahr-hadi-lp-03.png',
-  relaxed: '/products/shahr-hadi-lp-04.png',
-  product: '/products/shahr-hadi-lp-05.png',
+  hero: '/products/shahr-hadi-lp-hero.png',
+  pain: '/products/shahr-hadi-lp-pain.png',
+  drink: '/products/shahr-hadi-lp-drink.png',
+  relaxed: '/products/shahr-hadi-lp-drink.png',
+  product: '/products/shahr-hadi-product.png',
 } as const
 
 const TEST_PHONES = ['055000000']
