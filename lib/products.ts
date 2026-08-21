@@ -819,7 +819,7 @@ const ALL_PRODUCTS: Product[] = [
       'مسحوق مع مكيال: مايو-إينوسيتول + فيتكس + مغنيسيوم + B6 — دعم أيام الدورة الصعبة من الداخل، كل شهر.',
     pdpMagnetLineAr: 'أيام الدورة الصعبة لها حل داخلي — العروض تحت.',
     heroHeadlineAr: 'كل شهر نفس الألم… ونفس التقلّب؟ تبغين تحسّين إنكِ أنتِ — مو نسخة متعبة من نفسك.',
-    heroSubAr: 'مكيال يومي — مزاج أوضح وألم أخف. مو دواء.',
+    heroSubAr: 'مكيال يومي: مايو-إينوسيتول + فيتكس + مغنيسيوم + B6 — مزاج أوضح وألم أخف. مو دواء.',
     badgeAr: 'مسحوق الدورة الهادئة',
     accentColor: '#8E6C8E',
     bgColor: '#F0E9F0',
@@ -828,11 +828,43 @@ const ALL_PRODUCTS: Product[] = [
     coverHeight: 1024,
     homeCardImage: '/products/home-shahr-hadi.png',
     pdpHeroImage: {
-      src: '/products/shahr-hadi-product.png',
+      src: '/products/shahr-hadi-pdp-hero.png',
       width: 1024,
       height: 1024,
-      alt: 'شهر هادئ — العبوة كاملة',
+      alt: 'شهر هادئ — قبل وبعد مع العبوة الكاملة',
     },
+    pdpGallery: [
+      {
+        src: '/products/shahr-hadi-pdp-hero.png',
+        width: 1024,
+        height: 1024,
+        alt: 'قبل وبعد — العبوة في الوسط',
+      },
+      {
+        src: '/products/shahr-hadi-pdp-pain.png',
+        width: 1024,
+        height: 1024,
+        alt: 'أيام الدورة الصعبة',
+      },
+      {
+        src: '/products/shahr-hadi-pdp-drink-v8.png',
+        width: 1024,
+        height: 1024,
+        alt: 'تشرب شهر هادئ والعبوة بجانبها',
+      },
+      {
+        src: '/products/shahr-hadi-product.png',
+        width: 1024,
+        height: 1024,
+        alt: 'شهر هادئ — العبوة كاملة',
+      },
+      {
+        src: '/products/shahr-hadi-pdp-hold.png',
+        width: 1024,
+        height: 1024,
+        alt: 'شهر هادئ — العبوة في اليد',
+      },
+    ],
     extraStory: {
       titleAr: 'من أيام ثقيلة إلى شهر تتحكمين فيه',
       bodyAr:
