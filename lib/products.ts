@@ -819,8 +819,7 @@ const ALL_PRODUCTS: Product[] = [
       'مسحوق مع مكيال: مايو-إينوسيتول + فيتكس + مغنيسيوم + B6 — دعم أيام الدورة الصعبة من الداخل، كل شهر.',
     pdpMagnetLineAr: 'أيام الدورة الصعبة لها حل داخلي — العروض تحت.',
     heroHeadlineAr: 'كل شهر نفس الألم… ونفس التقلّب؟ تبغين تحسّين إنكِ أنتِ — مو نسخة متعبة من نفسك.',
-    heroSubAr:
-      'مزاج أوضح وألم أخف — مكيال يومي. مو دواء ولا وعد سحري؛ النتيجة تختلف حسب الجسم والالتزام.',
+    heroSubAr: 'مكيال يومي — مزاج أوضح وألم أخف. مو دواء.',
     badgeAr: 'مسحوق الدورة الهادئة',
     accentColor: '#8E6C8E',
     bgColor: '#F0E9F0',
@@ -829,50 +828,18 @@ const ALL_PRODUCTS: Product[] = [
     coverHeight: 1024,
     homeCardImage: '/products/home-shahr-hadi.png',
     pdpHeroImage: {
-      src: '/products/shahr-hadi-pdp-hero.png',
+      src: '/products/shahr-hadi-product.png',
       width: 1024,
       height: 1024,
-      alt: 'شهر هادئ — قبل وبعد مع العبوة الكاملة',
+      alt: 'شهر هادئ — العبوة كاملة',
     },
-    pdpGallery: [
-      {
-        src: '/products/shahr-hadi-pdp-hero.png',
-        width: 1024,
-        height: 1024,
-        alt: 'شهر هادئ — قبل وبعد مع العبوة الكاملة',
-      },
-      {
-        src: '/products/shahr-hadi-pdp-pain.png',
-        width: 1024,
-        height: 1024,
-        alt: 'أيام الدورة الصعبة — الإحساس اليومي عند كثير من النساء',
-      },
-      {
-        src: '/products/shahr-hadi-pdp-drink-v8.png',
-        width: 1024,
-        height: 1024,
-        alt: 'كوب يومي من شهر هادئ — العبوة على الطاولة',
-      },
-      {
-        src: '/products/shahr-hadi-pdp-hold.png',
-        width: 1024,
-        height: 1024,
-        alt: 'شهر هادئ — العبوة في اليد',
-      },
-      {
-        src: '/products/shahr-hadi-product.png',
-        width: 1024,
-        height: 1024,
-        alt: 'شهر هادئ — العبوة كاملة مع الكوب',
-      },
-    ],
     extraStory: {
       titleAr: 'من أيام ثقيلة إلى شهر تتحكمين فيه',
       bodyAr:
         'الفرق ما يجي من مكيال ليلة واحدة — يجي من روتين يومي يثبت مع الدورات. شهر هادئ (مايو-إينوسيتول + فيتكس + مغنيسيوم + B6) يكمّل نمطاً صحياً متوازناً. النتيجة تختلف حسب الجسم والالتزام — مو وعد طبي.',
     },
-    captionUnderHeroImage: 'العبوة كاملة كما هي — النتيجة تختلف حسب الجسم والالتزام والروتين.',
-    copyAfterHeroPrice: 'قطعة للشهر الأول، أو عرض ثلاث قطع للالتزام الكامل — الخيار تحت.',
+    captionUnderHeroImage: '',
+    copyAfterHeroPrice: '',
     persuasionBlock: {
       eyebrowAr: 'لكل شهر أيامه الصعبة',
       titleAr: 'التقلّب والألم كل شهر — مو «طبيعي» تتحمّليه بصمت',
