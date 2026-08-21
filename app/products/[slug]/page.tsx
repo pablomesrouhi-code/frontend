@@ -677,17 +677,21 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         style={{ background: `linear-gradient(to bottom left, ${product.bgColor}88, #fff, ${accent}0a)` }}
       >
         <div className="mx-auto flex max-w-3xl flex-col items-center px-4 text-center sm:px-6">
-          <p className="mb-3 text-xs font-black uppercase tracking-[0.26em]" style={{ color: accent }}>
-            {closeH.eyebrowAr ?? 'جاهزة من القرار؟'}
-          </p>
-          <h2 className="text-2xl font-black leading-snug text-charcoal sm:text-3xl">
-            {closeH.titleAr ?? 'طلعي لفوق؛ نفس العربات والخصم موجودين في خانة الأسعار فوق الصفحة'}
-          </h2>
-          <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-charcoal sm:text-lg">
-            اختاري العرض من تحت — يفتح نموذج الاسم والجوال مباشرة، ثم تأكيد الطلب.{' '}
-            <strong className="font-semibold text-charcoal">الدفع كاش عند الباب.</strong>
-          </p>
-          <PdpBottomOfferCta product={product} />
+          {product.id !== 'shahr-hadi' && (
+            <>
+              <p className="mb-3 text-xs font-black uppercase tracking-[0.26em]" style={{ color: accent }}>
+                {closeH.eyebrowAr ?? 'جاهزة من القرار؟'}
+              </p>
+              <h2 className="text-2xl font-black leading-snug text-charcoal sm:text-3xl">
+                {closeH.titleAr ?? 'طلعي لفوق؛ نفس العربات والخصم موجودين في خانة الأسعار فوق الصفحة'}
+              </h2>
+              <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-charcoal sm:text-lg">
+                اختاري العرض من تحت — يفتح نموذج الاسم والجوال مباشرة، ثم تأكيد الطلب.{' '}
+                <strong className="font-semibold text-charcoal">الدفع كاش عند الباب.</strong>
+              </p>
+            </>
+          )}
+          <PdpBottomOfferCta product={product} scrollToOffers={product.id === 'shahr-hadi'} />
         </div>
       </section>
 

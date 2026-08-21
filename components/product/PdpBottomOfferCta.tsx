@@ -5,9 +5,28 @@ import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import { getProductSolidButtonStyle, STORE_BUTTON_COLOR } from '@/lib/product-accent'
 import { openPdpCheckout } from '@/lib/pdp-checkout-event'
 
-export default function PdpBottomOfferCta({ product }: { product: Product }) {
+export default function PdpBottomOfferCta({
+  product,
+  scrollToOffers = false,
+}: {
+  product: Product
+  scrollToOffers?: boolean
+}) {
   useStorePricing()
   const accent = STORE_BUTTON_COLOR
+
+  if (scrollToOffers) {
+    return (
+      <a
+        href="#pdp-buy-anchor"
+        className="inline-flex min-h-[48px] w-full items-center justify-center rounded-2xl px-8 py-3.5 text-base font-black text-white shadow-lg"
+        style={getProductSolidButtonStyle(accent)}
+      >
+        اطلبي الآن ↑
+      </a>
+    )
+  }
+
   const offers = getOffers(product.format, product.id)
 
   return (
