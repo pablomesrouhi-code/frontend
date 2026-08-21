@@ -8,6 +8,7 @@ import PdpStickyRoutineCta from '@/components/product/PdpStickyRoutineCta'
 import { trackAddToCart, trackViewContent } from '@/lib/tracking/client'
 import { STORE_BUTTON_COLOR, getProductSolidButtonStyle, shadeTowardBlack } from '@/lib/product-accent'
 import { PDP_OPEN_CHECKOUT_EVENT } from '@/lib/pdp-checkout-event'
+import { scrollToPdpForm } from '@/lib/pdp-scroll'
 
 const PdpCodCheckout = dynamic(() => import('@/components/product/PdpCodCheckout'), { ssr: false })
 
@@ -134,7 +135,7 @@ export default function ProductPageClient({
         accentDeep={accentDeep}
         label={addToCartLabel}
         formattedPrice={formatSarRiial(getPriceForQty(selectedQty, product.id))}
-        onClick={openCheckout}
+        onClick={scrollToPdpForm}
       />
 
       {showCheckout && (

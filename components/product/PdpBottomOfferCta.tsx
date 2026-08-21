@@ -4,6 +4,7 @@ import { getOffers, formatSarCompact, type Product } from '@/lib/products'
 import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import { getProductSolidButtonStyle, STORE_BUTTON_COLOR } from '@/lib/product-accent'
 import { openPdpCheckout } from '@/lib/pdp-checkout-event'
+import ScrollToPdpFormLink from '@/components/product/ScrollToPdpFormLink'
 
 export default function PdpBottomOfferCta({
   product,
@@ -17,13 +18,12 @@ export default function PdpBottomOfferCta({
 
   if (scrollToOffers) {
     return (
-      <a
-        href="#pdp-buy-anchor"
+      <ScrollToPdpFormLink
         className="inline-flex min-h-[48px] w-full items-center justify-center rounded-2xl px-8 py-3.5 text-base font-black text-white shadow-lg"
         style={getProductSolidButtonStyle(accent)}
       >
         اطلبي الآن ↑
-      </a>
+      </ScrollToPdpFormLink>
     )
   }
 

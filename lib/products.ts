@@ -39,6 +39,8 @@ export type Product = {
   homeCardImage?: string
   /** صورة هيرو صفحة المنتج؛ إن وُجدت تُعرض بدل المساحة الفارغة (ولا تبدّل غلاف البطاقة `coverImage` إلا للعرض تحت هذا الحقل فقط هنا) */
   pdpHeroImage?: { src: string; width: number; height: number; alt?: string }
+  /** معرض صور صفحة المنتج (هيرو + مصغّرات) */
+  pdpGallery?: { src: string; width: number; height: number; alt: string }[]
   /** صورة قسم «لماذا تحتاجينه؟»؛ إن لم تُحدَّد يُعرَض غلاف المنتج مرة ثانية */
   painSectionImage?: { src: string; width: number; height: number; alt: string }
   /** صورة عمود قسم «المكونات الفعّالة» على صفحة المنتج؛ إن لم تُحدَّد يُستعمل الغلاف */
@@ -832,6 +834,38 @@ const ALL_PRODUCTS: Product[] = [
       height: 1024,
       alt: 'شهر هادئ — قبل وبعد مع العبوة الكاملة',
     },
+    pdpGallery: [
+      {
+        src: '/products/shahr-hadi-pdp-hero.png',
+        width: 1024,
+        height: 1024,
+        alt: 'شهر هادئ — قبل وبعد مع العبوة الكاملة',
+      },
+      {
+        src: '/products/shahr-hadi-pdp-pain.png',
+        width: 1024,
+        height: 1024,
+        alt: 'أيام الدورة الصعبة — الإحساس اليومي عند كثير من النساء',
+      },
+      {
+        src: '/products/shahr-hadi-pdp-drink-v8.png',
+        width: 1024,
+        height: 1024,
+        alt: 'كوب يومي من شهر هادئ — العبوة على الطاولة',
+      },
+      {
+        src: '/products/shahr-hadi-pdp-pack.png',
+        width: 1024,
+        height: 1024,
+        alt: 'شهر هادئ — عبوة Hormonal Balance',
+      },
+      {
+        src: '/products/home-shahr-hadi.png',
+        width: 1024,
+        height: 1024,
+        alt: 'شهر هادئ — العبوة كاملة',
+      },
+    ],
     painSectionImage: {
       src: '/products/shahr-hadi-pdp-pain.png',
       width: 1024,

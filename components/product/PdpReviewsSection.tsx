@@ -3,6 +3,7 @@ import type { Product, ProductReview } from '@/lib/products'
 import { getPdpSectionHeadlines } from '@/lib/pdp-section-headlines'
 import { getTestimonialMeta } from '@/lib/pdp-testimonial-meta'
 import { STORE_BUTTON_COLOR, getProductSolidButtonStyle } from '@/lib/product-accent'
+import ScrollToPdpFormLink from '@/components/product/ScrollToPdpFormLink'
 
 function reviewInitials(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean)
@@ -211,13 +212,12 @@ export default function PdpReviewsSection({ product }: Props) {
               <h3 className="mb-2 text-base font-black text-charcoal">{product.afterReviewsBanner.titleAr}</h3>
             )}
             <p className="mx-auto max-w-xl text-sm leading-relaxed text-charcoal">{product.afterReviewsBanner.bodyAr}</p>
-            <a
-              href="#pdp-buy-anchor"
+            <ScrollToPdpFormLink
               className="mt-4 inline-flex rounded-xl px-6 py-3 text-sm font-extrabold text-white shadow-sm"
               style={getProductSolidButtonStyle(accent)}
             >
               اختاري العرض واطلبي الآن ↑
-            </a>
+            </ScrollToPdpFormLink>
           </div>
         ) : null}
       </div>

@@ -7,6 +7,7 @@ import ProductPageClient from './ProductPageClient'
 import ProductCard from '@/components/product/ProductCard'
 import ProductPageImageSlot from '@/components/product/ProductPageImageSlot'
 import PdpSquareImage from '@/components/product/PdpSquareImage'
+import PdpImageGallery from '@/components/product/PdpImageGallery'
 import PdpDeliveryPaymentSection from '@/components/product/PdpDeliveryPaymentSection'
 import PdpReviewsSection from '@/components/product/PdpReviewsSection'
 import PowderPlaceholder from '@/components/product/PowderPlaceholder'
@@ -105,7 +106,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 className="mx-auto w-full max-w-md rounded-2xl border-2 bg-white/95 p-1.5 shadow-lg backdrop-blur-sm sm:max-w-lg sm:rounded-3xl sm:p-2 md:mx-0 md:max-w-none"
                 style={{ borderColor: `color-mix(in srgb, ${accent} 30%, #e8e0de)` }}
               >
-                {isPowder && !powderHeroPhoto ? (
+                {product.pdpGallery && product.pdpGallery.length > 0 ? (
+                  <PdpImageGallery images={product.pdpGallery} accentColor={accent} />
+                ) : isPowder && !powderHeroPhoto ? (
                   <div className="relative aspect-square min-h-[300px]">
                     <PowderPlaceholder product={product} size="hero" />
                   </div>
