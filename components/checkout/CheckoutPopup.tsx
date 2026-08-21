@@ -190,7 +190,7 @@ export default function CheckoutPopup({ onClose }: Props) {
           `تعذّر إرسال الطلب (${res.status}). جرّبوا بعد قليل أو تواصلوا مع الدعم.`
         const hint403 =
           res.status === 403
-            ? ' إن كنتِ تختبرين من خارج السعودية، استخدمي الرقم 055000000 أو اطلبي من الإدارة تفعيل MAXMIND_RELAXED=true مؤقتاً.'
+            ? ' تعذّر قبول الطلب. تأكّدي من الاسم والجوال ثم أعدي المحاولة.'
             : ''
         const hint502 =
           res.status === 502 || res.status === 504

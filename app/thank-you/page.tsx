@@ -192,7 +192,7 @@ export default function ThankYouPage() {
 
     setTrackingUser({ phone: order.phone })
 
-    // TikTok/Snap: thank-you. Meta: only after verify-tracking (order passed MaxMind).
+    // TikTok/Snap: thank-you. Meta: only after verify-tracking (order exists).
     trackPurchase(commerce, {
       eventId: order.purchaseEventId,
       orderNumber: order.orderNumber,

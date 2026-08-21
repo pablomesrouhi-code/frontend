@@ -1,4 +1,4 @@
-/** Thank-you gate: only Meta Lead/Purchase when API confirms MaxMind-passed order. */
+/** Thank-you gate: only Meta Lead/Purchase when API confirms the order. */
 
 export type TrackingVerifyResult = {
   ok: boolean
