@@ -845,7 +845,7 @@ const ALL_PRODUCTS: Product[] = [
       alt: 'شهر هادئ — عبوة Hormonal Balance',
     },
     extraStory: {
-      src: '/products/shahr-hadi-pdp-drink.png',
+      src: '/products/shahr-hadi-pdp-drink-v2.png',
       width: 1024,
       height: 1024,
       alt: 'كوب يومي من شهر هادئ — العبوة على الطاولة',
@@ -861,7 +861,7 @@ const ALL_PRODUCTS: Product[] = [
       bodyAr:
         'تقلّبات مزاج، ألم بطن، انتفاخ، إرهاق قبل الدورة… وتقولين لنفسك «هذا طبيعي»؟ الجسم يرسل إشارة — الهرمونات تحتاج توازنًا لا «صبرًا». شهر هادئ: مايو-إينوسيتول + فيتكس + مغنيسيوم + B6 في مكيال يومي — مكمّل يدعم التوازن الهرموني الطبيعي. مو علاج طبي، لكنه الخطوة الصغيرة الذكية قبل الشهر القادم.',
       sectionImage: {
-        src: '/products/shahr-hadi-pdp-drink.png',
+        src: '/products/shahr-hadi-pdp-drink-v2.png',
         width: 1024,
         height: 1024,
         alt: 'عميلة مرتاحة مع عبوة شهر هادئ',
