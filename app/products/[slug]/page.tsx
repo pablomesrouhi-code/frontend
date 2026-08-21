@@ -51,23 +51,27 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const pdpHeroWidth = product.pdpHeroImage?.width ?? product.coverWidth
   const pdpHeroHeight = product.pdpHeroImage?.height ?? product.coverHeight
 
-  const painPdpPhoto = product.painSectionImage
-    ? {
-        src: product.painSectionImage.src,
-        alt: product.painSectionImage.alt,
-        width: product.painSectionImage.width,
-        height: product.painSectionImage.height,
-      }
-    : null
+  const galleryOnly = Boolean(product.pdpGallery && product.pdpGallery.length > 0)
 
-  const ingredientsPdpPhoto = product.ingredientsSectionImage
-    ? {
-        src: product.ingredientsSectionImage.src,
-        alt: product.ingredientsSectionImage.alt,
-        width: product.ingredientsSectionImage.width,
-        height: product.ingredientsSectionImage.height,
-      }
-    : null
+  const painPdpPhoto =
+    !galleryOnly && product.painSectionImage
+      ? {
+          src: product.painSectionImage.src,
+          alt: product.painSectionImage.alt,
+          width: product.painSectionImage.width,
+          height: product.painSectionImage.height,
+        }
+      : null
+
+  const ingredientsPdpPhoto =
+    !galleryOnly && product.ingredientsSectionImage
+      ? {
+          src: product.ingredientsSectionImage.src,
+          alt: product.ingredientsSectionImage.alt,
+          width: product.ingredientsSectionImage.width,
+          height: product.ingredientsSectionImage.height,
+        }
+      : null
 
   const powderHeroPhoto = isPowder && product.pdpHeroImage
 
@@ -305,8 +309,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </p>
           </div>
 
-          <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-10">
-            <div className="order-2 space-y-5 text-start lg:order-2 lg:col-span-5">
+          <div className={painPdpPhoto ? 'grid items-start gap-8 lg:grid-cols-12 lg:gap-10' : 'max-w-3xl'}>
+            <div className={painPdpPhoto ? 'order-2 space-y-5 text-start lg:order-2 lg:col-span-5' : 'space-y-5 text-start'}>
               <div className="rounded-3xl border p-5 shadow-sm ring-1 ring-black/[0.03] sm:p-6" style={{ borderColor: `${accent}44`, background: `${accent}0a` }}>
                 <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: accent }}>{painH.feelTitleAr ?? 'تعرفين هذا الإحساس؟'}</p>
                 <h3 className="mt-2 text-lg font-black text-charcoal sm:text-xl">{painH.whyTitleAr ?? 'ليش يختارونه أصلاً؟'}</h3>
@@ -331,31 +335,20 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               </div>
             </div>
 
+            {painPdpPhoto ? (
             <div className="order-1 lg:order-1 lg:col-span-7">
               <div className="mx-auto max-w-xl md:mx-0 lg:max-w-none">
-                {painPdpPhoto ? (
-                  <PdpSquareImage
-                    src={painPdpPhoto.src}
-                    alt={painPdpPhoto.alt}
-                    width={painPdpPhoto.width}
-                    height={painPdpPhoto.height}
-                    sizes="(max-width:1024px) min(560px, 100vw), 56vw"
-                    maxWidthClass="max-w-full"
-                  />
-                ) : isPowder ? (
-                  <div className="relative min-h-[320px]">
-                    <PowderPlaceholder product={product} size="section" />
-                  </div>
-                ) : (
-                  <ProductPageImageSlot
-                    width={product.coverWidth}
-                    height={product.coverHeight}
-                    accentColor={accent}
-                    labelAr="مساحة صورة — قسم «لماذا تحتاجينه؟»"
-                  />
-                )}
+                <PdpSquareImage
+                  src={painPdpPhoto.src}
+                  alt={painPdpPhoto.alt}
+                  width={painPdpPhoto.width}
+                  height={painPdpPhoto.height}
+                  sizes="(max-width:1024px) min(560px, 100vw), 56vw"
+                  maxWidthClass="max-w-full"
+                />
               </div>
             </div>
+            ) : null}
           </div>
         </div>
       </section>
@@ -392,22 +385,28 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {product.extraStory && (
         <section className="py-10 sm:py-12 md:py-14 border-t border-[#eae2df]" style={{ background: `${product.bgColor}66` }}>
           <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
-            <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-center min-w-0">
+            <div className={
+              product.extraStory.src
+                ? 'grid md:grid-cols-2 gap-6 md:gap-10 items-center min-w-0'
+                : 'max-w-3xl text-start min-w-0'
+            }>
               <div className="text-start min-w-0 max-w-full break-words">
                 <p className="text-xs font-bold tracking-[0.18em] text-[#c9937e] mb-2 uppercase">لمسة إضافية</p>
                 <h2 className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-3 sm:mb-4 break-words">{product.extraStory.titleAr}</h2>
                 <p className="text-charcoal leading-loose text-[15px] break-words max-w-prose">{product.extraStory.bodyAr}</p>
               </div>
-              <div className="w-full max-w-[min(100%,440px)] md:max-w-full mx-auto md:mx-0 min-w-0">
-                <PdpSquareImage
-                  src={product.extraStory.src}
-                  alt={product.extraStory.alt}
-                  width={product.extraStory.width}
-                  height={product.extraStory.height}
-                  sizes="(max-width: 768px) min(440px, 100vw), 480px"
-                  maxWidthClass="max-w-full"
-                />
-              </div>
+              {product.extraStory.src && product.extraStory.width && product.extraStory.height ? (
+                <div className="w-full max-w-[min(100%,440px)] md:max-w-full mx-auto md:mx-0 min-w-0">
+                  <PdpSquareImage
+                    src={product.extraStory.src}
+                    alt={product.extraStory.alt ?? product.nameAr}
+                    width={product.extraStory.width}
+                    height={product.extraStory.height}
+                    sizes="(max-width: 768px) min(440px, 100vw), 480px"
+                    maxWidthClass="max-w-full"
+                  />
+                </div>
+              ) : null}
             </div>
           </div>
         </section>
@@ -422,12 +421,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
             <div
               className={
-                product.persuasionBlock.sectionImage
+                !galleryOnly && product.persuasionBlock.sectionImage
                   ? 'grid md:grid-cols-2 gap-6 md:gap-10 items-center min-w-0'
                   : 'max-w-3xl mr-0 ml-auto text-start min-w-0'
               }
             >
-              {product.persuasionBlock.sectionImage && (
+              {!galleryOnly && product.persuasionBlock.sectionImage && (
                 <div className="order-2 md:order-2 w-full max-w-[min(100%,440px)] md:max-w-full mx-auto md:mx-0 min-w-0">
                   <PdpSquareImage
                     src={product.persuasionBlock.sectionImage.src}
@@ -473,31 +472,20 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         }}
       >
         <div className="mx-auto max-w-6xl min-w-0 px-3 sm:px-6">
-          <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-12">
+          <div className={ingredientsPdpPhoto ? 'grid items-start gap-8 lg:grid-cols-12 lg:gap-12' : 'max-w-3xl'}>
+            {ingredientsPdpPhoto ? (
             <div className="order-2 min-w-0 lg:order-1 lg:col-span-7">
-              {ingredientsPdpPhoto ? (
-                <PdpSquareImage
-                  src={ingredientsPdpPhoto.src}
-                  alt={ingredientsPdpPhoto.alt}
-                  width={ingredientsPdpPhoto.width}
-                  height={ingredientsPdpPhoto.height}
-                  sizes="(max-width:1024px) min(560px, 100vw), 58vw"
-                  maxWidthClass="max-w-full"
-                />
-              ) : isPowder ? (
-                <div className="relative min-h-[320px]">
-                  <PowderPlaceholder product={product} size="section" />
-                </div>
-              ) : (
-                <ProductPageImageSlot
-                  width={product.coverWidth}
-                  height={product.coverHeight}
-                  accentColor={accent}
-                  labelAr="مساحة صورة — المكوّنات / تفاصيل العبوة"
-                />
-              )}
+              <PdpSquareImage
+                src={ingredientsPdpPhoto.src}
+                alt={ingredientsPdpPhoto.alt}
+                width={ingredientsPdpPhoto.width}
+                height={ingredientsPdpPhoto.height}
+                sizes="(max-width:1024px) min(560px, 100vw), 58vw"
+                maxWidthClass="max-w-full"
+              />
             </div>
-            <div className="order-1 min-w-0 max-w-full break-words text-start lg:order-2 lg:col-span-5">
+            ) : null}
+            <div className={ingredientsPdpPhoto ? 'order-1 min-w-0 max-w-full break-words text-start lg:order-2 lg:col-span-5' : 'min-w-0 max-w-full break-words text-start'}>
               <p className="mb-2 text-xs font-black uppercase tracking-[0.22em]" style={{ color: accent }}>
                 {ingH.eyebrowAr ?? 'شفافية'}
               </p>
