@@ -833,39 +833,23 @@ const ALL_PRODUCTS: Product[] = [
       height: 1024,
       alt: 'شهر هادئ — قبل وبعد مع العبوة الكاملة',
     },
-    pdpGallery: [
-      {
-        src: '/products/shahr-hadi-pdp-hero.png',
-        width: 1024,
-        height: 1024,
-        alt: 'قبل وبعد — العبوة في الوسط',
-      },
-      {
-        src: '/products/shahr-hadi-pdp-pain.png',
-        width: 1024,
-        height: 1024,
-        alt: 'أيام الدورة الصعبة',
-      },
-      {
-        src: '/products/shahr-hadi-pdp-drink-v8.png',
-        width: 1024,
-        height: 1024,
-        alt: 'تشرب شهر هادئ والعبوة بجانبها',
-      },
-      {
-        src: '/products/shahr-hadi-product.png',
-        width: 1024,
-        height: 1024,
-        alt: 'شهر هادئ — العبوة كاملة',
-      },
-      {
-        src: '/products/shahr-hadi-pdp-hold.png',
-        width: 1024,
-        height: 1024,
-        alt: 'شهر هادئ — العبوة في اليد',
-      },
-    ],
+    painSectionImage: {
+      src: '/products/shahr-hadi-pdp-pain.png',
+      width: 1024,
+      height: 1024,
+      alt: 'أيام الدورة الصعبة',
+    },
+    ingredientsSectionImage: {
+      src: '/products/shahr-hadi-pdp-hold.png',
+      width: 1024,
+      height: 1024,
+      alt: 'شهر هادئ — العبوة في اليد',
+    },
     extraStory: {
+      src: '/products/shahr-hadi-pdp-drink-v8.png',
+      width: 1024,
+      height: 1024,
+      alt: 'تشرب شهر هادئ والعبوة بجانبها',
       titleAr: 'من أيام ثقيلة إلى شهر تتحكمين فيه',
       bodyAr:
         'الفرق ما يجي من مكيال ليلة واحدة — يجي من روتين يومي يثبت مع الدورات. شهر هادئ (مايو-إينوسيتول + فيتكس + مغنيسيوم + B6) يكمّل نمطاً صحياً متوازناً. النتيجة تختلف حسب الجسم والالتزام — مو وعد طبي.',
@@ -877,6 +861,12 @@ const ALL_PRODUCTS: Product[] = [
       titleAr: 'التقلّب والألم كل شهر — مو «طبيعي» تتحمّليه بصمت',
       bodyAr:
         'تقلّبات مزاج، ألم بطن، انتفاخ، إرهاق قبل الدورة… وتقولين لنفسك «هذا طبيعي»؟ الجسم يرسل إشارة — الهرمونات تحتاج توازنًا لا «صبرًا». شهر هادئ: مايو-إينوسيتول + فيتكس + مغنيسيوم + B6 في مكيال يومي — مكمّل يدعم التوازن الهرموني الطبيعي. مو علاج طبي، لكنه الخطوة الصغيرة الذكية قبل الشهر القادم.',
+      sectionImage: {
+        src: '/products/shahr-hadi-product.png',
+        width: 1024,
+        height: 1024,
+        alt: 'شهر هادئ — العبوة كاملة',
+      },
       bullets: [
         'مايو-إينوسيتول — مرتبط بدعم توازن الإنسولين والهرمونات الأنثوية.',
         'فيتكس (توت العفاريت) — عشبة تقليدية مرتبطة بتخفيف أعراض PMS.',

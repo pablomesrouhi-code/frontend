@@ -7,7 +7,6 @@ import ProductPageClient from './ProductPageClient'
 import ProductCard from '@/components/product/ProductCard'
 import ProductPageImageSlot from '@/components/product/ProductPageImageSlot'
 import PdpSquareImage from '@/components/product/PdpSquareImage'
-import PdpImageGallery from '@/components/product/PdpImageGallery'
 import PdpDeliveryPaymentSection from '@/components/product/PdpDeliveryPaymentSection'
 import PdpReviewsSection from '@/components/product/PdpReviewsSection'
 import PowderPlaceholder from '@/components/product/PowderPlaceholder'
@@ -51,27 +50,23 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const pdpHeroWidth = product.pdpHeroImage?.width ?? product.coverWidth
   const pdpHeroHeight = product.pdpHeroImage?.height ?? product.coverHeight
 
-  const galleryOnly = Boolean(product.pdpGallery && product.pdpGallery.length > 0)
+  const painPdpPhoto = product.painSectionImage
+    ? {
+        src: product.painSectionImage.src,
+        alt: product.painSectionImage.alt,
+        width: product.painSectionImage.width,
+        height: product.painSectionImage.height,
+      }
+    : null
 
-  const painPdpPhoto =
-    !galleryOnly && product.painSectionImage
-      ? {
-          src: product.painSectionImage.src,
-          alt: product.painSectionImage.alt,
-          width: product.painSectionImage.width,
-          height: product.painSectionImage.height,
-        }
-      : null
-
-  const ingredientsPdpPhoto =
-    !galleryOnly && product.ingredientsSectionImage
-      ? {
-          src: product.ingredientsSectionImage.src,
-          alt: product.ingredientsSectionImage.alt,
-          width: product.ingredientsSectionImage.width,
-          height: product.ingredientsSectionImage.height,
-        }
-      : null
+  const ingredientsPdpPhoto = product.ingredientsSectionImage
+    ? {
+        src: product.ingredientsSectionImage.src,
+        alt: product.ingredientsSectionImage.alt,
+        width: product.ingredientsSectionImage.width,
+        height: product.ingredientsSectionImage.height,
+      }
+    : null
 
   const powderHeroPhoto = isPowder && product.pdpHeroImage
 
@@ -110,9 +105,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 className="mx-auto w-full max-w-md rounded-2xl border-2 bg-white/95 p-1.5 shadow-lg backdrop-blur-sm sm:max-w-lg sm:rounded-3xl sm:p-2 md:mx-0 md:max-w-none"
                 style={{ borderColor: `color-mix(in srgb, ${accent} 30%, #e8e0de)` }}
               >
-                {product.pdpGallery && product.pdpGallery.length > 0 ? (
-                  <PdpImageGallery images={product.pdpGallery} accentColor={accent} />
-                ) : isPowder && !powderHeroPhoto ? (
+                {isPowder && !powderHeroPhoto ? (
                   <div className="relative aspect-square min-h-[300px]">
                     <PowderPlaceholder product={product} size="hero" />
                   </div>
@@ -421,12 +414,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
             <div
               className={
-                !galleryOnly && product.persuasionBlock.sectionImage
+                product.persuasionBlock.sectionImage
                   ? 'grid md:grid-cols-2 gap-6 md:gap-10 items-center min-w-0'
                   : 'max-w-3xl mr-0 ml-auto text-start min-w-0'
               }
             >
-              {!galleryOnly && product.persuasionBlock.sectionImage && (
+              {product.persuasionBlock.sectionImage && (
                 <div className="order-2 md:order-2 w-full max-w-[min(100%,440px)] md:max-w-full mx-auto md:mx-0 min-w-0">
                   <PdpSquareImage
                     src={product.persuasionBlock.sectionImage.src}
