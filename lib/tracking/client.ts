@@ -76,7 +76,9 @@ export function setTrackingUser({ phone }: { phone: string }): void {
   try {
     const digits = normalizeSaPhoneForPixel(phone)
     if (digits) {
-      window.ttq?.identify?.({ phone_number: `+${digits}` })
+      whenTtqReady(() => {
+        window.ttq?.identify?.({ phone_number: `+${digits}` })
+      })
     }
   } catch {
     /* non-blocking */
@@ -101,7 +103,9 @@ export function fireDeferredPageView(): void {
     /* non-blocking */
   }
   try {
-    window.ttq?.page?.()
+    whenTtqReady(() => {
+      window.ttq?.page?.()
+    })
   } catch {
     /* non-blocking */
   }
@@ -235,12 +239,14 @@ export function trackTikTok(
 
   tiktokDebug(event, payload)
 
-  try {
-    if (typeof window.ttq?.track !== 'function') return
-    window.ttq.track(event, payload)
-  } catch {
-    /* non-blocking */
-  }
+  whenTtqReady(() => {
+    try {
+      if (typeof window.ttq?.track !== 'function') return
+      window.ttq.track(event, payload)
+    } catch {
+      /* non-blocking */
+    }
+  })
 }
 
 export function trackSnap(
@@ -344,9 +350,7 @@ export function trackLead(params: CommerceParams, options: TrackOptions): void {
 
   const metaParams = metaCommerceParams(params)
 
-  // Events Manager lists this event as code Lead (not SubmitForm).
   trackTikTok('Lead', tiktokCommercePayload(params), { eventId })
-  trackTikTok('SubmitForm', tiktokCommercePayload(params), { eventId: `${eventId}-form` })
   trackSnap('SIGN_UP', { ...snapItemPayload(params), sign_up_method: 'checkout' }, { clientDedupId: eventId })
 
   if (options.skipMeta) return
@@ -367,8 +371,6 @@ export function trackPurchase(params: CommerceParams, options: TrackOptions): vo
   }
 
   trackTikTok('Purchase', purchasePayload, { eventId })
-  trackTikTok('PlaceAnOrder', purchasePayload, { eventId: `${eventId}-order` })
-  trackTikTok('CompleteRegistration', tiktokCommercePayload(params), { eventId: `${eventId}-reg` })
   trackSnap(
     'PURCHASE',
     {

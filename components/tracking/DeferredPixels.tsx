@@ -1,13 +1,5 @@
 import Script from 'next/script'
-import { getMetaPixelId, getSnapPixelId, pixelsEnabled } from '@/lib/tracking/pixels-enabled'
-
-const SAFE_PIXEL_ID = /^[A-Za-z0-9_-]{4,64}$/
-
-function sanitizeId(raw: string | undefined): string | null {
-  const v = raw?.trim()
-  if (!v || !SAFE_PIXEL_ID.test(v)) return null
-  return v
-}
+import { getMetaPixelId, getSnapPixelId, getTikTokPixelId, pixelsEnabled } from '@/lib/tracking/pixels-enabled'
 
 /**
  * Meta + Snap load early in <head> (official snippets) so Ads diagnostics
@@ -15,7 +7,7 @@ function sanitizeId(raw: string | undefined): string | null {
  */
 export default function DeferredPixels() {
   const metaId = getMetaPixelId()
-  const tiktokId = sanitizeId(process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID)
+  const tiktokId = getTikTokPixelId()
   const snapId = getSnapPixelId()
 
   if (!pixelsEnabled()) return null

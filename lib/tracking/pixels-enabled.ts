@@ -31,12 +31,21 @@ export function getSnapPixelId(): string | null {
   )
 }
 
-export function hasAnyPixelId(): boolean {
-  return Boolean(
-    getMetaPixelId() ||
-      sanitizeId(process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID) ||
-      getSnapPixelId(),
+/**
+ * Browser TikTok pixel. `NEXT_PUBLIC_*` is baked at build.
+ * EasyPanel runtime (no rebuild): `TIKTOK_PIXEL_CODE` or `TIKTOK_PIXEL_ID`.
+ */
+export function getTikTokPixelId(): string | null {
+  if (pixelsExplicitlyDisabled()) return null
+  return (
+    sanitizeId(process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID) ??
+    sanitizeId(process.env.TIKTOK_PIXEL_CODE) ??
+    sanitizeId(process.env.TIKTOK_PIXEL_ID)
   )
+}
+
+export function hasAnyPixelId(): boolean {
+  return Boolean(getMetaPixelId() || getTikTokPixelId() || getSnapPixelId())
 }
 
 export function pixelsEnabled(): boolean {
