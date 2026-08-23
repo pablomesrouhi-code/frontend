@@ -3,8 +3,11 @@ const SAFE_PIXEL_ID = /^[A-Za-z0-9_-]{4,64}$/
 /** Live Meta Pixel — fallback if EasyPanel build arg/runtime env is missing. */
 const FALLBACK_META_PIXEL_ID = '24566837436275478'
 
-/** Live TikTok Pixel — same store pixel as EasyPanel. */
-const FALLBACK_TIKTOK_PIXEL_ID = 'DA520CJC77U72JPLTFRG'
+/** Live TikTok Pixel — Events Manager dataset nabtalabo. */
+const FALLBACK_TIKTOK_PIXEL_ID = 'DA52PS3C77U8CMLK5BO0'
+
+/** Previous pixel left in EasyPanel build args — never send events there. */
+const STALE_TIKTOK_PIXEL_IDS = new Set(['DA520CJC77U72JPLTFRG'])
 
 function sanitizeId(raw: string | undefined): string | null {
   const v = raw?.trim()
@@ -38,13 +41,19 @@ export function getSnapPixelId(): string | null {
  * Browser TikTok pixel. `NEXT_PUBLIC_*` is baked at build.
  * EasyPanel runtime (no rebuild): `TIKTOK_PIXEL_CODE` or `TIKTOK_PIXEL_ID`.
  */
+function sanitizeTikTokId(raw: string | undefined): string | null {
+  const v = sanitizeId(raw)
+  if (!v || STALE_TIKTOK_PIXEL_IDS.has(v)) return null
+  return v
+}
+
 export function getTikTokPixelId(): string | null {
   if (pixelsExplicitlyDisabled()) return null
   return (
-    sanitizeId(process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID) ??
-    sanitizeId(process.env.TIKTOK_PIXEL_CODE) ??
-    sanitizeId(process.env.TIKTOK_PIXEL_ID) ??
-    sanitizeId(FALLBACK_TIKTOK_PIXEL_ID)
+    sanitizeTikTokId(process.env.TIKTOK_PIXEL_CODE) ??
+    sanitizeTikTokId(process.env.TIKTOK_PIXEL_ID) ??
+    sanitizeTikTokId(process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID) ??
+    sanitizeTikTokId(FALLBACK_TIKTOK_PIXEL_ID)
   )
 }
 

@@ -3,7 +3,7 @@ import { getMetaPixelId, getSnapPixelId, getTikTokPixelId, pixelsEnabled } from 
 
 /**
  * Meta + Snap load early in <head> (official snippets) so Ads diagnostics
- * don't flag slow "pixel js start". TikTok stays afterInteractive.
+ * don't flag slow "pixel js start". TikTok loads the same way.
  */
 export default function DeferredPixels() {
   const metaId = getMetaPixelId()
@@ -55,7 +55,7 @@ export default function DeferredPixels() {
       ) : null}
 
       {tiktokId ? (
-        <Script id="nabtalabo-tiktok-pixel" strategy="afterInteractive">
+        <Script id="nabtalabo-tiktok-pixel" strategy="beforeInteractive">
           {`
             !function (w, d, t) {
               w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];

@@ -371,6 +371,7 @@ export function trackPurchase(params: CommerceParams, options: TrackOptions): vo
   }
 
   trackTikTok('Purchase', purchasePayload, { eventId })
+  trackTikTok('CompletePayment', purchasePayload, { eventId: `${eventId}-pay` })
   trackSnap(
     'PURCHASE',
     {
