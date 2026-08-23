@@ -3,6 +3,9 @@ const SAFE_PIXEL_ID = /^[A-Za-z0-9_-]{4,64}$/
 /** Live Meta Pixel — fallback if EasyPanel build arg/runtime env is missing. */
 const FALLBACK_META_PIXEL_ID = '24566837436275478'
 
+/** Live TikTok Pixel — same store pixel as EasyPanel. */
+const FALLBACK_TIKTOK_PIXEL_ID = 'DA520CJC77U72JPLTFRG'
+
 function sanitizeId(raw: string | undefined): string | null {
   const v = raw?.trim()
   if (!v || !SAFE_PIXEL_ID.test(v)) return null
@@ -40,7 +43,8 @@ export function getTikTokPixelId(): string | null {
   return (
     sanitizeId(process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID) ??
     sanitizeId(process.env.TIKTOK_PIXEL_CODE) ??
-    sanitizeId(process.env.TIKTOK_PIXEL_ID)
+    sanitizeId(process.env.TIKTOK_PIXEL_ID) ??
+    sanitizeId(FALLBACK_TIKTOK_PIXEL_ID)
   )
 }
 

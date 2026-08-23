@@ -10,6 +10,7 @@ import { getPublicApiBase } from '@/lib/api'
 import { getBestUpsell, formatSarAmount, getUpsellPriceSar } from '@/lib/products'
 import { CHECKOUT_UI_REV } from '@/lib/checkout-rev'
 import { newTrackingEventId, setTrackingUser, trackInitiateCheckout } from '@/lib/tracking/client'
+import { getTikTokClickIds } from '@/lib/tracking/tiktok-click-ids'
 
 const UpsellModal = dynamic(() => import('./UpsellModal'), { ssr: false })
 
@@ -137,6 +138,7 @@ export default function CheckoutPopup({ onClose }: Props) {
             typeof window !== 'undefined' ? window.location.href : undefined,
           purchase_event_id: purchaseEventId,
           client_event_id: leadEventId,
+          ...getTikTokClickIds(),
         }
         const fetchOpts: RequestInit = {
           method: 'POST',

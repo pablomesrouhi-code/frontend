@@ -1,5 +1,6 @@
 import { getUpsellPriceSar, type Product } from '@/lib/products'
 import { newTrackingEventId, setTrackingUser } from '@/lib/tracking/client'
+import { getTikTokClickIds } from '@/lib/tracking/tiktok-click-ids'
 
 export type PlaceOrderLine = {
   product_id: string
@@ -110,6 +111,7 @@ export async function placeCodOrder(input: PlaceOrderInput): Promise<PlaceOrderR
     source_page: sourcePage,
     purchase_event_id: purchaseEventId,
     client_event_id: leadEventId,
+    ...getTikTokClickIds(),
   }
 
   const fetchOpts: RequestInit = {
