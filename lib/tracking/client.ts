@@ -267,7 +267,24 @@ export function trackSnap(
 }
 
 function tiktokContents(contentIds: string[]) {
-  return contentIds.map((content_id) => ({ content_id, content_type: 'product' }))
+  return contentIds.map((content_id) => ({
+    content_id,
+    content_type: 'product',
+    content_name: content_id,
+  }))
+}
+
+/** Named event so Events Manager lists it — PageView alone stays hidden in the setup list. */
+export function trackTikTokViewContentForPath(pathname: string): void {
+  const path = pathname.trim() || '/'
+  const contentId = path === '/' ? 'nabtalabo-home' : path.replace(/^\/+|\/+$/g, '') || 'nabtalabo-home'
+  trackTikTok('ViewContent', {
+    contents: [{ content_id: contentId, content_type: 'product', content_name: contentId }],
+    content_id: contentId,
+    content_type: 'product',
+    value: 1,
+    currency: 'SAR',
+  })
 }
 
 function tiktokCommercePayload(params: CommerceParams) {

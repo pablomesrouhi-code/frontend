@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { fireDeferredPageView } from '@/lib/tracking/client'
+import { fireDeferredPageView, trackTikTokViewContentForPath } from '@/lib/tracking/client'
 import { persistTikTokClickIds } from '@/lib/tracking/tiktok-click-ids'
 import { pixelsEnabled } from '@/lib/tracking/pixels-enabled'
 
@@ -18,6 +18,7 @@ export default function RouteChangePageViews() {
   useEffect(() => {
     persistTikTokClickIds()
     if (!pixelsEnabled()) return
+    trackTikTokViewContentForPath(pathname)
     if (skipFirst.current) {
       skipFirst.current = false
       return
