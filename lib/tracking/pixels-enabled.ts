@@ -4,10 +4,10 @@ const SAFE_PIXEL_ID = /^[A-Za-z0-9_-]{4,64}$/
 const FALLBACK_META_PIXEL_ID = '24566837436275478'
 
 /** Live TikTok Pixel — Events Manager dataset nabtalabo. */
-const FALLBACK_TIKTOK_PIXEL_ID = 'DA52PS3C77U8CMLK5BO0'
+const FALLBACK_TIKTOK_PIXEL_ID = 'DA6CTDBC77U6BFBCRBQ0'
 
-/** Previous pixel left in EasyPanel build args — never send events there. */
-const STALE_TIKTOK_PIXEL_IDS = new Set(['DA520CJC77U72JPLTFRG'])
+/** Previous pixels left in EasyPanel — never send events there. */
+const STALE_TIKTOK_PIXEL_IDS = new Set(['DA520CJC77U72JPLTFRG', 'DA52PS3C77U8CMLK5BO0'])
 
 function sanitizeId(raw: string | undefined): string | null {
   const v = raw?.trim()
