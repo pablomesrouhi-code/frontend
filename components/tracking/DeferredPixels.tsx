@@ -69,6 +69,12 @@ export default function DeferredPixels() {
               e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
               ttq.load('${tiktokId}');
               ttq.page();
+              ttq.track('ViewContent', {
+                contents: [{ content_id: 'nabtalabo-home', content_type: 'product', content_name: 'nabtalabo-home' }],
+                content_type: 'product',
+                value: 1,
+                currency: 'SAR'
+              });
             }(window, document, 'ttq');
           `}
         </Script>

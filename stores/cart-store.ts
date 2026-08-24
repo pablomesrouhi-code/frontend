@@ -1,6 +1,7 @@
 'use client'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { trackAddToCart } from '@/lib/tracking/client'
 
 export type CartItem = {
   productId: string
@@ -41,6 +42,12 @@ export const useCartStore = create<CartStore>()(
             }
           }
           return { items: [...state.items, item] }
+        })
+        trackAddToCart({
+          content_ids: [item.productId],
+          value: item.price,
+          currency: 'SAR',
+          num_items: item.offerQty,
         })
       },
       removeItem: (productId) => {
