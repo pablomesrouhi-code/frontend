@@ -151,7 +151,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   {product.howToUse}
                 </p>
               )}
-              {product.benefits.length > 0 && product.id !== 'shahr-hadi' && (
+              {product.benefits.length > 0 && (
                 <ul className="mb-4 list-none space-y-1.5 text-sm leading-relaxed text-charcoal sm:text-[15px]">
                   {product.benefits.slice(0, 4).map((line) => (
                     <li key={line} className="flex gap-2">
