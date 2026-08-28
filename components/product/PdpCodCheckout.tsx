@@ -18,6 +18,7 @@ import {
   type Product,
 } from '@/lib/products'
 import { CHECKOUT_UI_REV } from '@/lib/checkout-rev'
+import { useCodSubmitGuard } from '@/lib/cod-submit-guard'
 import { trackInitiateCheckout } from '@/lib/tracking/client'
 
 const UpsellModal = dynamic(() => import('@/components/checkout/UpsellModal'), { ssr: false })
@@ -87,30 +88,47 @@ export default function PdpCodCheckout({ product, qty, onClose }: Props) {
   )
 
   const upsell = getBestUpsell([product.id])
+  const { tryBegin, end } = useCodSubmitGuard()
 
   const finalizeOrder = useCallback(
     async (data: FormValues, upsellAccepted: boolean) => {
+      if (!tryBegin()) return
       setCheckoutError(null)
       setPlacingOrder(true)
-      const result = await placeCodOrder({
-        base: getPublicApiBase(),
-        customerName: data.name,
-        phone: data.phone,
-        items: [{ product_id: product.id, offer_qty: qty }],
-        summaryItems,
-        summaryTotal: price,
-        upsellAccepted,
-        upsellProduct: upsell,
-      })
-      if (!result.ok) {
-        setCheckoutError(result.error)
+      try {
+        const result = await placeCodOrder({
+          base: getPublicApiBase(),
+          customerName: data.name,
+          phone: data.phone,
+          items: [{ product_id: product.id, offer_qty: qty }],
+          summaryItems,
+          summaryTotal: price,
+          upsellAccepted,
+          upsellProduct: upsell,
+        })
+        if (!result.ok) {
+          setCheckoutError(result.error)
+          setPlacingOrder(false)
+          end()
+          return
+        }
+        redirectToThankYou()
+      } catch {
+        setCheckoutError('تعذّر إتمام الطلب؛ حدّثي الصفحة وأعيدي المحاولة.')
         setPlacingOrder(false)
-        return
+        end()
       }
-      redirectToThankYou()
     },
-    [product.id, qty, summaryItems, price, upsell],
+    [product.id, qty, summaryItems, price, upsell, tryBegin, end],
   )
+
+  const onUpsellAccept = useCallback(() => {
+    if (formData) void finalizeOrder(formData, true)
+  }, [formData, finalizeOrder])
+
+  const onUpsellSkip = useCallback(() => {
+    if (formData) void finalizeOrder(formData, false)
+  }, [formData, finalizeOrder])
 
   function onSubmit(data: FormValues) {
     setCheckoutError(null)
@@ -136,8 +154,8 @@ export default function PdpCodCheckout({ product, qty, onClose }: Props) {
         product={upsell}
         placingOrder={placingOrder}
         checkoutError={checkoutError}
-        onAccept={() => void finalizeOrder(formData, true)}
-        onSkip={() => void finalizeOrder(formData, false)}
+        onAccept={onUpsellAccept}
+        onSkip={onUpsellSkip}
       />
     )
   }

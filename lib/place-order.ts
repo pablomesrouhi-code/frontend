@@ -58,6 +58,23 @@ function formatFastApiDetail(body: Record<string, unknown>): string | null {
   return null
 }
 
+const ORDER_FETCH_TIMEOUT_MS = 22_000
+
+async function fetchOrdersWithTimeout(url: string, fetchOpts: RequestInit): Promise<Response> {
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), ORDER_FETCH_TIMEOUT_MS)
+  try {
+    return await fetch(url, { ...fetchOpts, signal: controller.signal })
+  } catch (e) {
+    if (e instanceof Error && e.name === 'AbortError') {
+      throw new TypeError('order_request_timeout')
+    }
+    throw e
+  } finally {
+    clearTimeout(timeoutId)
+  }
+}
+
 export async function captureFailedCheckout(
   base: string,
   customerName: string,
@@ -125,13 +142,27 @@ export async function placeCodOrder(input: PlaceOrderInput): Promise<PlaceOrderR
 
   let res: Response
   try {
-    res = await fetch(`${input.base.replace(/\/$/, '')}/api/orders`, fetchOpts)
+    res = await fetchOrdersWithTimeout(`${input.base.replace(/\/$/, '')}/api/orders`, fetchOpts)
   } catch (e1) {
+    if (e1 instanceof TypeError && e1.message === 'order_request_timeout') {
+      return {
+        ok: false,
+        error: 'استغرق الطلب وقتاً طويلاً. تحققي من الشبكة وأعيدي المحاولة.',
+        status: null,
+      }
+    }
     if (e1 instanceof TypeError) {
       await new Promise((r) => setTimeout(r, 900))
       try {
-        res = await fetch(`${input.base.replace(/\/$/, '')}/api/orders`, fetchOpts)
-      } catch {
+        res = await fetchOrdersWithTimeout(`${input.base.replace(/\/$/, '')}/api/orders`, fetchOpts)
+      } catch (e2) {
+        if (e2 instanceof TypeError && (e2 as Error).message === 'order_request_timeout') {
+          return {
+            ok: false,
+            error: 'استغرق الطلب وقتاً طويلاً. تحققي من الشبكة وأعيدي المحاولة.',
+            status: null,
+          }
+        }
         return { ok: false, error: 'تعذّر الاتصال بالخادم. تحققي من الشبكة وأعيدي المحاولة.', status: null }
       }
     } else {

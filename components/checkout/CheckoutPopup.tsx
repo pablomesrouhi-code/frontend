@@ -9,6 +9,7 @@ import { useCartStore } from '@/stores/cart-store'
 import { getPublicApiBase } from '@/lib/api'
 import { getBestUpsell, formatSarAmount, getUpsellPriceSar } from '@/lib/products'
 import { CHECKOUT_UI_REV } from '@/lib/checkout-rev'
+import { useCodSubmitGuard } from '@/lib/cod-submit-guard'
 import { newTrackingEventId, setTrackingUser, trackInitiateCheckout } from '@/lib/tracking/client'
 import { getTikTokClickIds } from '@/lib/tracking/tiktok-click-ids'
 
@@ -101,6 +102,7 @@ export default function CheckoutPopup({ onClose }: Props) {
   })
 
   const upsell = getBestUpsell(items.map((i) => i.productId))
+  const { tryBegin, end } = useCodSubmitGuard()
 
   // Funnel: InitiateCheckout when the COD form opens (not Lead — Lead is thank-you only).
   useEffect(() => {
@@ -116,6 +118,7 @@ export default function CheckoutPopup({ onClose }: Props) {
 
   const finalizeOrder = useCallback(
     async (data: FormValues, upsellAccepted: boolean) => {
+      if (!tryBegin()) return
       setCheckoutError(null)
       const base = getPublicApiBase()
       setPlacingOrder(true)
@@ -205,6 +208,7 @@ export default function CheckoutPopup({ onClose }: Props) {
         void captureFailedCheckout(base, data, items, res.status, msg)
         setCheckoutError(msg + hint403 + hint502 + hint503)
         setPlacingOrder(false)
+        end()
         return
       }
 
@@ -226,6 +230,7 @@ export default function CheckoutPopup({ onClose }: Props) {
           'تعذّر تأكيد الطلب: المتصفّح لم يستلم تأكيدًا صالحًا من الخادم (قد يكون بروكسي أو كاش يعيد صفحة بدل الطلب الفعلي). حدّثي الصفحة، جرّبي نافذة خاصة، أو تأكدي من أنّ الطلب على https://api.nabtalabo.store يعمل.'
         )
         setPlacingOrder(false)
+        end()
         return
       }
 
@@ -273,9 +278,10 @@ export default function CheckoutPopup({ onClose }: Props) {
         setCheckoutError('تعذّر إتمام الطلب؛ حدّثي الصفحة وأعدي المحاولة.')
       }
       setPlacingOrder(false)
+      end()
     }
   },
-    [items, total, upsell, clearCart, onClose]
+    [items, total, upsell, clearCart, onClose, tryBegin, end]
   )
 
   const onUpsellAccept = useCallback(() => {

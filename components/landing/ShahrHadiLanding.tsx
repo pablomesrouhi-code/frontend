@@ -25,6 +25,7 @@ import {
 } from '@/lib/products'
 import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import { getProductSolidButtonStyle, STORE_BUTTON_COLOR } from '@/lib/product-accent'
+import { useCodSubmitGuard } from '@/lib/cod-submit-guard'
 import { trackInitiateCheckout, trackViewContent } from '@/lib/tracking/client'
 
 const UpsellModal = dynamic(() => import('@/components/checkout/UpsellModal'), { ssr: false })
@@ -249,6 +250,7 @@ export default function ShahrHadiLanding() {
 
   const cart = useMemo(() => (product ? buildCart(packMode, selectedQty, product) : null), [packMode, selectedQty, product])
   const upsell = useMemo(() => (cart ? getBestUpsell(cart.items.map((i) => i.product_id)) : null), [cart])
+  const { tryBegin, end } = useCodSubmitGuard()
   const bullets = product?.persuasionBlock?.bullets ?? []
 
   useEffect(() => {
@@ -270,26 +272,34 @@ export default function ShahrHadiLanding() {
   const finalizeOrder = useCallback(
     async (data: FormValues, upsellAccepted: boolean) => {
       if (!product || !cart) return
+      if (!tryBegin()) return
       setCheckoutError(null)
       setPlacingOrder(true)
-      const result = await placeCodOrder({
-        base: getPublicApiBase(),
-        customerName: data.name,
-        phone: data.phone,
-        items: cart.items,
-        summaryItems: cart.summaryItems,
-        summaryTotal: cart.total,
-        upsellAccepted,
-        upsellProduct: upsell,
-      })
-      if (!result.ok) {
-        setCheckoutError(result.error)
+      try {
+        const result = await placeCodOrder({
+          base: getPublicApiBase(),
+          customerName: data.name,
+          phone: data.phone,
+          items: cart.items,
+          summaryItems: cart.summaryItems,
+          summaryTotal: cart.total,
+          upsellAccepted,
+          upsellProduct: upsell,
+        })
+        if (!result.ok) {
+          setCheckoutError(result.error)
+          setPlacingOrder(false)
+          end()
+          return
+        }
+        redirectToThankYou()
+      } catch {
+        setCheckoutError('تعذّر إتمام الطلب؛ حدّثي الصفحة وأعيدي المحاولة.')
         setPlacingOrder(false)
-        return
+        end()
       }
-      redirectToThankYou()
     },
-    [cart, product, upsell],
+    [cart, product, upsell, tryBegin, end],
   )
 
   const onUpsellAccept = useCallback(() => { if (formData) void finalizeOrder(formData, true) }, [formData, finalizeOrder])
