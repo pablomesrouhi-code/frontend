@@ -207,10 +207,10 @@ export default function HomePage() {
                 </span>
 
                 <div
-                  className="relative overflow-hidden rounded-[1.5rem] bg-white ring-1 ring-[#1A1815]/8"
+                  className="relative rounded-[1.5rem] bg-white ring-1 ring-[#1A1815]/8"
                   style={{ boxShadow: '0 25px 50px -12px rgba(26, 24, 21, 0.18)' }}
                 >
-                  <div className="relative aspect-square">
+                  <div className="relative aspect-square overflow-hidden rounded-t-[1.5rem]">
                     <Image
                       src="/hero-6-saudi.png"
                       alt="عميلات نبتة لابو مع منتجاتهن — شهر هادئ، رونق، كولاجين، فيتا فلو"
@@ -224,17 +224,17 @@ export default function HomePage() {
                       className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#1A1815]/10 via-transparent to-transparent"
                     />
                   </div>
-                  <div className="home-logo-marquee" aria-hidden>
-                    <div className="home-logo-marquee__track" dir="ltr">
+                  <div className="home-logo-marquee" aria-hidden dir="ltr">
+                    <div className="home-logo-marquee__track">
                       {[0, 1].map((copy) => (
                         <div key={copy} className="home-logo-marquee__group">
-                          {Array.from({ length: 8 }, (_, i) => (
-                            <Image
+                          {Array.from({ length: 10 }, (_, i) => (
+                            <img
                               key={`${copy}-${i}`}
                               src="/nabta-lab-icon-180.png"
                               alt=""
-                              width={56}
-                              height={56}
+                              width={88}
+                              height={88}
                               className="home-logo-marquee__logo"
                             />
                           ))}

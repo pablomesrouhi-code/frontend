@@ -55,37 +55,47 @@ html {
 }
 
 .home-logo-marquee {
+  direction: ltr;
   overflow: hidden;
   border-top: 1px solid #e7ddd3;
   background: #fff;
-  padding-block: 0.65rem;
+  padding-block: 0.85rem;
+  border-bottom-left-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
 }
 
 .home-logo-marquee__track {
   display: flex;
   width: max-content;
-  animation: home-logo-marquee 36s linear infinite;
+  animation: home-logo-marquee 24s linear infinite;
   will-change: transform;
 }
 
 .home-logo-marquee__group {
   display: flex;
-  flex-shrink: 0;
+  flex: 0 0 auto;
   align-items: center;
+  gap: 1.75rem;
+  padding-inline: 0.875rem;
 }
 
 .home-logo-marquee__logo {
   display: block;
-  height: 2.35rem;
-  width: 2.35rem;
-  flex-shrink: 0;
-  margin-inline: 1.15rem;
+  height: 4.35rem;
+  width: 4.35rem;
+  flex: 0 0 auto;
   object-fit: contain;
 }
 
 @keyframes home-logo-marquee {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-50%, 0, 0); }
+}
+
+html[dir="rtl"] .home-logo-marquee,
+html[dir="rtl"] .home-logo-marquee__track,
+html[dir="rtl"] .home-logo-marquee__group {
+  direction: ltr;
 }
 
 html[dir="rtl"] {
