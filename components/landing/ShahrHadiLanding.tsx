@@ -39,7 +39,7 @@ const LP_IMAGES = {
   pain: '/products/shahr-hadi-funnel-02-problem.png',
   drink: '/products/shahr-hadi-funnel-03-why.png',
   relaxed: '/products/shahr-hadi-funnel-04-client.png',
-  product: '/products/shahr-hadi-funnel-03-why.png',
+  product: '/products/shahr-hadi-product.png',
 } as const
 
 const TEST_PHONES = ['055000000']

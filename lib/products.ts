@@ -833,32 +833,6 @@ const ALL_PRODUCTS: Product[] = [
       height: 1080,
       alt: 'شهر هادئ — الحل الوحيد · قبل وبعد',
     },
-    pdpGallery: [
-      {
-        src: '/products/shahr-hadi-funnel-01-benefits.png',
-        width: 1080,
-        height: 1080,
-        alt: 'شهر هادئ — الحل الوحيد · قبل وبعد',
-      },
-      {
-        src: '/products/shahr-hadi-funnel-02-problem.png',
-        width: 1080,
-        height: 1080,
-        alt: 'كل شهر… نفس الإحساس؟',
-      },
-      {
-        src: '/products/shahr-hadi-funnel-03-why.png',
-        width: 1080,
-        height: 1080,
-        alt: 'ليش Hormonal Balance؟',
-      },
-      {
-        src: '/products/shahr-hadi-funnel-04-client.png',
-        width: 1080,
-        height: 1080,
-        alt: 'حسّيت إني رجعت لنفسي — نورة، الرياض',
-      },
-    ],
     painSectionImage: {
       src: '/products/shahr-hadi-funnel-02-problem.png',
       width: 1080,
@@ -887,12 +861,6 @@ const ALL_PRODUCTS: Product[] = [
       titleAr: 'التقلّب والألم كل شهر — مو «طبيعي» تتحمّليه بصمت',
       bodyAr:
         'بطن يمسك، مزاج ينقلب، ويوم يضيع — وتقولين «هذا طبيعي»؟ الجسم يطلب دعم من الداخل، مو صبر بس. شهر هادئ مكيال يومي: مايو-إينوسيتول + فيتكس + مغنيسيوم + B6. مكمّل غذائي — مو علاج طبي.',
-      sectionImage: {
-        src: '/products/shahr-hadi-product.png',
-        width: 1024,
-        height: 1024,
-        alt: 'شهر هادئ — العبوة كاملة',
-      },
       bullets: [
         'مايو-إينوسيتول — مرتبط بدعم توازن الهرمونات الأنثوية.',
         'فيتكس — عشبة تقليدية مرتبطة بأيام ما قبل الدورة.',
@@ -920,7 +888,6 @@ const ALL_PRODUCTS: Product[] = [
       'ترجعين لنفسك أيام الدورة — مو نسخة متعبة',
       'مزاج أوضح، وألم أخف مع الاستمرار',
       'دقيقة في الماء. روتين يثبت',
-      '7 ر.س في اليوم — أقل من قهوة',
     ],
     howToUse: 'مكيال واحد يومياً في ماء أو عصير.',
     painCopy: 'بطن يمسك ومزاج ينقلب ويوم يضيع. تقدرين تبدئين شهر أهدأ من اليوم.',

@@ -7,7 +7,6 @@ import ProductPageClient from './ProductPageClient'
 import ProductCard from '@/components/product/ProductCard'
 import ProductPageImageSlot from '@/components/product/ProductPageImageSlot'
 import PdpSquareImage from '@/components/product/PdpSquareImage'
-import PdpImageGallery from '@/components/product/PdpImageGallery'
 import PdpDeliveryPaymentSection from '@/components/product/PdpDeliveryPaymentSection'
 import PdpReviewsSection from '@/components/product/PdpReviewsSection'
 import PowderPlaceholder from '@/components/product/PowderPlaceholder'
@@ -107,9 +106,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 className="mx-auto w-full max-w-md rounded-2xl border-2 bg-white/95 p-1.5 shadow-lg backdrop-blur-sm sm:max-w-lg sm:rounded-3xl sm:p-2 md:mx-0 md:max-w-none"
                 style={{ borderColor: `color-mix(in srgb, ${accent} 30%, #e8e0de)` }}
               >
-                {product.pdpGallery && product.pdpGallery.length > 1 ? (
-                  <PdpImageGallery images={product.pdpGallery} accentColor={accent} />
-                ) : isPowder && !powderHeroPhoto ? (
+                {isPowder && !powderHeroPhoto ? (
                   <div className="relative aspect-square min-h-[300px]">
                     <PowderPlaceholder product={product} size="hero" />
                   </div>
@@ -132,12 +129,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               )}
             </div>
             <div className="order-2 min-w-0 text-pretty break-words text-start md:order-1 md:max-w-xl lg:max-w-none">
-              <p className="mb-3 text-center text-[11px] font-bold text-[#146b70] sm:text-xs md:text-start">
-                مكمّلات غذائية مرخّصة من هيئة الغذاء والدواء (SFDA)
-              </p>
-
-              <PdpHeroStatPills stats={heroStats} accentColor={accent} />
-
               {product.id === 'shahr-hadi' ? (
                 <div className="mb-4">
                   <PdpDisplayTitle
@@ -161,7 +152,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   <p className="mb-3 text-base font-semibold leading-relaxed text-charcoal sm:text-lg">{product.heroSubAr}</p>
                 </>
               )}
-              {product.painCopy && (
+              {product.id !== 'shahr-hadi' && product.painCopy && (
                 <p className="mb-3 text-sm leading-relaxed text-charcoal/85 sm:text-[15px]">{product.painCopy}</p>
               )}
               {product.id !== 'shahr-hadi' && product.howToUse && (
@@ -172,7 +163,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               )}
               {product.benefits.length > 0 && (
                 <ul className="mb-4 list-none space-y-1.5 text-sm leading-relaxed text-charcoal sm:text-[15px]">
-                  {product.benefits.slice(0, 4).map((line) => (
+                  {(product.id === 'shahr-hadi' ? product.benefits.slice(0, 3) : product.benefits.slice(0, 4)).map((line) => (
                     <li key={line} className="flex gap-2">
                       <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: accent }} />
                       <span>{line}</span>
@@ -180,7 +171,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   ))}
                 </ul>
               )}
-              {product.copyAfterHeroPrice && (
+              {product.id !== 'shahr-hadi' && product.copyAfterHeroPrice && (
                 <p className="mb-4 text-sm font-semibold leading-relaxed text-charcoal sm:text-[15px]">
                   {product.copyAfterHeroPrice}
                 </p>
@@ -255,9 +246,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               )}
 
               <div id="pdp-buy-anchor" className="scroll-mt-[calc(4.5rem+env(safe-area-inset-top))]">
-                <div className="mb-3">
-                  <PdpRoutineNote productId={product.id} format={product.format} accentColor={accent} />
-                </div>
+                {product.id !== 'shahr-hadi' && (
+                  <div className="mb-3">
+                    <PdpRoutineNote productId={product.id} format={product.format} accentColor={accent} />
+                  </div>
+                )}
                 <ProductPageClient
                   product={product}
                   addToCartLabel={getPdpAddCta(product.id)}
@@ -419,8 +412,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       </section>
       ) : null}
 
-      {/* bloc إضافي اختياري — صورة + قصة قصيرة */}
-      {product.extraStory && (
+      {/* bloc إضافي اختياري — صورة + قصة قصيرة. شهر هادئ: بعد المكوّنات باش الترتيب 1→2→3→4 */}
+      {product.extraStory && product.id !== 'shahr-hadi' && (
         <section className="py-10 sm:py-12 md:py-14 border-t border-[#eae2df]" style={{ background: `${product.bgColor}66` }}>
           <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
             <div className={
@@ -628,6 +621,36 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
+      {product.extraStory && product.id === 'shahr-hadi' && (
+        <section className="py-10 sm:py-12 md:py-14 border-t border-[#eae2df]" style={{ background: `${product.bgColor}66` }}>
+          <div className="max-w-6xl mx-auto px-3 sm:px-6 min-w-0">
+            <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-center min-w-0">
+              <div className="text-start min-w-0 max-w-full break-words">
+                <PdpDisplayTitle
+                  color={accent}
+                  eyebrow="التحول"
+                  before="من أيام ثقيلة…"
+                  highlight="لشهر تعيشينه"
+                  sub={product.extraStory.bodyAr}
+                />
+              </div>
+              {product.extraStory.src && product.extraStory.width && product.extraStory.height ? (
+                <div className="w-full max-w-[min(100%,440px)] md:max-w-full mx-auto md:mx-0 min-w-0">
+                  <PdpSquareImage
+                    src={product.extraStory.src}
+                    alt={product.extraStory.alt ?? product.nameAr}
+                    width={product.extraStory.width}
+                    height={product.extraStory.height}
+                    sizes="(max-width: 768px) min(440px, 100vw), 480px"
+                    maxWidthClass="max-w-full"
+                  />
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* How to use */}
       <section className="py-10 sm:py-12 md:py-14">
         <div className="max-w-3xl mx-auto px-3 sm:px-6 text-center min-w-0">
@@ -814,6 +837,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               </details>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="border-t border-border/70 bg-[#faf8f7] py-8 sm:py-10">
+        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
+          <p className="mb-4 text-[12px] font-bold leading-relaxed text-[#146b70] sm:text-sm">
+            مكمّلات غذائية مرخّصة من هيئة الغذاء والدواء (SFDA)
+          </p>
+          <PdpHeroStatPills stats={heroStats} accentColor={accent} />
         </div>
       </section>
     </div>
