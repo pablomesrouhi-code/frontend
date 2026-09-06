@@ -59,7 +59,7 @@ html {
   overflow: hidden;
   border-top: 1px solid #e7ddd3;
   background: #fff;
-  padding-block: 1rem;
+  padding-block: 0.8rem;
   border-bottom-left-radius: 1.5rem;
   border-bottom-right-radius: 1.5rem;
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
@@ -77,14 +77,14 @@ html {
   display: flex;
   flex: 0 0 auto;
   align-items: center;
-  gap: 2rem;
-  padding-inline: 1rem;
+  gap: 1.7rem;
+  padding-inline: 0.85rem;
 }
 
 .home-logo-marquee__logo {
   display: block;
-  height: 5.75rem;
-  width: 5.75rem;
+  height: 4.6rem;
+  width: 4.6rem;
   flex: 0 0 auto;
   object-fit: contain;
 }
