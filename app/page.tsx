@@ -115,15 +115,28 @@ export default function HomePage() {
               </div>
 
               <h1
-                className="mb-4 text-3xl font-bold leading-tight sm:text-4xl md:text-[2.75rem]"
+                className="mb-3 text-3xl font-black leading-[1.12] tracking-tight sm:text-4xl md:text-[2.85rem]"
                 style={{ color: BRAND.charcoal }}
               >
-                مكمّلات غذائية{' '}
-                <span style={{ color: BRAND.rose }}>علكة ومسحوق — تثق فيه السعوديات</span>
+                نبتة لابو — مكملات يومية{' '}
+                <span
+                  className="inline box-decoration-clone px-1"
+                  style={{
+                    color: BRAND.rose,
+                    background: `linear-gradient(180deg, transparent 62%, ${BRAND.rose}2e 62%)`,
+                  }}
+                >
+                  تثقين فيها
+                </span>
               </h1>
+              <span
+                className="mb-4 block h-1 w-[4.5rem] rounded-full"
+                style={{ background: `linear-gradient(90deg, ${BRAND.rose}, transparent)` }}
+                aria-hidden
+              />
 
-              <p className="mb-6 max-w-md text-base leading-relaxed sm:text-lg" style={{ color: BRAND.muted }}>
-                منتجات مرخّصة — علكة يومية وعبوات مسحوق مع مكاييل. اسم + جوال 05 · تأكيد هاتفي · دفع عند الباب · 2–4 أيام.
+              <p className="mb-6 max-w-md text-base font-semibold leading-snug sm:text-lg" style={{ color: BRAND.charcoal }}>
+                حلول للنساء في السعودية: علكة أو مكيال، تركيبة مرخّصة وواضحة على الغلاف. تطلبين مرتاحة — والفلوس لما يوصل.
               </p>
 
               <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
@@ -199,32 +212,33 @@ export default function HomePage() {
                 >
                   <div className="relative aspect-square">
                     <Image
-                      src="/hero-store-trio-v2.jpg"
-                      alt="منتجات نبتة لابو — مساحيق وفيتا فلو وعلكة البيوتين"
+                      src="/hero-6-saudi.png"
+                      alt="عميلات نبتة لابو مع منتجاتهن — شهر هادئ، رونق، كولاجين، فيتا فلو"
                       fill
                       priority
                       sizes="(max-width: 768px) 90vw, 36rem"
-                      className="object-contain object-center"
+                      className="object-cover object-center"
                     />
                     <div
                       aria-hidden
-                      className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#1A1815]/12 via-transparent to-transparent"
+                      className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#1A1815]/10 via-transparent to-transparent"
                     />
                   </div>
-                  <div
-                    className="relative border-t px-4 py-2.5"
-                    style={{ borderColor: BRAND.border, background: '#fff' }}
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <span
-                        className="text-[10px] font-black uppercase tracking-[0.16em]"
-                        style={{ color: BRAND.muted }}
-                      >
-                        متوافق مع اشتراطات SFDA
-                      </span>
-                      <span className="text-[10px] font-black tracking-[0.16em]" style={{ color: BRAND.peach }}>
-                        علكة + مسحوق
-                      </span>
+                  <div className="home-logo-marquee" aria-hidden>
+                    <div className="home-logo-marquee__track" dir="ltr">
+                      {Array.from({ length: 16 }, (_, i) => (
+                        <span key={i} className="home-logo-marquee__item">
+                          <Image
+                            src="/nabta-lab-icon-180.png"
+                            alt=""
+                            width={36}
+                            height={36}
+                            className="h-7 w-7 object-contain"
+                          />
+                          <span>نبتة لابو</span>
+                          <span className="home-logo-marquee__en">Nabta Labo</span>
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>

@@ -54,10 +54,39 @@ html {
   text-size-adjust: 100%;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  details[open] > div {
-    animation: none;
-  }
+.home-logo-marquee {
+  overflow: hidden;
+  border-top: 1px solid #e7ddd3;
+  background: linear-gradient(90deg, #f8f0ee 0%, #fff 40%, #f8f0ee 100%);
+}
+
+.home-logo-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: home-logo-marquee 32s linear infinite;
+}
+
+.home-logo-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.15rem;
+  color: #b8485c;
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.home-logo-marquee__en {
+  color: #8a3242;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@keyframes home-logo-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 html[dir="rtl"] {
