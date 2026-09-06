@@ -226,18 +226,19 @@ export default function HomePage() {
                   </div>
                   <div className="home-logo-marquee" aria-hidden>
                     <div className="home-logo-marquee__track" dir="ltr">
-                      {Array.from({ length: 16 }, (_, i) => (
-                        <span key={i} className="home-logo-marquee__item">
-                          <Image
-                            src="/nabta-lab-icon-180.png"
-                            alt=""
-                            width={36}
-                            height={36}
-                            className="h-7 w-7 object-contain"
-                          />
-                          <span>نبتة لابو</span>
-                          <span className="home-logo-marquee__en">Nabta Labo</span>
-                        </span>
+                      {[0, 1].map((copy) => (
+                        <div key={copy} className="home-logo-marquee__group">
+                          {Array.from({ length: 8 }, (_, i) => (
+                            <Image
+                              key={`${copy}-${i}`}
+                              src="/nabta-lab-icon-180.png"
+                              alt=""
+                              width={56}
+                              height={56}
+                              className="home-logo-marquee__logo"
+                            />
+                          ))}
+                        </div>
                       ))}
                     </div>
                   </div>
