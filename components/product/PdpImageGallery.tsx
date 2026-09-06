@@ -35,7 +35,7 @@ export default function PdpImageGallery({
           className="mx-auto block h-auto w-full max-w-full object-contain object-center"
         />
       </div>
-      <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
+      <div className={`grid gap-1.5 sm:gap-2 ${images.length <= 4 ? 'grid-cols-4' : 'grid-cols-5'}`}>
         {images.map((img, i) => {
           const selected = i === active
           return (

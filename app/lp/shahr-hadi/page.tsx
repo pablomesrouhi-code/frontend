@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'شهر هادئ — مسحوق دعم الدورة',
     description: 'اطلبي الآن COD — عروض 199 / 279 / 349 ر.س',
-    images: [{ url: '/products/shahr-hadi-lp-hero.png', width: 1024, height: 1024 }],
+    images: [{ url: '/products/shahr-hadi-funnel-01-benefits.png', width: 1080, height: 1080 }],
   },
 }
 

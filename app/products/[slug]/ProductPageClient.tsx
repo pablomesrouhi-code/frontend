@@ -20,7 +20,7 @@ export default function ProductPageClient({
   addToCartLabel?: string
 }) {
   useStorePricing()
-  const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(1)
+  const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(product.id === 'shahr-hadi' ? 2 : 1)
   const [showCheckout, setShowCheckout] = useState(false)
   const [stickyCtaVisible, setStickyCtaVisible] = useState(false)
   const priceBlockRef = useRef<HTMLDivElement>(null)
@@ -85,7 +85,9 @@ export default function ProductPageClient({
         }}
       >
         <p className="mb-3 text-center text-[11px] font-black tracking-wide sm:text-xs" style={{ color: accent }}>
-          اطلبي هنا · اسم + جوال فقط · COD
+          {product.id === 'shahr-hadi'
+            ? 'اطلبي هنا · اسم + جوال · تدفعين عند الباب'
+            : 'اطلبي هنا · اسم + جوال فقط · COD'}
         </p>
         <div className={soldOut ? 'pointer-events-none opacity-50' : undefined} aria-disabled={soldOut}>
           <OfferSelector
@@ -125,7 +127,9 @@ export default function ProductPageClient({
         <p className="mt-2 text-center text-[11px] font-semibold text-muted sm:text-xs">
           {soldOut
             ? 'سيعود قريباً — هذا المنتج غير قابل للطلب الآن'
-            : 'بعد الزر: اسم + جوال → تأكيد الطلب'}
+            : product.id === 'shahr-hadi'
+              ? 'بعد الزر: اسم + جوال → تأكيد · الكاش عند الباب'
+              : 'بعد الزر: اسم + جوال → تأكيد الطلب'}
         </p>
       </div>
 

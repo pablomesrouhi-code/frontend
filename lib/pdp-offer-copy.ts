@@ -3,6 +3,16 @@
 export const PDP_OFFER_HEADING = 'اختاري عرضك الآن:'
 export const PDP_OFFER_TAGLINE = 'قطعتين أوضح نتيجة · ثلاث قطع أوفر سعر — والدفع عند الباب'
 
+export function getPdpOfferCopy(productId?: string): { heading: string; tagline: string } {
+  if (productId === 'shahr-hadi') {
+    return {
+      heading: 'اختاري عرضك — السعر كامل وواضح',
+      tagline: 'عبوة ≈ 7 ر.س في اليوم · عبوتين أوفر · الكاش عند الباب',
+    }
+  }
+  return { heading: PDP_OFFER_HEADING, tagline: PDP_OFFER_TAGLINE }
+}
+
 export function formatOfferSavings(save: number): string {
   return `وفّري ${save} ريال`
 }

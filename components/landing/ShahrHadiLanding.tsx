@@ -35,11 +35,11 @@ const LP_ACCENT = STORE_BUTTON_COLOR
 const LP_SOFT = '#F0E9F0'
 
 const LP_IMAGES = {
-  hero: '/products/shahr-hadi-lp-hero.png',
-  pain: '/products/shahr-hadi-lp-pain.png',
-  drink: '/products/shahr-hadi-lp-drink.png',
-  relaxed: '/products/shahr-hadi-lp-drink.png',
-  product: '/products/shahr-hadi-product.png',
+  hero: '/products/shahr-hadi-funnel-01-benefits.png',
+  pain: '/products/shahr-hadi-funnel-02-problem.png',
+  drink: '/products/shahr-hadi-funnel-03-why.png',
+  relaxed: '/products/shahr-hadi-funnel-04-client.png',
+  product: '/products/shahr-hadi-funnel-03-why.png',
 } as const
 
 const TEST_PHONES = ['055000000']
@@ -345,7 +345,7 @@ export default function ShahrHadiLanding() {
       <div className="mx-auto max-w-lg sm:max-w-2xl">
         <LpPhoto
           src={LP_IMAGES.hero}
-          alt="شهر هادئ — من ألم الدورة إلى راحة"
+          alt="شهر هادئ — الحل الوحيد · قبل وبعد"
           priority
           onTap={scrollToOrder}
           caption={{
@@ -451,7 +451,7 @@ export default function ShahrHadiLanding() {
         <div className="mt-8">
           <LpPhoto
             src={LP_IMAGES.pain}
-            alt="أيام الدورة الصعبة"
+            alt="كل شهر… نفس الإحساس؟"
             onTap={scrollToOrder}
             caption={{
               eyebrow: product.persuasionBlock?.eyebrowAr,
@@ -478,9 +478,9 @@ export default function ShahrHadiLanding() {
         <div className="mt-8">
           <LpPhoto
             src={LP_IMAGES.drink}
-            alt="شرب شهر هادئ يومياً"
+            alt="ليش Hormonal Balance؟"
             onTap={scrollToOrder}
-            caption={{ title: 'مكيال واحد يومياً — نكهة فراولة آساي', body: 'اخلطي المسحوق في ماء أو عصير — روتين بسيط قبل الدورة وخلالها.' }}
+            caption={{ title: 'ليش Hormonal Balance؟', body: 'تركيبة يومية سهلة — دعم من الداخل — طعم فراولة وآساي. مو سحر… روتين يثبت.' }}
           />
         </div>
 
@@ -488,7 +488,7 @@ export default function ShahrHadiLanding() {
         <div className="mt-8">
           <LpPhoto
             src={LP_IMAGES.relaxed}
-            alt="شهر أهدأ — راحة بعد الروتين"
+            alt="حسّيت إني رجعت لنفسي — نورة، الرياض"
             onTap={scrollToOrder}
             caption={{
               title: product.extraStory?.titleAr ?? 'من أيام ثقيلة… لشهر تتحكمين فيه',

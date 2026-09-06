@@ -60,38 +60,45 @@ export function getOffers(format: ProductOfferFormat = 'gummy', productId?: stri
   const p1 = getPriceForQty(1, productId)
   const p2 = getPriceForQty(2, productId)
   const p3 = getPriceForQty(3, productId)
+  const isShahrHadi = productId === 'shahr-hadi'
   return [
     {
       qty: 1 as const,
       label: `${unit} واحدة`,
-      sublabel: isPouch
-        ? 'عبوة مسحوق مع مكيال · الجرعة حسب الغلاف'
-        : isPowder
-          ? '30 مكيال · شهر كامل'
-          : '60 علكة · شهر كامل',
+      sublabel: isShahrHadi
+        ? 'شهر تجربة · ≈ 7 ر.س في اليوم'
+        : isPouch
+          ? 'عبوة مسحوق مع مكيال · الجرعة حسب الغلاف'
+          : isPowder
+            ? '30 مكيال · شهر كامل'
+            : '60 علكة · شهر كامل',
       price: p1,
-      badge: 'الأكثر اختياراً' as string | null,
+      badge: isShahrHadi ? 'للتجربة' : ('الأكثر اختياراً' as string | null),
     },
     {
       qty: 2 as const,
-      label: `${unitDual} · ثبّتي النتيجة`,
-      sublabel: isPouch
-        ? 'عبوتان مسحوق · روتين أطول'
-        : isPowder
-          ? '60 مكيال · شهر + تثبيت'
-          : '120 علكة · شهر النتيجة + تثبيت',
+      label: isShahrHadi ? `${unitDual} · دورتان أوضح` : `${unitDual} · ثبّتي النتيجة`,
+      sublabel: isShahrHadi
+        ? '≈ 5 ر.س في اليوم · وفّري 119'
+        : isPouch
+          ? 'عبوتان مسحوق · روتين أطول'
+          : isPowder
+            ? '60 مكيال · شهر + تثبيت'
+            : '120 علكة · شهر النتيجة + تثبيت',
       price: p2,
-      badge: null,
+      badge: isShahrHadi ? 'الأكثر اختياراً' : null,
       saveVs: p1 * 2 - p2,
     },
     {
       qty: 3 as const,
-      label: `${units3} · النتيجة الكاملة`,
-      sublabel: isPouch
-        ? '3 عبوات مسحوق · أفضل توفير'
-        : isPowder
-          ? '90 مكيال · نتيجة + تثبيت + هدية'
-          : '180 علكة · نتيجة + تثبيت + هدية',
+      label: isShahrHadi ? `${units3} · أرخص سعر للقطعة` : `${units3} · النتيجة الكاملة`,
+      sublabel: isShahrHadi
+        ? '≈ 4 ر.س في اليوم · أفضل صفقة'
+        : isPouch
+          ? '3 عبوات مسحوق · أفضل توفير'
+          : isPowder
+            ? '90 مكيال · نتيجة + تثبيت + هدية'
+            : '180 علكة · نتيجة + تثبيت + هدية',
       price: p3,
       badge: 'الأكثر توفيراً',
       saveVs: p1 * 3 - p3,

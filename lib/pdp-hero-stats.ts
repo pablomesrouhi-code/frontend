@@ -13,6 +13,14 @@ export function getPdpHeroStats(product: Product): PdpHeroStat[] {
       { value: 'SFDA', label: 'مكمّل غذائي مرخّص' },
     ]
   }
+  if (product.id === 'shahr-hadi') {
+    return [
+      { value: '≈7 ر.س', label: 'لليوم — أقل من قهوة' },
+      { value: '30', label: 'مكيال · شهر كامل' },
+      { value: 'COD', label: 'تدفعين عند الباب' },
+      { value: 'SFDA', label: 'مكمّل مرخّص' },
+    ]
+  }
   return [
     { value: powder ? '30' : '60', label: powder ? 'مكيال في العبوة' : 'علكة في العلبة' },
     { value: '30', label: 'يوم لكل عبوة' },

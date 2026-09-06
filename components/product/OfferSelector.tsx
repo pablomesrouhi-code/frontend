@@ -1,7 +1,7 @@
 'use client'
 import { getOffers, getPriceForQty, formatSarCompact } from '@/lib/products'
 import type { Product } from '@/lib/products'
-import { PDP_OFFER_HEADING, PDP_OFFER_TAGLINE, formatOfferSavings } from '@/lib/pdp-offer-copy'
+import { PDP_OFFER_HEADING, formatOfferSavings, getPdpOfferCopy } from '@/lib/pdp-offer-copy'
 import { useStorePricing } from '@/components/pricing/StorePricingProvider'
 import StarRating from '@/components/ui/StarRating'
 import {
@@ -64,6 +64,7 @@ export default function OfferSelector({
 }: Props) {
   useStorePricing()
   const offers = getOffers(format ?? 'gummy', productId)
+  const offerCopy = getPdpOfferCopy(productId)
   const priceActive = shadeTowardBlack(accentColor, 0.18)
 
   return (
@@ -74,8 +75,8 @@ export default function OfferSelector({
         </div>
       )}
 
-      <p className="mb-1 text-sm font-bold text-charcoal sm:text-base">{PDP_OFFER_HEADING}</p>
-      <p className="mb-3 text-xs font-semibold text-muted sm:text-sm">{PDP_OFFER_TAGLINE}</p>
+      <p className="mb-1 text-sm font-bold text-charcoal sm:text-base">{offerCopy.heading}</p>
+      <p className="mb-3 text-xs font-semibold text-muted sm:text-sm">{offerCopy.tagline}</p>
 
       <div className="flex min-w-0 flex-col gap-2.5 sm:gap-3" role="radiogroup" aria-label={PDP_OFFER_HEADING}>
         {offers.map((offer) => {
