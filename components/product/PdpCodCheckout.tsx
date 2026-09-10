@@ -228,7 +228,7 @@ export default function PdpCodCheckout({ product, qty, onClose }: Props) {
             disabled={isSubmitting || placingOrder}
             className="w-full rounded-full bg-[#b8485c] py-4 text-lg font-bold text-white disabled:opacity-60"
           >
-            {placingOrder || isSubmitting ? 'جاري الإرسال…' : 'تأكيد الطلب · COD'}
+            {placingOrder || isSubmitting ? 'جاري الإرسال…' : 'تأكيد الطلب'}
           </button>
           <p className="text-center text-[11px] text-muted">نقداً عند الاستلام · نتصل للتأكيد</p>
           <p className="sr-only">{CHECKOUT_UI_REV}</p>

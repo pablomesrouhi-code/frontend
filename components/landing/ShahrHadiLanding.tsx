@@ -16,7 +16,6 @@ import {
   type PlaceOrderLine,
 } from '@/lib/place-order'
 import {
-  formatSarAmount,
   formatSarCompact,
   getBestUpsell,
   getComboPrice,
@@ -424,7 +423,7 @@ export default function ShahrHadiLanding() {
 
         <section ref={orderRef} id="order" className="mt-6 scroll-mt-20 rounded-3xl border-2 border-[#b8485c]/25 bg-white p-5 shadow-lg sm:p-6">
           <div className="flex items-center justify-between gap-2">
-            <h2 className="text-xl font-black text-charcoal">اطلبي الآن — COD</h2>
+            <h2 className="text-xl font-black text-charcoal">تأكيد الطلب</h2>
             <span className="rounded-full bg-red-50 px-2.5 py-1 text-[10px] font-black text-red-600">🔥 {stockLeft} عبوة متبقية</span>
           </div>
           <p className="mt-1 text-sm text-muted">اسم + جوال — نتصل للتأكيد قبل الشحن</p>
@@ -441,7 +440,7 @@ export default function ShahrHadiLanding() {
             </div>
             {checkoutError && <p className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">{checkoutError}</p>}
             <button type="submit" disabled={isSubmitting || placingOrder} className="flex min-h-[3.25rem] w-full items-center justify-center rounded-full text-lg font-black text-white transition disabled:opacity-60" style={getProductSolidButtonStyle(LP_ACCENT)}>
-              {placingOrder || isSubmitting ? 'جاري إرسال الطلب…' : `تأكيد الطلب · ${formatSarAmount(cart?.total ?? entryPrice)} · COD`}
+              {placingOrder || isSubmitting ? 'جاري إرسال الطلب…' : 'تأكيد الطلب'}
             </button>
           </form>
           <TrustStrip className="mt-5" />
