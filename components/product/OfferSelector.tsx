@@ -81,7 +81,12 @@ export default function OfferSelector({
       <div className="flex min-w-0 flex-col gap-2.5 sm:gap-3" role="radiogroup" aria-label={PDP_OFFER_HEADING}>
         {offers.map((offer) => {
           const active = selected === offer.qty
-          const save = savingsForQty(offer.qty, getPriceForQty(1, productId), format, productId)
+          const featured = productId === 'shahr-hadi' && offer.qty === 1
+          const compare = offer.compare
+          const save =
+            offer.saveVs && offer.saveVs > 0
+              ? offer.saveVs
+              : savingsForQty(offer.qty, getPriceForQty(1, productId), format, productId)
           return (
             <button
               type="button"
@@ -89,7 +94,9 @@ export default function OfferSelector({
               role="radio"
               aria-checked={active}
               onClick={() => onChange(offer.qty)}
-              className={`relative grid min-h-[4.5rem] grid-cols-[auto_1fr_auto] items-center gap-x-3 rounded-2xl border-2 px-3.5 py-3.5 text-right sm:gap-x-3.5 sm:px-4 sm:py-4 ${
+              className={`relative grid grid-cols-[auto_1fr_auto] items-center gap-x-3 rounded-2xl border-2 px-3.5 text-right sm:gap-x-3.5 sm:px-4 ${
+                featured ? 'min-h-[5.25rem] py-4 sm:py-5' : 'min-h-[4.5rem] py-3.5 sm:py-4'
+              } ${
                 active ? '' : 'hover:bg-white/90 active:scale-[0.99]'
               } cursor-pointer touch-manipulation overflow-hidden transition-[transform,border-color,background-color] duration-200`}
               style={active ? getProductOfferActiveStyle(accentColor) : getProductOfferInactiveStyle(accentColor)}
@@ -111,10 +118,17 @@ export default function OfferSelector({
                   <p className="mt-0.5 text-[11px] leading-snug text-muted sm:text-xs">{offer.sublabel}</p>
                 )}
               </div>
-              <div className="relative z-[1] flex shrink-0 flex-col items-start gap-1">
+              <div className="relative z-[1] flex shrink-0 flex-col items-start gap-0.5">
+                {compare != null && compare > offer.price && (
+                  <span className="text-[11px] font-semibold tabular-nums text-muted line-through sm:text-xs">
+                    {formatSarCompact(compare)}
+                  </span>
+                )}
                 <span
-                  className="text-lg font-black tabular-nums whitespace-nowrap sm:text-xl"
-                  style={{ color: active ? priceActive : '#1C1C1C' }}
+                  className={`font-black tabular-nums whitespace-nowrap ${
+                    featured ? 'text-2xl sm:text-[1.75rem]' : 'text-lg sm:text-xl'
+                  }`}
+                  style={{ color: featured || active ? priceActive : '#1C1C1C' }}
                 >
                   {formatSarCompact(offer.price)}
                 </span>

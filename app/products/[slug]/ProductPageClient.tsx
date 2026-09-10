@@ -20,7 +20,9 @@ export default function ProductPageClient({
   addToCartLabel?: string
 }) {
   useStorePricing()
-  const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(product.id === 'shahr-hadi' ? 2 : 1)
+  const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(1)
+  const entryPrice = getPriceForQty(1, product.id)
+  const isShahrHadi = product.id === 'shahr-hadi'
   const [showCheckout, setShowCheckout] = useState(false)
   const [stickyCtaVisible, setStickyCtaVisible] = useState(false)
   const priceBlockRef = useRef<HTMLDivElement>(null)
@@ -63,14 +65,16 @@ export default function ProductPageClient({
 
   const openCheckout = useCallback(() => {
     if (soldOut) return
+    const qty = isShahrHadi ? 1 : selectedQty
+    if (isShahrHadi) setSelectedQty(1)
     trackAddToCart({
       content_ids: [product.id],
-      value: getPriceForQty(selectedQty, product.id),
+      value: getPriceForQty(qty, product.id),
       currency: 'SAR',
-      num_items: selectedQty,
+      num_items: qty,
     })
     setShowCheckout(true)
-  }, [soldOut, product.id, selectedQty])
+  }, [soldOut, product.id, selectedQty, isShahrHadi])
 
   return (
     <>
@@ -85,9 +89,7 @@ export default function ProductPageClient({
         }}
       >
         <p className="mb-3 text-center text-[11px] font-black tracking-wide sm:text-xs" style={{ color: accent }}>
-          {product.id === 'shahr-hadi'
-            ? 'اطلبي هنا · اسم + جوال · تدفعين عند الباب'
-            : 'اطلبي هنا · اسم + جوال فقط · COD'}
+          {isShahrHadi ? 'اسم + جوال · تدفعين عند الباب' : 'اطلبي هنا · اسم + جوال فقط · COD'}
         </p>
         <div className={soldOut ? 'pointer-events-none opacity-50' : undefined} aria-disabled={soldOut}>
           <OfferSelector
@@ -113,6 +115,11 @@ export default function ProductPageClient({
           <span>
             {soldOut ? (
               'نفدت الكمية حالياً'
+            ) : isShahrHadi ? (
+              <>
+                اطلبي الآن{' '}
+                <span className="sar-price sar-price-dark tabular-nums">{formatSarRiial(entryPrice)}</span>
+              </>
             ) : (
               <>
                 {addToCartLabel} ·{' '}
@@ -137,8 +144,8 @@ export default function ProductPageClient({
         visible={!soldOut && stickyCtaVisible}
         accentColor={accent}
         accentDeep={accentDeep}
-        label={addToCartLabel}
-        formattedPrice={formatSarRiial(getPriceForQty(selectedQty, product.id))}
+        label={isShahrHadi ? 'ابدئي' : addToCartLabel}
+        formattedPrice={formatSarRiial(isShahrHadi ? entryPrice : getPriceForQty(selectedQty, product.id))}
         onClick={scrollToPdpForm}
       />
 

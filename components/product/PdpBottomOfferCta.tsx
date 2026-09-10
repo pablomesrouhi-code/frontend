@@ -22,7 +22,7 @@ export default function PdpBottomOfferCta({
         className="inline-flex min-h-[48px] w-full items-center justify-center rounded-2xl px-8 py-3.5 text-base font-black text-white shadow-lg"
         style={getProductSolidButtonStyle(accent)}
       >
-        اطلبي الآن ↑
+        اطلبي الآن · 199 ر.س ↑
       </ScrollToPdpFormLink>
     )
   }

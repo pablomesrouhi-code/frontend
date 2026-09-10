@@ -35,7 +35,7 @@ const LP_ACCENT = STORE_BUTTON_COLOR
 const LP_SOFT = '#F0E9F0'
 
 const LP_IMAGES = {
-  hero: '/products/shahr-hadi-funnel-01-benefits.png',
+  hero: '/products/shahr-hadi-funnel-01-pick.png',
   pain: '/products/shahr-hadi-funnel-02-problem.png',
   drink: '/products/shahr-hadi-funnel-03-why.png',
   relaxed: '/products/shahr-hadi-funnel-04-client.png',
@@ -73,9 +73,9 @@ type FormValues = z.infer<typeof formSchema>
 type PackMode = 'single' | 'rawnaq_shahr' | 'powder_trio'
 
 const SINGLE_OFFERS = [
-  { qty: 1 as const, label: 'عبوة واحدة', sub: 'شهر تجربة · 30 مكيال', compare: 249, badge: null as string | null },
-  { qty: 2 as const, label: 'عبوتان', sub: 'دورتان — الأكثر اختياراً', compare: 558, badge: 'الأكثر اختياراً · وفر 50%' },
-  { qty: 3 as const, label: '3 عبوات', sub: '3 دورات — أفضل صفقة', compare: 747, badge: 'أفضل صفقة · وفر 53%' },
+  { qty: 1 as const, label: 'عبوة واحدة', sub: 'شهر تجربة · 30 مكيال', compare: 249, badge: 'الأكثر اختياراً' as string | null },
+  { qty: 2 as const, label: 'عبوتان', sub: 'دورتان — وفّري 119', compare: 558, badge: null },
+  { qty: 3 as const, label: '3 عبوات', sub: '3 دورات — أفضل صفقة', compare: 747, badge: 'الأوفر' },
 ]
 
 const BENEFITS = [
@@ -236,7 +236,7 @@ export default function ShahrHadiLanding() {
   const product = getProductById(PRODUCT_ID)
   const orderRef = useRef<HTMLElement>(null)
 
-  const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(2)
+  const [selectedQty, setSelectedQty] = useState<1 | 2 | 3>(1)
   const [packMode, setPackMode] = useState<PackMode>('single')
   const [stockLeft] = useState(() => 11 + (Math.floor(Date.now() / 86400000) % 5))
   const [showUpsell, setShowUpsell] = useState(false)

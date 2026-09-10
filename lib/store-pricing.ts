@@ -66,34 +66,37 @@ export function getOffers(format: ProductOfferFormat = 'gummy', productId?: stri
       qty: 1 as const,
       label: `${unit} واحدة`,
       sublabel: isShahrHadi
-        ? 'شهر تجربة · ≈ 7 ر.س في اليوم'
+        ? 'شهر كامل'
         : isPouch
           ? 'عبوة مسحوق مع مكيال · الجرعة حسب الغلاف'
           : isPowder
             ? '30 مكيال · شهر كامل'
             : '60 علكة · شهر كامل',
       price: p1,
-      badge: isShahrHadi ? 'للتجربة' : ('الأكثر اختياراً' as string | null),
+      badge: 'الأكثر اختياراً' as string | null,
+      compare: isShahrHadi ? 249 : undefined,
+      saveVs: isShahrHadi ? 249 - p1 : undefined,
     },
     {
       qty: 2 as const,
-      label: isShahrHadi ? `${unitDual} · دورتان أوضح` : `${unitDual} · ثبّتي النتيجة`,
+      label: isShahrHadi ? unitDual : `${unitDual} · ثبّتي النتيجة`,
       sublabel: isShahrHadi
-        ? '≈ 5 ر.س في اليوم · وفّري 119'
+        ? 'دورتان'
         : isPouch
           ? 'عبوتان مسحوق · روتين أطول'
           : isPowder
             ? '60 مكيال · شهر + تثبيت'
             : '120 علكة · شهر النتيجة + تثبيت',
       price: p2,
-      badge: isShahrHadi ? 'الأكثر اختياراً' : null,
+      badge: null,
+      compare: isShahrHadi ? p1 * 2 : undefined,
       saveVs: p1 * 2 - p2,
     },
     {
       qty: 3 as const,
-      label: isShahrHadi ? `${units3} · أرخص سعر للقطعة` : `${units3} · النتيجة الكاملة`,
+      label: isShahrHadi ? units3 : `${units3} · النتيجة الكاملة`,
       sublabel: isShahrHadi
-        ? '≈ 4 ر.س في اليوم · أفضل صفقة'
+        ? '3 أشهر'
         : isPouch
           ? '3 عبوات مسحوق · أفضل توفير'
           : isPowder
@@ -101,6 +104,7 @@ export function getOffers(format: ProductOfferFormat = 'gummy', productId?: stri
             : '180 علكة · نتيجة + تثبيت + هدية',
       price: p3,
       badge: 'الأكثر توفيراً',
+      compare: isShahrHadi ? p1 * 3 : undefined,
       saveVs: p1 * 3 - p3,
     },
   ]

@@ -6,8 +6,8 @@ export const PDP_OFFER_TAGLINE = 'قطعتين أوضح نتيجة · ثلاث �
 export function getPdpOfferCopy(productId?: string): { heading: string; tagline: string } {
   if (productId === 'shahr-hadi') {
     return {
-      heading: 'اختاري عرضك — السعر كامل وواضح',
-      tagline: 'عبوة ≈ 7 ر.س في اليوم · عبوتين أوفر · الكاش عند الباب',
+      heading: 'اختاري عرضك',
+      tagline: 'العبوة 199 ر.س · الكاش عند الباب',
     }
   }
   return { heading: PDP_OFFER_HEADING, tagline: PDP_OFFER_TAGLINE }

@@ -52,14 +52,12 @@ export default function PdpStickyRoutineCta({
             className="flex w-full touch-manipulation flex-row items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-white shadow-sm transition-[transform,filter] active:scale-[0.99]"
             style={getProductSolidButtonStyle(accentColor)}
           >
-            <span className="flex flex-col items-center gap-0.5 text-center">
-              <span className="flex flex-row-reverse items-center justify-center gap-2">
-                <span className="text-[13px] font-extrabold leading-snug sm:text-sm">
-                  {label}
-                </span>
-                <ArrowUp className="h-4 w-4 shrink-0 opacity-95 pdp-cta-arrow-nudge" />
+            <span className="flex flex-row-reverse items-center justify-center gap-2 text-center">
+              <span className="text-[15px] font-extrabold leading-none sm:text-base">
+                {label}{' '}
+                <span className="tabular-nums">{formattedPrice}</span>
               </span>
-              <span className="text-[11px] font-bold tabular-nums text-white/95 sm:text-xs">{formattedPrice}</span>
+              <ArrowUp className="h-4 w-4 shrink-0 opacity-95 pdp-cta-arrow-nudge" />
             </span>
           </button>
         </div>

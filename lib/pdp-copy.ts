@@ -14,7 +14,7 @@ export const PDP_ADD_CTA: Record<string, string> = {
   laylmag: 'ابدئي روتين المساء الآن',
   'quwwat-sha3r': 'ابدئي روتين الشعر من الداخل',
   wudouh: 'ابدئي روتين البشرة من الداخل',
-  'shahr-hadi': 'ابدئي شهر مختلف · من 199 ر.س',
+  'shahr-hadi': 'اطلبي الآن',
   naseej: 'ابدئي روتين الشعر من الداخل الآن',
   vitaflow: 'ابدئي روتين الطاقة الآن',
 }
