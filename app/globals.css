@@ -59,7 +59,7 @@ html {
   overflow: hidden;
   border-top: 1px solid #e7ddd3;
   background: #fff;
-  padding-block: 0.8rem;
+  padding-block: 0.7rem;
   border-bottom-left-radius: 1.5rem;
   border-bottom-right-radius: 1.5rem;
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
@@ -69,7 +69,7 @@ html {
 .home-logo-marquee__track {
   display: flex;
   width: max-content;
-  animation: home-logo-marquee 22s linear infinite;
+  animation: home-logo-marquee 26s linear infinite;
   will-change: transform;
 }
 
@@ -77,14 +77,14 @@ html {
   display: flex;
   flex: 0 0 auto;
   align-items: center;
-  gap: 1.7rem;
-  padding-inline: 0.85rem;
+  gap: 1.35rem;
+  padding-inline: 0.675rem;
 }
 
 .home-logo-marquee__logo {
   display: block;
-  height: 4.6rem;
-  width: 4.6rem;
+  height: 3.15rem;
+  width: 3.15rem;
   flex: 0 0 auto;
   object-fit: contain;
 }

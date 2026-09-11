@@ -9,6 +9,7 @@ import { trackAddToCart, trackViewContent } from '@/lib/tracking/client'
 import { STORE_BUTTON_COLOR, getProductSolidButtonStyle, shadeTowardBlack } from '@/lib/product-accent'
 import { PDP_OPEN_CHECKOUT_EVENT } from '@/lib/pdp-checkout-event'
 import { scrollToPdpForm } from '@/lib/pdp-scroll'
+import { useCartStore } from '@/stores/cart-store'
 
 const PdpCodCheckout = dynamic(() => import('@/components/product/PdpCodCheckout'), { ssr: false })
 
@@ -29,6 +30,7 @@ export default function ProductPageClient({
   const accent = STORE_BUTTON_COLOR
   const accentDeep = shadeTowardBlack(accent, 0.28)
   const soldOut = product.availability === 'sold_out'
+  const { addItem, openCart } = useCartStore()
 
   useEffect(() => {
     trackViewContent({
@@ -76,6 +78,20 @@ export default function ProductPageClient({
     setShowCheckout(true)
   }, [soldOut, product.id, selectedQty, isShahrHadi])
 
+  const addToCart = useCallback(() => {
+    if (soldOut) return
+    const qty = isShahrHadi ? 1 : selectedQty
+    addItem({
+      productId: product.id,
+      offerQty: qty,
+      price: getPriceForQty(qty, product.id),
+      nameAr: product.nameAr,
+      accentColor: product.accentColor,
+      bgColor: product.bgColor,
+    })
+    openCart()
+  }, [soldOut, isShahrHadi, selectedQty, addItem, openCart, product])
+
   return (
     <>
       <div
@@ -105,31 +121,43 @@ export default function ProductPageClient({
           دفع عند الاستلام · تأكيد هاتفي قبل الشحن · بدون بطاقة
         </p>
 
-        <button
-          onClick={openCheckout}
-          disabled={soldOut}
-          type="button"
-          className="group relative mt-3 w-full overflow-hidden rounded-2xl px-4 py-4 text-sm font-extrabold text-white transition enabled:hover:brightness-105 enabled:active:translate-y-[1px] disabled:cursor-not-allowed disabled:bg-charcoal/70 sm:py-[1.1rem] sm:text-base md:text-lg"
-          style={soldOut ? undefined : getProductSolidButtonStyle(accent)}
-        >
-          <span>
-            {soldOut ? (
-              'نفدت الكمية حالياً'
-            ) : isShahrHadi ? (
-              <>
-                اطلبي الآن{' '}
-                <span className="sar-price sar-price-dark tabular-nums">{formatSarRiial(entryPrice)}</span>
-              </>
-            ) : (
-              <>
-                {addToCartLabel} ·{' '}
-                <span className="sar-price sar-price-dark tabular-nums">
-                  {formatSarRiial(getPriceForQty(selectedQty, product.id))}
-                </span>
-              </>
-            )}
-          </span>
-        </button>
+        <div className="mt-3 flex flex-col gap-2.5 sm:flex-row">
+          <button
+            onClick={openCheckout}
+            disabled={soldOut}
+            type="button"
+            className="group relative min-w-0 flex-1 overflow-hidden rounded-2xl px-4 py-4 text-sm font-extrabold text-white transition enabled:hover:brightness-105 enabled:active:translate-y-[1px] disabled:cursor-not-allowed disabled:bg-charcoal/70 sm:py-[1.1rem] sm:text-base md:text-lg"
+            style={soldOut ? undefined : getProductSolidButtonStyle(accent)}
+          >
+            <span>
+              {soldOut ? (
+                'نفدت الكمية حالياً'
+              ) : isShahrHadi ? (
+                <>
+                  اطلبي الآن{' '}
+                  <span className="sar-price sar-price-dark tabular-nums">{formatSarRiial(entryPrice)}</span>
+                </>
+              ) : (
+                <>
+                  {addToCartLabel} ·{' '}
+                  <span className="sar-price sar-price-dark tabular-nums">
+                    {formatSarRiial(getPriceForQty(selectedQty, product.id))}
+                  </span>
+                </>
+              )}
+            </span>
+          </button>
+          {!soldOut && (
+            <button
+              onClick={addToCart}
+              type="button"
+              className="min-w-0 rounded-2xl border-2 bg-white px-4 py-4 text-sm font-extrabold transition hover:bg-white/90 active:translate-y-[1px] sm:w-[11.5rem] sm:shrink-0 sm:py-[1.1rem] sm:text-base"
+              style={{ borderColor: accent, color: accent }}
+            >
+              أضيفي للسلة
+            </button>
+          )}
+        </div>
 
         <p className="mt-2 text-center text-[11px] font-semibold text-muted sm:text-xs">
           {soldOut

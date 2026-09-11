@@ -233,8 +233,8 @@ export default function HomePage() {
                               key={`${copy}-${i}`}
                               src="/nabta-lab-icon-180.png"
                               alt=""
-                              width={74}
-                              height={74}
+                              width={50}
+                              height={50}
                               className="home-logo-marquee__logo"
                             />
                           ))}
